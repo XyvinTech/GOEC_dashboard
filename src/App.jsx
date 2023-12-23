@@ -1,3 +1,7 @@
+import React from "react";
+import StyledTable from "./ui/styledTable";
+
+import "./App.css";
 import React from 'react'
 import StyledButton from './ui/CommonButton'
 import InputWithIcon from './ui/CommonInput';
@@ -9,14 +13,38 @@ import Sidebar from './layout/sidebar';
 import {theme} from './theme/index'
 
 export default function App() {
-  const bgcolor='var(--Primary, linear-gradient(100deg, #ED5DCD -2.24%, rgba(95, 93, 215, 0.71) 98.06%))';
-  const bgcolor2='var(--Selection, #4A4458);';
+
+  // Example usage of DynamicTable
+const headers = ['OCCP Txn ID', 'User Name', 'Charge Station Name', /* ... more headers */];
+
+const data = [
+  {
+    'OCCP Txn ID': '23202911',
+    'User Name': 'Avinash Nazeer',
+    'Charge Station Name': 'GOEC Jansons Orchard Inn',
+    // ... more key-value pairs for each row
+  },
+  {
+    'OCCP Txn ID': '23202911',
+    'User Name': 'Avinash Nazeer',
+    'Charge Station Name': 'GOEC Jansons Orchard Inn',
+    // ... more key-value pairs for each row
+  },
+  {
+    'OCCP Txn ID': '23202911',
+    'User Name': 'Avinash Nazeer',
+    'Charge Station Name': 'GOEC Jansons Orchard Inn',
+    // ... more key-value pairs for each row
+  },
+  // ... more rows
+];
 
   return (
+
     <ThemeProvider theme={theme}>
     {/* <div> */}
       <Sidebar />
-      
+      <StyledTable headers={headers} data={data} />
       {/* <br/>
       <StyledButton background={bgcolor}>Sign in</StyledButton>
       <br/>
