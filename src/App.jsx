@@ -4,7 +4,6 @@ import StyledTable from "./ui/styledTable";
 import "./App.css";
 import { ThemeProvider } from '@mui/material/styles'
 import {theme} from './theme/index'
-import Sidebar from "./layout/sideBar";
 import DashboardLayout from "./layout/dashboardLayout";
 
 export default function App() {
@@ -38,7 +37,7 @@ const data = [
 
     <ThemeProvider theme={theme}>
       <DashboardLayout/>
-      <StyledTable headers={headers} data={data} />
+      {/* <StyledTable headers={headers} data={data} /> */}
 
     </ThemeProvider>
   )

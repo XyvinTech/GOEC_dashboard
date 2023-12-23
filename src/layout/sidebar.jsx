@@ -15,7 +15,7 @@ import {
     TagManageIcon,
     TariffIcon,
 } from '../assets/icons/sidebar';
-import { NavItem } from '../ui/navItem';
+import { NavItem } from '../ui/Navitem';
 import { ReactComponent as Logo } from '../assets/Logo.svg';
 
 
@@ -186,9 +186,10 @@ const Sidebar=({ open, onClose, ...props })=> {
                 open
                 PaperProps={{
                     sx: {
-                        backgroundColor: 'primary.main',
+                        backgroundColor: 'secondary.main',
                         color: 'secondary.contrastText',
-                        width: 260
+                        width: 260,
+                        border:'none'
                     }
                 }}
                 variant="permanent"
@@ -205,7 +206,7 @@ const Sidebar=({ open, onClose, ...props })=> {
             open={true}
             PaperProps={{
                 sx: {
-                    backgroundColor: 'primary.main',
+                    backgroundColor: 'secondary.main',
                     color: 'secondary.contrastText',
                     width: 260
                 }

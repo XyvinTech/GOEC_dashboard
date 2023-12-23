@@ -1,5 +1,8 @@
 import { styled } from "@mui/material";
-import Sidebar from "./sideBar";
+import Sidebar from "./sidebar";
+import { DashboardNavbar } from "./navbar";
+import { Box } from '@mui/material';
+
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -14,18 +17,20 @@ const DashboardLayoutRoot = styled('div')(({ theme }) => ({
 
 const DashboardLayout = () => {
     return (
-        <><DashboardLayoutRoot>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flex: '1 1 auto',
-                    flexDirection: 'column',
-                    width: '100%'
-                }}
-            >
-                {children}
-            </Box>
-        </DashboardLayoutRoot><Sidebar />
+        <>
+            <DashboardLayoutRoot>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flex: '1 1 auto',
+                        flexDirection: 'column',
+                        width: '100%'
+                    }}
+                >
+                </Box>
+            </DashboardLayoutRoot>
+            <DashboardNavbar />
+            <Sidebar />
         </>
     )
 }

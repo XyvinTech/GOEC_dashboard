@@ -161,6 +161,7 @@ export const theme = createTheme({
       light: '#828DF8',
       dark: '#3832A0',
       contrastText: '#F7F8FC',
+      DimText: '#828282',
       button:'#000'
     },
     secondary: {
@@ -168,7 +169,8 @@ export const theme = createTheme({
       light: '#3FC79A',
       dark: '#0B815A',
       contrastText: '#B5B8C5',
-      button:'#4A4458'
+      button:'#4A4458',
+      contrast: '#171717'
     },
     success: {
       main: '#14B8A6',
