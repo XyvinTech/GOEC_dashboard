@@ -2,13 +2,7 @@ import React from "react";
 import StyledTable from "./ui/styledTable";
 
 import "./App.css";
-import React from 'react'
-import StyledButton from './ui/CommonButton'
-import InputWithIcon from './ui/CommonInput';
 import { ThemeProvider } from '@mui/material/styles'
-import { ReactComponent as SmsIcon } from './assets/icons/sms.svg'; 
-import { ReactComponent as LockIcon } from './assets/icons/lock.svg'; 
-import { ReactComponent as EyeIcon } from './assets/icons/eye-slash.svg'; 
 import Sidebar from './layout/sidebar';
 import {theme} from './theme/index'
 
