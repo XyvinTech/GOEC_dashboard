@@ -31,7 +31,7 @@ export const NavItem = (props) => {
                     active ? props.indexChange() : <></> 
                 }}
                 sx={{
-                    backgroundColor: active && '#000',
+                    backgroundColor: active && 'secondary.contrast',
                     borderRadius: 0,
                     height: '50px',
                     color: active ? '#FFF' : 'secondary.contrastText',
@@ -55,7 +55,7 @@ export const NavItem = (props) => {
             </Button>
             {active && extendable &&
                 <Box sx={{
-                    backgroundColor: active && '#000',
+                    backgroundColor: active && 'secondary.contrast',
                     width: '100%',
                 }}>
                     <Stack
@@ -68,7 +68,7 @@ export const NavItem = (props) => {
                             active && sub && sub.map((item,index) => {
                                 return (
                                     <Button sx={{
-                                        backgroundColor: activeIndex == index ? 'secondary.button' : 'primary.button',
+                                        backgroundColor: activeIndex === index ? 'secondary.button' : 'secondary.contrast',
                                         borderRadius: 0.5,
                                         height: '35px',
                                         my: 1,

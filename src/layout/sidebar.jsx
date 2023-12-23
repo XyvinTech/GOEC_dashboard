@@ -187,7 +187,7 @@ const Sidebar=({ open, onClose, ...props })=> {
                 open
                 PaperProps={{
                     sx: {
-                        backgroundColor: 'primary.main',
+                        backgroundColor: 'secondary.main',
                         color: 'secondary.contrastText',
                         width: 260
                     }
@@ -206,7 +206,7 @@ const Sidebar=({ open, onClose, ...props })=> {
             open={true}
             PaperProps={{
                 sx: {
-                    backgroundColor: 'primary.main',
+                    backgroundColor: 'secondary.main',
                     color: 'secondary.contrastText',
                     width: 260
                 }

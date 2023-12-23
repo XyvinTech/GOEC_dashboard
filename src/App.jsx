@@ -4,8 +4,8 @@ import StyledTable from "./ui/styledTable";
 import "./App.css";
 import { ThemeProvider } from '@mui/material/styles'
 import {theme} from './theme/index'
-import Sidebar from "./layout/sideBar";
-
+import Sidebar from "./layout/sidebar";
+import { DashboardNavbar } from "./layout/navbar";
 export default function App() {
 
   // Example usage of DynamicTable
@@ -38,6 +38,7 @@ const data = [
     <ThemeProvider theme={theme}>
     {/* <div> */}
       <Sidebar />
+      <DashboardNavbar/>
       <StyledTable headers={headers} data={data} />
       {/* <br/>
       <StyledButton background={bgcolor}>Sign in</StyledButton>
