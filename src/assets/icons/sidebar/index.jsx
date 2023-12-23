@@ -1,0 +1,13 @@
+export {ReactComponent as AccountIcon} from './accounts.svg';
+export {ReactComponent as AssetManageIcon} from './assetmanage.svg';
+export {ReactComponent as ChargingIcon} from './charging.svg';
+export {ReactComponent as CPOIcon} from './cpo.svg';
+export {ReactComponent as CRMIcon} from './crm.svg';
+export {ReactComponent as DashboardIcon} from './dashboard.svg';
+export {ReactComponent as DataManageIcon} from './datamanage.svg';
+export {ReactComponent as HelpIcon} from './help.svg';
+export {ReactComponent as NotificationIcon} from './notification.svg';
+export {ReactComponent as ReportIcon} from './report.svg';
+export {ReactComponent as SettingsIcon} from './settings.svg';
+export {ReactComponent as TagManageIcon} from './tagmanage.svg';
+export {ReactComponent as TariffIcon} from './tariff.svg';
