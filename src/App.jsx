@@ -3,8 +3,8 @@ import StyledTable from "./ui/styledTable";
 
 import "./App.css";
 import { ThemeProvider } from '@mui/material/styles'
-import Sidebar from './layout/sidebar';
 import {theme} from './theme/index'
+import Sidebar from "./layout/sideBar";
 
 export default function App() {
 

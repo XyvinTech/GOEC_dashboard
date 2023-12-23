@@ -3,12 +3,10 @@ import { Box, Button, ListItem, Stack } from '@mui/material';
 import { ReactComponent as ArrowDropdown } from '../assets/icons/arrow_drop_down.svg';
 
 export const NavItem = (props) => {
-    const { href, icon, title, sub, extendable, ...others } = props;
-    let active = false;
+    const { href, icon, title, sub, extendable,active, ...others } = props;
     let activeIndex = -1;
     sub && sub.forEach((element,ind) => {
         if(window.location.pathname === element.href){
-            active = true;
             activeIndex  = ind
             return
         }
@@ -29,6 +27,9 @@ export const NavItem = (props) => {
                 startIcon={icon}
                 endIcon={extendable ? <ArrowDropdown style={{fill:'#fff'}} /> :<></>}
                 disableRipple
+                onClick={()=>{
+                    active ? props.indexChange() : <></> 
+                }}
                 sx={{
                     backgroundColor: active && '#000',
                     borderRadius: 0,
@@ -52,7 +53,7 @@ export const NavItem = (props) => {
                     {title}
                 </Box>
             </Button>
-            {active &&
+            {active && extendable &&
                 <Box sx={{
                     backgroundColor: active && '#000',
                     width: '100%',
@@ -76,7 +77,9 @@ export const NavItem = (props) => {
                                         '&:hover': {
                                             backgroundColor: 'rgba(255,255,255, 0.1)'
                                         }
-                                    }}>
+                                        
+                                    }}
+                                    key={index}>
                                         {item.title}
                                     </Button>
                                 )
