@@ -5,6 +5,7 @@ import "./App.css";
 import { ThemeProvider } from '@mui/material/styles'
 import {theme} from './theme/index'
 import Sidebar from "./layout/sideBar";
+import DashboardLayout from "./layout/dashboardLayout";
 
 export default function App() {
 
@@ -36,25 +37,9 @@ const data = [
   return (
 
     <ThemeProvider theme={theme}>
-    {/* <div> */}
-      <Sidebar />
+      <DashboardLayout/>
       <StyledTable headers={headers} data={data} />
-      {/* <br/>
-      <StyledButton background={bgcolor}>Sign in</StyledButton>
-      <br/>
-      <StyledButton background={bgcolor2} border="2px solid var(--White-20, rgba(255, 255, 255, 0.20));">Sign in</StyledButton>
-      <br/>
-      <InputWithIcon
-        icon={<SmsIcon  />} 
-        placeholder="Enter your email"
-      />
-      <br/>
-      <InputWithIcon
-        icon={<LockIcon  />} 
-        placeholder="Enter your password"
-        iconright={<EyeIcon  />} 
-      />
-    </div> */}
+
     </ThemeProvider>
   )
 }

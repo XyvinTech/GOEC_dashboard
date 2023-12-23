@@ -124,7 +124,6 @@ const Sidebar=({ open, onClose, ...props })=> {
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
-                    overflowY:'clip',
                 }}
             >
                 <div>
