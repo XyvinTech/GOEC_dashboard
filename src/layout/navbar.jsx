@@ -1,10 +1,8 @@
-import { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
+import { AppBar, Avatar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {ReactComponent as Notification} from '../assets/icons/notification.svg'
-import { deepOrange, deepPurple, grey } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
@@ -13,9 +11,7 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 }));
 
 export const DashboardNavbar = (props) => {
-  const { onSidebarOpen, ...other } = props;
-  const settingsRef = useRef(null);
-  const [openAccountPopover, setOpenAccountPopover] = useState(false);
+  const { open,onSideBarOpen, ...other } = props;
 
   return (
     <>
@@ -38,7 +34,7 @@ export const DashboardNavbar = (props) => {
           }}
         >
           <IconButton
-            onClick={onSidebarOpen}
+            onClick={onSideBarOpen}
             sx={{
               display: {
                 xs: 'inline-flex',
@@ -58,8 +54,6 @@ export const DashboardNavbar = (props) => {
           }} variant='subtitle2'>Jackie Chan</Typography>
 
           <Avatar
-                  onClick={() => setOpenAccountPopover(true)}
-                  ref={settingsRef}
                   sx={{
                     cursor: 'pointer',
                     height: 40,

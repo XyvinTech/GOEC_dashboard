@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
-import { Box, Button, ListItem, Stack } from '@mui/material';
+import { Box, Button, Collapse, ListItem, Stack } from '@mui/material';
 import { ReactComponent as ArrowDropdown } from '../assets/icons/arrow_drop_down.svg';
+// import { useNavigate  } from 'react-router-dom'
 
 export const NavItem = (props) => {
     const { href, icon, title, sub, extendable,active, ...others } = props;
+    // const navigate = useNavigate();
     let activeIndex = -1;
     sub && sub.forEach((element,ind) => {
         if(window.location.pathname === element.href){
@@ -33,7 +35,7 @@ export const NavItem = (props) => {
                 sx={{
                     backgroundColor: active && 'secondary.contrast',
                     borderRadius: 0,
-                    height: '50px',
+                    height: '47px',
                     color: active ? '#FFF' : 'secondary.contrastText',
                     fontWeight: '20px',
                     justifyContent: 'flex-start',
@@ -53,10 +55,9 @@ export const NavItem = (props) => {
                     {title}
                 </Box>
             </Button>
-            {active && extendable &&
-                <Box sx={{
+            <Collapse in={active && extendable} sx={{
                     backgroundColor: active && 'secondary.contrast',
-                    width: '100%',
+                    width: '100%'
                 }}>
                     <Stack
                         sx={{
@@ -71,14 +72,14 @@ export const NavItem = (props) => {
                                         backgroundColor: activeIndex === index ? 'secondary.button' : 'secondary.contrast',
                                         borderRadius: 0.5,
                                         height: '35px',
-                                        my: 1,
+                                        my: 0.5,
                                         justifyContent: "flex-start",
                                         color: active ? '#fff' : 'primary.contrastText',
                                         '&:hover': {
                                             backgroundColor: 'rgba(255,255,255, 0.1)'
                                         }
-                                        
                                     }}
+                                    // onClick={()=>{navigate(`/${item.href}`);}}
                                     key={index}>
                                         {item.title}
                                     </Button>
@@ -86,7 +87,7 @@ export const NavItem = (props) => {
                             })
                         }
                     </Stack>
-                </Box>}
+                </Collapse>
         </ListItem>
     );
 };

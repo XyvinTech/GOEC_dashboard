@@ -2,6 +2,7 @@ import { styled } from "@mui/material";
 import Sidebar from "./sidebar";
 import { DashboardNavbar } from "./navbar";
 import { Box } from '@mui/material';
+import { useState } from "react";
 
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
@@ -15,7 +16,8 @@ const DashboardLayoutRoot = styled('div')(({ theme }) => ({
 }));
 
 
-const DashboardLayout = () => {
+const DashboardLayout = ({children}) => {
+    const [isDrawerOpen, setDrawerOpen] = useState(false)
     return (
         <>
             <DashboardLayoutRoot>
@@ -27,10 +29,11 @@ const DashboardLayout = () => {
                         width: '100%'
                     }}
                 >
+                    {children}
                 </Box>
             </DashboardLayoutRoot>
-            <DashboardNavbar />
-            <Sidebar />
+            <DashboardNavbar onSideBarOpen={()=>{setDrawerOpen(true)}}/>
+            <Sidebar onClose={() => setDrawerOpen(false)} open={isDrawerOpen}/>
         </>
     )
 }
