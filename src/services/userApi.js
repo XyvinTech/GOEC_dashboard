@@ -30,9 +30,9 @@ export async function editUserByMob(mob, data) {
   }
 }
 
-export async function deleteUser(userId, data) {
+export async function deleteUser(userId) {
   try {
-    const response = await tokenInstance.delete(`users/${userId}`, data);
+    const response = await tokenInstance.delete(`users/${userId}`);
     return response.data;
   } catch (error) {
     throw error;
