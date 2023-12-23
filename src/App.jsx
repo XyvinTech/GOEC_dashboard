@@ -1,29 +1,38 @@
 import React from "react";
-import StyledButton from "./ui/styledButton";
-import InputWithIcon from "./ui/styledInput";
-import StyledBadge from "./ui/styledBadge";
-import { ReactComponent as SmsIcon } from "./assets/icons/sms.svg";
-import { ReactComponent as LockIcon } from "./assets/icons/lock.svg";
-import { ReactComponent as EyeIcon } from "./assets/icons/eye-slash.svg";
+import StyledTable from "./ui/styledTable";
+
 import "./App.css";
 
 export default function App() {
+
+  // Example usage of DynamicTable
+const headers = ['OCCP Txn ID', 'User Name', 'Charge Station Name', /* ... more headers */];
+
+const data = [
+  {
+    'OCCP Txn ID': '23202911',
+    'User Name': 'Avinash Nazeer',
+    'Charge Station Name': 'GOEC Jansons Orchard Inn',
+    // ... more key-value pairs for each row
+  },
+  {
+    'OCCP Txn ID': '23202911',
+    'User Name': 'Avinash Nazeer',
+    'Charge Station Name': 'GOEC Jansons Orchard Inn',
+    // ... more key-value pairs for each row
+  },
+  {
+    'OCCP Txn ID': '23202911',
+    'User Name': 'Avinash Nazeer',
+    'Charge Station Name': 'GOEC Jansons Orchard Inn',
+    // ... more key-value pairs for each row
+  },
+  // ... more rows
+];
+
   return (
     <div>
-      Hi
-      <br />
-      <StyledButton variant="primary">Sign in</StyledButton>
-      <br />
-      <StyledButton variant="secondary">Sign in</StyledButton>
-      <br />
-      <StyledBadge >Sign out</StyledBadge> 
-      <InputWithIcon icon={<SmsIcon />} placeholder="Enter your email" />
-      <br />
-      <InputWithIcon
-        icon={<LockIcon />}
-        placeholder="Enter your password"
-        iconright={<EyeIcon />}
-      />
+      <StyledTable headers={headers} data={data} />
     </div>
   );
 }
