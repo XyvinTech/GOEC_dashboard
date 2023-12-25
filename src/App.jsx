@@ -73,7 +73,9 @@ const handleSearch = () => {
 
   return (
     <div>
-      {/* Appbar */}
+
+      
+      Appbar
       <StyledAppBar username={username} avatarSrc={avatarSrc} notifications={notifications}/>
 
       <StyledDivider />
