@@ -1,7 +1,24 @@
-import React from 'react'
+import React from "react";
+import StyledTable from "../ui/styledTable.jsx";
+import { DummyData } from "../assets/json/TableData";
+
+import DashboardLayout from '../layout/dashboardLayout.jsx'
 
 export default function Home() {
+
+  const headers = [
+    "OCCP Txn ID",
+    "User Name",
+    "Charge Station Name" ,
+    "status"
+  ];
+
+
+
   return (
-    <div>Home</div>
-  )
+      <DashboardLayout>
+        <StyledTable headers={headers} data={DummyData} />
+      </DashboardLayout>
+
+  );
 }
