@@ -5,13 +5,8 @@ import { theme } from "./theme/index";
 
 export default function App() {
   return (
-
-
     <ThemeProvider theme={theme}>
-      <DashboardLayout>
-        <StyledTable headers={headers} data={data} />
-      </DashboardLayout>
+      <RouteRenderer />
     </ThemeProvider>
-  )
-
+  );
 }
