@@ -3,6 +3,7 @@ import Sidebar from "./sidebar";
 import { DashboardNavbar } from "./navbar";
 import { Box } from '@mui/material';
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
@@ -31,7 +32,7 @@ const DashboardLayout = ({children}) => {
                         width: '100%'
                     }}
                 >
-                    {children}
+                    {children? children : <Outlet/>}
                 </Box>
             </DashboardLayoutRoot>
             <DashboardNavbar onSideBarOpen={()=>{setDrawerOpen(true)}}/>

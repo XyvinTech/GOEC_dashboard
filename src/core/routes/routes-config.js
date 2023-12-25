@@ -1,5 +1,7 @@
+import DashboardLayout from "../../layout/dashboardLayout";
 import Home from "../../pages/Home";
 import Login from "../../pages/Login";
+import ChargingStation from "../../pages/chargingStation";
 
 const RoutesConfig = () => {
 
@@ -7,7 +9,13 @@ const RoutesConfig = () => {
 
         {
             path: '/',
-            element: <Home />,
+            element: <DashboardLayout/>,
+            children:[
+                {
+                    path:'chargestations',
+                    element: <ChargingStation/>
+                }
+            ]
         },
         {
             path: '/login',
