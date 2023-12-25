@@ -1,0 +1,14 @@
+
+
+/* Optional: for smooth scrolling when 'display: none' scrollbar is applied */
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox 64 */
+    -ms-overflow-style: none;
+}
+
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+::-webkit-scrollbar {
+    display: none;
+}
