@@ -9,9 +9,11 @@ const DashboardLayoutRoot = styled('div')(({ theme }) => ({
     display: 'flex',
     flex: '1 1 auto',
     maxWidth: '100%',
-    paddingTop: 64,
+    paddingTop: 128,
     [theme.breakpoints.up('lg')]: {
-        paddingLeft: 260
+        paddingLeft: 260,
+        marginLeft:48,
+        marginRight:48
     }
 }));
 

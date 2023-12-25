@@ -1,4 +1,5 @@
-import App from "../../App";
+import Home from "../../pages/Home";
+import Login from "../../pages/Login";
 
 const RoutesConfig = () => {
 
@@ -6,7 +7,11 @@ const RoutesConfig = () => {
 
         {
             path: '/',
-            element: <App />,
+            element: <Home />,
+        },
+        {
+            path: '/login',
+            element: <Login />,
         },
 
     ]

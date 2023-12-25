@@ -266,7 +266,7 @@ const Sidebar = ({ open, onClose, ...props }) => {
                         </Box>
                     </Box>
                 </div>
-                <Box sx={{ flexGrow: 1, maxHeight: '100%' }}>
+                <Box sx={{ flexGrow: 1, maxHeight: 'calc(100vh - 15px)', overflowY: 'auto' }}>
                     {items.map((item, index) => {
                         return (
                             <NavItem
