@@ -81,8 +81,4 @@ const handleSearch = () => {
     </ThemeProvider>
   )
 
-
-  
-  );
-
-}
+};

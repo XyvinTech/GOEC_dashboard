@@ -14,7 +14,6 @@ export const DashboardNavbar = (props) => {
   const { open,onSideBarOpen, ...other } = props;
 
   return (
-    <>
       <DashboardNavbarRoot
         sx={{
           left: {
@@ -69,8 +68,6 @@ export const DashboardNavbar = (props) => {
           
         </Toolbar>
       </DashboardNavbarRoot>
-    
-    </>
   );
 };
 
