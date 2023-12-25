@@ -1,5 +1,6 @@
 import Home from "../../pages/Home";
 import Login from "../../pages/Login";
+import AddRfidCard from "../../components/rfid/AddRfidCard";
 
 const RoutesConfig = () => {
 
@@ -12,6 +13,10 @@ const RoutesConfig = () => {
         {
             path: '/login',
             element: <Login />,
+        },
+        {
+            path: '/addrfid',
+            element: <AddRfidCard />,
         },
 
     ]

@@ -1,63 +1,98 @@
 import React from 'react'
 import styled from 'styled-components';
+import StyledButton from '../ui/styledButton';
+import StyledDivider from '../ui/styledDivider'; 
+import { ReactComponent as CloseCircle } from '../assets/icons/close-circle.svg';
 
 const StyledLayout = styled.div`
-display: flex;
-width: 543px;
-padding: 0px 32px 24px 32px;
-flex-direction: column;
-align-items: center;
-gap: 32px;
-flex-shrink: 0;
-border-radius: 8px;
-background: #1C1D22;
+width: 772px;
+height: 609px;
+border-radius: var(--borderRadius, 4px);
+background: #27292F;
+position:relative;
 `;
 
 const StyledLayout2 = styled.div`
 display: flex;
-width: 544px;
-padding: 32px;
+width: 100%;
 flex-direction: column;
 align-items: center;
-gap: 32px;
+//gap: 32px;
+flex-shrink: 0;
 border-radius: 8px;
-background: #1C1D22;
+background: #27292F;
 `;
-
-const LogoContainer = styled.div`
+const HeaderContainer = styled.div`
+padding: 28px 32px 28px 32px;
 display: flex;
-width: 544px;
-padding: 32px 0px 34px 0px;
-justify-content: center;
+justify-content: space-between;
 align-items: center;
-border-bottom: 1px solid rgba(255, 255, 255, 0.20);
-font-family: Conthrax;
-font-size: 29.712px;
+align-self: stretch;
+color: #B5B8C5;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Inter;
+font-size: 18px;
 font-style: normal;
-font-weight: 600;
-line-height: normal;
-letter-spacing: 0.446px;
-background: var(--Primary, linear-gradient(100deg, #ED5DCD -2.24%, rgba(95, 93, 215, 0.71) 98.06%));
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+font-weight: 700;
+line-height: 32px; /* 177.778% */
+`;
+const MiddleContainer = styled.div`
+display: flex;
+width: 100%;
+padding: 15px 32px 24px 32px;
+flex-direction: column;
+gap: 22px;
+flex-shrink: 0;
+border-radius: 8px;
+background: #27292F;
+`;
+const FooterContainer = styled.div`
+display: inline-flex;
+padding: 20px 25.506px 20px 467.494px;
+justify-content: flex-end;
+align-items: center;
+background: #1C1D22;
+width:100%;
+bottom: 0;
+border-bottom-left-radius: var(--borderRadius, 4px);
+border-bottom-right-radius: var(--borderRadius, 4px);
 `;
 
-const LogLayout = ({ logo, children }) => {
+
+const CommonLayout = ({ header, children,button,onClose }) => {
+    const handleClose = () => {
+        // If onClose is provided and is a valid ID, hide the element with that ID
+        if (onClose && document.getElementById(onClose)) {
+          document.getElementById(onClose).style.display = 'none';
+        }
+      };
     return (
       <>
-       
-       {(logo ? <StyledLayout  >
-        <LogoContainer>{logo}</LogoContainer>
-            {children}
-        </StyledLayout> : <StyledLayout2  >
-            {children}
-        </StyledLayout2>)}
-
+       <StyledLayout  >
+            <StyledLayout2>
+                {header && 
+                <>
+                    <HeaderContainer>{header}<CloseCircle onClick={handleClose}/></HeaderContainer>
+                    <StyledDivider/>
+                </>
+                }
+                <MiddleContainer> {children}</MiddleContainer>
+               
+            </StyledLayout2>
+            {button &&
+             <>
+                <FooterContainer>
+                    <StyledButton variant='secondary' width='103' mr='20'>Cancel</StyledButton>
+                    <StyledButton variant='primary' width='160'>{button}</StyledButton>
+                </FooterContainer>
+            </>
+            }
+        </StyledLayout>
+        
         
         </>
     );
 };
 
 
-export default LogLayout
+export default CommonLayout
