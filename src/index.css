@@ -12,3 +12,38 @@ html {
 ::-webkit-scrollbar {
     display: none;
 }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+
+*{
+    padding:0px;
+    margin:0px;
+    box-sizing:border-box;
+
+}
+
+:root {
+    --color-dark: #121212; /* Primary dark color */
+    --color-accent: #9C27B0; /* Primary accent color */
+    --color-text-primary: #FFFFFF; /* Primary text color */
+    --color-text-secondary: #AAAAAA; /* Secondary text color */
+    --color-background: #242424; /* Background color */
+    --color-card: #1E1E1E; /* Card background color */
+    --color-border: #333333; /* Border color for elements */
+    --primary-font: "Inter", 'sans-serif';
+
+  }
+  
+  /* Typography */
+  body {
+    margin: 0;
+    font-family: var(--primary-font); /* Replace with your font of choice */
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+  }
+  
+  /* h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-primary);
+  } */
+
