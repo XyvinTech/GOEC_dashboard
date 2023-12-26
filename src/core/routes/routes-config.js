@@ -159,7 +159,7 @@ const RoutesConfig = () => {
                     element: <UnderConstruction />,
                 },
                 {
-                    path: 'start-remote-session',
+                    path: 'remote-session',
                     element: <UnderConstruction />,
                 },
 
@@ -174,7 +174,7 @@ const RoutesConfig = () => {
                     element: <UnderConstruction />,
                 },
                 {
-                    path: 'in-app-notification',
+                    path: 'app-notifications',
                     element: <UnderConstruction />,
                 }
 
