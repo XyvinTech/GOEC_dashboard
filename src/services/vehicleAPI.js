@@ -18,27 +18,27 @@ export async function editVehicle(Id, data) {
   }
 }
 
-export async function deleteVehicle(Id, data) {
+export async function deleteVehicle(Id) {
   try {
-    const response = await tokenInstance.delete(`vehicle/${Id}`, data);
+    const response = await tokenInstance.delete(`vehicle/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getVehicleById(Id, data) {
+export async function getVehicleById(Id) {
   try {
-    const response = await tokenInstance.get(`vehicle/${Id}`, data);
+    const response = await tokenInstance.get(`vehicle/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getVehicleList(Id, data) {
+export async function getVehicleList() {
   try {
-    const response = await tokenInstance.get(`vehicle/list`, data);
+    const response = await tokenInstance.get(`vehicle/list`);
     return response.data;
   } catch (error) {
     throw error;
