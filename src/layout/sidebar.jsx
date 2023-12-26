@@ -25,15 +25,15 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/livestatus',
+                href: 'dashboard/live-status',
                 title: 'Live Status',
             },
             {
-                href: '/analytics',
+                href: 'dashboard/analytics',
                 title: 'Analytics'
             },
             {
-                href: '/alarms',
+                href: 'dashboard/alarms',
                 title: 'Alarms'
             }
         ]
@@ -44,11 +44,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/chargestations',
+                href: 'asset-management/charge-stations',
                 title: 'Charge Stations',
             },
             {
-                href: '/chargepoints',
+                href: 'asset-management/charge-points',
                 title: 'Charge Points',
             }
         ]
@@ -59,11 +59,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/rfid',
+                href: 'tag-management/rfid-cards',
                 title: 'RFID Cards',
             },
             {
-                href: '/vid',
+                href: 'tag-management/vid-cards',
                 title: 'VID Cards',
             }
         ]
@@ -74,34 +74,34 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/evchargers',
+                href: 'data-management/ev-chargers',
                 title: 'EV chargers',
             },
             {
-                href: '/evvehicles',
+                href: 'data-management/ev-vehicles',
                 title: 'EV vehicles',
             },
             {
-                href: '/manufacturers',
+                href: 'data-management/manufacturers',
                 title: 'Manufacturers',
             }
         ]
     },
     {
         icon: (<ChargingIcon />),
-        title: 'Charging Network',
+        title: 'charging-network',
         extendable: true,
         sub: [
             {
-                href: '/chargingtransaction',
+                href: 'charging-network/charging-transaction',
                 title: 'Charging Transaction',
             },
             {
-                href: '/chargerlogs',
+                href: 'charging-network/charger-logs',
                 title: 'Charger Logs',
             },
             {
-                href: '/bookingtransation',
+                href: 'charging-network/booking-transation',
                 title: 'Booking Transaction',
             }
         ]
@@ -112,11 +112,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/accounttransaction',
+                href: 'account/account-transaction',
                 title: 'Account Transaction',
             },
             {
-                href: '/customerlist',
+                href: 'account/customer-list',
                 title: 'Customer List',
             }
         ]
@@ -127,11 +127,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/searchcustomer',
+                href: 'crm/search-customer',
                 title: 'Search Customer',
             },
             {
-                href: '/customerlist',
+                href: 'crm/customer-list',
                 title: 'Customer List',
             }
         ]
@@ -142,15 +142,15 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/chargingtariff',
+                href: 'tariff/charging-tariff',
                 title: 'Charging Tariff',
             },
             {
-                href: '/assigntariff',
+                href: 'tariff/assign-tariff',
                 title: 'Assign Tariff',
             },
             {
-                href: '/tax',
+                href: 'tariff/tax',
                 title: 'Tax',
             }
         ]
@@ -161,11 +161,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/activesession',
+                href: 'cpo-support/active-session',
                 title: 'Active Session',
             },
             {
-                href: '/remotesession',
+                href: 'cpo-support/remote-session',
                 title: 'Start remote session ',
             }
         ]
@@ -176,11 +176,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/emailnotifiaction',
+                href: 'notification/email-notifiaction',
                 title: 'Email Notification',
             },
             {
-                href: '/appnotifications',
+                href: 'notification/app-notifications',
                 title: 'In-App Notifications',
             }
         ]
@@ -188,6 +188,7 @@ const items = [
     {
         icon: (<ReportIcon />),
         title: 'Report',
+        href: 'report',
         extendable: false
     },
     {
@@ -196,15 +197,15 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: '/adminmanage',
+                href: 'settings/admin-manangement',
                 title: 'Admin Management',
             },
             {
-                href: '/roleManagement',
+                href: 'settings/role-manangement',
                 title: 'Role Management',
             },
             {
-                href: '/adminactivity',
+                href: 'settings/admin-activity',
                 title: 'Admin Activity',
             }
         ]
@@ -212,6 +213,7 @@ const items = [
     {
         icon: (<HelpIcon />),
         title: 'Help',
+        href: 'help',
         extendable: false
     }
 ];

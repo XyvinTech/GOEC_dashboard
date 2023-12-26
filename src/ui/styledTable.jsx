@@ -55,7 +55,7 @@ const StyledTable = ({ headers, data }) => {
                 return (
                   <TableCell
                     key={`${rowIndex}-${header}`}
-                    isFirstColumn={cellIndex === 0}
+                    isfirstcolumn={cellIndex === 0}
                   >
                      {isStatusColumn ? (
                       <StatusChip status={row[header]}>{row[header]}</StatusChip>
@@ -169,7 +169,7 @@ export const TableCell = styled.td`
   font-weight: 400; // Regular font weight
   font-family: "Inter", sans-serif; // Use Inter font family
   color: ${(props) =>
-    props.isFirstColumn
+    props.isfirstcolumn
       ? "#2D9CDB"
       : "rgba(181, 184, 197, 1)"}; // Blue text color for the first column, white for others
 `;

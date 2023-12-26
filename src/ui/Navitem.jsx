@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { Box, Button, Collapse, ListItem, Stack } from '@mui/material';
 import { ReactComponent as ArrowDropdown } from '../assets/icons/arrow_drop_down.svg';
-// import { useNavigate  } from 'react-router-dom'
+import { useNavigate  } from 'react-router-dom'
 
 export const NavItem = (props) => {
     const { href, icon, title, sub, extendable,active, ...others } = props;
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     let activeIndex = -1;
     sub && sub.forEach((element,ind) => {
         if(window.location.pathname === element.href){
@@ -30,7 +30,12 @@ export const NavItem = (props) => {
                 endIcon={extendable ? <ArrowDropdown style={{fill:'#fff'}} /> :<></>}
                 disableRipple
                 onClick={()=>{
-                    active ? props.indexChange() : <></> 
+                    if (!extendable) {
+                        navigate(href);
+                    } else {
+                        // Existing logic for extendable items
+                        active ? props.indexChange() : <></>;
+                    } 
                 }}
                 sx={{
                     backgroundColor: active && 'secondary.contrast',
@@ -79,7 +84,7 @@ export const NavItem = (props) => {
                                             backgroundColor: 'rgba(255,255,255, 0.1)'
                                         }
                                     }}
-                                    // onClick={()=>{navigate(`/${item.href}`);}}
+                                    onClick={()=>{navigate(`/${item.href}`);}}
                                     key={index}>
                                         {item.title}
                                     </Button>
