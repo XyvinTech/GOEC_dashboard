@@ -7,6 +7,7 @@ import {
   Menu,
   MenuItem,
   Stack,
+  Switch,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -140,6 +141,27 @@ const AddChargingStation = ({ headers, data }) => {
           </Grid>
         </Grid>
 
+        
+
+        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+          Amenities
+        </Typography>
+        <Grid container spacing={2}>
+          {Amenities.map((Amenity) => {
+            return (
+              <Grid item xs={6} md={3}>
+                <StyledCheckButton
+                  active={active}
+                  setActive={setActive}
+                  color="gray"
+                >
+                  {Amenity}
+                </StyledCheckButton>
+              </Grid>
+            );
+          })}
+        </Grid>
+
         <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
           Business name
         </Typography>
@@ -160,33 +182,16 @@ const AddChargingStation = ({ headers, data }) => {
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid item xs={12} md={12}>
-            <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+          <Grid  sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
+            <Stack direction={'row'} sx={{ justifyContent: 'space-between' }}>
+
+            <Typography >
               Staff
             </Typography>
-            tooglle buton
+            <Switch  color="default" />
+            </Stack>
           </Grid>
         </Grid>
-
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
-          Amenities
-        </Typography>
-        <Grid container spacing={2}>
-          {Amenities.map((Amenity) => {
-            return (
-              <Grid item xs={2} md={3}>
-                <StyledCheckButton
-                  active={active}
-                  onClick={() => setActive(!active)}
-                  color="gray"
-                >
-                  {Amenity}{" "}
-                </StyledCheckButton>
-              </Grid>
-            );
-          })}
-        </Grid>
-
         <Typography sx={{ marginBottom: 3, marginTop: 3 }}>Vendor</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
@@ -203,8 +208,10 @@ const AddChargingStation = ({ headers, data }) => {
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
-            <Stack item xs={12} md={12}>
-              <StyledButton />
+            <Stack item xs={12} md={12} direction={'row'}>
+              <StyledButton variant={"primary"} width="200" mt="20" > Save </StyledButton>
+
+              <StyledButton variant={"secondary"}  width="160" mt="20" > Cancel </StyledButton>
             </Stack>
           </Grid>
         </Grid>

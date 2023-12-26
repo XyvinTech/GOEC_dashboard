@@ -10,9 +10,9 @@ align-items: center;
   color: var(--grayscale-white, #FFF);// White text color
   border: solid 1px rgba(255, 255, 255, 0.20);
   border-radius: 5px; // Adjust for the desired roundedness
-  justify-content: center;
-  padding: 5px 20px;
-  max-width: 170px; // Adjust based on the design
+ 
+  padding: 2rem 4rem;
+ 
   min-height: 60px; // Adjust based on the design
   
   font-size: 1rem;
@@ -37,7 +37,7 @@ align-items: center;
 
 const IconContainer = styled.div`
 
-width: 24px;
+
 padding-left:10px;
 height: 24px;
 justify-content: center;
@@ -49,7 +49,8 @@ color:#87898E;
 const 
 StyledCheckButton = ({ icon, children, ...props }) => {
   return (
-    <CheckbutonContainer {...props}>
+    <CheckbutonContainer  onClick={() => props.setActive(!props.active)} {...props}>
+     
     {children}
     {
       props.active ? <IconContainer><Close style={{ fontSize:'25px'}}/></IconContainer> : <IconContainer><Plus/></IconContainer>
