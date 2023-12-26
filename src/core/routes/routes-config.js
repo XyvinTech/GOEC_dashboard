@@ -27,7 +27,8 @@ const RoutesConfig = () => {
             path: '/login',
             element: <Login />,
         },
-        {
+     
+{
             path: '/forgot-password',
             element: <UnderConstruction />,
         },

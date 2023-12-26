@@ -4,7 +4,7 @@ import Select from 'react-select';
 
 const SelectContainer = styled.div`
   position: relative;
-  width: 230px; /* Adjust width as needed */
+  width: 100%; /* Adjust width as needed */
 `;
 
 
