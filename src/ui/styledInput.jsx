@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 const InputContainer = styled.div`
   position: relative;
   display: flex;
-  width: 482px;
+  width: 402px;
   height: 56px;
   padding: 16px;
   align-items: center;
