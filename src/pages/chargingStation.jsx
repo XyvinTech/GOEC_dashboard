@@ -10,8 +10,8 @@ export default function ChargingStation() {
   return (
     <Box>
       <StyledGroupButton
-        sx={{ mx: 2 }}
-        buttons={['All Chargepoints', 'Add chargepoints']} onChanged={buttonChanged} />
+        buttons={['All Chargepoints', 'Add chargepoints']} 
+        onChanged={buttonChanged} />
       <AllChargeStation />
     </Box>
   )

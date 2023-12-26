@@ -4,7 +4,7 @@ import {useState} from 'react'
 export default function  StyledGroupButton({ buttons,onChanged, ...props }) {
     const [activeInd, setActiveInd] = useState(0);
     return (
-        <Stack direction={'row'} sx={{backgroundColor:'secondary.main'}}>
+        <Stack direction={'row'} sx={{backgroundColor:'secondary.main',pl:2}}>
         <ButtonGroup variant="outlined" aria-label="outlined primary button group" {...props}>
             {buttons.map((item,ind) => {
                 let act = ind == activeInd;
