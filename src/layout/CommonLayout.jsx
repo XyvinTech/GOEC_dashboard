@@ -1,0 +1,98 @@
+import React from 'react'
+import styled from 'styled-components';
+import StyledButton from '../ui/styledButton';
+import StyledDivider from '../ui/styledDivider'; 
+import { ReactComponent as CloseCircle } from '../assets/icons/close-circle.svg';
+
+const StyledLayout = styled.div`
+width: 772px;
+height: 609px;
+border-radius: var(--borderRadius, 4px);
+background: #27292F;
+position:relative;
+`;
+
+const StyledLayout2 = styled.div`
+display: flex;
+width: 100%;
+flex-direction: column;
+align-items: center;
+//gap: 32px;
+flex-shrink: 0;
+border-radius: 8px;
+background: #27292F;
+`;
+const HeaderContainer = styled.div`
+padding: 28px 32px 28px 32px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;
+color: #B5B8C5;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Inter;
+font-size: 18px;
+font-style: normal;
+font-weight: 700;
+line-height: 32px; /* 177.778% */
+`;
+const MiddleContainer = styled.div`
+display: flex;
+width: 100%;
+padding: 15px 32px 24px 32px;
+flex-direction: column;
+gap: 22px;
+flex-shrink: 0;
+border-radius: 8px;
+background: #27292F;
+`;
+const FooterContainer = styled.div`
+display: inline-flex;
+padding: 20px 25.506px 20px 467.494px;
+justify-content: flex-end;
+align-items: center;
+background: #1C1D22;
+width:100%;
+bottom: 0;
+border-bottom-left-radius: var(--borderRadius, 4px);
+border-bottom-right-radius: var(--borderRadius, 4px);
+`;
+
+
+const CommonLayout = ({ header, children,button,onClose }) => {
+    const handleClose = () => {
+        // If onClose is provided and is a valid ID, hide the element with that ID
+        if (onClose && document.getElementById(onClose)) {
+          document.getElementById(onClose).style.display = 'none';
+        }
+      };
+    return (
+      <>
+       <StyledLayout  >
+            <StyledLayout2>
+                {header && 
+                <>
+                    <HeaderContainer>{header}<CloseCircle onClick={handleClose}/></HeaderContainer>
+                    <StyledDivider/>
+                </>
+                }
+                <MiddleContainer> {children}</MiddleContainer>
+               
+            </StyledLayout2>
+            {button &&
+             <>
+                <FooterContainer>
+                    <StyledButton variant='secondary' width='103' mr='20'>Cancel</StyledButton>
+                    <StyledButton variant='primary' width='160'>{button}</StyledButton>
+                </FooterContainer>
+            </>
+            }
+        </StyledLayout>
+        
+        
+        </>
+    );
+};
+
+
+export default CommonLayout
