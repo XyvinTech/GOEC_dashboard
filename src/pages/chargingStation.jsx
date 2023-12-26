@@ -9,11 +9,9 @@ export default function ChargingStation() {
   }
   return (
     <Box>
-      <Stack direction={'row'} sx={{backgroundColor:'secondary.main'}}>
-        <StyledGroupButton
-         sx={{mx:2}}
-         buttons={['All Chargepoints', 'Add chargepoints']} onChanged={buttonChanged} />
-      </Stack>
+      <StyledGroupButton
+        sx={{ mx: 2 }}
+        buttons={['All Chargepoints', 'Add chargepoints']} onChanged={buttonChanged} />
       <AllChargeStation />
     </Box>
   )

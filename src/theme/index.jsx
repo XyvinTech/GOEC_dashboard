@@ -163,7 +163,8 @@ export const theme = createTheme({
       contrastText: '#F7F8FC',
       DimText: '#828282',
       grey:'#212326',
-      button:'#000'
+      button:'#000',
+      subButton: 'rgba(181, 184, 197,0.2)'
     },
     secondary: {
       main: '#1C1D22',
@@ -172,7 +173,8 @@ export const theme = createTheme({
       contrastText: '#B5B8C5',
       greytext: '#bdbdbd',
       button:'#4A4458',
-      contrast: '#171717'
+      contrast: '#171717',
+      
     },
     success: {
       main: '#27AE60',

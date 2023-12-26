@@ -1,9 +1,10 @@
-import { Button, ButtonGroup } from '@mui/material'
+import { Button, ButtonGroup, Stack } from '@mui/material'
 import {useState} from 'react'
 
 export default function  StyledGroupButton({ buttons,onChanged, ...props }) {
     const [activeInd, setActiveInd] = useState(0);
     return (
+        <Stack direction={'row'} sx={{backgroundColor:'secondary.main'}}>
         <ButtonGroup variant="outlined" aria-label="outlined primary button group" {...props}>
             {buttons.map((item,ind) => {
                 let act = ind == activeInd;
@@ -33,5 +34,6 @@ export default function  StyledGroupButton({ buttons,onChanged, ...props }) {
             })
             }
         </ButtonGroup>
+        </Stack>
     )
 }
