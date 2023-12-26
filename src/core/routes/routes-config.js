@@ -1,7 +1,6 @@
 import DashboardLayout from "../../layout/dashboardLayout";
 import Home from "../../pages/Home";
 import Login from "../../pages/Login";
-import AddChargingStation from "../../ui/charging-stations/AddChargingStation";
 
 import ChargingStation from "../../pages/chargingStation";
 
@@ -27,11 +26,7 @@ const RoutesConfig = () => {
             path: '/login',
             element: <Login />,
         },
-        {
-
-            path:'/test',
-            element: <AddChargingStation />,
-        },
+     
 {
             path: '/forgot-password',
             element: <UnderConstruction />,
