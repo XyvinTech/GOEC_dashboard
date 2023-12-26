@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 
 const StyledButton = styled.button`
-  width:482px;
-  padding: 15px 20px;
   border: 1px solid rgba(255, 255, 255, 0.20);
   border-radius: 4px; 
   /* font-family:"Inter", 'sans-serif'; */
@@ -15,6 +13,76 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s, box-shadow 0.3s;
+
+  // width for different button styles
+  ${(props) => props.width &&
+    css`
+      width:${props.width}px;
+    `}
+    ${(props) => !props.width &&
+    css`
+        width:482px;
+      `}
+     
+  // padding for different button styles
+
+  ${(props) => {
+    if (props.p) {
+        return css`
+            padding: ${props.p}px;
+        `;
+    } else if (props.pt) {
+        return css`
+            padding-top: ${props.pt}px;
+        `;
+    } else if (props.pr) {
+        return css`
+            padding-right: ${props.pr}px;
+        `;
+    } else if (props.pb) {
+        return css`
+            padding-bottom: ${props.pb}px;
+        `;
+    } else if (props.pl) {
+        return css`
+            padding-left: ${props.pl}px;
+        `;
+    } else {
+        return css`
+            padding: 15px 20px;
+        `;
+    }
+}}
+
+// margin for different button styles
+
+${(props) => {
+  if (props.m) {
+      return css`
+          margin: ${props.m}px;
+      `;
+  } else if (props.mt) {
+      return css`
+      margin-top: ${props.mt}px;
+      `;
+  } else if (props.mr) {
+      return css`
+      margin-right: ${props.mr}px;
+      `;
+  } else if (props.mb) {
+      return css`
+      margin-bottom: ${props.mb}px;
+      `;
+  } else if (props.ml) {
+      return css`
+      margin-left: ${props.ml}px;
+      `;
+  } else {
+      return css`
+      margin: 0px 0px;
+      `;
+  }
+}}
 
   // Variants for different button styles
   ${(props) =>

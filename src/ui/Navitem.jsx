@@ -31,7 +31,12 @@ export const NavItem = (props) => {
                 endIcon={extendable ? <ArrowDropdown style={{fill:'#fff'}} /> :<></>}
                 disableRipple
                 onClick={()=>{
-                    activ ? props.indexChange() : <></> 
+                    if (!extendable) {
+                        navigate(href);
+                    } else {
+                        // Existing logic for extendable items
+                        active ? props.indexChange() : <></>;
+                    } 
                 }}
                 sx={{
                     backgroundColor: activ && 'secondary.contrast',
