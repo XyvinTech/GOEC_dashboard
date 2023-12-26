@@ -6,6 +6,7 @@ import ChargingStation from "../../pages/chargingStation";
 
 import UnderConstruction from "../../pages/UnderConstruction";
 import NotFoundPage from "../../pages/NotFound";
+import ChargeStationDetail from "../../components/assetManagement/chargingStations/chargeStationDetail";
 
 
 const RoutesConfig = () => {
@@ -52,6 +53,7 @@ const RoutesConfig = () => {
         //!---------Asset management
         {
             path: '/asset-management',
+            element: <DashboardLayout/>,
             children: [
                 {
                     path: 'charge-stations',
@@ -60,6 +62,11 @@ const RoutesConfig = () => {
                 {
                     path: 'charge-points',
                     element: <UnderConstruction />,
+                },
+                ,
+                {
+                    path: 'charge-station-detail',
+                    element: <ChargeStationDetail />,
                 }
             ]
         },
