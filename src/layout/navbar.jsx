@@ -7,7 +7,8 @@ import { grey } from '@mui/material/colors';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
-  boxShadow: theme.shadows[3]
+  border:'none',
+  boxShadow:'none'
 }));
 
 export const DashboardNavbar = (props) => {
@@ -21,7 +22,8 @@ export const DashboardNavbar = (props) => {
           },
           width: {
             lg: 'calc(100% - 260px)'
-          }
+          },
+          border:'none'
         }}
         {...other}>
         <Toolbar

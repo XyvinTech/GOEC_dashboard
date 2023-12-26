@@ -4,15 +4,20 @@ import { ReactComponent as SearchIcon } from '../assets/icons/Icon.svg'
 
 const SearchContainer = styled.div`
   position: relative;
-  width: 280px;
+  width: 360px;
+  height: 50px;
+  padding-left : 20px;
+  background-color:#2b2930;
+  border-radius: 5px;
 `;
 
 const SearchInput = styled.input`
-  padding: 8px 32px 8px 8px; /* Adjust padding to accommodate the icon */
+  // padding: 8px 32px 8px 8px; /* Adjust padding to accommodate the icon */
+  marging-left: 8px;
+  height: 100%;
   border: none;
-  border-radius: 4px;
   outline: none;
-  width: 100%;
+  width: 90%;
   background-color:#2b2930;
   color:#CAC4D0;
 `;
@@ -20,15 +25,15 @@ const SearchInput = styled.input`
 const SearchIcondiv = styled.div`
   position: absolute;
   top: 50%;
-  right: 8px;
+  right: 10px;
   transform: translateY(-50%);
   cursor: pointer;
 `;
 
 
-const StyledSearchField = ({ placeholder, onChange, onSearch }) => {
+const StyledSearchField = ({ placeholder, onChange, onSearch, ...props }) => {
     return (
-      <SearchContainer>
+      <SearchContainer {...props}>
         <SearchInput type="text" placeholder={placeholder} onChange={onChange} />
         <SearchIcondiv onClick={onSearch}><SearchIcon/></SearchIcondiv>
       </SearchContainer>

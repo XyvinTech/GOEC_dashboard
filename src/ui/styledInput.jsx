@@ -1,11 +1,10 @@
 import React from 'react'
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const InputContainer = styled.div`
   position: relative;
   display: flex;
-  width: 402px;
-  height: 56px;
+  width: 100%;
   padding: 16px;
   align-items: center;
   gap: 8px;
@@ -14,7 +13,7 @@ const InputContainer = styled.div`
   border-radius: 4px;
 `;
 
-const StyledInput = styled.input`
+const InputField = styled.input`
   
 color: var(--Color-Dark-Dark-2, #87898E);
 font-feature-settings: 'clig' off, 'liga' off;
@@ -27,11 +26,15 @@ line-height: 16px; /* 114.286% */
 flex: 1 0 0;
 background: var(--inner, #39383D);
 border:none;
+&::placeholder {
+  color: #B5B8C5; 
+}
 &:focus {
     outline: none; // Disable the default focus outline
     border: none;  // Set border to none when focusing
     // Add any additional styles you want when the input is focused
   }
+  
 `;
 
 const IconContainer = styled.div`
@@ -44,14 +47,14 @@ flex-shrink: 0;
 color:#87898E;
 `;
 
-const InputWithIcon = ({ icon, placeholder,iconright, ...props }) => {
+const StyledInput = ({ icon, placeholder,iconright, ...props }) => {
   return (
     <InputContainer>
       {icon && <IconContainer>{icon}</IconContainer>}
-      <StyledInput placeholder={placeholder} {...props} />
+      <InputField placeholder={placeholder} {...props} />
       {iconright && <IconContainer>{iconright}</IconContainer>}
     </InputContainer>
   );
 };
 
-export default InputWithIcon;
+export default StyledInput;
