@@ -1,3 +1,4 @@
+import  {useState} from 'react';
 import styled, { css } from "styled-components";
 import { ReactComponent as Close } from "../assets/icons/Light.svg";
 import { ReactComponent as Plus } from "../assets/icons/Light-1.svg";
@@ -46,14 +47,19 @@ flex-shrink: 0;
 color:#87898E;
 `;
 
-const 
-StyledCheckButton = ({ icon, children, ...props }) => {
+const StyledCheckButton = ({ icon, children,checkButtonChange, ...props }) => {
+  const [active, setActive] = useState(false);
+
   return (
-    <CheckbutonContainer  onClick={() => props.setActive(!props.active)} {...props}>
+    <CheckbutonContainer  active={active} onClick={() =>{
+      setActive(!active) 
+      
+      checkButtonChange && checkButtonChange({active:!active,value: children})
+    }} {...props}>
      
     {children}
     {
-      props.active ? <IconContainer><Close style={{ fontSize:'25px'}}/></IconContainer> : <IconContainer><Plus/></IconContainer>
+      active ? <IconContainer><Close style={{ fontSize:'25px'}}/></IconContainer> : <IconContainer><Plus/></IconContainer>
     }
     
     </CheckbutonContainer>

@@ -16,7 +16,7 @@ const [togglePage,setTogglePage] = useState(0);
       <Stack direction={'row'} sx={{backgroundColor:'secondary.main'}}>
         <StyledGroupButton
          sx={{mx:2}}
-         buttons={['All Chargepoints', 'Add chargepoints']} onChanged={buttonChanged} />
+         buttons={['All Charge stations', 'Add Charge Station']} onChanged={buttonChanged} />
       </Stack>
       {togglePage === 0 ?
       

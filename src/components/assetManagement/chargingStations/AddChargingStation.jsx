@@ -25,7 +25,10 @@ import { ReactComponent as SMS } from "../../../assets/icons/sms.svg";
 
 // StyledTable component
 const AddChargingStation = ({ headers, data }) => {
-  const [active, setActive] = useState(false);
+
+  const getCheckButtonData = (data) =>{
+    console.log(data);
+  }
 
   let Amenities = [
     "Mall",
@@ -152,8 +155,7 @@ const AddChargingStation = ({ headers, data }) => {
             return (
               <Grid item xs={6} md={3}>
                 <StyledCheckButton
-                  active={active}
-                  setActive={setActive}
+                  checkButtonChange={getCheckButtonData}
                   color="gray"
                 >
                   {Amenity}
