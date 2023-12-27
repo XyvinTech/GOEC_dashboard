@@ -4,15 +4,14 @@ import StyledSearchField from '../../../ui/styledSearchField'
 import StyledTable from '../../../ui/styledTable'
 import { ReactComponent as ReloadIcon } from '../../../assets/icons/reload.svg'
 
-
-import { DummyData } from '../../../assets/json/ChargePointsData'
+import { ChargeStationData } from '../../../assets/json/chargestations'
 
 const tableHeader = [
   'Charge Station',
   'Address',
   'Longitude',
   'Latitude',
-  'owner'
+  'Owner'
 ]
 
 export default function AllChargeStation() {
@@ -24,8 +23,7 @@ export default function AllChargeStation() {
           flexDirection: 'row',
           alignItems: 'center',
           backgroundColor: 'primary.grey',
-          p: 2,
-          m:2
+          p: 2
         }}>
         <Stack direction={'column'} sx={{ ml: 2 }}>
           <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>Charge Stations</Typography>
@@ -41,7 +39,7 @@ export default function AllChargeStation() {
         </Box>
       </Box>
       <Box sx={{p:3}}>
-        <StyledTable headers={tableHeader} data={DummyData}/>
+        <StyledTable headers={tableHeader} data={ChargeStationData}/>
       </Box>
     </>
   )

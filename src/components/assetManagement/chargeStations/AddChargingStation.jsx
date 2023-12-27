@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import InputField from "../../../ui/styledInput";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledCheckButton from "../../../ui/styledCheckButton";
+import StyledSwitch from "../../../ui/styledSwitch";
 import StyledButton from "../../../ui/styledButton";
 import FileUpload from "../../../utils/FileUpload";
 import { ReactComponent as ClockOutline } from "../../../assets/icons/ClockOutline.svg";
@@ -20,7 +21,10 @@ import { ReactComponent as SMS } from "../../../assets/icons/sms.svg";
 
 // StyledTable component
 const AddChargingStation = ({ headers, data }) => {
-  const [active, setActive] = useState(false);
+
+  const getCheckButtonData = (data) =>{
+    console.log(data);
+  }
 
   let Amenities = [
     "Mall",
@@ -147,8 +151,7 @@ const AddChargingStation = ({ headers, data }) => {
             return (
               <Grid key={Amenity} item xs={6} md={3}>
                 <StyledCheckButton
-                  $active={active}
-                  setActive={setActive}
+                  checkButtonChange={getCheckButtonData}
                   color="gray"
                 >
                   {Amenity}
@@ -184,7 +187,7 @@ const AddChargingStation = ({ headers, data }) => {
             <Typography >
               Staff
             </Typography>
-            <Switch  color="default" />
+            <StyledSwitch  />
             </Stack>
           </Grid>
         </Grid>
@@ -204,10 +207,10 @@ const AddChargingStation = ({ headers, data }) => {
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
-            <Stack item xs={12} md={12} direction={'row'}>
-              <StyledButton variant={"primary"} width="200" mt="20" > Save </StyledButton>
+            <Stack item xs={12} md={12} direction={'row'} spacing={2} sx={{mt:2}}>
+              <StyledButton variant={"primary"} width="200" > Save </StyledButton>
 
-              <StyledButton variant={"secondary"}  width="160" mt="20" > Cancel </StyledButton>
+              <StyledButton variant={"secondary"}  width="160" > Cancel </StyledButton>
             </Stack>
           </Grid>
         </Grid>
