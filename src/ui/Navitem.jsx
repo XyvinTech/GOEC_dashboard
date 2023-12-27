@@ -31,7 +31,7 @@ export const NavItem = (props) => {
                 disableRipple
                 onClick={()=>{
                     if (!extendable) {
-                        navigate(href);
+                        navigate(`/${href}`);
                     } else {
                         // Existing logic for extendable items
                         active ? props.indexChange() : <></>;

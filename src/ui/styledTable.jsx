@@ -55,10 +55,10 @@ const StyledTable = ({ headers, data }) => {
                 return (
                   <TableCell
                     key={`${rowIndex}-${header}`}
-                    isfirstcolumn={cellIndex === 0}
+                    $isfirstcolumn={cellIndex === 0}
                   >
                      {isStatusColumn ? (
-                      <StatusChip status={row[header]}>{row[header]}</StatusChip>
+                      <StatusChip $status={row[header]}>{row[header]}</StatusChip>
                     ) : (
                       row[header]
                     )}
@@ -169,7 +169,7 @@ export const TableCell = styled.td`
   font-weight: 400; // Regular font weight
   font-family: "Inter", sans-serif; // Use Inter font family
   color: ${(props) =>
-    props.isfirstcolumn
+    props.$isfirstcolumn // Use $ prefix for transient prop
       ? "#2D9CDB"
       : "rgba(181, 184, 197, 1)"}; // Blue text color for the first column, white for others
 `;
@@ -188,7 +188,7 @@ const StatusChip = styled.span`
   // Dynamically set the background color based on the status
   background-color: ${props => {
     // Normalize the status to uppercase for case-insensitive comparison
-    const status = props.status.toUpperCase();
+    const status = props.$status.toUpperCase();
 
     if (["ACTIVE", "ONLINE", "ASSIGNED", "SUCCESS"].includes(status)) {
       return "rgba(24, 73, 45, 1)"; // Green for active or successful statuses
