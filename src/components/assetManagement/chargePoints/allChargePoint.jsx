@@ -6,6 +6,7 @@ import { ReactComponent as ReloadIcon } from '../../../assets/icons/reload.svg'
 
 
 import { AllChargePointsData } from '../../../assets/json/chargepoints'
+import LastSynced from '../../../layout/LastSynced'
 
 export default function AllChargePoint() {
     const tableHeader = [
@@ -20,27 +21,7 @@ export default function AllChargePoint() {
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: 'primary.grey',
-          p: 2,
-        }}>
-        <Stack direction={'column'} sx={{ ml: 2 }}>
-          <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>Charge Stations</Typography>
-          <Stack direction={'row'} spacing={1}>
-            <Typography sx={{ color: 'secondary.greytext', fontSize: 12 }}>Last synced</Typography>
-            <Typography sx={{ color: 'success.main', fontSize: 12 }}>4 minutes ago</Typography>
-            <ReloadIcon style={{ cursor: 'pointer' }} />
-          </Stack>
-        </Stack>
-        <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ mr: 3 }}>
-          <StyledSearchField placeholder={'Search'} />
-        </Box>
-      </Box>
+     <LastSynced heading="Charge Points"/>
       <Box sx={{p:3}}>
         <StyledTable headers={tableHeader} data={AllChargePointsData}/>
       </Box>

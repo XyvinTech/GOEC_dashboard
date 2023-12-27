@@ -13,7 +13,7 @@ const SearchContainer = styled.div`
 
 const SearchInput = styled.input`
   // padding: 8px 32px 8px 8px; /* Adjust padding to accommodate the icon */
-  marging-left: 8px;
+  margin-left: 8px;
   height: 100%;
   border: none;
   outline: none;
