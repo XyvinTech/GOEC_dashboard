@@ -8,7 +8,7 @@ import StyledFooter from '../../ui/StyledFooter';
 import StyledButton from '../../ui/styledButton';
 
 
-const AddRfidCard = () => {
+const EditRfidCard = () => {
 
   const IOSSwitch = styled((props) => (
     <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -73,15 +73,15 @@ const AddRfidCard = () => {
   return (
     <div id='layout'>
    
-    <CommonLayout  header='Add RFID Card' onClose='layout' >
+    <CommonLayout  header='Edit RFID Card' onClose='layout' >
       <Typography align="left">RFID tag</Typography>
-      <StyledInput placeholder='Enter RFID Tag' />
+      <StyledInput placeholder='Enter RFID Tag' value='2324235345' />
       <Typography align="left">Serial number</Typography>
-      <StyledInput placeholder='Enter Serial number'/>
+      <StyledInput placeholder='Enter Serial number' value='2324235345'/>
       <Typography align="left">RFID Expiry date</Typography>
       <StyledInput id='expiry' 
         placeholder='Enter RFID Expiry date' 
-        iconright={<CalendarInput inputid='expiry'/>    }
+        iconright={<CalendarInput inputid='expiry' dateValue='15-02-2024'/>    }
       />
       <Grid container spacing={2} direction="row">
         <Grid item xs={6}>
@@ -97,9 +97,9 @@ const AddRfidCard = () => {
     <StyledFooter>
         <StyledButton variant='secondary' width='103' mr='20'>Cancel</StyledButton>
         <StyledButton variant='primary' width='160'>Save</StyledButton>
-      </StyledFooter>
+    </StyledFooter>
     </div>
   )
 }
 
-export default AddRfidCard
+export default EditRfidCard

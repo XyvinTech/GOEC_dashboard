@@ -5,8 +5,8 @@ const StyledButton = styled.button`
   border-radius: 4px; 
   /* font-family:"Inter", 'sans-serif'; */
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
+  // font-size: 16px;
+  // font-weight: 600;
   font-style: normal;
   gap:16px;
   display: flex;
@@ -14,6 +14,12 @@ const StyledButton = styled.button`
   align-items: center;
   transition: background-color 0.3s, box-shadow 0.3s;
 
+  // font size for different button styles
+  ${(props) => props.fontSize &&
+    css`
+    font-size:${props.fontSize}px;
+    `}
+    
   // width for different button styles
   ${(props) => props.width &&
     css`
@@ -109,6 +115,20 @@ ${(props) => {
   
     box-shadow: 0 6px 12px rgba(152, 149, 149, 0.35);
   }
+
+  ${(props) =>
+    props.variant === "gray" &&
+    css`
+      background-color: #39383D; 
+      color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    `}
+
+  &:hover {
+  
+    box-shadow: 0 6px 12px rgba(152, 149, 149, 0.35);
+  }
+
 
   &:focus {
     outline: none;

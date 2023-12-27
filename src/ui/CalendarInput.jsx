@@ -1,24 +1,65 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StyledInput from './styledInput'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ReactComponent as CalendarIcon } from '../assets/icons/calendar_month.svg'
+import { format } from 'date-fns';
 
-const CalendarInput = ({inputid}) => {
-  const [selectedDate, setSelectedDate] = useState(null);
+function convertDateFormat(inputDate) {
+  // Parse the input date string in the format "30-12-2023"
+  const parts = inputDate.split('-');
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1; // Months are zero-based
+  const year = parseInt(parts[2], 10);
+
+  // Create a Date object
+  const dateObject = new Date(year, month, day);
+
+  // Format the Date object to the desired string
+  const formattedDate = dateObject.toLocaleString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZoneName: 'short',
+  });
+
+  return formattedDate;
+}
+
+const CalendarInput = ({inputid,dateValue}) => {
+
+  const cal_date=dateValue ? new Date(convertDateFormat(dateValue)) : new Date()
+  const [selectedDate, setSelectedDate] = useState(cal_date);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
 
+  useEffect(() => {
+    document.getElementById(inputid).value = dateValue || '';
+  }, [dateValue, inputid]);
+
   const handleCalendarClick = () => {
-    setSelectedDate(new Date()); 
-    setDatePickerOpen(!isDatePickerOpen);
+
+      setDatePickerOpen(!isDatePickerOpen);
   };
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
-    const formattedDate = date ? date.toLocaleDateString() : '';
-    const expid = inputid;
-    document.getElementById(expid).value = formattedDate;
-    setDatePickerOpen(false);
+
+    if (date instanceof Date && !isNaN(date)) {
+      const formattedDate = format(date, 'dd-MM-yyyy');
+      document.getElementById(inputid).value = formattedDate;
+      const updateDate = convertDateFormat(formattedDate);
+      const new_date=new Date(updateDate)
+  
+      setSelectedDate(new_date);
+      //setSelectedDate(date);
+      setDatePickerOpen(false);
+    } else {
+      console.error("Invalid date object:", date);
+    }
+
   };
 
   return (
@@ -29,17 +70,20 @@ const CalendarInput = ({inputid}) => {
           <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
-            dateFormat="MM/dd/yyyy"
+            dateFormat="dd-MM-yyyy"
             showYearDropdown
             showMonthDropdown
             dropdownMode="select"
             popperPlacement="bottom-start"
             open
+             // Use CustomInput prop for a simplified input
+             customInput={<StyledInput value={dateValue || ''} readOnly />}
           />
         </div>
       )}
     </div>
   )
 }
+
 
 export default CalendarInput
