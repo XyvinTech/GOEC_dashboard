@@ -1,8 +1,9 @@
 import { Box, Stack } from '@mui/material'
 import React,{useState} from 'react'
 import StyledGroupButton from '../ui/styledGroupButton'
-import AllChargeStation from '../components/assetManagement/chargeStations/allChargeStation';
-import AddChargingStation from '../components/assetManagement/chargeStations/AddChargingStation';
+import AllChargeStation from '../components/assetManagement/chargingStations/allChargeStation';
+import AddChargingStation from '../components/assetManagement/chargingStations/AddChargingStation';
+import AddChargePoint from '../components/assetManagement/chargingStations/AddChargePoint';
 export default function ChargingStation() {
 const [togglePage,setTogglePage] = useState(0);
 
@@ -15,7 +16,7 @@ const [togglePage,setTogglePage] = useState(0);
       <Stack direction={'row'} sx={{backgroundColor:'secondary.main'}}>
         <StyledGroupButton
          sx={{mx:2}}
-         buttons={['All Chargepoints', 'Add chargepoints']} onChanged={buttonChanged} />
+         buttons={['All Charge stations', 'Add Charge Station']} onChanged={buttonChanged} />
       </Stack>
       {togglePage === 0 ?
       

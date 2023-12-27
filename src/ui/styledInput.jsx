@@ -15,7 +15,7 @@ const InputContainer = styled.div`
 
 const InputField = styled.input`
   
-color: var(--Color-Dark-Dark-2, #87898E);
+color: #FFFFFF;
 font-feature-settings: 'clig' off, 'liga' off;
 /* Small Caption/ Medium */
 font-family: Inter;

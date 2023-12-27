@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import InputField from "../../../ui/styledInput";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledCheckButton from "../../../ui/styledCheckButton";
+import StyledSwitch from "../../../ui/styledSwitch";
 import StyledButton from "../../../ui/styledButton";
 import FileUpload from "../../../utils/FileUpload";
 import { ReactComponent as ClockOutline } from "../../../assets/icons/ClockOutline.svg";
@@ -24,7 +25,10 @@ import { ReactComponent as SMS } from "../../../assets/icons/sms.svg";
 
 // StyledTable component
 const AddChargingStation = ({ headers, data }) => {
-  const [active, setActive] = useState(false);
+
+  const getCheckButtonData = (data) =>{
+    console.log(data);
+  }
 
   let Amenities = [
     "Mall",
@@ -151,8 +155,7 @@ const AddChargingStation = ({ headers, data }) => {
             return (
               <Grid item xs={6} md={3}>
                 <StyledCheckButton
-                  active={active}
-                  setActive={setActive}
+                  checkButtonChange={getCheckButtonData}
                   color="gray"
                 >
                   {Amenity}
@@ -188,7 +191,7 @@ const AddChargingStation = ({ headers, data }) => {
             <Typography >
               Staff
             </Typography>
-            <Switch  color="default" />
+            <StyledSwitch  />
             </Stack>
           </Grid>
         </Grid>
