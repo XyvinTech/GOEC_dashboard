@@ -11,7 +11,7 @@ import ChargeStationDetail from "../../components/assetManagement/chargeStations
 import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
 import ChargeStationDetailsCard from "../../components/assetManagement/chargePoints/chargeStationDetailsCard";
-
+import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
 
 const RoutesConfig = () => {
 
@@ -191,7 +191,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'active-session',
-                    element: <UnderConstruction />,
+                    element: <ActiveSession />,
                 },
                 {
                     path: 'remote-session',

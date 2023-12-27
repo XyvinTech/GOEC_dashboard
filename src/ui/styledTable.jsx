@@ -7,7 +7,7 @@ import StyledPagination from "./styledPagination";
 // StyledTable component
 const StyledTable = ({ headers, data }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const[showAction,setShowAction]=useState(true);
+  const [showAction, setShowAction] = useState(true);
   const [openMenuRowIndex, setOpenMenuRowIndex] = useState(null);
   // pagination
 
@@ -66,17 +66,10 @@ const StyledTable = ({ headers, data }) => {
                     ) : (
                       row[header]
                     )}
-                    {isTerminateSession ? (
-                      <StatusChip $status={row[header]}>
-                        {row[header]}
-                      </StatusChip>
-                    ) : (
-                      row[header]
-                    )}
                   </TableCell>
                 );
               })}
-              ()
+              
               <ActionCell>
                 <IconButton
                   aria-label="more"
