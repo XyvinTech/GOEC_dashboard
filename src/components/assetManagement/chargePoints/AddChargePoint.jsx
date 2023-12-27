@@ -49,6 +49,17 @@ const AddChargePoint = ({ headers, data }) => {
           </Grid>
         </Grid>
 
+
+        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+          Location Name
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <StyledSelectField placeholder={"Select Location Name"} />
+          </Grid>
+        </Grid>
+
+
         <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
           Charge Point OEM
         </Typography>
@@ -84,6 +95,7 @@ const AddChargePoint = ({ headers, data }) => {
             </Stack>
           </Grid>
         </Grid>
+        sdfsd
 
         <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
           Authorisation key

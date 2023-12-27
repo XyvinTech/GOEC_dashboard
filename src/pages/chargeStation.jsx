@@ -3,7 +3,7 @@ import React,{useState} from 'react'
 import StyledGroupButton from '../ui/styledGroupButton'
 import AllChargeStation from '../components/assetManagement/chargeStations/allChargeStation';
 import AddChargingStation from '../components/assetManagement/chargeStations/AddChargingStation';
-import AddChargePoint from '../components/assetManagement/chargeStations/AddChargePoint';
+
 export default function ChargingStation() {
 const [togglePage,setTogglePage] = useState(0);
 
