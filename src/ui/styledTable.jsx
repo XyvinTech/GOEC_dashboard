@@ -128,7 +128,7 @@ export const TableContainer = styled.div`
   background: #121212; // Dark background for the table
   overflow-x: auto; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
-  margin: 20px 0; // Margin for spacing, adjust as needed
+  margin: 16px 0; // Margin for spacing, adjust as needed
 `;
 
 // Styled table

@@ -25,6 +25,7 @@ export default function AllChargeStation() {
           alignItems: 'center',
           backgroundColor: 'primary.grey',
           p: 2,
+          m:2
         }}>
         <Stack direction={'column'} sx={{ ml: 2 }}>
           <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>Charge Stations</Typography>

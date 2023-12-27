@@ -1,6 +1,6 @@
 import DashboardLayout from "../../layout/dashboardLayout";
-import Home from "../../pages/Home";
 import Login from "../../pages/Login";
+import { Navigate } from "react-router-dom";
 
 import ChargingStation from "../../pages/chargingStation";
 
@@ -17,6 +17,11 @@ const RoutesConfig = () => {
             path: '/',
             element: <DashboardLayout />,
             children: [
+
+                {
+                    path: '/',
+                    element: <Navigate to="/dashboard/live-status" replace />,
+                },
                 //!---------Dashboard
                 {
                     path: 'dashboard',
