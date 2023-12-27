@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import InputField from "../../../ui/styledInput";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledCheckButton from "../../../ui/styledCheckButton";
+import StyledSwitch from "../../../ui/styledSwitch";
 import StyledButton from "../../../ui/styledButton";
 import FileUpload from "../../../utils/FileUpload";
 import { ReactComponent as ClockOutline } from "../../../assets/icons/ClockOutline.svg";
@@ -188,7 +189,7 @@ const AddChargingStation = ({ headers, data }) => {
             <Typography >
               Staff
             </Typography>
-            <Switch  color="default" />
+            <StyledSwitch  />
             </Stack>
           </Grid>
         </Grid>
