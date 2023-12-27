@@ -7,6 +7,7 @@ import StyledPagination from "./styledPagination";
 // StyledTable component
 const StyledTable = ({ headers, data }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const[showAction,setShowAction]=useState(true);
   const [openMenuRowIndex, setOpenMenuRowIndex] = useState(null);
   // pagination
 
@@ -51,20 +52,31 @@ const StyledTable = ({ headers, data }) => {
             <tr key={rowIndex}>
               {headers.map((header, cellIndex) => {
                 const isStatusColumn = header.toLowerCase() === "status";
-
+                const isTerminateSession =
+                  header.toLowerCase() === "terminate session";
                 return (
                   <TableCell
                     key={`${rowIndex}-${header}`}
                     $isfirstcolumn={cellIndex === 0}
                   >
-                     {isStatusColumn ? (
-                      <StatusChip $status={row[header]}>{row[header]}</StatusChip>
+                    {isStatusColumn ? (
+                      <StatusChip $status={row[header]}>
+                        {row[header]}
+                      </StatusChip>
+                    ) : (
+                      row[header]
+                    )}
+                    {isTerminateSession ? (
+                      <StatusChip $status={row[header]}>
+                        {row[header]}
+                      </StatusChip>
                     ) : (
                       row[header]
                     )}
                   </TableCell>
                 );
               })}
+              ()
               <ActionCell>
                 <IconButton
                   aria-label="more"
@@ -180,13 +192,13 @@ const StatusChip = styled.span`
   border-radius: 10px; // Adjust as needed for the chip look
   color: white;
   text-transform: uppercase;
- font-weight:500;
+  font-weight: 500;
   text-align: center;
   display: inline-block;
   min-width: 60px; // Set a minimum width for uniformity
 
   // Dynamically set the background color based on the status
-  background-color: ${props => {
+  background-color: ${(props) => {
     // Normalize the status to uppercase for case-insensitive comparison
     const status = props.$status.toUpperCase();
 

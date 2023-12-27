@@ -8,7 +8,7 @@ import ChargingStation from "../../pages/chargingStation";
 import UnderConstruction from "../../pages/UnderConstruction";
 import NotFoundPage from "../../pages/NotFound";
 import ChargeStationDetail from "../../components/assetManagement/chargingStations/chargeStationDetail";
-
+import AllActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession"
 
 const RoutesConfig = () => {
 
@@ -163,10 +163,11 @@ const RoutesConfig = () => {
                 //!---------CPO
                 {
                     path: 'cpo-support',
+                    element: <DashboardLayout />,
                     children: [
                         {
                             path: 'active-session',
-                            element: <UnderConstruction />,
+                            element: <AllActiveSession/>,
                         },
                         {
                             path: 'remote-session',
