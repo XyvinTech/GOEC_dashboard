@@ -16,7 +16,7 @@ export default function Analytics() {
                     <Stack direction={'column'}>
                         <Typography variant='caption' sx={{ color: 'primary.DimText', fontSize: '14px', fontWeight: '400' }}>Revenue</Typography>
                         <Typography variant='caption' sx={{ color: 'primary.DimText', fontSize: '14px', fontWeight: '400' }}>Earned(INR)</Typography>
-                        <Box sx={{ height: '70px' }}>
+                        <Box sx={{ height: '91 px' }}>
                             <Box direction={'column'} spacing={'5px'} sx={{ mt: 2, borderLeft: '3px solid ',borderImage: 'linear-gradient(100deg, #ED5DCD -2.24%, rgba(95, 93, 215, 0.71) 98.06%) 10',borderRadius:8,pl:2,py:0 }}>
                                 <Typography variant='h5'>24234345</Typography>
                             </Box>

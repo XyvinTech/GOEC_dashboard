@@ -15,8 +15,8 @@ export default function ChargeStationDetail() {
         setToggleoption(e.index)
     }
     return (
-        <><Stack direction={'row'} sx={{ backgroundColor: 'secondary.main', p: 1 }} spacing={2}>
-            <ArrowBackIosNew sx={{ cursor: 'pointer' }} />
+        <><Stack direction={'row'} sx={{ backgroundColor: 'secondary.main', p: 3 }} spacing={2}>
+            <ArrowBackIosNew sx={{ cursor: 'pointer' }}  />
             <Typography variant='h6' color={'secondary.contrastText'}>Charge Station Details</Typography></Stack>
             <Box sx={{ p: { xs: 1, md: 4 } }}>
                 <Grid container spacing={4}>
