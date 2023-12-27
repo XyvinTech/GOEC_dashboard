@@ -4,6 +4,48 @@ import StyledButton from '../ui/styledButton';
 import StyledDivider from '../ui/styledDivider'; 
 import { ReactComponent as CloseCircle } from '../assets/icons/close-circle.svg';
 
+
+
+const CommonLayout = ({ header, children,button,onClose }) => {
+    const handleClose = () => {
+        // If onClose is provided and is a valid ID, hide the element with that ID
+        if (onClose && document.getElementById(onClose)) {
+          document.getElementById(onClose).style.display = 'none';
+        }
+      };
+    return (
+      <>
+       <StyledLayout  >
+            <StyledLayout2>
+                {header && 
+                <>
+                    <HeaderContainer>{header}<CloseCircle onClick={handleClose}/></HeaderContainer>
+                    <StyledDivider/>
+                </>
+                }
+                <MiddleContainer> {children}</MiddleContainer>
+               
+            </StyledLayout2>
+            {button &&
+             <>
+                <FooterContainer>
+                    <StyledButton variant='secondary' width='103' mr='20'>Cancel</StyledButton>
+                    <StyledButton variant='primary' width='160'>{button}</StyledButton>
+                </FooterContainer>
+            </>
+            }
+        </StyledLayout>
+        
+        
+        </>
+    );
+};
+
+
+export default CommonLayout
+
+
+
 const StyledLayout = styled.div`
 width: 772px;
 height: 609px;
@@ -57,42 +99,3 @@ bottom: 0;
 border-bottom-left-radius: var(--borderRadius, 4px);
 border-bottom-right-radius: var(--borderRadius, 4px);
 `;
-
-
-const CommonLayout = ({ header, children,button,onClose }) => {
-    const handleClose = () => {
-        // If onClose is provided and is a valid ID, hide the element with that ID
-        if (onClose && document.getElementById(onClose)) {
-          document.getElementById(onClose).style.display = 'none';
-        }
-      };
-    return (
-      <>
-       <StyledLayout  >
-            <StyledLayout2>
-                {header && 
-                <>
-                    <HeaderContainer>{header}<CloseCircle onClick={handleClose}/></HeaderContainer>
-                    <StyledDivider/>
-                </>
-                }
-                <MiddleContainer> {children}</MiddleContainer>
-               
-            </StyledLayout2>
-            {button &&
-             <>
-                <FooterContainer>
-                    <StyledButton variant='secondary' width='103' mr='20'>Cancel</StyledButton>
-                    <StyledButton variant='primary' width='160'>{button}</StyledButton>
-                </FooterContainer>
-            </>
-            }
-        </StyledLayout>
-        
-        
-        </>
-    );
-};
-
-
-export default CommonLayout

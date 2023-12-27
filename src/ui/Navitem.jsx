@@ -4,7 +4,7 @@ import { ReactComponent as ArrowDropdown } from '../assets/icons/arrow_drop_down
 import { useNavigate  } from 'react-router-dom'
 
 export const NavItem = (props) => {
-    const { href, icon, title, sub, extendable,active, ...others } = props;
+    const { href, icon, title, sub, extendable,active,indexChange, ...others } = props;
     const navigate = useNavigate();
     let activeIndex = -1;
     let activ = active;
@@ -35,7 +35,7 @@ export const NavItem = (props) => {
                         navigate(`/${href}`);
                     } else {
                         // Existing logic for extendable items
-                        active ? props.indexChange() : <></>;
+                        active ? indexChange() : <></>;
                     } 
                 }}
                 sx={{

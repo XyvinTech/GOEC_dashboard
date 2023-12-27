@@ -1,11 +1,7 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import {
-  Box,
   Container,
   Grid,
-  IconButton,
-  Menu,
-  MenuItem,
   Stack,
   Switch,
   Typography,
@@ -149,9 +145,9 @@ const AddChargingStation = ({ headers, data }) => {
         <Grid container spacing={2}>
           {Amenities.map((Amenity) => {
             return (
-              <Grid item xs={6} md={3}>
+              <Grid key={Amenity} item xs={6} md={3}>
                 <StyledCheckButton
-                  active={active}
+                  $active={active}
                   setActive={setActive}
                   color="gray"
                 >
