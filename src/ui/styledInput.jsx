@@ -49,7 +49,7 @@ color:#87898E;
 
 const StyledInput = ({ icon, placeholder,iconright, ...props }) => {
   return (
-    <InputContainer>
+    <InputContainer {...props}>
       {icon && <IconContainer>{icon}</IconContainer>}
       <InputField placeholder={placeholder} {...props} />
       {iconright && <IconContainer>{iconright}</IconContainer>}

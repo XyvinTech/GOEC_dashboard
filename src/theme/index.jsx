@@ -162,18 +162,22 @@ export const theme = createTheme({
       dark: '#3832A0',
       contrastText: '#F7F8FC',
       DimText: '#828282',
-      button:'#000'
+      grey:'#212326',
+      button:'#000',
+      subButton: 'rgba(181, 184, 197,0.2)'
     },
     secondary: {
       main: '#1C1D22',
       light: '#3FC79A',
       dark: '#0B815A',
       contrastText: '#B5B8C5',
+      greytext: '#bdbdbd',
       button:'#4A4458',
-      contrast: '#171717'
+      contrast: '#171717',
+      
     },
     success: {
-      main: '#14B8A6',
+      main: '#27AE60',
       light: '#43C6B7',
       dark: '#0E8074',
       contrastText: '#FFFFFF'
