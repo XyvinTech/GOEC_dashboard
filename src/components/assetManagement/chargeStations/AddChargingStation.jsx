@@ -208,10 +208,10 @@ const AddChargingStation = ({ headers, data }) => {
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
-            <Stack item xs={12} md={12} direction={'row'}>
-              <StyledButton variant={"primary"} width="200" mt="20" > Save </StyledButton>
+            <Stack item xs={12} md={12} direction={'row'} spacing={2} sx={{mt:2}}>
+              <StyledButton variant={"primary"} width="200" > Save </StyledButton>
 
-              <StyledButton variant={"secondary"}  width="160" mt="20" > Cancel </StyledButton>
+              <StyledButton variant={"secondary"}  width="160" > Cancel </StyledButton>
             </Stack>
           </Grid>
         </Grid>

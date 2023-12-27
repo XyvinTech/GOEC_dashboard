@@ -12,7 +12,7 @@ export default function ChargePoints() {
     'Model',
     'Tariff',
     'Status',
-    'Pubished'
+    'Published'
   ]
   return (
     <>
