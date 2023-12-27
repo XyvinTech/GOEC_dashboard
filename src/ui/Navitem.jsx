@@ -9,7 +9,7 @@ export const NavItem = (props) => {
     let activeIndex = -1;
     let activ = active;
     sub && sub.forEach((element,ind) => {
-        if(window.location.pathname === element.href){
+        if(window.location.pathname.substring(1,window.location.pathname.length) === element.href){
             activeIndex  = ind
             activ = true
             return
@@ -85,7 +85,7 @@ export const NavItem = (props) => {
                                             backgroundColor: 'rgba(255,255,255, 0.1)'
                                         }
                                     }}
-                                    onClick={()=>{navigate(`${item.href}`);}}
+                                    onClick={()=>{navigate(`/${item.href}`);}}
                                     key={index}>
                                         {item.title}
                                     </Button>
