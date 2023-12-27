@@ -12,6 +12,7 @@ import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
 import ChargeStationDetailsCard from "../../components/assetManagement/chargePoints/chargeStationDetailsCard";
 import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
+import RfidCards from "../../pages/RfidCards";
 
 const RoutesConfig = () => {
 
@@ -86,7 +87,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'rfid-cards',
-                    element: <UnderConstruction />,
+                    element: <RfidCards />,
                 },
                 {
                     path: 'vid-cards',
