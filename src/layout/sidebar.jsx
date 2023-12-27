@@ -82,7 +82,7 @@ const items = [
                 title: 'EV vehicles',
             },
             {
-                href: 'data-management/manufacturers',
+                href: 'data-management/manufactures',
                 title: 'Manufacturers',
             }
         ]
@@ -101,7 +101,7 @@ const items = [
                 title: 'Charger Logs',
             },
             {
-                href: 'charging-network/booking-transation',
+                href: 'charging-network/booking-transaction',
                 title: 'Booking Transaction',
             }
         ]
@@ -112,11 +112,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: 'account/account-transaction',
+                href: 'accounts/account-transaction',
                 title: 'Account Transaction',
             },
             {
-                href: 'account/customer-list',
+                href: 'accounts/customer-list',
                 title: 'Customer List',
             }
         ]
@@ -176,7 +176,7 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: 'notification/email-notifiaction',
+                href: 'notification/email-notification',
                 title: 'Email Notification',
             },
             {
@@ -197,11 +197,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: 'settings/admin-manangement',
+                href: 'settings/admin-management',
                 title: 'Admin Management',
             },
             {
-                href: 'settings/role-manangement',
+                href: 'settings/role-management',
                 title: 'Role Management',
             },
             {
