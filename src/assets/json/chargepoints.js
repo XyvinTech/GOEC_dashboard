@@ -1,3 +1,62 @@
+export const AllChargePointsData = [
+    {
+      'CPID': 'GOe12',
+      'OEM': 'Delta',
+      'Model': 'EVMSE23455',
+      'Tariff': 'Default',
+      'station': 'Oberon Mall, Ernakulam',
+      'Status': 'Available',
+      'Published': 'Yes'
+    },
+    {
+      'CPID': 'ABC34',
+      'OEM': 'Tesla',
+      'Model': 'Supercharger V2',
+      'Tariff': 'Premium',
+      'station': 'Tech Plaza, Innovation City',
+      'Status': 'Occupied',
+      'Published': 'Yes'
+    },
+    {
+      'CPID': 'XYZ56',
+      'OEM': 'ChargePoint',
+      'Model': 'CPF25',
+      'Tariff': 'Standard',
+      'station': 'GreenPark Charging Hub, Eco City',
+      'Status': 'Out of Service',
+      'Published': 'No'
+    },
+    {
+      'CPID': 'LMN78',
+      'OEM': 'ABB',
+      'Model': 'Terra 54 CJG',
+      'Tariff': 'Advanced',
+      'station': 'MetroCharge Center, Urban City',
+      'Status': 'Available',
+      'Published': 'Yes'
+    },
+    {
+      'CPID': 'PQR90',
+      'OEM': 'EVBox',
+      'Model': 'Elvi',
+      'Tariff': 'Basic',
+      'station': 'Sunrise Plaza Charging Point, Sky City',
+      'Status': 'Preparing',
+      'Published': 'Yes'
+    },
+    {
+      'CPID': 'DEF12',
+      'OEM': 'Greenlots',
+      'Model': 'Sky Charger',
+      'Tariff': 'Eco-Friendly',
+      'station': 'Harbor Electric Hub, Harbor City',
+      'Status': 'Available',
+      'Published': 'Yes'
+    },
+    // ... 5 more charge points to make a total of 6
+  ];
+  
+
 export const chargePointsData = [
   {
     'CPID': 'GOe12',
