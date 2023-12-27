@@ -5,7 +5,7 @@ import StyledTable from '../../../ui/styledTable'
 import { ReactComponent as ReloadIcon } from '../../../assets/icons/reload.svg'
 
 
-import { DummyData } from '../../../assets/json/TableData'
+import { DummyData } from '../../../assets/json/ChargePointsData'
 
 const tableHeader = [
   'Charge Station',
