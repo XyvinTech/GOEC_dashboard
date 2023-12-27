@@ -13,9 +13,8 @@ export default function ChargingStation() {
   };
   return (
     <Box>
-      <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", m: 2 }}>
+      <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
         <StyledGroupButton
-         sx={{mx:2}}
          buttons={['All Charge stations', 'Add Charge Station']} onChanged={buttonChanged} />
       </Stack>
       {togglePage === 0 ? <AllChargeStation /> : <AddChargingStation />}

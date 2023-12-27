@@ -23,8 +23,7 @@ export default function AllChargeStation() {
           flexDirection: 'row',
           alignItems: 'center',
           backgroundColor: 'primary.grey',
-          p: 2,
-          m:2
+          p: 2
         }}>
         <Stack direction={'column'} sx={{ ml: 2 }}>
           <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>Charge Stations</Typography>
