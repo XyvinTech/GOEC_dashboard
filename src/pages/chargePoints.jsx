@@ -1,8 +1,10 @@
 import { Box, Stack } from '@mui/material'
 import React,{useState} from 'react'
 import StyledGroupButton from '../ui/styledGroupButton'
+
 import AddChargingStation from '../components/assetManagement/chargeStations/AddChargingStation';
 import AllChargePoint from '../components/assetManagement/chargePoints/allChargePoint';
+import AddChargePoint from '../components/assetManagement/chargePoints/AddChargePoint';
 export default function ChargingPoints() {
 const [togglePage,setTogglePage] = useState(0);
 
@@ -21,7 +23,7 @@ const [togglePage,setTogglePage] = useState(0);
       
       <AllChargePoint />
     :
-    <AddChargingStation/>
+    <AddChargePoint/>
     }
     </Box>
   )

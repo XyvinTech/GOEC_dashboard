@@ -9,6 +9,7 @@ import NotFoundPage from "../../pages/NotFound";
 import ChargeStationDetail from "../../components/assetManagement/chargeStations/chargeStationDetail";
 import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
+import ChargeStationDetailsCard from "../../components/assetManagement/chargePoints/chargeStationDetailsCard";
 
 
 const RoutesConfig = () => {
@@ -25,6 +26,12 @@ const RoutesConfig = () => {
                 }
             ]
         },
+        // Test purpose
+        {
+            path: 'testCard',
+            element: <ChargeStationDetailsCard />,
+        },
+        // 
         {
             path: 'charge-station-detail',
             element: <ChargeStationDetail />,
