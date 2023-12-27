@@ -1,7 +1,13 @@
+import DashboardLayout from "../../layout/dashboardLayout";
 import Home from "../../pages/Home";
 import Login from "../../pages/Login";
+
+import ChargingStation from "../../pages/chargingStation";
+
 import UnderConstruction from "../../pages/UnderConstruction";
 import NotFoundPage from "../../pages/NotFound";
+import ChargeStationDetail from "../../components/assetManagement/chargingStations/chargeStationDetail";
+
 
 const RoutesConfig = () => {
 
@@ -9,13 +15,20 @@ const RoutesConfig = () => {
 
         {
             path: '/',
-            element: <Home />,
+            element: <DashboardLayout/>,
+            children:[
+                {
+                    path:'chargestations',
+                    element: <ChargingStation/>
+                }
+            ]
         },
         {
             path: '/login',
             element: <Login />,
         },
-        {
+     
+{
             path: '/forgot-password',
             element: <UnderConstruction />,
         },
@@ -40,6 +53,7 @@ const RoutesConfig = () => {
         //!---------Asset management
         {
             path: '/asset-management',
+            element: <DashboardLayout/>,
             children: [
                 {
                     path: 'charge-stations',
@@ -48,6 +62,11 @@ const RoutesConfig = () => {
                 {
                     path: 'charge-points',
                     element: <UnderConstruction />,
+                },
+                ,
+                {
+                    path: 'charge-station-detail',
+                    element: <ChargeStationDetail />,
                 }
             ]
         },

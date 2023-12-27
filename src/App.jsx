@@ -5,10 +5,8 @@ import { theme } from "./theme/index";
 
 export default function App() {
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <RouteRenderer />
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={theme}>
+      <RouteRenderer />
+    </ThemeProvider>
   );
 }

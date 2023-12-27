@@ -7,13 +7,14 @@ export const NavItem = (props) => {
     const { href, icon, title, sub, extendable,active, ...others } = props;
     const navigate = useNavigate();
     let activeIndex = -1;
+    let activ = active;
     sub && sub.forEach((element,ind) => {
         if(window.location.pathname === element.href){
             activeIndex  = ind
+            activ = true
             return
         }
     });
-    // const active = href ? (window.location.pathname === href) : false;
     return (
         <ListItem
             disableGutters
@@ -38,10 +39,10 @@ export const NavItem = (props) => {
                     } 
                 }}
                 sx={{
-                    backgroundColor: active && 'secondary.contrast',
+                    backgroundColor: activ && 'secondary.contrast',
                     borderRadius: 0,
                     height: '47px',
-                    color: active ? '#FFF' : 'secondary.contrastText',
+                    color: activ ? '#FFF' : 'secondary.contrastText',
                     fontWeight: '20px',
                     justifyContent: 'flex-start',
                     px: 3,
@@ -49,7 +50,7 @@ export const NavItem = (props) => {
                     textTransform: 'none',
                     width: '100%',
                     '& .MuiButton-startIcon': {
-                        color: active ? 'secondary.main' : 'neutral.400'
+                        color: activ ? 'secondary.main' : 'neutral.400'
                     },
                     '&:hover': {
                         backgroundColor: 'rgba(255,255,255, 0.08)'
@@ -60,8 +61,8 @@ export const NavItem = (props) => {
                     {title}
                 </Box>
             </Button>
-            <Collapse in={active && extendable} sx={{
-                    backgroundColor: active && 'secondary.contrast',
+            <Collapse in={activ && extendable} sx={{
+                    backgroundColor: activ && 'secondary.contrast',
                     width: '100%'
                 }}>
                     <Stack
@@ -71,7 +72,7 @@ export const NavItem = (props) => {
                             borderLeft: 'solid 1px #4A4458'
                         }}>
                         {
-                            active && sub && sub.map((item,index) => {
+                            activ && sub && sub.map((item,index) => {
                                 return (
                                     <Button sx={{
                                         backgroundColor: activeIndex === index ? 'secondary.button' : 'secondary.contrast',
@@ -79,12 +80,12 @@ export const NavItem = (props) => {
                                         height: '35px',
                                         my: 0.5,
                                         justifyContent: "flex-start",
-                                        color: active ? '#fff' : 'primary.contrastText',
+                                        color: activ ? '#fff' : 'primary.contrastText',
                                         '&:hover': {
                                             backgroundColor: 'rgba(255,255,255, 0.1)'
                                         }
                                     }}
-                                    onClick={()=>{navigate(`/${item.href}`);}}
+                                    onClick={()=>{navigate(`${item.href}`);}}
                                     key={index}>
                                         {item.title}
                                     </Button>
