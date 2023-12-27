@@ -5,15 +5,17 @@ import StyledTable from '../../../ui/styledTable'
 import { ReactComponent as ReloadIcon } from '../../../assets/icons/reload.svg'
 
 
-import { DummyData } from '../../../assets/json/TableData'
+import { AllChargePointsData } from '../../../assets/json/chargepoints'
 
 export default function AllChargePoint() {
     const tableHeader = [
-        'Charge Station',
-        'Address',
-        'Longitude',
-        'Latitude',
-        'owner'
+        'CPID',
+        'OEM',
+        'Model',
+        'Tariff',
+        'Station',
+        'Status',
+        'Published'
       ]
 
   return (
@@ -40,7 +42,7 @@ export default function AllChargePoint() {
         </Box>
       </Box>
       <Box sx={{p:3}}>
-        <StyledTable headers={tableHeader} data={DummyData}/>
+        <StyledTable headers={tableHeader} data={AllChargePointsData}/>
       </Box>
     </>
   )

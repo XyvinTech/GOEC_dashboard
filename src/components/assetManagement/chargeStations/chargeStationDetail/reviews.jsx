@@ -10,7 +10,7 @@ const ReviewComponent = () => {
       <Stack direction={'column'} spacing={1}>
         <Stack direction={'row'} justifyContent={'space-between'}>
           <Stack direction={'row'} alignItems={'center'} spacing={1}>
-            <Typography color={'#F7F8FC'}>Name</Typography>
+            <Typography color={'primary.contrastText'}>Name</Typography>
             <Stack direction={'row'}>
               {[1, 2, 3, 4, 5].map((item) => (
                 <Star fontSize='14px' sx={{ color: '#F2C94C' }} />

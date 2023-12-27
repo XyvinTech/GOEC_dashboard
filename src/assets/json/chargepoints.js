@@ -4,7 +4,7 @@ export const AllChargePointsData = [
       'OEM': 'Delta',
       'Model': 'EVMSE23455',
       'Tariff': 'Default',
-      'station': 'Oberon Mall, Ernakulam',
+      'Station': 'Oberon Mall, Ernakulam',
       'Status': 'Available',
       'Published': 'Yes'
     },
@@ -13,7 +13,7 @@ export const AllChargePointsData = [
       'OEM': 'Tesla',
       'Model': 'Supercharger V2',
       'Tariff': 'Premium',
-      'station': 'Tech Plaza, Innovation City',
+      'Station': 'Tech Plaza, Innovation City',
       'Status': 'Occupied',
       'Published': 'Yes'
     },
@@ -22,7 +22,7 @@ export const AllChargePointsData = [
       'OEM': 'ChargePoint',
       'Model': 'CPF25',
       'Tariff': 'Standard',
-      'station': 'GreenPark Charging Hub, Eco City',
+      'Station': 'GreenPark Charging Hub, Eco City',
       'Status': 'Out of Service',
       'Published': 'No'
     },
@@ -31,7 +31,7 @@ export const AllChargePointsData = [
       'OEM': 'ABB',
       'Model': 'Terra 54 CJG',
       'Tariff': 'Advanced',
-      'station': 'MetroCharge Center, Urban City',
+      'Station': 'MetroCharge Center, Urban City',
       'Status': 'Available',
       'Published': 'Yes'
     },
@@ -40,7 +40,7 @@ export const AllChargePointsData = [
       'OEM': 'EVBox',
       'Model': 'Elvi',
       'Tariff': 'Basic',
-      'station': 'Sunrise Plaza Charging Point, Sky City',
+      'Station': 'Sunrise Plaza Charging Point, Sky City',
       'Status': 'Preparing',
       'Published': 'Yes'
     },
@@ -49,7 +49,7 @@ export const AllChargePointsData = [
       'OEM': 'Greenlots',
       'Model': 'Sky Charger',
       'Tariff': 'Eco-Friendly',
-      'station': 'Harbor Electric Hub, Harbor City',
+      'Station': 'Harbor Electric Hub, Harbor City',
       'Status': 'Available',
       'Published': 'Yes'
     },

@@ -8,6 +8,7 @@ import UnderConstruction from "../../pages/UnderConstruction";
 import NotFoundPage from "../../pages/NotFound";
 import ChargeStationDetail from "../../components/assetManagement/chargeStations/chargeStationDetail";
 import ChargingPoints from "../../pages/chargePoints";
+import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
 
 
 const RoutesConfig = () => {
@@ -23,6 +24,15 @@ const RoutesConfig = () => {
                     element: <ChargingStation />
                 }
             ]
+        },
+        {
+            path: 'charge-station-detail',
+            element: <ChargeStationDetail />,
+        }
+        ,
+        {
+            path: 'charge-point-detail',
+            element: <ChargePointDetail />,
         },
         {
             path: '/login',
@@ -64,11 +74,6 @@ const RoutesConfig = () => {
                 {
                     path: 'charge-points',
                     element: <ChargingPoints />,
-                },
-                ,
-                {
-                    path: 'charge-station-detail',
-                    element: <ChargeStationDetail />,
                 }
             ]
         },
