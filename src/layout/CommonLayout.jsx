@@ -4,12 +4,18 @@ import StyledButton from '../ui/styledButton';
 import StyledDivider from '../ui/styledDivider'; 
 import { ReactComponent as CloseCircle } from '../assets/icons/close-circle.svg';
 
+
+
+
 const StyledLayout = styled.div`
 width: 772px;
-height: 609px;
+// height: 609px;
 border-radius: var(--borderRadius, 4px);
 background: #27292F;
 position:relative;
+border-bottom-left-radius: var(--borderRadius, 0px);
+border-bottom-right-radius: var(--borderRadius, 0px);
+
 `;
 
 const StyledLayout2 = styled.div`
@@ -59,7 +65,7 @@ border-bottom-right-radius: var(--borderRadius, 4px);
 `;
 
 
-const CommonLayout = ({ header, children,button,onClose }) => {
+const CommonLayout = ({ header, children,onClose }) => {
     const handleClose = () => {
         // If onClose is provided and is a valid ID, hide the element with that ID
         if (onClose && document.getElementById(onClose)) {
@@ -79,14 +85,14 @@ const CommonLayout = ({ header, children,button,onClose }) => {
                 <MiddleContainer> {children}</MiddleContainer>
                
             </StyledLayout2>
-            {button &&
+            {/* {button &&
              <>
                 <FooterContainer>
                     <StyledButton variant='secondary' width='103' mr='20'>Cancel</StyledButton>
                     <StyledButton variant='primary' width='160'>{button}</StyledButton>
                 </FooterContainer>
             </>
-            }
+            } */}
         </StyledLayout>
         
         

@@ -5,25 +5,20 @@ import AllChargeStation from '../components/assetManagement/chargeStations/allCh
 import AddChargingStation from '../components/assetManagement/chargeStations/AddChargingStation';
 
 export default function ChargingStation() {
-const [togglePage,setTogglePage] = useState(0);
+  const [togglePage, setTogglePage] = useState(0);
 
   const buttonChanged = (e) => {
     console.log(e);
-    setTogglePage(e.index)
-  }
+    setTogglePage(e.index);
+  };
   return (
     <Box>
-      <Stack direction={'row'} sx={{backgroundColor:'secondary.main'}}>
+      <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", m: 2 }}>
         <StyledGroupButton
          sx={{mx:2}}
          buttons={['All Charge stations', 'Add Charge Station']} onChanged={buttonChanged} />
       </Stack>
-      {togglePage === 0 ?
-      
-      <AllChargeStation />
-    :
-    <AddChargingStation/>
-    }
+      {togglePage === 0 ? <AllChargeStation /> : <AddChargingStation />}
     </Box>
-  )
+  );
 }

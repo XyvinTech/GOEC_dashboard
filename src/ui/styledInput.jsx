@@ -48,11 +48,11 @@ flex-shrink: 0;
 color:#87898E;
 `;
 
-const StyledInput = ({ icon, placeholder,iconright, ...props }) => {
+const StyledInput = ({ icon, placeholder,iconright,value, ...props }) => {
   return (
     <InputContainer {...props}>
       {icon && <IconContainer>{icon}</IconContainer>}
-      <InputField placeholder={placeholder} {...props} />
+      <InputField placeholder={placeholder} value={value} {...props} />
       {iconright && <IconContainer>{iconright}</IconContainer>}
     </InputContainer>
   );
