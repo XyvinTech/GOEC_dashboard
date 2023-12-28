@@ -4,6 +4,7 @@ import StyledDivider from "../../../ui/styledDivider";
 import { ReactComponent as Mdi_evplugchademo } from "../../../assets/icons/mdi_ev-plug-chademo.svg";
 import { ReactComponent as Qr_evplug } from "../../../assets/icons/material-symbols_qr-code.svg";
 import { ReactComponent as AvailableCHAdeMO } from "../../../assets/icons/CHAdeMO/Property1=Available.svg";
+import { ReactComponent as Mdi_unlocked} from "../../../assets/icons/mdi_unlocked.svg"
 export default function ChargeStationDetailsConnectors() {
   return (
     <Box
@@ -55,6 +56,7 @@ export default function ChargeStationDetailsConnectors() {
                     width: "150px",
                   }}
                 >
+                    <Mdi_unlocked/>
                   Unlock
                 </Box>
               </Stack>
@@ -90,6 +92,7 @@ export default function ChargeStationDetailsConnectors() {
                     width: "150px",
                   }}
                 >
+                    <Mdi_unlocked/>
                   Unlock
                 </Box>
               </Stack>

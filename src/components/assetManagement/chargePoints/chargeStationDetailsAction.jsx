@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Container, Grid, Typography, Stack } from "@mui/material";
-import { ReactComponent as Station } from "../../../assets/icons/station.svg";
 import StyledDivider from "../../../ui/styledDivider";
 
 export default function ChargeStationDetailsAction() {
