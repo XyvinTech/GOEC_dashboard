@@ -164,7 +164,7 @@ export const theme = createTheme({
       DimText: '#828282',
       grey:'#212326',
       button:'#000',
-      subButton: 'rgba(181, 184, 197,0.2)'
+      subButton: 'rgba(181, 184, 197,0.2)',
     },
     secondary: {
       main: '#1C1D22',
@@ -174,6 +174,7 @@ export const theme = createTheme({
       greytext: '#bdbdbd',
       button:'#4A4458',
       contrast: '#171717',
+      lightGray: '#39383D'
       
     },
     success: {
