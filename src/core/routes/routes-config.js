@@ -7,7 +7,7 @@ import ChargingStation from "../../pages/chargeStation";
 
 import UnderConstruction from "../../pages/UnderConstruction";
 import NotFoundPage from "../../pages/NotFound";
-import Tariff from "../../pages/Tariff";
+import CTariff from "../../pages/cTariff";
 import ChargeStationDetail from "../../components/assetManagement/chargeStations/chargeStationDetail";
 import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
@@ -173,7 +173,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'charging-tariff',
-                    element: <Tariff />,
+                    element: <CTariff />,
                 },
                 {
                     path: 'assign-tariff',
