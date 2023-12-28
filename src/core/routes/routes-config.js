@@ -12,7 +12,6 @@ import ATariff from "../../pages/aTariff";
 import ChargeStationDetail from "../../components/assetManagement/chargeStations/chargeStationDetail";
 import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
-import ChargeStationDetailsCard from "../../components/assetManagement/chargePoints/chargeStationDetailsCard";
 import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
 import RemoteSession from "../../components/cpoSupport/startRemoteSession/RemoteSession";
 import RfidCards from "../../pages/RfidCards";
@@ -32,10 +31,7 @@ const RoutesConfig = () => {
             element: <Navigate to="/dashboard/live-status" replace />,
         },
         // Test purpose
-        {
-            path: 'testCard',
-            element: <ChargeStationDetailsCard />,
-        },
+        
         // 
         {
             path: 'charge-station-detail',
