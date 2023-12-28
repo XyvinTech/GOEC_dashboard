@@ -6,7 +6,7 @@ function Tax({ data, headers }) {
 
   return (
     <>
-      <LastSynced heading="Tax" />
+      <LastSynced heading="Tax" showSearchField={true} showButton={true}  />
       <Box sx={{ p: 3 }}>
         <StyledTable headers={headers} data={data} />
       </Box>

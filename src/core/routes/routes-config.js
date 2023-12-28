@@ -80,7 +80,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'charge-stations',
-                    element: <ChargingStation/>,
+                    element: <ChargingStation />,
                 },
                 {
                     path: 'charge-points',
