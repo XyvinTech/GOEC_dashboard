@@ -1,6 +1,6 @@
 import { Box, Stack } from '@mui/material'
 import React, { useState } from 'react'
-import StyledGroupButton from "../ui/styledGroupButton";
+import StyledTab from "../ui/styledTab";
 import AllRfidCards from '../components/tagManagement/Rfid/AllRfidCards';
 import AssignRfid from '../components/tagManagement/Rfid/AssignRfid';
 
@@ -14,7 +14,7 @@ const RfidCards = () => {
   return (
     <Box>
     <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", m: 2 }}>
-      <StyledGroupButton
+      <StyledTab
         sx={{ mx: 2 }}
         buttons={["All RFID cards", "Assign RFID"]}
         onChanged={buttonChanged}
