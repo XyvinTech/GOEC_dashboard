@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 
 const InputContainer = styled.div`
@@ -50,10 +50,18 @@ color:#87898E;
 `;
 
 const StyledInput = ({ icon, placeholder,iconright,value, ...props }) => {
+  const [inputValue, setInputValue] = useState(value); 
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
   return (
     <InputContainer {...props}>
       {icon && <IconContainer>{icon}</IconContainer>}
-      <InputField placeholder={placeholder} value={value} {...props} />
+      <InputField 
+        placeholder={placeholder} 
+        value={value} 
+        onChange={handleInputChange} 
+        {...props} />
       {iconright && <IconContainer>{iconright}</IconContainer>}
     </InputContainer>
   );

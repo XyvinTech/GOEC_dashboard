@@ -7,62 +7,7 @@ import CalendarInput from "../../../ui/CalendarInput";
 import StyledFooter from "../../../ui/StyledFooter";
 import StyledButton from "../../../ui/styledButton";
 
-const EditRfidCard = () => {
-  const IOSSwitch = styled((props) => (
-    <Switch
-      focusVisibleClassName=".Mui-focusVisible"
-      disableRipple
-      {...props}
-    />
-  ))(({ theme }) => ({
-    width: 42,
-    height: 26,
-    padding: 0,
-    "& .MuiSwitch-switchBase": {
-      padding: 0,
-      margin: 2,
-      transitionDuration: "300ms",
-      "&.Mui-checked": {
-        transform: "translateX(16px)",
-        color: "#fff",
-        "& + .MuiSwitch-track": {
-          backgroundColor:
-            theme.palette.mode === "dark" ? "#18492D" : "#18492D ",
-          opacity: 1,
-          border: 0,
-        },
-        "&.Mui-disabled + .MuiSwitch-track": {
-          opacity: 0.5,
-        },
-      },
-      "&.Mui-focusVisible .MuiSwitch-thumb": {
-        color: "#33cf4d",
-        border: "6px solid #fff",
-      },
-      "&.Mui-disabled .MuiSwitch-thumb": {
-        color:
-          theme.palette.mode === "light"
-            ? theme.palette.grey[100]
-            : theme.palette.grey[600],
-      },
-      "&.Mui-disabled + .MuiSwitch-track": {
-        opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
-      },
-    },
-    "& .MuiSwitch-thumb": {
-      boxSizing: "border-box",
-      width: 22,
-      height: 22,
-    },
-    "& .MuiSwitch-track": {
-      borderRadius: 26 / 2,
-      backgroundColor: theme.palette.mode === "light" ? "#87898E" : "#39383D",
-      opacity: 1,
-      transition: theme.transitions.create(["background-color"], {
-        duration: 500,
-      }),
-    },
-  }));
+const EditRfidCard = ({Close,Save}) => {
 
   const [checked, setChecked] = useState(true);
 
@@ -70,18 +15,25 @@ const EditRfidCard = () => {
     setChecked(event.target.checked);
   };
 
+  // date update
+  const [parentDateValue, setParentDateValue] = useState('15-02-2024');
+
+  const handleDateChangeInParent = (formattedDate) => {
+    setParentDateValue(formattedDate);
+  };
+
   return (
-    <div id="layout">
-      <CommonLayout header="Edit RFID Card" onClose="layout">
+    <>
+      <CommonLayout header="Edit RFID Card"  onClick={Close}>
         <Typography align="left">RFID tag</Typography>
         <StyledInput placeholder="Enter RFID Tag" value="2324235345" />
         <Typography align="left">Serial number</Typography>
         <StyledInput placeholder="Enter Serial number" value="2324235345" />
         <Typography align="left">RFID Expiry date</Typography>
         <StyledInput
-          id="expiry"
           placeholder="Enter RFID Expiry date"
-          iconright={<CalendarInput inputid="expiry" dateValue="15-02-2024" />}
+          iconright={<CalendarInput dateValue={parentDateValue} onDateChange={handleDateChangeInParent} />}
+          value={parentDateValue}
         />
         <Grid container spacing={2} direction="row">
           <Grid item xs={6}>
@@ -102,15 +54,72 @@ const EditRfidCard = () => {
         </Grid>
       </CommonLayout>
       <StyledFooter>
-        <StyledButton variant="secondary" width="103" mr="20">
+        <StyledButton variant="secondary" width="103" mr="20" onClick={Close}>
           Cancel
         </StyledButton>
-        <StyledButton variant="primary" width="160">
+        <StyledButton variant="primary" width="160" onClick={Save}>
           Save
         </StyledButton>
       </StyledFooter>
-    </div>
+    </>
   );
 };
+
+const IOSSwitch = styled((props) => (
+  <Switch
+    focusVisibleClassName=".Mui-focusVisible"
+    disableRipple
+    {...props}
+  />
+))(({ theme }) => ({
+  width: 42,
+  height: 26,
+  padding: 0,
+  "& .MuiSwitch-switchBase": {
+    padding: 0,
+    margin: 2,
+    transitionDuration: "300ms",
+    "&.Mui-checked": {
+      transform: "translateX(16px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        backgroundColor:
+          theme.palette.mode === "dark" ? "#18492D" : "#18492D ",
+        opacity: 1,
+        border: 0,
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: 0.5,
+      },
+    },
+    "&.Mui-focusVisible .MuiSwitch-thumb": {
+      color: "#33cf4d",
+      border: "6px solid #fff",
+    },
+    "&.Mui-disabled .MuiSwitch-thumb": {
+      color:
+        theme.palette.mode === "light"
+          ? theme.palette.grey[100]
+          : theme.palette.grey[600],
+    },
+    "&.Mui-disabled + .MuiSwitch-track": {
+      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxSizing: "border-box",
+    width: 22,
+    height: 22,
+  },
+  "& .MuiSwitch-track": {
+    borderRadius: 26 / 2,
+    backgroundColor: theme.palette.mode === "light" ? "#87898E" : "#39383D",
+    opacity: 1,
+    transition: theme.transitions.create(["background-color"], {
+      duration: 500,
+    }),
+  },
+}));
+
 
 export default EditRfidCard;

@@ -5,6 +5,8 @@ import StyledSelectField from '../../../../ui/styledSelectField'
 import StyledButton from '../../../../ui/styledButton'
 import ConfigElement from './CPConfig/configElement'
 import ConfigSwitch from './CPConfig/configSwitch'
+import ConfigMeter from './CPConfig/configMeter'
+import ConfigCP from './CPConfig/configCP'
 
 const configList = [
     {
@@ -76,6 +78,69 @@ const switchList = [
     'Open charge mode enable'
 ]
 
+const meterList =[
+    {
+        title:'Metre value aligned data',
+        selectData: [],
+        chipData:['Measurand','Measurand','Measurand','Measurand']
+    },
+    {
+        title:'Meter value Sample data',
+        selectData: [],
+        chipData:['Measurand','Measurand','Measurand','Measurand','Measurand','Measurand']
+    },
+    {
+        title:'Stop Transaction Sample data',
+        selectData: [],
+        chipData:['Measurand','Measurand','Measurand','Measurand','Measurand']
+    },
+    {
+        title:'Stop Transaction aligned data',
+        selectData: [],
+        chipData:['Measurand','Measurand','Measurand','Measurand']
+    },
+    {
+        title:'Connector Phase rotation',
+        selectData: [],
+        chipData:['Value','Value','Value','Value','Value']
+    }   
+]
+
+const configCPList = [
+    {
+        label:'Get configuration keys',
+        value:'24'
+    },
+    {
+        label:'Meter value aligned data max length',
+        value:''
+    },
+    {
+        label:'Number of connectors',
+        value:''
+    },
+    {
+        label:'Connector phase rotation max length',
+        value:''
+    },
+    {
+        label:'Stop transaction aligned data max length',
+        value:''
+    },
+    {
+        label:'Supported feature profiles',
+        value:''
+    },
+    {
+        label:'Supported feature profiles max length',
+        value:''
+    },
+    {
+        label:'Supported feature profiles',
+        value:''
+    }
+]
+
 
 export default function CPConfig() {
 
@@ -114,11 +179,27 @@ export default function CPConfig() {
                             })
                         }
                     </Stack>
-                    <Grid container spacing={2} my={2}>
+                    <Grid container spacing={3} my={2}>
                         {
                             switchList.map((item) => (
                                 <Grid item md={6} xs={12}>
                                     <ConfigSwitch label={item}/>
+                                </Grid>
+                            ))
+                        }
+                    </Grid>
+                    <Stack direction={'column'} spacing={3}>
+                        {
+                            meterList.map((item)=>(
+                                <ConfigMeter title={item.title} chipData={item.chipData}/>
+                            ))
+                        }
+                    </Stack>
+                    <Grid container spacing={3} my={3}>
+                        {
+                            configCPList.map((item) => (
+                                <Grid item md={6} xs={12}>
+                                    <ConfigCP label={item.label} value={item.value}/>
                                 </Grid>
                             ))
                         }

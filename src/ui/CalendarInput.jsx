@@ -30,16 +30,13 @@ function convertDateFormat(inputDate) {
   return formattedDate;
 }
 
-const CalendarInput = ({inputid,dateValue}) => {
+const CalendarInput = ({dateValue,onDateChange }) => {
 
   const cal_date=dateValue ? new Date(convertDateFormat(dateValue)) : new Date()
   const [selectedDate, setSelectedDate] = useState(cal_date);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
 
-  useEffect(() => {
-    document.getElementById(inputid).value = dateValue || '';
-  }, [dateValue, inputid]);
-
+ 
   const handleCalendarClick = () => {
 
       setDatePickerOpen(!isDatePickerOpen);
@@ -49,13 +46,20 @@ const CalendarInput = ({inputid,dateValue}) => {
 
     if (date instanceof Date && !isNaN(date)) {
       const formattedDate = format(date, 'dd-MM-yyyy');
-      document.getElementById(inputid).value = formattedDate;
+      if (onDateChange) {
+        onDateChange(formattedDate);
+      }
       const updateDate = convertDateFormat(formattedDate);
       const new_date=new Date(updateDate)
   
       setSelectedDate(new_date);
       //setSelectedDate(date);
       setDatePickerOpen(false);
+
+      
+
+
+
     } else {
       console.error("Invalid date object:", date);
     }
