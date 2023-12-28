@@ -13,6 +13,7 @@ import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
 import ChargeStationDetailsCard from "../../components/assetManagement/chargePoints/chargeStationDetailsCard";
 import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
+import RemoteSession from "../../components/cpoSupport/startRemoteSession/RemoteSession";
 import RfidCards from "../../pages/RfidCards";
 import VidCards from "../../pages/VidCards";
 
@@ -198,7 +199,7 @@ const RoutesConfig = () => {
                 },
                 {
                     path: 'remote-session',
-                    element: <UnderConstruction />,
+                    element: <RemoteSession />,
                 },
 
             ]
