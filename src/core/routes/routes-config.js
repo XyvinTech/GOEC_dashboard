@@ -14,6 +14,10 @@ import ChargePointDetail from "../../components/assetManagement/chargePoints/cha
 import ChargeStationDetailsCard from "../../components/assetManagement/chargePoints/chargeStationDetailsCard";
 import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
 import RfidCards from "../../pages/RfidCards";
+import EvChargers from "../../pages/EvChargers";
+import Vehicles from "../../pages/EvVehicles";
+import Manufactures from "../../pages/Manufactures";
+
 
 const RoutesConfig = () => {
 
@@ -104,15 +108,15 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'ev-chargers',
-                    element: <UnderConstruction />,
+                    element: < EvChargers />,
                 },
                 {
                     path: 'ev-vehicles',
-                    element: <UnderConstruction />,
+                    element: <Vehicles />,
                 },
                 {
                     path: 'manufacturers',
-                    element: <UnderConstruction />,
+                    element: <Manufactures />,
                 }
             ]
         },
