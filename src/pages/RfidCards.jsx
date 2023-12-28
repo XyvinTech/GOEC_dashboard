@@ -13,9 +13,8 @@ const RfidCards = () => {
   };
   return (
     <Box>
-    <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", m: 2 }}>
-      <StyledTab
-        sx={{ mx: 2 }}
+      <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
+        <StyledTab
         buttons={["All RFID cards", "Assign RFID"]}
         onChanged={buttonChanged}
       />
