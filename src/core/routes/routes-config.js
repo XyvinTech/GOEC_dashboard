@@ -2,6 +2,7 @@ import Home from "../../pages/Home";
 import Login from "../../pages/Login";
 import UnderConstruction from "../../pages/UnderConstruction";
 import NotFoundPage from "../../pages/NotFound";
+import Tariff from "../../pages/Tariff";
 
 const RoutesConfig = () => {
 
@@ -137,7 +138,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'charging-tariff',
-                    element: <UnderConstruction />,
+                    element: <Tariff />,
                 },
                 {
                     path: 'assign-tariff',

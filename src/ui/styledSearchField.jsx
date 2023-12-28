@@ -4,6 +4,7 @@ import { ReactComponent as SearchIcon } from '../assets/icons/Icon.svg'
 
 const SearchContainer = styled.div`
   position: relative;
+  display: block;
   width: 280px;
 `;
 
@@ -13,6 +14,7 @@ const SearchInput = styled.input`
   border-radius: 4px;
   outline: none;
   width: 100%;
+  height: 50px;
   background-color:#2b2930;
   color:#CAC4D0;
 `;
