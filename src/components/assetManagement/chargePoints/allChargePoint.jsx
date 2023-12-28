@@ -21,7 +21,7 @@ export default function AllChargePoint() {
 
   return (
     <>
-     <LastSynced heading="Charge Points"/>
+     <LastSynced heading="Charge Points" showSearchField={true} />
       <Box sx={{p:3}}>
         <StyledTable headers={tableHeader} data={AllChargePointsData}/>
       </Box>
