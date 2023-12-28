@@ -12,6 +12,7 @@ import StyledButton from "../../../ui/styledButton";
 import StyledPhoneNumber from "../../../ui/StyledPhoneNumber";
 import LastSynced from "../../../layout/LastSynced";
 import StyledSearchField from "../../../ui/styledSearchField";
+import StyledDivider from "../../../ui/styledDivider";
 export default function RemoteSession() {
   const handlePhoneNumberChange = (e) => {
     console.log(e.target.value);
@@ -38,6 +39,8 @@ export default function RemoteSession() {
                   md={12}
                   sx={{ backgroundColor: "black", padding: 4, margin: 2 }}
                 >
+                  <Typography sx={{ mt: 1, mb: 1 }}>Start Remote Session</Typography>
+                <StyledDivider/>
                   <Typography sx={{ mt: 1, mb: 1 }}>Phone number</Typography>
                   <Grid container spacing={2} item xs={12} md={12}>
                     <Grid item xs={12} md={9}>
@@ -55,7 +58,7 @@ export default function RemoteSession() {
                 </Grid>
               </Grid>
 
-              {/*Second Section */}
+              {/* Other Sections */}
               <Grid
                 item
                 xs={6}
