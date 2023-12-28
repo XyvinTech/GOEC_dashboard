@@ -22,9 +22,9 @@ const tableHeader = [
 export default function ActiveSession() {
   return (
     <>
-      <LastSynced heading="Active Sessions" />
+      <LastSynced heading="Active Sessions" showSearchField={true} />
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={DummyData} />
+        <StyledTable headers={tableHeader} data={DummyData} showActionCell={false} />
       </Box>
     </>
   );
