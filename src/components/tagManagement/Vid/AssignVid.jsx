@@ -22,6 +22,7 @@ import StyledFooter from "../../../ui/StyledFooter";
 import StyledPhoneNumber from "../../../ui/StyledPhoneNumber";
 import StyledList from "../../../ui/StyledList";
 import LastSynced from '../../../layout/LastSynced'
+import StyledDropdown from "../../../ui/StyledDropdown";
 
 const listdata = [
     { title: 'VID Tag', value: '04238ECAF10F90' },

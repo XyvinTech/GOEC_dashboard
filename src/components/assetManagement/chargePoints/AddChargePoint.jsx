@@ -1,13 +1,8 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import {
-  Box,
   Container,
   Grid,
-  IconButton,
-  Menu,
-  MenuItem,
   Stack,
-  Switch,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
