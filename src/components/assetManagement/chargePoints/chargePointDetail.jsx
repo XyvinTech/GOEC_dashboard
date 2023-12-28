@@ -7,6 +7,7 @@ import CPAction from './chargePointDetail/CPAction'
 import CPConfig from './chargePointDetail/CPConfig'
 import Transactions from './chargePointDetail/transactions'
 
+import ChargeStationDetailsAnalytics from './chargeStationDetailsAnalytics'
 export default function ChargePointDetail() {
     const [toggleOption, setToggleoption] = useState(0)
     const onChangeToggleOption = (e) => {
@@ -20,8 +21,8 @@ export default function ChargePointDetail() {
             </Stack>
             <Box sx={{ p: { xs: 1, md: 4 } }}>
                 <Grid container spacing={4}>
-                    <Grid item xs={12} md={12} lg={6}>
-                        G014
+                    <Grid item xs={12} md={12} >
+                        <ChargeStationDetailsAnalytics/>
                     </Grid>
                     <Grid item xs={12} md={12} lg={6}>
                         <Stack direction={'column'} spacing={2}>
