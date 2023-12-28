@@ -30,7 +30,7 @@ const PayloadComponent = ({ title, code, variant = 'success', toast = false, toa
 
 
 
-export default function ChargerAvailable() {
+export default function TriggerMessage() {
     return (
         <><Box sx={{ backgroundColor: 'secondary.main', px: 3, mt: 1, borderRadius: '4px', justifyContent: 'center' }}>
             <Grid container sx={{ px: 3 }}>
@@ -42,8 +42,8 @@ export default function ChargerAvailable() {
                 </Grid>
                 <Grid item xs={12} md={6} p={2}>
                     <Stack direction={'column'} spacing={2}>
-                        <Typography>Type</Typography>
-                        <StyledSelectField placeholder={'Choose Type'} />
+                        <Typography>Trigger Message</Typography>
+                        <StyledSelectField placeholder={'Meter Values'} />
                     </Stack>
                 </Grid>
             </Grid>
@@ -58,7 +58,7 @@ export default function ChargerAvailable() {
                 <Grid container spacing={2} mt={2}>
                     <Grid item xs={12} md={6}>
                         <PayloadComponent
-                            title={'Payload: ChangeAvailability'}
+                            title={'Payload: TriggerMessage'}
                             code={'{hello:seccess}'}
                             variant='success'
                             toast={true}
@@ -68,7 +68,7 @@ export default function ChargerAvailable() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <PayloadComponent
-                            title={'Responds: ChangeAvailabilityConfirmation'}
+                            title={'Responds: MeterValues'}
                             code={'{hello:seccess}'}
                             variant='error'
                             toast={true}

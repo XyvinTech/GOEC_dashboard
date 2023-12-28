@@ -4,6 +4,7 @@ import { Stack } from '@mui/system'
 import { ArrowBackIosNew } from '@mui/icons-material'
 import StyledGroupButton from '../../../ui/styledGroupButton'
 import CPAction from './chargePointDetail/CPAction'
+import CPConfig from './chargePointDetail/CPConfig'
 
 export default function ChargePointDetail() {
     const [toggleOption, setToggleoption] = useState(0)
@@ -28,7 +29,7 @@ export default function ChargePointDetail() {
                 </Grid>
             </Box>
             <StyledGroupButton buttons={['CP Action', 'CP config', 'Transaction', 'Charger logs', 'Alarm', 'Tariff']} onChanged={onChangeToggleOption} />
-            {toggleOption === 0 ? <CPAction /> : "sub2"}
+            {toggleOption === 0 ? <CPAction /> : <CPConfig/>}
         </>
     )
 }

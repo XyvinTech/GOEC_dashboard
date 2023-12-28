@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { styled } from "@mui/material";
 import { ReactComponent as ReloadIcon } from '../../../../assets/icons/reload.svg'
 import ChargerAvailable from "./CPAction/chargerAvailable";
+import TriggerMessage from "./CPAction/triggerMessage";
 
 
 
@@ -37,7 +38,7 @@ export default function CPAction() {
                     <CPSidebar onChanged={onOptionChanged} />
                     <Box sx={{px:{xs:1,md:6},py:{xs:1,md:3},flexGrow:1}}>
                         {
-                            optionIndex === 0 ? <ChargerAvailable/> : optionIndex === 1 ? '2' : optionIndex === 2 ? '3' : optionIndex === 3 ? '4' : '5'
+                            optionIndex === 0 ? <ChargerAvailable/> : optionIndex === 1 ? <TriggerMessage/> : optionIndex === 2 ? '' : optionIndex === 3 ? '' : ''
                         }
                     </Box>
             </Stack>
