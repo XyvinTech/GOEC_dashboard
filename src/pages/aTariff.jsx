@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import React, { useState } from "react";
-import StyledGroupButton from "../ui/styledGroupButton";
+import StyledTab from "../ui/styledTab";
 import Personal from "../components/tariff/assignTariff/personal";
 import Location from "../components/tariff/assignTariff/location";
 export default function ATariff() {
@@ -13,7 +13,7 @@ export default function ATariff() {
   return (
     <Box>
       <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
-        <StyledGroupButton
+        <StyledTab
           buttons={["Location", "Personal"]}
           onChanged={buttonChanged}
         />
