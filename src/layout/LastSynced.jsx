@@ -7,7 +7,7 @@ import StyledButton from '../ui/styledButton.jsx';
 
 
 
-export default function LastSynced({heading,showButton,showSearchField }) {
+export default function LastSynced({heading,showButton,showSearchField,handleClick }) {
   return (
     <>
     
@@ -44,6 +44,7 @@ export default function LastSynced({heading,showButton,showSearchField }) {
           variant="primary" 
           width="153"
           height="51"
+          onClick={handleClick}
         >
           Add
         </StyledButton>}
