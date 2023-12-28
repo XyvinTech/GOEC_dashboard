@@ -1,9 +1,9 @@
 import React from "react";
+import { Box } from "@mui/material";
 import { DummyData } from "../assets/json/ChargingTariffData.js";
-import DashboardLayout from "../layout/dashboardLayout.jsx";
 import ChargingTariff from "../components/tariff/chargingTariff/ChargingTariff.jsx";
 
-export default function Tariff() {
+export default function cTariff() {
   const headers = [
     "Name",
     "Service fee(INR)",
@@ -14,8 +14,8 @@ export default function Tariff() {
   ];
 
   return (
-    <DashboardLayout>
-      <ChargingTariff data={DummyData} headers={headers}/>
-    </DashboardLayout>
+    <Box>
+      <ChargingTariff data={DummyData} headers={headers} />
+    </Box>
   );
 }
