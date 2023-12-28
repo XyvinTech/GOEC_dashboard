@@ -3,7 +3,7 @@ import {
     Box,
   ButtonBase,
   Container,
-  Dirfider,
+  Divider,
   Grid,
   List,
   ListItem,
@@ -22,14 +22,15 @@ import StyledFooter from "../../../ui/StyledFooter";
 import StyledPhoneNumber from "../../../ui/StyledPhoneNumber";
 import StyledList from "../../../ui/StyledList";
 import LastSynced from '../../../layout/LastSynced'
+import StyledDropdown from "../../../ui/StyledDropdown";
 
 const listdata = [
-    { title: 'RFID Tag', value: '04238ECAF10F90' },
-    { title: 'RFID Serial No.', value: '04238ECAF10F90' },
-    { title: 'RFID Type', value: 'Personal' },
+    { title: 'VID Tag', value: '04238ECAF10F90' },
+    { title: 'VID Serial No.', value: '04238ECAF10F90' },
+    { title: 'VID Type', value: 'Personal' },
   ];
 
-const AssignRfid = () => {
+const AssignVid = () => {
    
     const handlePhoneNumberChange = (e) => {
         // Handle phone number input logic here
@@ -38,13 +39,13 @@ const AssignRfid = () => {
 
   return (
     <>
-    <LastSynced heading="RFID Cards"/>
+    <LastSynced heading="VID Cards"/>
     <TableContainer>
         <Container maxWidth="lg">
-            <Grid container spacing={2}>
+            <Grid container>
             
-                <Grid item xs={12} sm container>
-                    <Grid item   xs={6} md={6}>
+                <Grid item xs={12} sm container >
+                    <Grid item   xs={12} md={6}>
                         <Grid item xs={12} md={12}>
                             <Typography sx={{  mt: 3,mb:1 }}>Type</Typography>
                             <Stack direction="column">
@@ -73,14 +74,14 @@ const AssignRfid = () => {
                     <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: 0, md: '30px' } }}>
                     
                         <Grid item xs={12} md={12}>
-                            <Typography sx={{  mt: 3,mb:1 }}>RFID</Typography>
+                            <Typography sx={{  mt: 3,mb:1 }}>VID</Typography>
                             <Stack direction="column">
-                                <StyledSelectField placeholder={"Choose RFID"} />
+                                <StyledSelectField placeholder={"Choose VID"} />
                             </Stack>
                         </Grid>
                         <Grid item xs={12} sm container spacing={1}>
                             <Grid item xs={12} md={12}>
-                                <Typography sx={{  mt: 3,mb:1 }}>Assigned RFID</Typography>
+                                <Typography sx={{  mt: 3,mb:1 }}>Assigned VID</Typography>
                             </Grid>
                             <Grid item xs={6} md={6}>
                                 <Box  justifyContent="center" sx={{ bgcolor: '#39383D', paddingBottom:'10px' }}>
@@ -91,7 +92,7 @@ const AssignRfid = () => {
                                     
                                 </Box>
                             </Grid>
-                            <Grid item xs={6} md={6}>
+                            <Grid item xs={6} md={6} >
                                 <Box  justifyContent="center" sx={{ bgcolor: '#39383D', paddingBottom:'10px' }}>
                                     <StyledList data={listdata}/>
                                     <Box  justifyContent="center" display="flex">
@@ -106,7 +107,7 @@ const AssignRfid = () => {
             </Grid>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={12}  sx={{mt:4}}>
-                <StyledFooter width='100'>
+                <StyledFooter width='100' sx={{paddingRight:'0px'}}>
                     <StyledButton variant={"gray"} width="103"  mr="20" > Cancel </StyledButton>
 
                     <StyledButton variant={"primary"}  width="160" > Assign </StyledButton>
@@ -119,7 +120,7 @@ const AssignRfid = () => {
   )
 }
 
-export default AssignRfid
+export default AssignVid
 
 //! STYLINGS
 

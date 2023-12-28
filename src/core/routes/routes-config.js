@@ -8,12 +8,15 @@ import ChargingStation from "../../pages/chargeStation";
 import UnderConstruction from "../../pages/UnderConstruction";
 import NotFoundPage from "../../pages/NotFound";
 import CTariff from "../../pages/cTariff";
+import ATariff from "../../pages/aTariff";
 import ChargeStationDetail from "../../components/assetManagement/chargeStations/chargeStationDetail";
 import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
 import ChargeStationDetailsCard from "../../components/assetManagement/chargePoints/chargeStationDetailsCard";
 import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
 import RfidCards from "../../pages/RfidCards";
+import CTax from "../../pages/cTax";
+import VidCards from "../../pages/VidCards";
 import EvChargers from "../../pages/EvChargers";
 import Vehicles from "../../pages/EvVehicles";
 import Manufactures from "../../pages/Manufactures";
@@ -96,7 +99,7 @@ const RoutesConfig = () => {
                 },
                 {
                     path: 'vid-cards',
-                    element: <UnderConstruction />,
+                    element: <VidCards />,
                 }
             ]
         },
@@ -181,11 +184,11 @@ const RoutesConfig = () => {
                 },
                 {
                     path: 'assign-tariff',
-                    element: <UnderConstruction />,
+                    element: <ATariff />,
                 },
                 {
                     path: 'tax',
-                    element: <UnderConstruction />,
+                    element: <CTax />,
                 },
 
             ]
