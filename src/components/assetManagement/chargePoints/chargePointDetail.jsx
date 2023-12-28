@@ -5,6 +5,7 @@ import { ArrowBackIosNew } from '@mui/icons-material'
 import StyledTab from '../../../ui/styledTab'
 import CPAction from './chargePointDetail/CPAction'
 import CPConfig from './chargePointDetail/CPConfig'
+import Transactions from './chargePointDetail/transactions'
 
 export default function ChargePointDetail() {
     const [toggleOption, setToggleoption] = useState(0)
@@ -29,7 +30,7 @@ export default function ChargePointDetail() {
                 </Grid>
             </Box>
             <StyledTab buttons={['CP Action', 'CP config', 'Transaction', 'Charger logs', 'Alarm', 'Tariff']} onChanged={onChangeToggleOption} />
-            {toggleOption === 0 ? <CPAction /> : <CPConfig/>}
+            {toggleOption === 0 ? <CPAction /> : toggleOption === 1 ? <CPConfig/> : <Transactions/>}
         </>
     )
 }

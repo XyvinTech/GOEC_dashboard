@@ -154,8 +154,8 @@ export default function CPConfig() {
                 p: 2
             }}>
             <Stack direction={'column'} sx={{ ml: 2 }}>
-                <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>Charge Stations</Typography>
-                <Stack direction={'row'} spacing={1}>
+                <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>CP Config</Typography>
+                <Stack direction={'row'} sx={{alignItems:'center'}} spacing={1}>
                     <Typography sx={{ color: 'secondary.greytext', fontSize: 12 }}>Last synced</Typography>
                     <Typography sx={{ color: 'success.main', fontSize: 12 }}>4 minutes ago</Typography>
                     <ReloadIcon style={{ cursor: 'pointer' }} />
