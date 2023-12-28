@@ -2,8 +2,8 @@ import React from "react";
 import { Box, Container, Grid, Typography, Stack } from "@mui/material";
 import { ReactComponent as Station } from "../../../assets/icons/station.svg";
 import {ReactComponent as ContentCopy} from "../../../assets/icons/content_copy.svg";
-import StyledDivider from "../../../ui/styledDivider";
-import StyledInput from "../../../ui/styledInput";
+import StyledDivider from "../../../../ui/styledDivider";
+import StyledInput from "../../../../ui/styledInput";
 export default function chargeStationDetailsCard() {
   return (
     <Box px={3} pb={2} sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>

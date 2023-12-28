@@ -5,7 +5,7 @@ import { ArrowBackIosNew } from '@mui/icons-material'
 import StyledTab from '../../../ui/styledTab'
 import CPAction from './chargePointDetail/CPAction'
 import CPConfig from './chargePointDetail/CPConfig'
-
+import ChargeStationDetailsConnectors from './chargeStationDetailsConnectors'
 export default function ChargePointDetail() {
     const [toggleOption, setToggleoption] = useState(0)
     const onChangeToggleOption = (e) => {
@@ -19,8 +19,8 @@ export default function ChargePointDetail() {
             </Stack>
             <Box sx={{ p: { xs: 1, md: 4 } }}>
                 <Grid container spacing={4}>
-                    <Grid item xs={12} md={12} lg={6}>
-                        G014
+                    <Grid item xs={12} md={12} lg={4}>
+                        <ChargeStationDetailsConnectors/>
                     </Grid>
                     <Grid item xs={12} md={12} lg={6}>
                         <Stack direction={'column'} spacing={2}>
