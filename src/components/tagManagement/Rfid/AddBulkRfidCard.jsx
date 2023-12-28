@@ -3,11 +3,11 @@ import CommonLayout from "../../../layout/CommonLayout";
 import { Grid, List, ListItem, Typography } from "@mui/material";
 import StyledFooter from "../../../ui/StyledFooter";
 import StyledButton from "../../../ui/styledButton";
-import { ReactComponent as ArrowDown } from "../../assets/icons/arrow-down.svg";
+import { ReactComponent as ArrowDown } from "../../../assets/icons/arrow-down.svg";
 import UploadFile from "../../../ui/UploadFile";
 import ProgressBar from "../../../ui/ProgressBar";
 
-const AddBulkRfidCard = () => {
+const AddBulkRfidCard = ({Close,Save}) => {
   const [selectedFileName, setSelectedFileName] = useState(null);
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
@@ -16,8 +16,8 @@ const AddBulkRfidCard = () => {
     setUploadPercentage(percentage);
   };
   return (
-    <div id="layout">
-      <CommonLayout header="Add bulk RFID Card" onClose="layout">
+    <>
+      <CommonLayout header="Add bulk RFID Card" onClick={Close}>
         <Grid
           container
           spacing={2}
@@ -111,14 +111,14 @@ const AddBulkRfidCard = () => {
         </Grid>
       </CommonLayout>
       <StyledFooter>
-        <StyledButton variant="secondary" width="103" mr="20">
+        <StyledButton variant="secondary" width="103" mr="20" onClick={Close}>
           Cancel
         </StyledButton>
-        <StyledButton variant="primary" width="160">
+        <StyledButton variant="primary" width="160" onClick={Save}>
           Upload
         </StyledButton>
       </StyledFooter>
-    </div>
+    </>
   );
 };
 
