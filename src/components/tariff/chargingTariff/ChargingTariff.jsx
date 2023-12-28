@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Stack, Typography } from "@mui/material";
 import StyledTable from "../../../ui/styledTable";
 import LastSynced from "../../../layout/LastSynced";
+import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
+import StyledDivider from "../../../ui/styledDivider";
+import AddTariff from "./addTariff";
 function ChargingTariff({ data, headers }) {
   const [open, setOpen] = useState(false);
   // Function to open the modal
@@ -12,6 +15,13 @@ function ChargingTariff({ data, headers }) {
   // Function to close the modal
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const dummyData = {
+    name: "Jack Hugh",
+    value: "40 kWH",
+    fee: "40 Rs",
+    tax: "10%",
   };
 
   return (
@@ -34,13 +44,26 @@ function ChargingTariff({ data, headers }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <Typography id="modal-title" variant="h6" component="h2">
-            Charge Tariff Details
-          </Typography>
-          <Typography id="modal-description" sx={{ mt: 2 }}>
-            Details about the charging tariff can be placed here.
-          </Typography>
-          <Button onClick={handleClose}>Close</Button>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            spacing={2}
+            my={2}
+          >
+            <Typography
+              sx={{
+                color: "secondary.greytext",
+                fontSize: 18,
+                fontWeight: 700,
+              }}
+            >
+              Add Tariff
+            </Typography>
+            <Close onClick={handleClose} style={{ cursor: "pointer" }} />
+          </Stack>
+          <StyledDivider />
+          <AddTariff action={"add"} data={dummyData}/>
         </Box>
       </Modal>
     </>
@@ -51,15 +74,14 @@ export default ChargingTariff;
 
 // Modal style
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'auto', // Adjust width to fit your content or screen
-  bgcolor: '#333', // Dark background color
-  boxShadow: 24,
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "auto", // Adjust width to fit your content or screen
+  bgcolor: "#27292F", // Dark background color
+  boxShadow: 10,
   p: 4,
-  borderRadius: 2,
-  color: '#fff', // White text for better visibility on dark background
-  outline: 'none' // Remove the focus ring
+  color: "#fff", // White text for better visibility on dark background
+  outline: "none", // Remove the focus ring
 };

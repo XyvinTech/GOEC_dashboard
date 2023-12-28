@@ -1,66 +1,106 @@
-import { Grid, Typography, Container, Stack } from "@mui/material";
-import React from "react";
+import { Grid, Typography, Container, Stack, Modal, Box } from "@mui/material";
+import React, { useState } from "react";
 import styled from "styled-components";
 import LastSynced from "../../../layout/LastSynced";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledButton from "../../../ui/styledButton";
 import StyledWarning from "../../../ui/styledWarning";
 import { ReactComponent as Warn } from "../../../assets/icons/textWarn.svg";
+import StyledDivider from "../../../ui/styledDivider";
+import Assign from "./assign";
+import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
 
 export default function Location() {
+  const [open, setOpen] = useState(false);
+  // Function to open the modal
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  // Function to close the modal
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <TableContainer>
-      <LastSynced heading="Location" />
-      <Container fixed>
-        <Grid
-          container
-          spacing={4}
-          sx={{
-            alignItems: "center",
-            bgcolor: "#1c1d22",
-            padding: 5,
-            marginTop: 5,
-            marginLeft: 5,
-            width: "50%",
-          }}
-        >
-          <Grid item md={12}>
-            <StyledSelectField placeholder={"Select Locations"} />
-          </Grid>
-          <Grid item md={12}>
-            <StyledWarning
-              icon={<Warn />}
-              value={"Please enter Location"}
-            />
-          </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>CPID</Typography>
-            <StyledSelectField placeholder={"Select CPID"} />
-          </Grid>
+    <>
+      <TableContainer>
+        <LastSynced heading="Location" />
+        <Container fixed>
           <Grid
-            item
-            xs={12}
-            md={12}
+            container
+            spacing={4}
             sx={{
-              display: "flex",
-              justifyContent: "center",
               alignItems: "center",
+              bgcolor: "#1c1d22",
+              padding: 5,
+              marginTop: 5,
+              marginLeft: 5,
+              width: "50%",
             }}
           >
-            <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-              <StyledButton variant={"secondary"} width="103">
-                {" "}
-                Cancel{" "}
-              </StyledButton>
-              <StyledButton variant={"primary"} width="160">
-                {" "}
-                Assign{" "}
-              </StyledButton>
-            </Stack>
+            <Grid item md={12}>
+              <StyledSelectField placeholder={"Select Locations"} />
+            </Grid>
+            <Grid item md={12}>
+              <StyledWarning icon={<Warn />} value={"Please enter Location"} />
+            </Grid>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>CPID</Typography>
+              <StyledSelectField placeholder={"Select CPID"} />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={12}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
+                <StyledButton variant={"secondary"} width="103">
+                  Cancel
+                </StyledButton>
+                <StyledButton variant={"primary"} width="160" onClick={handleOpen}>
+                  Assign
+                </StyledButton>
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </TableContainer>
+        </Container>
+      </TableContainer>
+      {/* Modal */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            spacing={2}
+            my={2}
+          >
+            <Typography
+              sx={{
+                color: "secondary.greytext",
+                fontSize: 18,
+                fontWeight: 700,
+              }}
+            >
+              Add Tariff
+            </Typography>
+            <Close onClick={handleClose} style={{ cursor: "pointer" }} />
+          </Stack>
+          <StyledDivider />
+          <Assign tab={"location"}/>
+        </Box>
+      </Modal>
+    </>
   );
 }
 
@@ -72,3 +112,17 @@ export const TableContainer = styled.div`
   overflow-x: auto; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
 `;
+
+// Modal style
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "auto", // Adjust width to fit your content or screen
+  bgcolor: "#27292F", // Dark background color
+  boxShadow: 10,
+  p: 4,
+  color: "#fff", // White text for better visibility on dark background
+  outline: "none", // Remove the focus ring
+};
