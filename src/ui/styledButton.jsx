@@ -29,6 +29,12 @@ const StyledButton = styled.button`
     css`
         width:482px;
       `}
+
+    // height for different button styles
+  ${(props) => props.height &&
+    css`
+    height:${props.height}px;
+    `}
      
   // padding for different button styles
 

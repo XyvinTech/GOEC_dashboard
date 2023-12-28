@@ -4,9 +4,6 @@ import StyledButton from '../ui/styledButton';
 import StyledDivider from '../ui/styledDivider'; 
 import { ReactComponent as CloseCircle } from '../assets/icons/close-circle.svg';
 
-
-
-
 const StyledLayout = styled.div`
 width: 772px;
 // height: 609px;
@@ -15,7 +12,7 @@ background: #27292F;
 position:relative;
 border-bottom-left-radius: var(--borderRadius, 0px);
 border-bottom-right-radius: var(--borderRadius, 0px);
-
+}
 `;
 
 const StyledLayout2 = styled.div`

@@ -1,0 +1,67 @@
+export const DummyData = [
+    {
+        "OCPP Txn ID": "23220911",
+        "User Name": "Avinash Nazeer",
+        "Charge Station Name": "GOEC Jansons Orchard Inn",
+        "Date": "Nov 16, 2022 7:09:36 AM",
+        "CPID": "GOEC117",
+        "Connector ID":"1",
+        "Start Soc":"62",
+        "Current Soc":"67",
+        "Duration(Min)":"00:05:13",
+        "Units Consumed(kWh)":"1.65",
+        "Charge Speed(kW)":"21.07",
+        "Last Meter Received":"Nov 16, 2022 7:09:36 AM",
+        "Transaction Mode":"RFID",
+        "Terminate Session":"Stop"
+    },
+    {
+        "OCPP Txn ID": "23220911",
+        "User Name": "Avinash Nazeer",
+        "Charge Station Name": "GOEC Jansons Orchard Inn",
+        "Date": "Nov 16, 2022 7:09:36 AM",
+        "CPID": "GOEC117",
+        "Connector ID":"1",
+        "Start Soc":"62",
+        "Current Soc":"67",
+        "Duration(Min)":"00:05:13",
+        "Units Consumed(kWh)":"1.65",
+        "Charge Speed(kW)":"21.07",
+        "Last Meter Received":"Nov 16, 2022 7:09:36 AM",
+        "Transaction Mode":"RFID",
+        "Terminate Session":"Stop"
+    },
+    {
+        "OCPP Txn ID": "23220911",
+        "User Name": "Avinash Nazeer",
+        "Charge Station Name": "GOEC Jansons Orchard Inn",
+        "Date": "Nov 16, 2022 7:09:36 AM",
+        "CPID": "GOEC117",
+        "Connector ID":"1",
+        "Start Soc":"62",
+        "Current Soc":"67",
+        "Duration(Min)":"00:05:13",
+        "Units Consumed(kWh)":"1.65",
+        "Charge Speed(kW)":"21.07",
+        "Last Meter Received":"Nov 16, 2022 7:09:36 AM",
+        "Transaction Mode":"RFID",
+        "Terminate Session":"Stop"
+    },
+    {
+        "OCPP Txn ID": "23220911",
+        "User Name": "Avinash Nazeer",
+        "Charge Station Name": "GOEC Jansons Orchard Inn",
+        "Date": "Nov 16, 2022 7:09:36 AM",
+        "CPID": "GOEC117",
+        "Connector ID":"1",
+        "Start Soc":"62",
+        "Current Soc":"67",
+        "Duration(Min)":"00:05:13",
+        "Units Consumed(kWh)":"1.65",
+        "Charge Speed(kW)":"21.07",
+        "Last Meter Received":"Nov 16, 2022 7:09:36 AM",
+        "Transaction Mode":"RFID"
+        ,
+        "Terminate Session":"Stop"
+    }
+]
