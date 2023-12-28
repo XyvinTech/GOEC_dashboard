@@ -165,6 +165,7 @@ export const theme = createTheme({
       grey:'#212326',
       button:'#000',
       subButton: 'rgba(181, 184, 197,0.2)',
+      saveButton: '#0047C2'
     },
     secondary: {
       main: '#1C1D22',
