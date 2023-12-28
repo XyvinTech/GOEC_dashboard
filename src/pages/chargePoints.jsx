@@ -1,6 +1,6 @@
 import { Box, Stack } from '@mui/material'
 import React,{useState} from 'react'
-import StyledGroupButton from '../ui/styledGroupButton'
+import StyledTab from '../ui/styledTab'
 
 import AddChargingStation from '../components/assetManagement/chargeStations/AddChargingStation';
 import AllChargePoint from '../components/assetManagement/chargePoints/allChargePoint';
@@ -15,7 +15,7 @@ const [togglePage,setTogglePage] = useState(0);
   return (
     <Box>
       <Stack direction={'row'} sx={{backgroundColor:'secondary.main'}}>
-        <StyledGroupButton
+        <StyledTab
          buttons={['All Chargepoints', 'Add chargepoints']} onChanged={buttonChanged} />
       </Stack>
       {togglePage === 0 ?

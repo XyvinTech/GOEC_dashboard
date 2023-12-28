@@ -16,6 +16,7 @@ import ChargeStationDetailsCard from "../../components/assetManagement/chargePoi
 import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
 import RfidCards from "../../pages/RfidCards";
 import CTax from "../../pages/cTax";
+import VidCards from "../../pages/VidCards";
 
 const RoutesConfig = () => {
 
@@ -94,7 +95,7 @@ const RoutesConfig = () => {
                 },
                 {
                     path: 'vid-cards',
-                    element: <UnderConstruction />,
+                    element: <VidCards />,
                 }
             ]
         },

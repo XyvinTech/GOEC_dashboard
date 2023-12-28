@@ -2,12 +2,12 @@ import React from 'react'
 import { Box, Stack, Typography } from "@mui/material";
 import StyledSearchField from "../ui/styledSearchField.jsx";
 import { ReactComponent as ReloadIcon } from "../assets/icons/reload.svg";
+import StyledButton from '../ui/styledButton.jsx';
 
 
 
 
-
-export default function LastSynced({heading}) {
+export default function LastSynced({heading,showButton,showSearchField }) {
   return (
     <>
     
@@ -35,9 +35,18 @@ export default function LastSynced({heading}) {
           </Stack>
         </Stack>
         <Box sx={{ flexGrow: 1 }} />
+        {showSearchField &&
         <Box sx={{ mr: 3 }}>
           <StyledSearchField placeholder={"Search"} />
         </Box>
+        }
+        {showButton && <StyledButton 
+          variant="primary" 
+          width="153"
+          height="51"
+        >
+          Add
+        </StyledButton>}
       </Box>
     
     

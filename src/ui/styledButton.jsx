@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 const StyledButton = styled.button`
   border: 1px solid rgba(255, 255, 255, 0.20);
   border-radius: 4px; 
-  /* font-family:"Inter", 'sans-serif'; */
+  font-family:"Inter", 'sans-serif';
   cursor: pointer;
   // font-size: 16px;
   // font-weight: 600;
@@ -18,6 +18,10 @@ const StyledButton = styled.button`
   ${(props) => props.fontSize &&
     css`
     font-size:${props.fontSize}px;
+    `}
+    ${(props) => !props.fontSize &&
+    css`
+    font-size:16px;
     `}
     
   // width for different button styles

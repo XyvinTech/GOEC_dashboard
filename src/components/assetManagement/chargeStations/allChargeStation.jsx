@@ -16,7 +16,7 @@ export default function AllChargeStation() {
   return (
     <>
 
-<LastSynced heading="Charge Stations" />
+<LastSynced heading="Charge Stations" showSearchField={true} />
 
       <Box sx={{p:3}}>
         <StyledTable headers={tableHeader} data={ChargeStationData}/>
