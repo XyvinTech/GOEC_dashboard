@@ -6,6 +6,8 @@ import StyledSelectField from "../../../ui/styledSelectField";
 import InputField from "../../../ui/styledInput";
 import StyledButton from "../../../ui/styledButton";
 import { ReactComponent as Phone } from "../../../assets/icons/Phone.svg";
+import StyledWarning from "../../../ui/styledWarning";
+import { ReactComponent as Warn } from "../../../assets/icons/textWarn.svg";
 
 export default function Personal() {
   return (
@@ -29,11 +31,17 @@ export default function Personal() {
             <InputField icon={<Phone />} placeholder={"Enter Phone number"} />
           </Grid>
           <Grid item md={12}>
+            <StyledWarning
+              icon={<Warn />}
+              value={"Please enter Person Phone number"}
+            />
+          </Grid>
+          <Grid item md={12}>
             <Typography sx={{ marginBottom: 1 }}>Change Location</Typography>
             <StyledSelectField placeholder={"Select Locations"} />
           </Grid>
           <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1}}>CPID</Typography>
+            <Typography sx={{ marginBottom: 1 }}>CPID</Typography>
             <StyledSelectField placeholder={"Select CPID"} />
           </Grid>
           <Grid

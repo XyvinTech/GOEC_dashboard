@@ -4,6 +4,8 @@ import styled from "styled-components";
 import LastSynced from "../../../layout/LastSynced";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledButton from "../../../ui/styledButton";
+import StyledWarning from "../../../ui/styledWarning";
+import { ReactComponent as Warn } from "../../../assets/icons/textWarn.svg";
 
 export default function Location() {
   return (
@@ -26,13 +28,34 @@ export default function Location() {
             <StyledSelectField placeholder={"Select Locations"} />
           </Grid>
           <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1}}>CPID</Typography>
+            <StyledWarning
+              icon={<Warn />}
+              value={"Please enter Location"}
+            />
+          </Grid>
+          <Grid item md={12}>
+            <Typography sx={{ marginBottom: 1 }}>CPID</Typography>
             <StyledSelectField placeholder={"Select CPID"} />
           </Grid>
-          <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Stack  direction={'row'} spacing={2} sx={{mt:2}}>
-              <StyledButton variant={"secondary"}  width="103" > Cancel </StyledButton>
-              <StyledButton variant={"primary"} width="160" > Assign </StyledButton>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
+              <StyledButton variant={"secondary"} width="103">
+                {" "}
+                Cancel{" "}
+              </StyledButton>
+              <StyledButton variant={"primary"} width="160">
+                {" "}
+                Assign{" "}
+              </StyledButton>
             </Stack>
           </Grid>
         </Grid>
