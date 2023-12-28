@@ -4,7 +4,7 @@ import { ReactComponent as SearchIcon } from '../assets/icons/Icon.svg'
 
 const SearchContainer = styled.div`
   position: relative;
-  width: 360px;
+  width: 100%;
   height: 50px;
   padding-left : 20px;
   background-color:#2b2930;
