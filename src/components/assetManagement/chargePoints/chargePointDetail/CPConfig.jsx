@@ -1,9 +1,10 @@
 import React from 'react'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Grid, Stack, Typography } from '@mui/material'
 import { ReactComponent as ReloadIcon } from '../../../../assets/icons/reload.svg'
 import StyledSelectField from '../../../../ui/styledSelectField'
 import StyledButton from '../../../../ui/styledButton'
-import StyledInput from '../../../../ui/styledInput'
+import ConfigElement from './CPConfig/configElement'
+import ConfigSwitch from './CPConfig/configSwitch'
 
 const configList = [
     {
@@ -63,24 +64,20 @@ const configList = [
 
 ]
 
-const ConfigureElement = ({ label, data, ...props }) => {
-    return (
-        <Stack direction={'row'} sx={{justifyContent:'space-between',alignItems:'center'}} props>
-            <Typography>{label}</Typography>
-            <Stack direction={'row'} spacing={1}>
-                <Button sx={{backgroundColor:'secondary.button',color:'primary.DimText',width:'150px'}}>{data}</Button>
-                <StyledInput defaultValue={data} style={{width:'150px',textAlign:'center'}}/>
-                <StyledButton style={{backgroundColor:'#0047C2',color:'#fffc',width:'150px'}}>Save</StyledButton>
-            </Stack>
-        </Stack>
-    )
-}
+const switchList = [
+    'Allow offline transaction for unknown ID',
+    '',
+    'Authorization remote transaction requests',
+    'Local authorize offline',
+    'Local pre-authorize',
+    'Stop transaction on EV side disconnect',
+    'Stop transaction on invalid ID',
+    'Unlock connector on EV side disconnect',
+    'Open charge mode enable'
+]
 
 
 export default function CPConfig() {
-
-
-    
 
     return (
         <><Box
@@ -100,23 +97,32 @@ export default function CPConfig() {
                 </Stack>
             </Stack>
         </Box>
-            <Box sx={{ backgroundColor: 'secondary.main', borderRadius: '4px', mx: { xs: 1, md: 30 }, mt: { xs: 1, md: 3 } }}>
-                <Stack direction={'column'} sx={{ p: 2 }} >
-                    <Stack direction={'row'} sx={{ alignItems: 'center' }} spacing={{ xs: 2, md: 5 }}>
+            <Box sx={{ backgroundColor: 'secondary.main', borderRadius: '4px', mx: { xs: 2, md: 30 }, mt: { xs: 2, md: 3 } }}>
+                <Stack direction={'column'} sx={{ px: {xs:3,md:8}}} >
+                    <Stack direction={'row'} sx={{ alignItems: 'center',my:5 }} spacing={{ xs: 2, md: 5 }}>
                         <Typography variant='subtitle2' sx={{ color: 'primary.contrastText', fontSize: '14px', fontWeight: 400 }}>Configuration</Typography>
                         <StyledSelectField placeholder={'Core profile'} />
                         <StyledButton variant='primary'>Get Configuration</StyledButton>
                     </Stack>
                     <configureElement label={'dff'} data={'dfsg'} />
-                    <Stack direction={'column'} spacing={2} mt={5}>
+                    <Stack direction={'column'} spacing={2} my={2}>
                         {
                             configList.map((item) => {
                                 return (
-                                    <ConfigureElement label={item.label} data={item.data} />
+                                    <ConfigElement label={item.label} data={item.data} />
                                 )
                             })
                         }
                     </Stack>
+                    <Grid container spacing={2} my={2}>
+                        {
+                            switchList.map((item) => (
+                                <Grid item md={6} xs={12}>
+                                    <ConfigSwitch label={item}/>
+                                </Grid>
+                            ))
+                        }
+                    </Grid>
                 </Stack>
             </Box>
         </>

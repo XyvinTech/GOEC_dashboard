@@ -202,7 +202,7 @@ const items = [
                 title: 'Admin Management',
             },
             {
-                href: 'settings/role-manangement',
+                href: 'settings/role-management',
                 title: 'Role Management',
             },
             {
