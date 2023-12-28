@@ -5,7 +5,7 @@ import OwnerDetail from './chargeStationDetail/ownerDetail'
 import Analytics from './chargeStationDetail/analytics'
 import { Stack } from '@mui/system'
 import { ArrowBackIosNew } from '@mui/icons-material'
-import StyledGroupButton from '../../../ui/styledGroupButton'
+import StyledTab from '../../../ui/styledTab'
 import ChargePoints from './chargeStationDetail/chargePoints'
 import Reviews from './chargeStationDetail/reviews'
 
@@ -31,7 +31,7 @@ export default function ChargeStationDetail() {
                     </Grid>
                 </Grid>
             </Box>
-            <StyledGroupButton buttons={['Charge-points', 'Reviews']} onChanged={onChangeToggleOption} />
+            <StyledTab buttons={['Charge-points', 'Reviews']} onChanged={onChangeToggleOption} />
             {toggleOption===0 ? <ChargePoints/>:<Reviews/>}
         </>
     )

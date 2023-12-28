@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Stack } from "@mui/material";
 import { useState } from "react";
 
-export default function StyledGroupButton({ buttons, onChanged, ...props }) {
+export default function StyledTab({ buttons, onChanged, ...props }) {
   const [activeInd, setActiveInd] = useState(0);
   return (
     <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", pl: 2 }}>

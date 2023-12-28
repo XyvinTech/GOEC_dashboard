@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 
 const FooterContainer = styled.div`
 display: inline-flex;
-padding: 20px 25.506px 20px 467.494px;
+padding: 20px 10px 20px 20px;
 justify-content: flex-end;
 align-items: center;
 background: #1C1D22;

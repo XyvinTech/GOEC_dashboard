@@ -1,34 +1,29 @@
 import React from 'react'
 import { Box, Stack, Typography } from '@mui/material'
 import StyledTable from '../../../ui/styledTable'
-import { DummyData } from '../../../assets/json/RfidTableData'
+import { DummyData } from '../../../assets/json/VidTableData'
 import StyledButton from '../../../ui/styledButton'
 import LastSynced from '../../../layout/LastSynced'
 
-
 const tableHeader = [
-    'RFID Tag',
-    'User Name',
-    'Created On',
-    'Expires On',
-    'Balance',
-    'Status'
-  ]
+  'VID Tag',
+  'User Name',
+  'Created On',
+  'Expires On',
+  'Balance',
+  'Status'
+]
 
-
-const AllRfidCards = () => {
+export default function AllVidCards() {
   return (
     <>
-     <LastSynced heading="RFID Cards"/>
+      <LastSynced heading="VID Cards"/>
       <Box sx={{p:3}}>
         <Box display="flex" justifyContent="flex-end">
             <StyledButton variant='secondary' width='150' mr='10'>Add</StyledButton>
-            <StyledButton variant='primary' width='150' >Add Bulk</StyledButton>
         </Box>
         <StyledTable headers={tableHeader} data={DummyData}/>
       </Box>
     </>
   )
 }
-
-export default AllRfidCards

@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Stack } from '@mui/system'
 import { ArrowBackIosNew } from '@mui/icons-material'
-import StyledGroupButton from '../../../ui/styledGroupButton'
+import StyledTab from '../../../ui/styledTab'
 import CPAction from './chargePointDetail/CPAction'
 import CPConfig from './chargePointDetail/CPConfig'
 
@@ -28,7 +28,7 @@ export default function ChargePointDetail() {
                     </Grid>
                 </Grid>
             </Box>
-            <StyledGroupButton buttons={['CP Action', 'CP config', 'Transaction', 'Charger logs', 'Alarm', 'Tariff']} onChanged={onChangeToggleOption} />
+            <StyledTab buttons={['CP Action', 'CP config', 'Transaction', 'Charger logs', 'Alarm', 'Tariff']} onChanged={onChangeToggleOption} />
             {toggleOption === 0 ? <CPAction /> : <CPConfig/>}
         </>
     )
