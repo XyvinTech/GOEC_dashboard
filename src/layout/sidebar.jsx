@@ -1,22 +1,23 @@
-import { useState } from 'react';
-import { Box, Drawer, Typography, useMediaQuery } from '@mui/material';
+import { useState } from "react";
+import { Box, Drawer, Typography, useMediaQuery } from "@mui/material";
 import {
-    AccountIcon,
-    CPOIcon,
-    AssetManageIcon,
-    CRMIcon,
-    ChargingIcon,
-    DashboardIcon,
-    DataManageIcon,
-    HelpIcon,
-    NotificationIcon,
-    ReportIcon,
-    SettingsIcon,
-    TagManageIcon,
-    TariffIcon,
-} from '../assets/icons/sidebar';
-import { NavItem } from '../ui/Navitem';
-import { ReactComponent as Logo } from '../assets/Logo.svg';
+  AccountIcon,
+  CPOIcon,
+  AssetManageIcon,
+  CRMIcon,
+  ChargingIcon,
+  DashboardIcon,
+  DataManageIcon,
+  HelpIcon,
+  NotificationIcon,
+  ReportIcon,
+  SettingsIcon,
+  TagManageIcon,
+  TariffIcon,
+} from "../assets/icons/sidebar";
+import { useNavigate  } from 'react-router-dom';
+import { NavItem } from "../ui/Navitem";
+import { ReactComponent as Logo } from "../assets/Logo.svg";
 
 const items = [
     {
@@ -101,7 +102,7 @@ const items = [
                 title: 'Charger Logs',
             },
             {
-                href: 'charging-network/booking-transation',
+                href: 'charging-network/booking-transaction',
                 title: 'Booking Transaction',
             }
         ]
@@ -112,11 +113,11 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: 'account/account-transaction',
+                href: 'accounts/account-transaction',
                 title: 'Account Transaction',
             },
             {
-                href: 'account/customer-list',
+                href: 'accounts/customer-list',
                 title: 'Customer List',
             }
         ]
@@ -176,7 +177,7 @@ const items = [
         extendable: true,
         sub: [
             {
-                href: 'notification/email-notifiaction',
+                href: 'notification/email-notification',
                 title: 'Email Notification',
             },
             {

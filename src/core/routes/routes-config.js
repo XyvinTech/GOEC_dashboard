@@ -1,8 +1,19 @@
-import Home from "../../pages/Home";
+
+import DashboardLayout from "../../layout/dashboardLayout";
 import Login from "../../pages/Login";
+import { Navigate } from "react-router-dom";
+
+import ChargingStation from "../../pages/chargeStation";
+
 import UnderConstruction from "../../pages/UnderConstruction";
 import NotFoundPage from "../../pages/NotFound";
 import Tariff from "../../pages/Tariff";
+import ChargeStationDetail from "../../components/assetManagement/chargeStations/chargeStationDetail";
+import ChargingPoints from "../../pages/chargePoints";
+import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
+import ChargeStationDetailsCard from "../../components/assetManagement/chargePoints/chargeStationDetailsCard";
+import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
+import RfidCards from "../../pages/RfidCards";
 
 const RoutesConfig = () => {
 
@@ -10,12 +21,28 @@ const RoutesConfig = () => {
 
         {
             path: '/',
-            element: <Home />,
+            element: <Navigate to="/dashboard/live-status" replace />,
+        },
+        // Test purpose
+        {
+            path: 'testCard',
+            element: <ChargeStationDetailsCard />,
+        },
+        // 
+        {
+            path: 'charge-station-detail',
+            element: <ChargeStationDetail />,
+        }
+        ,
+        {
+            path: 'charge-point-detail',
+            element: <ChargePointDetail />,
         },
         {
             path: '/login',
             element: <Login />,
         },
+
         {
             path: '/forgot-password',
             element: <UnderConstruction />,
@@ -23,6 +50,7 @@ const RoutesConfig = () => {
         //!---------Dashboard
         {
             path: '/dashboard',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'live-status',
@@ -41,24 +69,26 @@ const RoutesConfig = () => {
         //!---------Asset management
         {
             path: '/asset-management',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'charge-stations',
-                    element: <UnderConstruction />,
+                    element: <ChargingStation/>,
                 },
                 {
                     path: 'charge-points',
-                    element: <UnderConstruction />,
+                    element: <ChargingPoints />,
                 }
             ]
         },
         //!---------Tag management
         {
             path: '/tag-management',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'rfid-cards',
-                    element: <UnderConstruction />,
+                    element: <RfidCards />,
                 },
                 {
                     path: 'vid-cards',
@@ -70,6 +100,7 @@ const RoutesConfig = () => {
         //!---------Data management
         {
             path: '/data-management',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'ev-chargers',
@@ -80,7 +111,7 @@ const RoutesConfig = () => {
                     element: <UnderConstruction />,
                 },
                 {
-                    path: 'manufactures',
+                    path: 'manufacturers',
                     element: <UnderConstruction />,
                 }
             ]
@@ -89,6 +120,7 @@ const RoutesConfig = () => {
         //!---------Charging Network
         {
             path: '/charging-network',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'charging-transaction',
@@ -107,6 +139,7 @@ const RoutesConfig = () => {
         //!---------Accounts
         {
             path: '/accounts',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'account-transaction',
@@ -121,6 +154,7 @@ const RoutesConfig = () => {
         //!---------CRM
         {
             path: '/crm',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'search-customer',
@@ -135,6 +169,7 @@ const RoutesConfig = () => {
         //!---------Tariff
         {
             path: '/tariff',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'charging-tariff',
@@ -154,10 +189,11 @@ const RoutesConfig = () => {
         //!---------CPO
         {
             path: '/cpo-support',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'active-session',
-                    element: <UnderConstruction />,
+                    element: <ActiveSession />,
                 },
                 {
                     path: 'remote-session',
@@ -169,6 +205,7 @@ const RoutesConfig = () => {
         //!---------Notification
         {
             path: '/notification',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'email-notification',
@@ -189,6 +226,7 @@ const RoutesConfig = () => {
         //!---------Settings
         {
             path: '/settings',
+            element: <DashboardLayout />,
             children: [
                 {
                     path: 'admin-manangement',

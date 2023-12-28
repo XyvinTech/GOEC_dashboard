@@ -15,11 +15,12 @@ const InputContainer = styled.div`
 
 const InputField = styled.input`
   
-color: var(--Color-Dark-Dark-2, #87898E);
+color: #FFFFFF;
 font-feature-settings: 'clig' off, 'liga' off;
 /* Small Caption/ Medium */
 font-family: Inter;
 font-size: 14px;
+width:100%;
 font-style: normal;
 font-weight: 400;
 line-height: 16px; /* 114.286% */
@@ -47,11 +48,11 @@ flex-shrink: 0;
 color:#87898E;
 `;
 
-const StyledInput = ({ icon, placeholder,iconright, ...props }) => {
+const StyledInput = ({ icon, placeholder,iconright,value, ...props }) => {
   return (
-    <InputContainer>
+    <InputContainer {...props}>
       {icon && <IconContainer>{icon}</IconContainer>}
-      <InputField placeholder={placeholder} {...props} />
+      <InputField placeholder={placeholder} value={value} {...props} />
       {iconright && <IconContainer>{iconright}</IconContainer>}
     </InputContainer>
   );

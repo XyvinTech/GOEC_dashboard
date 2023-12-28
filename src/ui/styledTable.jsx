@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React, { useState } from "react";
@@ -7,6 +7,7 @@ import StyledPagination from "./styledPagination";
 // StyledTable component
 const StyledTable = ({ headers, data }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [showAction, setShowAction] = useState(true);
   const [openMenuRowIndex, setOpenMenuRowIndex] = useState(null);
   // pagination
 
@@ -51,20 +52,24 @@ const StyledTable = ({ headers, data }) => {
             <tr key={rowIndex}>
               {headers.map((header, cellIndex) => {
                 const isStatusColumn = header.toLowerCase() === "status";
-
+                const isTerminateSession =
+                  header.toLowerCase() === "terminate session";
                 return (
                   <TableCell
                     key={`${rowIndex}-${header}`}
-                    isfirstcolumn={cellIndex === 0}
+                    $isfirstcolumn={cellIndex === 0}
                   >
-                     {isStatusColumn ? (
-                      <StatusChip status={row[header]}>{row[header]}</StatusChip>
+                    {isStatusColumn ? (
+                      <StatusChip $status={row[header]}>
+                        {row[header]}
+                      </StatusChip>
                     ) : (
                       row[header]
                     )}
                   </TableCell>
                 );
               })}
+              
               <ActionCell>
                 <IconButton
                   aria-label="more"
@@ -128,7 +133,7 @@ export const TableContainer = styled.div`
   background: #121212; // Dark background for the table
   overflow-x: auto; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
-  margin: 20px 0; // Margin for spacing, adjust as needed
+  margin: 16px 0; // Margin for spacing, adjust as needed
 `;
 
 // Styled table
@@ -169,7 +174,7 @@ export const TableCell = styled.td`
   font-weight: 400; // Regular font weight
   font-family: "Inter", sans-serif; // Use Inter font family
   color: ${(props) =>
-    props.isfirstcolumn
+    props.$isfirstcolumn // Use $ prefix for transient prop
       ? "#2D9CDB"
       : "rgba(181, 184, 197, 1)"}; // Blue text color for the first column, white for others
 `;
@@ -180,15 +185,15 @@ const StatusChip = styled.span`
   border-radius: 10px; // Adjust as needed for the chip look
   color: white;
   text-transform: uppercase;
- font-weight:500;
+  font-weight: 500;
   text-align: center;
   display: inline-block;
   min-width: 60px; // Set a minimum width for uniformity
 
   // Dynamically set the background color based on the status
-  background-color: ${props => {
+  background-color: ${(props) => {
     // Normalize the status to uppercase for case-insensitive comparison
-    const status = props.status.toUpperCase();
+    const status = props.$status.toUpperCase();
 
     if (["ACTIVE", "ONLINE", "ASSIGNED", "SUCCESS"].includes(status)) {
       return "rgba(24, 73, 45, 1)"; // Green for active or successful statuses
