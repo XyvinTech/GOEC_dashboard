@@ -280,7 +280,7 @@ const Sidebar = ({ open, onClose, ...props }) => {
                                 sub={item.sub}
                                 active={index === activeIndex}
                                 extendable={item.extendable}
-                                onClick={() => { index !== activeIndex && setActiveIndex(index) }}
+                                onClick={() => { index !== activeIndex && setActiveIndex(index);  index === activeIndex && onClose();}}
                                 indexChange={indexChange}
                             />
                         )
