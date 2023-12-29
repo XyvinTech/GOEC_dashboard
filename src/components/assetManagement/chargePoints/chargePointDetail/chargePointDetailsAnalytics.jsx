@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Typography, Stack } from "@mui/material";
 import { CalendarMonth } from "@mui/icons-material";
-export default function ChargeStationDetailsAnalytics() {
+
+export default function ChargePointDetailsAnalytics() {
   return (
     <Box sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>
       <Stack
@@ -22,8 +23,8 @@ export default function ChargeStationDetailsAnalytics() {
 
       <Box padding={2}>
         <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={{ xs: 2, md: 15 }}
+          direction={{ sm: "column", md: "row" }}
+          spacing={{ xs: 2, md: 5, lg: 20 }}
           sx={{ justifyContent: "center" }}
         >
           <Stack direction={"column"}>
