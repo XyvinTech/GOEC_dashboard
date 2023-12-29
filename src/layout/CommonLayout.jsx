@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import StyledButton from '../ui/styledButton';
 import StyledDivider from '../ui/styledDivider'; 
@@ -62,20 +62,16 @@ border-bottom-right-radius: var(--borderRadius, 4px);
 `;
 
 
-const CommonLayout = ({ header, children,onClose }) => {
-    const handleClose = () => {
-        // If onClose is provided and is a valid ID, hide the element with that ID
-        if (onClose && document.getElementById(onClose)) {
-          document.getElementById(onClose).style.display = 'none';
-        }
-      };
+const CommonLayout = ({ header, children,onClick }) => {
+   
+  
     return (
       <>
        <StyledLayout  >
             <StyledLayout2>
                 {header && 
                 <>
-                    <HeaderContainer>{header}<CloseCircle onClick={handleClose}/></HeaderContainer>
+                    <HeaderContainer>{header}<CloseCircle onClick={onClick}/></HeaderContainer>
                     <StyledDivider/>
                 </>
                 }

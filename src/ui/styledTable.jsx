@@ -67,7 +67,7 @@ const StyledTable = ({ headers, data, showActionCell=true }) => {
                 <td>
                   <StyledActionCell
                     id={row.id} // Assuming your row data has an 'id' property
-                    onEdit={(id) => alert(`Edit item with id: `)}
+                    onEdit={(id) => alert(`Edit item with id: ${id}`)}
                     onView={(id) => alert(`View item with id: `)}
                     onDelete={(id) => alert(`Delete item with id: `)}
                   />
