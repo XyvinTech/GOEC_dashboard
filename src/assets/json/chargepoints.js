@@ -390,3 +390,159 @@ export const transactionData = [
     'Closed by': 'CP'
   }
 ]
+
+export const chargerLogData = [
+  {
+    'CPID': 'go1',
+    'Time': 'Nov 16, 2022 7:09:36 AM',
+    'Command': 'HeartbeatConfirmation',
+    'Payload Data': '{currentTime: 2022-11-17T03:41:15.705Z}',
+    'Unique ID': '1668656494-54311937'
+  },
+  {
+    'CPID': 'go2',
+    'Time': 'Nov 17, 2022 8:15:45 AM',
+    'Command': 'StatusUpdate',
+    'Payload Data': '{status: "Charging", currentPower: 4.5}',
+    'Unique ID': '1668656494-54311938'
+  },
+  {
+    'CPID': 'go3',
+    'Time': 'Nov 18, 2022 3:30:22 PM',
+    'Command': 'ErrorNotification',
+    'Payload Data': '{errorCode: "E002", errorMessage: "Overcurrent detected"}',
+    'Unique ID': '1668656494-54311939'
+  },
+  {
+    'CPID': 'go4',
+    'Time': 'Nov 19, 2022 10:45:18 AM',
+    'Command': 'TransactionStart',
+    'Payload Data': '{userID: "12345", chargingTime: 0}',
+    'Unique ID': '1668656494-54311940'
+  },
+  {
+    'CPID': 'go5',
+    'Time': 'Nov 20, 2022 5:20:30 PM',
+    'Command': 'TransactionEnd',
+    'Payload Data': '{userID: "67890", chargedAmount: 12.30}',
+    'Unique ID': '1668656494-54311941'
+  },
+  {
+    'CPID': 'go6',
+    'Time': 'Nov 21, 2022 12:35:40 PM',
+    'Command': 'HeartbeatConfirmation',
+    'Payload Data': '{currentTime: 2022-11-22T09:12:09.123Z}',
+    'Unique ID': '1668656494-54311942'
+  },
+  {
+    'CPID': 'go7',
+    'Time': 'Nov 22, 2022 8:50:15 AM',
+    'Command': 'StatusUpdate',
+    'Payload Data': '{status: "Idle", currentPower: 0}',
+    'Unique ID': '1668656494-54311943'
+  },
+  {
+    'CPID': 'go8',
+    'Time': 'Nov 23, 2022 3:05:22 PM',
+    'Command': 'ErrorNotification',
+    'Payload Data': '{errorCode: "E101", errorMessage: "Communication failure"}',
+    'Unique ID': '1668656494-54311944'
+  },
+  {
+    'CPID': 'go9',
+    'Time': 'Nov 24, 2022 10:15:33 AM',
+    'Command': 'TransactionStart',
+    'Payload Data': '{userID: "54321", chargingTime: 0}',
+    'Unique ID': '1668656494-54311945'
+  },
+  {
+    'CPID': 'go10',
+    'Time': 'Nov 25, 2022 5:30:45 PM',
+    'Command': 'TransactionEnd',
+    'Payload Data': '{userID: "98765", chargedAmount: 8.75}',
+    'Unique ID': '1668656494-54311946'
+  },
+];
+
+export const alarmData = [
+  {
+    'CPID': 'GOEC67',
+    'Generated on': 'Nov 15, 2022 8:34:27 AM',
+    'Summary': 'Lorem ipsum dolor sit amet consectetur. Pharetra.',
+    'Connector ID': '1',
+    'Connector status': 'Available',
+    'Error code': 'OverVoltage'
+  },
+  {
+    'CPID': 'GOEC68',
+    'Generated on': 'Nov 16, 2022 9:45:15 AM',
+    'Summary': 'Nulla facilisi. Sed eu ligula in risus finibus ultrices.',
+    'Connector ID': '2',
+    'Connector status': 'Occupied',
+    'Error code': 'E003'
+  },
+  {
+    'CPID': 'GOEC69',
+    'Generated on': 'Nov 17, 2022 2:20:40 PM',
+    'Summary': 'Aenean vel libero vel turpis consequat ullamcorper.',
+    'Connector ID': '3',
+    'Connector status': 'Faulted',
+    'Error code': 'E102'
+  },
+  {
+    'CPID': 'GOEC70',
+    'Generated on': 'Nov 18, 2022 4:55:22 PM',
+    'Summary': 'Proin lacinia nisl id urna tristique venenatis.',
+    'Connector ID': '4',
+    'Connector status': 'Available',
+    'Error code': 'UnderVoltage'
+  },
+  {
+    'CPID': 'GOEC71',
+    'Generated on': 'Nov 19, 2022 11:10:18 AM',
+    'Summary': 'Duis efficitur libero et risus tincidunt, ut consectetur ex varius.',
+    'Connector ID': '1',
+    'Connector status': 'Occupied',
+    'Error code': 'E004'
+  },
+  {
+    'CPID': 'GOEC72',
+    'Generated on': 'Nov 20, 2022 6:30:30 PM',
+    'Summary': 'Integer congue elit ut tortor pharetra, a luctus odio mattis.',
+    'Connector ID': '2',
+    'Connector status': 'Available',
+    'Error code': 'E103'
+  },
+  {
+    'CPID': 'GOEC73',
+    'Generated on': 'Nov 21, 2022 1:45:40 PM',
+    'Summary': 'Vivamus rhoncus est eu lacus vestibulum, at cursus sapien laoreet.',
+    'Connector ID': '3',
+    'Connector status': 'Faulted',
+    'Error code': 'OverCurrent'
+  },
+  {
+    'CPID': 'GOEC74',
+    'Generated on': 'Nov 22, 2022 9:25:15 AM',
+    'Summary': 'Suspendisse potenti. Sed id ex vel turpis commodo accumsan.',
+    'Connector ID': '4',
+    'Connector status': 'Occupied',
+    'Error code': 'E005'
+  },
+  {
+    'CPID': 'GOEC75',
+    'Generated on': 'Nov 23, 2022 3:55:22 PM',
+    'Summary': 'Curabitur ultrices felis in lorem vehicula, id euismod lectus pulvinar.',
+    'Connector ID': '1',
+    'Connector status': 'Available',
+    'Error code': 'E104'
+  },
+  {
+    'CPID': 'GOEC76',
+    'Generated on': 'Nov 24, 2022 10:05:33 AM',
+    'Summary': 'Fusce malesuada mauris sit amet velit ullamcorper bibendum.',
+    'Connector ID': '2',
+    'Connector status': 'Occupied',
+    'Error code': 'UnderCurrent'
+  },
+];
