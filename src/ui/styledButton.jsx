@@ -106,8 +106,8 @@ ${(props) => {
     css`
       background-image: linear-gradient(
         100deg,
-        #8e2de2,
-        #4a00e0
+        #ED5DCD -2.24%,
+         rgba(95, 93, 215, 0.71) 98.06%
       ); 
       color: white;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);

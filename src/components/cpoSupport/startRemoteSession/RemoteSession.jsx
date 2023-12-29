@@ -8,6 +8,7 @@ import StyledPhoneNumber from "../../../ui/StyledPhoneNumber";
 import LastSynced from "../../../layout/LastSynced";
 import StyledDivider from "../../../ui/styledDivider";
 import { ReactComponent as SearchButtonIcon } from "../../../assets/icons/searchGlass.svg";
+
 export default function RemoteSession() {
   const handlePhoneNumberChange = (e) => {
     console.log(e.target.value);
