@@ -17,7 +17,7 @@ export default function AllChargeStation() {
   const navigate = useNavigate()
   const tableActionClick = (e)=>{
     if(e.action==='View'){
-      navigate('/charge-point-detail')
+      navigate('/charge-station-detail')
     }
   }
   return (
