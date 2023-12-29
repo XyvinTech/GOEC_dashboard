@@ -8,37 +8,36 @@ import StyledFooter from "../../../ui/StyledFooter";
 import StyledButton from "../../../ui/styledButton";
 import StyledSwitch from "../../../ui/styledSwitch";
 
-const EditRfidCard = ({Close,Save}) => {
+const EditVidCards = ({Close,Save}) => {
+    const [checked, setChecked] = useState(true);
 
-  const [checked, setChecked] = useState(true);
-
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  // date update
-  const [parentDateValue, setParentDateValue] = useState('15-02-2024');
-
-  const handleDateChangeInParent = (formattedDate) => {
-    setParentDateValue(formattedDate);
-  };
+    const handleChange = (event) => {
+      setChecked(event.target.checked);
+    };
+  
+    // date update
+    const [parentDateValue, setParentDateValue] = useState('15-11-2024');
+  
+    const handleDateChangeInParent = (formattedDate) => {
+      setParentDateValue(formattedDate);
+    };
 
   return (
     <>
-      <CommonLayout header="Edit RFID Card"  onClick={Close}>
-        <Typography align="left">RFID tag</Typography>
-        <StyledInput placeholder="Enter RFID Tag" value="2324235345" />
+      <CommonLayout header="Edit VID Tag"  onClick={Close}>
+        <Typography align="left">VID </Typography>
+        <StyledInput placeholder="Enter VID " value="2324235345" />
         <Typography align="left">Serial number</Typography>
         <StyledInput placeholder="Enter Serial number" value="2324235345" />
-        <Typography align="left">RFID Expiry date</Typography>
+        <Typography align="left">VID Expiry date</Typography>
         <StyledInput
-          placeholder="Enter RFID Expiry date"
+          placeholder="Enter VID Expiry date"
           iconright={<CalendarInput dateValue={parentDateValue} onDateChange={handleDateChangeInParent} />}
           value={parentDateValue}
         />
         <Grid container spacing={2} direction="row">
           <Grid item xs={6}>
-            <Typography align="left">Activate RFID</Typography>
+            <Typography align="left">Activate VID</Typography>
           </Grid>
           <Grid item xs={6} textAlign={"right"} justifyContent={"flex-end"} display={"flex"}>
             <StyledSwitch/>
@@ -54,9 +53,7 @@ const EditRfidCard = ({Close,Save}) => {
         </StyledButton>
       </StyledFooter>
     </>
-  );
-};
+  )
+}
 
-
-
-export default EditRfidCard;
+export default EditVidCards
