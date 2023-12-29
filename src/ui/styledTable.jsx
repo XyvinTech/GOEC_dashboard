@@ -68,7 +68,7 @@ const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=
                   <StyledActionCell
                   actions={actions}
                     id={row.id} // Assuming your row data has an 'id' property
-                    onCliked={(e)=>{onActionClick({data:row, ...e}) }}
+                    onCliked={ (e)=>{onActionClick && onActionClick({data:row, ...e}) }}
                   />
                 </td>
               )}

@@ -14,7 +14,12 @@ import ChargePointDetailsConnectors from './chargePointDetail/chargePointDetails
 import ChargerLog from './chargePointDetail/chargerLog'
 import Alarm from './chargePointDetail/alarm'
 import Tariff from './chargePointDetail/tariff'
+
+import { useNavigate } from 'react-router-dom'
+
+
 export default function ChargePointDetail() {
+    const navigate = useNavigate()
     const [toggleOption, setToggleoption] = useState(0)
     const onChangeToggleOption = (e) => {
         setToggleoption(e.index)
@@ -22,7 +27,7 @@ export default function ChargePointDetail() {
     return (
         <>
             <Stack direction={'row'} sx={{ backgroundColor: 'secondary.main', p: 3 }} spacing={2}>
-                <ArrowBackIosNew sx={{ cursor: 'pointer' }} />
+                <ArrowBackIosNew sx={{ cursor: 'pointer' }} onClick={() => { navigate(-1) }} />
                 <Typography variant='h6' color={'secondary.contrastText'}>Charge Point Details</Typography>
             </Stack>
             <Grid container spacing={2} sx={{ p: { xs: 1, md: 4 }}}>

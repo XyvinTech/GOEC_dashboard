@@ -4,12 +4,7 @@ import { useState } from "react";
 export default function StyledTab({ buttons, onChanged, ...props }) {
   const [activeInd, setActiveInd] = useState(0);
   return (
-    <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", pl: 2 }}>
-      <ButtonGroup
-        variant="outlined"
-        aria-label="outlined primary button group"
-        {...props}
-      >
+    <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", justifyContent:{xs:'center',md:'flex-start'} }}>
         {buttons.map((item, ind) => {
           let isActive = ind === activeInd;
           return (
@@ -41,7 +36,6 @@ export default function StyledTab({ buttons, onChanged, ...props }) {
             </Button>
           );
         })}
-      </ButtonGroup>
     </Stack>
   );
 }
