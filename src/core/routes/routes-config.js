@@ -13,13 +13,14 @@ import ChargeStationDetail from "../../components/assetManagement/chargeStations
 import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
 import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
-import RemoteSession from "../../components/cpoSupport/startRemoteSession/RemoteSession";
 import RfidCards from "../../pages/RfidCards";
 import CTax from "../../pages/cTax";
 import VidCards from "../../pages/VidCards";
 import EvChargers from "../../pages/EvChargers";
 import Vehicles from "../../pages/EvVehicles";
 import Manufactures from "../../pages/Manufactures";
+import StartRemoteSession from "../../pages/StartRemoteSession";
+import ActiveSessionPage from "../../pages/ActiveSession";
 
 
 const RoutesConfig = () => {
@@ -197,11 +198,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'active-session',
-                    element: <ActiveSession />,
+                    element: <ActiveSessionPage />,
                 },
                 {
                     path: 'remote-session',
-                    element: <RemoteSession />,
+                    element: <StartRemoteSession />,
                 },
 
             ]
@@ -225,7 +226,13 @@ const RoutesConfig = () => {
         //!---------Report
         {
             path: '/report',
-            element: <UnderConstruction />
+            element: <DashboardLayout />,
+            children: [
+                {
+                    path: '',
+                    element: <UnderConstruction />,
+                }
+            ]
         },
         //!---------Settings
         {
@@ -251,7 +258,13 @@ const RoutesConfig = () => {
         //!---------Help
         {
             path: '/help',
-            element: <UnderConstruction />
+            element: <DashboardLayout />,
+            children: [
+                {
+                    path: '',
+                    element: <UnderConstruction />,
+                }
+            ]
         },
         //!---------404 Not Found
         {
