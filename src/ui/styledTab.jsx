@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function StyledTab({ buttons, onChanged, ...props }) {
   const [activeInd, setActiveInd] = useState(0);
   return (
-    <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", pl: 2 }}>
+    <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
       <ButtonGroup
         variant="outlined"
         aria-label="outlined primary button group"

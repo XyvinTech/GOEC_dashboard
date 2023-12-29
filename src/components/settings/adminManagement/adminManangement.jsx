@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Box, Modal, Stack, Typography } from "@mui/material";
-import StyledTable from "../../../ui/styledTable";
 import LastSynced from "../../../layout/LastSynced";
-import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
-import StyledDivider from "../../../ui/styledDivider";
-import AddTariff from "./addTariff";
+import { Box, Modal, Stack, Typography } from "@mui/material";
 import StyledButton from "../../../ui/styledButton";
-function ChargingTariff({ data, headers }) {
+import StyledTable from "../../../ui/styledTable";
+import StyledDivider from "../../../ui/styledDivider";
+import AddAdmin from "./addAdmin";
+import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
+
+export default function AdminManangement({ data, headers }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -27,14 +28,13 @@ function ChargingTariff({ data, headers }) {
       setTableData(e.data);
     }
   };
-
   return (
     <>
-      <LastSynced heading="Charge Tariff" showSearchField={true} />
-      <Box sx={{ p: 3 }}>
+      <LastSynced heading="Admin Management" />
+      <Box sx={{p:3}}>
         <Box display="flex" justifyContent="flex-end">
           <StyledButton
-            variant="primary"
+            variant="secondary"
             width="150"
             mr="10"
             onClick={handleOpen}
@@ -48,7 +48,6 @@ function ChargingTariff({ data, headers }) {
           onActionClick={handleClick}
         />
       </Box>
-
       {/* Modal */}
       <Modal
         open={open}
@@ -71,19 +70,17 @@ function ChargingTariff({ data, headers }) {
                 fontWeight: 700,
               }}
             >
-              Add Tariff
+              Add New Admin
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTariff action={action} data={tableData} />
+          <AddAdmin action={action} data={tableData} />
         </Box>
       </Modal>
     </>
   );
 }
-
-export default ChargingTariff;
 
 // Modal style
 const modalStyle = {
