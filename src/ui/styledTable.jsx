@@ -5,7 +5,7 @@ import StyledStopButton from "./styledStopButton";
 import StyledActionCell from "./styledActionCell";
 import StyledStatusChip from "./styledStatusChip";
 // StyledTable component
-const StyledTable = ({ headers, data, showActionCell=true }) => {
+const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=['Edit','View','Delete'] }) => {
   const [page, setPage] = useState(0);
   const rowsPerPage = 10;
   const paginatedData = data.slice(
@@ -66,10 +66,9 @@ const StyledTable = ({ headers, data, showActionCell=true }) => {
               {showActionCell && (
                 <td>
                   <StyledActionCell
+                  actions={actions}
                     id={row.id} // Assuming your row data has an 'id' property
-                    onEdit={(id) => alert(`Edit item with id: ${id}`)}
-                    onView={(id) => alert(`View item with id: `)}
-                    onDelete={(id) => alert(`Delete item with id: `)}
+                    onCliked={(e)=>{onActionClick({data:row, ...e}) }}
                   />
                 </td>
               )}

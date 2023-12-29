@@ -3,6 +3,7 @@ import React from 'react'
 import StyledTable from '../../../ui/styledTable'
 import LastSynced from '../../../layout/LastSynced'
 import { ChargeStationData } from '../../../assets/json/chargestations'
+import { useNavigate } from 'react-router-dom'
 
 const tableHeader = [
   'Charge Station',
@@ -13,13 +14,19 @@ const tableHeader = [
 ]
 
 export default function AllChargeStation() {
+  const navigate = useNavigate()
+  const tableActionClick = (e)=>{
+    if(e.action==='View'){
+      navigate('/charge-point-detail')
+    }
+  }
   return (
     <>
 
 <LastSynced heading="Charge Stations" showSearchField={true} />
 
       <Box sx={{p:3}}>
-        <StyledTable headers={tableHeader} data={ChargeStationData}/>
+        <StyledTable headers={tableHeader} data={ChargeStationData} onActionClick={tableActionClick}/>
       </Box>
     </>
   )
