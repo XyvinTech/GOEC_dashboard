@@ -41,7 +41,7 @@ const StyledActionCell = ({ actions, onCliked }) => {
         }}
       >
         {actions.map((item, index) => (
-          <MenuItem onClick={() => { onCliked({ index: index, action: item }); handleClose(); }}>{item}</MenuItem>
+          <MenuItem key={index} onClick={() => { onCliked({ index: index, action: item }); handleClose(); }}>{item}</MenuItem>
         ))
         }
       </Menu>

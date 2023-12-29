@@ -5,9 +5,8 @@ import Select from 'react-select';
 const PhoneNumberContainer = styled.div`
   display: flex;
   height: 56px;
-  padding: 16px;
+  padding: 0px;
   align-items: center;
-  gap: 8px;
   border-radius: var(--borderRadius, 4px);
   background: var(--Field-inner, #39383D);
   border: 1px solid var(--White-20, rgba(255, 255, 255, 0.20));

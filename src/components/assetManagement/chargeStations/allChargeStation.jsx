@@ -10,7 +10,8 @@ const tableHeader = [
   'Address',
   'Longitude',
   'Latitude',
-  'Owner'
+  'Owner',
+  'status'
 ]
 
 export default function AllChargeStation() {

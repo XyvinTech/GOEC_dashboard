@@ -128,6 +128,9 @@ export const HeaderCell = styled.th`
   // Optionally, if using flexbox in your table:
   flex-grow: 1; // Allows the cell to grow to fit available space
   padding: 20px 90px 20px 10px;
+  &::first-letter {
+    text-transform: uppercase;
+  }
 `;
 
 // Styled table body
