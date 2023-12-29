@@ -1,17 +1,12 @@
 import styled from "styled-components";
-import {
-  Container,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Container, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import InputField from "../../../ui/styledInput";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledButton from "../../../ui/styledButton";
 import StyledPhoneNumber from "../../../ui/StyledPhoneNumber";
 import LastSynced from "../../../layout/LastSynced";
-import StyledSearchField from "../../../ui/styledSearchField";
+import { ReactComponent as SearchButtonIcon } from "../../../assets/icons/searchGlass.svg";
 import StyledDivider from "../../../ui/styledDivider";
 export default function RemoteSession() {
   const handlePhoneNumberChange = (e) => {
@@ -24,23 +19,19 @@ export default function RemoteSession() {
       <TableContainer>
         <Container maxWidth="lg">
           <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              sm
-              container
-              spacing={6}
-            >
+            <Grid item xs={12} sm container spacing={6}>
               {/*First Section */}
               <Grid item xs={6} md={6}>
                 <Grid
                   item
                   xs={12}
                   md={12}
-                  sx={{ backgroundColor: "black", padding: 4, margin: 2 }}
+                  sx={{ backgroundColor: "#1C1D22", padding: 4, margin: 2 }}
                 >
-                  <Typography sx={{ mt: 1, mb: 1 }}>Start Remote Session</Typography>
-                <StyledDivider/>
+                  <Typography sx={{ mt: 1, mb: 1 }}>
+                    Start Remote Session
+                  </Typography>
+                  <StyledDivider />
                   <Typography sx={{ mt: 1, mb: 1 }}>Phone number</Typography>
                   <Grid container spacing={2} item xs={12} md={12}>
                     <Grid item xs={12} md={9}>
@@ -50,8 +41,8 @@ export default function RemoteSession() {
                       />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                      <StyledButton variant="primary" width="121" height="56">
-                        search
+                      <StyledButton variant="primary" width="70" height="56">
+                        <SearchButtonIcon />
                       </StyledButton>
                     </Grid>
                   </Grid>
@@ -59,13 +50,13 @@ export default function RemoteSession() {
               </Grid>
 
               {/* Other Sections */}
-              <Grid
-                item
-                xs={6}
-                md={6}
-                
-              >
-                <Grid item xs={12} md={12}sx={{ backgroundColor: "black", padding: 4 , margin: 2 }}>
+              <Grid item xs={6} md={6}>
+                <Grid
+                  item
+                  xs={12}
+                  md={12}
+                  sx={{ backgroundColor: "black", padding: 4, margin: 2 }}
+                >
                   <Typography sx={{ mt: 3, mb: 1 }}>User Name</Typography>
                   <Stack direction="column">
                     <StyledSelectField placeholder={"Anish Vikende"} />
