@@ -30,22 +30,26 @@ export default function ChargePointDetail() {
                 <ArrowBackIosNew sx={{ cursor: 'pointer' }} onClick={() => { navigate(-1) }} />
                 <Typography variant='h6' color={'secondary.contrastText'}>Charge Point Details</Typography>
             </Stack>
-            <Grid container spacing={2} sx={{ p: { xs: 1, md: 4 }}}>
-                <Grid item xs={12} md={6} >
+            <Grid container spacing={2} sx={{ p: { xs: 1, md: 4 } }}>
+                <Grid item xs={12} md={5} >
                     <ChargePointDetailsCard />
                 </Grid>
-                <Grid item xs={12} md={6} >
-                    <Stack direction={'column'} spacing={1.5}>
-                        <Stack direction={{ sx: 'column', md: 'row' }} spacing={1.5}>
+                <Grid item xs={12} md={7} >
+                    <Grid container spacing={1.5}>
+                        <Grid item xs={12} md={5}>
                             <ChargePointDetailsAction />
+                        </Grid>
+                        <Grid item xs={12} md={7}>
                             <ChargePointDetailsConnectors />
-                        </Stack>
-                        <ChargePointDetailsAnalytics />
-                    </Stack>
+                        </Grid>
+                        <Grid item xs={12} md={12}>
+                            <ChargePointDetailsAnalytics />
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
             <StyledTab buttons={['CP Action', 'CP config', 'Transaction', 'Charger logs', 'Alarm', 'Tariff']} onChanged={onChangeToggleOption} />
-            {toggleOption === 0 ? <CPAction /> : toggleOption === 1 ? <CPConfig /> : toggleOption === 2 ? <Transactions />: toggleOption === 3 ? <ChargerLog/>: toggleOption === 4 ?<Alarm/>:<Tariff/>}
+            {toggleOption === 0 ? <CPAction /> : toggleOption === 1 ? <CPConfig /> : toggleOption === 2 ? <Transactions /> : toggleOption === 3 ? <ChargerLog /> : toggleOption === 4 ? <Alarm /> : <Tariff />}
         </>
     )
 }

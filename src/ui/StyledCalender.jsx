@@ -62,8 +62,8 @@ function Day(props) {
   );
 }
 
-export default function WeekPicker({ onDateChange, ...props }) {
-  const [hoveredDay, setHoveredDay] = React.useState(null);
+export default function StyledCalender({ onDateChange, ...props }) {
+
   const [startDate, setStartDate] = React.useState(dayjs(new Date().setDate(new Date().getDate() - 6)));
   const [endDate, setEndDate] = React.useState(dayjs(Date()));
   const dateChange = (newValue) => {
