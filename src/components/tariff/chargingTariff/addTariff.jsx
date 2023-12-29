@@ -12,7 +12,7 @@ export default function AddTariff({action, data}) {
         <Grid container spacing={4}>
           <Grid item md={12}>
             <Typography sx={{ marginBottom: 1 }}>Name</Typography>
-            <InputField placeholder={"Enter Name"} value={action==="edit"? data.name: ""}/>
+            <InputField placeholder={"Enter Name"} value={action==="edit"? data.Name: ""}/>
           </Grid>
           <Grid item md={12}>
             <Typography sx={{ marginBottom: 1 }}>Value (per kWH)</Typography>
@@ -24,7 +24,7 @@ export default function AddTariff({action, data}) {
           </Grid>
           <Grid item md={12}>
             <Typography sx={{ marginBottom: 1 }}>TAX</Typography>
-            <StyledSelectField placeholder={"None"} value={action==="edit"? data.tax: ""}/>
+            <StyledSelectField placeholder={"None"} value={action==="edit"? data.Tax: ""}/>
           </Grid>
           <Grid
             item

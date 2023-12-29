@@ -7,6 +7,8 @@ import StyledDivider from "../../../ui/styledDivider";
 import AddTariff from "./addTariff";
 function ChargingTariff({ data, headers }) {
   const [open, setOpen] = useState(false);
+  const [action, setAction] = useState("add");
+  const [tableData, setTableData] = useState();
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);
@@ -17,12 +19,14 @@ function ChargingTariff({ data, headers }) {
     setOpen(false);
   };
 
-  const dummyData = {
-    name: "Jack Hugh",
-    value: "40 kWH",
-    fee: "40 Rs",
-    tax: "10%",
-  };
+  const handleClick = (e)=>{
+    if(e.action==='Edit'){
+      setAction("edit")
+      setOpen(true)
+      setTableData(e.data)
+    }
+  }
+
 
   return (
     <>
@@ -33,7 +37,7 @@ function ChargingTariff({ data, headers }) {
         handleClick={handleOpen}
       />
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={headers} data={data} />
+        <StyledTable headers={headers} data={data} onActionClick={handleClick}/>
       </Box>
 
       {/* Modal */}
@@ -63,7 +67,7 @@ function ChargingTariff({ data, headers }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTariff action={"add"} data={dummyData}/>
+          <AddTariff action={action} data={tableData}/>
         </Box>
       </Modal>
     </>
