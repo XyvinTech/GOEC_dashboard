@@ -14,7 +14,7 @@ export default function AddTax({ action, data }) {
             <Typography sx={{ marginBottom: 1 }}>Name</Typography>
             <InputField
               placeholder={"Enter Name"}
-              value={action === "edit" ? data.name : ""}
+              value={action === "edit" ? data.Name : ""}
             />
           </Grid>
           <Grid item md={12}>
@@ -23,7 +23,7 @@ export default function AddTax({ action, data }) {
             </Typography>
             <InputField
               placeholder={"Enter Percentage"}
-              value={action === "edit" ? data.percentage : ""}
+              value={action === "edit" ? data.Percentage : ""}
             />
           </Grid>
           <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
