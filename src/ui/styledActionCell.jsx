@@ -1,9 +1,9 @@
 // ActionCell.jsx
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-const StyledActionCell = ({ id, onEdit, onView, onDelete }) => {
+const StyledActionCell = ({ actions, onCliked }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -40,9 +40,10 @@ const StyledActionCell = ({ id, onEdit, onView, onDelete }) => {
           },
         }}
       >
-        <MenuItem onClick={() => { onEdit(id); handleClose(); }}>Edit</MenuItem>
-        <MenuItem onClick={() => { onView(id); handleClose(); }}>View</MenuItem>
-        <MenuItem onClick={() => { onDelete(id); handleClose(); }}>Delete</MenuItem>
+        {actions.map((item, index) => (
+          <MenuItem onClick={() => { onCliked({ index: index, action: item }); handleClose(); }}>{item}</MenuItem>
+        ))
+        }
       </Menu>
     </>
   );
