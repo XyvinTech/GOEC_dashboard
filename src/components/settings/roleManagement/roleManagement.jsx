@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import LastSynced from "../../../layout/LastSynced";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 import StyledTable from "../../../ui/styledTable";
-import LastSynced from "../../../layout/LastSynced";
-import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
-import StyledDivider from "../../../ui/styledDivider";
-import AddTariff from "./addTariff";
 import StyledButton from "../../../ui/styledButton";
-function ChargingTariff({ data, headers }) {
+import { useState } from "react";
+import StyledDivider from "../../../ui/styledDivider";
+import AddRole from "./addRole";
+import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
+
+export default function RoleManagement({ headers, data }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -27,14 +29,13 @@ function ChargingTariff({ data, headers }) {
       setTableData(e.data);
     }
   };
-
   return (
     <>
-      <LastSynced heading="Charge Tariff" showSearchField={true} />
-      <Box sx={{ p: 3 }}>
+      <LastSynced heading="Role Management" showSearchField={true} />
+      <Box sx={{p:3}}>
         <Box display="flex" justifyContent="flex-end">
           <StyledButton
-            variant="primary"
+            variant="secondary"
             width="150"
             mr="10"
             onClick={handleOpen}
@@ -48,7 +49,6 @@ function ChargingTariff({ data, headers }) {
           onActionClick={handleClick}
         />
       </Box>
-
       {/* Modal */}
       <Modal
         open={open}
@@ -71,19 +71,17 @@ function ChargingTariff({ data, headers }) {
                 fontWeight: 700,
               }}
             >
-              Add Tariff
+              Add New Admin
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTariff action={action} data={tableData} />
+          <AddRole action={action} data={tableData} />
         </Box>
       </Modal>
     </>
   );
 }
-
-export default ChargingTariff;
 
 // Modal style
 const modalStyle = {

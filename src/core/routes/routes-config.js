@@ -21,6 +21,9 @@ import Vehicles from "../../pages/EvVehicles";
 import Manufactures from "../../pages/Manufactures";
 import StartRemoteSession from "../../pages/StartRemoteSession";
 import ActiveSessionPage from "../../pages/ActiveSession";
+import AMSettings from "../../pages/AMSettings";
+import AASettings from "../../pages/AASettings";
+import RMSettings from "../../pages/RMSettings";
 
 
 const RoutesConfig = () => {
@@ -241,15 +244,15 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'admin-manangement',
-                    element: <UnderConstruction />,
+                    element: <AMSettings />,
                 },
                 {
                     path: 'role-management',
-                    element: <UnderConstruction />,
+                    element: <RMSettings />,
                 },
                 {
                     path: 'admin-activity',
-                    element: <UnderConstruction />,
+                    element: <AASettings />,
                 },
 
             ]

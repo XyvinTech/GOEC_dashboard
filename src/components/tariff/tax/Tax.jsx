@@ -6,6 +6,7 @@ import StyledDivider from "../../../ui/styledDivider";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
 
 import AddTax from "./addTax";
+import StyledButton from "../../../ui/styledButton";
 function Tax({ data, headers }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
@@ -20,24 +21,33 @@ function Tax({ data, headers }) {
     setOpen(false);
   };
 
-  const handleClick = (e)=>{
-    if(e.action==='Edit'){
-      setAction("edit")
-      setOpen(true)
-      setTableData(e.data)
+  const handleClick = (e) => {
+    if (e.action === "Edit") {
+      setAction("edit");
+      setOpen(true);
+      setTableData(e.data);
     }
-  }
+  };
 
   return (
     <>
-      <LastSynced
-        heading="Tax"
-        showSearchField={true}
-        showButton={true}
-        handleClick={handleOpen}
-      />
+      <LastSynced heading="Tax" showSearchField={true} />
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={headers} data={data} onActionClick={handleClick}/>
+        <Box display="flex" justifyContent="flex-end">
+          <StyledButton
+            variant="primary"
+            width="150"
+            mr="10"
+            onClick={handleOpen}
+          >
+            Add
+          </StyledButton>
+        </Box>
+        <StyledTable
+          headers={headers}
+          data={data}
+          onActionClick={handleClick}
+        />
       </Box>
       {/* Modal */}
       <Modal
