@@ -15,7 +15,7 @@ export default function AllChargerLogs({ChargerLogsData}) {
   return (
     <>
     
-    <LastSynced heading="Charging Transactions" showSearchField={true} />
+    <LastSynced heading="Charging Transactions" showSearchField showFilterButton/>
       <Box sx={{ p: 3 }}>
         <StyledTable
         showActionCell={false}

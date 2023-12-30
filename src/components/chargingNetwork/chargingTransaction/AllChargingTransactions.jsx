@@ -5,7 +5,7 @@ import { Box, Modal, Stack, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import StyledDivider from "../../../ui/styledDivider";
 import ChargingSummary from "./ChargingSummary";
-
+import FilterNetwork from "../FilterNetwork";
 const tableHeader = [
   "Transaction ID",
   "Date",
@@ -40,7 +40,7 @@ export default function AllChargingTransactions({ ChargeStationData }) {
 
   return (
     <>
-      <LastSynced heading="Charging Transactions" showSearchField={true} />
+      <LastSynced heading="Charging Transactions" showSearchField showFilterButton  />
       <Box sx={{ p: 3 }}>
         <StyledTable
           headers={tableHeader}

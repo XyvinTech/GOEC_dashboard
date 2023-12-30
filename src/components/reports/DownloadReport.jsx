@@ -1,21 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  MenuItem,
-  Stack,
-  TextField,
-  Typography,
-  Paper,
+
+  Stack
+
 } from "@mui/material";
 import InputField from "../../ui/styledInput";
 import StyledSelectField from "../../ui/styledSelectField";
 import StyledButton from "../../ui/styledButton";
 import LastSynced from "../../layout/LastSynced";
-import { ReactComponent as Calendar } from "../../assets/icons/calendar.svg";
 import { ReactComponent as CalendarMonth } from "../../assets/icons/calendar_month.svg";
 
 export default function DownloadReport() {
