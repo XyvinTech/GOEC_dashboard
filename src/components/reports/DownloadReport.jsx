@@ -1,10 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {
-
-  Stack
-
-} from "@mui/material";
+import { Stack } from "@mui/material";
 import InputField from "../../ui/styledInput";
 import StyledSelectField from "../../ui/styledSelectField";
 import StyledButton from "../../ui/styledButton";
@@ -21,6 +17,11 @@ export default function DownloadReport() {
     { value: "option6", label: "Charge points" },
   ];
 
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.label);
+  };
   return (
     <>
       <LastSynced heading="Reports" />
@@ -34,6 +35,8 @@ export default function DownloadReport() {
             <StyledSelectField
               placeholder={"Select Report"}
               options={options}
+              value={selectedOption}
+              onChange={handleSelectChange}
             />
           </FormContainer>
           <FormContainer>
@@ -48,17 +51,27 @@ export default function DownloadReport() {
               iconright={<CalendarMonth />}
               placeholder={"mm/dd/yyyy"}
             />
-            <Label>Location</Label>
-            <StyledSelectField
-              placeholder={"Select Report"}
-              options={options}
-            />
 
-            <Label>CPID</Label>
-            <StyledSelectField
-              placeholder={"Select Report"}
-              options={options}
-            />
+            {selectedOption !== "Account Transaction" &&
+              selectedOption !== "User Registration" && (
+                <>
+                  <Label>Location</Label>
+                  <StyledSelectField
+                    placeholder={"Select Report"}
+                    options={options}
+                  />
+                </>
+              )}
+
+            {selectedOption === "Alarms" && (
+              <>
+                <Label>CPID</Label>
+                <StyledSelectField
+                  placeholder={"Select Report"}
+                  options={options}
+                />
+              </>
+            )}
 
             <StyledButton variant="primary" fontSize="14">
               Download
