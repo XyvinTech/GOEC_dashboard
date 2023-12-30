@@ -25,9 +25,9 @@ export default function Location() {
     <>
       <TableContainer>
         <LastSynced heading="Location" />
-        <Container fixed>
+        <Container >
           <Grid
-            container
+            Container
             spacing={4}
             sx={{
               alignItems: "center",
@@ -39,6 +39,8 @@ export default function Location() {
             }}
           >
             <Grid item md={12}>
+            <Typography sx={{ marginBottom: 1 }}>Locations</Typography>
+
               <StyledSelectField placeholder={"Select Locations"} />
             </Grid>
             <Grid item md={12}>
@@ -111,6 +113,7 @@ export const TableContainer = styled.div`
   background: #27292f; // Dark background for the table
   overflow-x: auto; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
+
 `;
 
 // Modal style
@@ -126,3 +129,14 @@ const modalStyle = {
   color: "#fff", // White text for better visibility on dark background
   outline: "none", // Remove the focus ring
 };
+
+export const FormContainer = styled.div`
+  display: inline-flex;
+  padding: 30px 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 4px;
+  background: #1c1d22;
+`;

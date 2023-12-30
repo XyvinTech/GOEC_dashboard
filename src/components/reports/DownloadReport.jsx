@@ -9,6 +9,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Paper,
 } from "@mui/material";
 import InputField from "../../ui/styledInput";
 import StyledSelectField from "../../ui/styledSelectField";
@@ -42,7 +43,6 @@ export default function DownloadReport() {
               options={options}
             />
           </FormContainer>
-
           <FormContainer>
             <Label>Start date</Label>
             <InputField
@@ -67,9 +67,7 @@ export default function DownloadReport() {
               options={options}
             />
 
-            <StyledButton variant="primary" 
-            fontSize='14'
-            >
+            <StyledButton variant="primary" fontSize="14">
               Download
             </StyledButton>
           </FormContainer>
@@ -94,8 +92,8 @@ export const FormContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 17px;
-
-  border-radius: var(--borderRadius, 4px);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 4px;
   background: #1c1d22;
 `;
 
