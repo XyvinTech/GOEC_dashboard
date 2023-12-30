@@ -2,14 +2,17 @@ import { useState } from 'react';
 import { Box, Button, Drawer, Stack, Typography, useMediaQuery } from '@mui/material';
 
 const items = [
-    'Charger Availability',
-    'Trigger Message',
-    'Get Diagnostics',
-    'send Localist',
-    'Update Firmware'
+    'User info',
+    'Account Transaction',
+    'Charging Transactions',
+    'Favourites',
+    'Reviews',
+    'Tariff',
+    'Assigned ID Tags',
+    'VR details',
 ]
 
-export default function CPSidebar({ open, onClose, ...props }) {
+export default function UserSidebar({ open, onClose, ...props }) {
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
         defaultMatches: true,
         noSsr: false
@@ -28,14 +31,14 @@ export default function CPSidebar({ open, onClose, ...props }) {
                     height: '100%',
                 }}
             >
-                <Stack sx={{ flexGrow: 1, maxHeight: 'calc(100vh - 15px)', overflowY: 'auto' , justifyContent:'center',p:3 }} spacing={2}>
+                <Stack sx={{ flexGrow: 1, maxHeight: 'calc(100vh - 15px)',p:3 }} spacing={2}>
                     {items.map((item, index) => {
                         return (
                             <Button sx={{
                                 backgroundColor: activeIndex === index ? 'secondary.button' : 'secondary.main',
                                 borderRadius: 1,
                                 height: '45px',
-                                width: '180px',
+                                width: '200px',
                                 my: 0.5,
                                 justifyContent: "flex-start",
                                 fontSize:'14px',
@@ -48,6 +51,7 @@ export default function CPSidebar({ open, onClose, ...props }) {
                             onClick={()=>{
                                 setActiveIndex(index)
                                 props.onChanged({index:index,item:item})
+                                onClose()
                             }}
                             key={index}>
                                 {item}
@@ -62,37 +66,41 @@ export default function CPSidebar({ open, onClose, ...props }) {
 
     if (lgUp) {
         return (
-            <Box sx={{backgroundColor: 'secondary.main',pt:5}}>
-                <Box
-                    sx={{
+            <Drawer
+                anchor="left"
+                open
+                PaperProps={{
+                    sx: {
+                        backgroundColor: 'secondary.main',
                         color: 'secondary.contrastText',
-                        width: 230,
+                        width: 260,
+                        mt:11,
                         border: 'none'
-                    }} 
-                    direction={'row'}
-                >
-                    {content}
-                </Box >
-            </Box>
+                    }
+                }}
+                variant="permanent"
+            >
+                {content}
+            </Drawer>
         );
     }
 
-    // return (
-    //     <Drawer
-    //         anchor="right"
-    //         onClose={onClose}
-    //         open={open}
-    //         PaperProps={{
-    //             sx: {
-    //                 backgroundColor: 'secondary.main',
-    //                 color: 'secondary.contrastText',
-    //                 width: 260
-    //             }
-    //         }}
-    //         sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
-    //         variant="temporary"
-    //     >
-    //         {content}
-    //     </Drawer>
-    // );
+    return (
+        <Drawer
+            anchor="left"
+            onClose={onClose}
+            open={open}
+            PaperProps={{
+                sx: {
+                    backgroundColor: 'secondary.main',
+                    color: 'secondary.contrastText',
+                    width: 260
+                }
+            }}
+            sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
+            variant="temporary"
+        >
+            {content}
+        </Drawer>
+    );
 }

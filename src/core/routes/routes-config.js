@@ -30,6 +30,7 @@ import SearchCustomer from "../../pages/SearchCustomer";
 import CustomerList from "../../pages/CustomerList";
 import LiveStatus from "../../pages/LiveStatus";
 import Reports from "../../pages/Reports";
+import UserDetails from "../../components/crm/userDetails";
 import FilterNetwork from "../../components/chargingNetwork/FilterNetwork";
 
 const RoutesConfig = () => {
@@ -53,6 +54,12 @@ const RoutesConfig = () => {
             element: <ChargePointDetail />,
         },
         {
+            path:'user-details',
+            element:<UserDetails/>
+        },
+        {
+            path: '/login',
+            element: <Login />,
             path: '/test',
             element: <FilterNetwork />,
         },
