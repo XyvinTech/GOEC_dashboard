@@ -7,7 +7,7 @@ export default function ActiveSessionPage() {
   return (
     <>
      {DummyData.length > 0 ? (
-        <ActiveSession />
+        <ActiveSession  />
       ) : (
         <NoActiveSession />
       )}
