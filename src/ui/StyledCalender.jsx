@@ -62,38 +62,31 @@ function Day(props) {
   );
 }
 
-export default function StyledCalender({ onDateChange, ...props }) {
+export default function StyledCalender({ onDateChange,onClose, ...props }) {
 
   const [startDate, setStartDate] = React.useState(dayjs(new Date().setDate(new Date().getDate() - 6)));
   const [endDate, setEndDate] = React.useState(dayjs(Date()));
   const dateChange = (newValue) => {
-    let dates = { startDate: dayjs(startDate).format('DD/MM/YYYY'), endDate: dayjs(endDate).format('DD/MM/YYYY') }
     if (newValue > startDate && newValue < endDate) {
       const midDate = new Date((new Date(dayjs(startDate).format('YYYY-MM-DD')).getTime() + new Date(dayjs(endDate).format('YYYY-MM-DD')).getTime()) / 2)
       console.log(midDate);
       if (midDate > newValue) {
         setStartDate(newValue)
-        dates.startDate = dayjs(newValue).format('DD/MM/YYYY')
       } else {
         setEndDate(newValue)
-        dates.endDate = dayjs(newValue).format('DD/MM/YYYY')
       }
     } else if (newValue >= startDate) {
       setEndDate(newValue)
-      dates.endDate = dayjs(newValue).format('DD/MM/YYYY')
     } else if (newValue <= startDate) {
       setStartDate(newValue)
-      dates.startDate = dayjs(newValue).format('DD/MM/YYYY')
     }
-
-    onDateChange && onDateChange({ ...dates })
   }
 
   return (
     <Stack direction={'column'} sx={{ backgroundColor: 'primary.main', borderRadius: '4px' }}>
       <Stack direction={'row'} sx={{ justifyContent: 'space-between', px: 2, py: 2, alignItems: 'center' }}>
         <Typography color={'primary.contrastText'} variant='h6'>Calender</Typography>
-        <Close />
+        <Close style={{cursor:'pointer'}} onClick={()=>{onClose && onClose() }}/>
       </Stack>
       <StyledDivider />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -114,8 +107,8 @@ export default function StyledCalender({ onDateChange, ...props }) {
         />
       </LocalizationProvider>
       <Stack direction={'row'} sx={{ justifyContent: 'space-between', px: 2, py: 2, alignItems: 'center', backgroundColor: 'secondary.main' }} spacing={2}>
-        <StyledButton variant='secondary' style={{ width: '140px', height: '45px' }}>Cancel</StyledButton>
-        <StyledButton variant='primary' style={{ width: '140px', height: '45px' }}>Save</StyledButton>
+        <StyledButton variant='secondary' style={{ width: '140px', height: '45px' }} onClick={()=>{onClose && onClose() }}>Cancel</StyledButton>
+        <StyledButton variant='primary' style={{ width: '140px', height: '45px' }} onClick={()=>{onDateChange && onDateChange({startDate,endDate })}}>Save</StyledButton>
       </Stack>
     </Stack>
   );

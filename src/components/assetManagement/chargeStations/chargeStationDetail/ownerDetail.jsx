@@ -4,7 +4,7 @@ import React from 'react'
 export default function OwnerDetail() {
     return (
         <Box
-            sx={{ px: { xs: 1, md: 5 }, py: 3, backgroundColor: 'secondary.main', borderRadius: '4px' }}>
+            sx={{ px: { xs: 1, md: 5 }, py: 4, backgroundColor: 'secondary.main', borderRadius: '4px' }}>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={3}>
                 <Stack direction={'column'} sx={{ flexGrow: 1, p: 0 }}>
                     <Typography variant='caption' sx={{ color: 'primary.DimText', fontSize: '14px', fontWeight: '400' }}>Owner Details</Typography>
