@@ -4,7 +4,7 @@ import { ReactComponent as OutlineIcon } from "../../src/assets/icons/Adjustment
 import { Typography } from "@mui/material";
 import StyledSelectField from "./styledSelectField";
 
-const StyledDropdown = ({ height, width, component }) => {
+const StyledDropdown = ({ height, width, component,alignRight }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -31,7 +31,7 @@ const StyledDropdown = ({ height, width, component }) => {
       <DropdownTrigger onClick={handleTriggerClick}>
         <OutlineIcon />
       </DropdownTrigger>
-      <DropdownContent isOpen={isOpen} width={width} height={height}>
+      <DropdownContent isOpen={isOpen} width={width} height={height} alignRight={alignRight}>
         <DropdownItem>{component}</DropdownItem>
       </DropdownContent>
     </DropdownContainer>
@@ -66,6 +66,10 @@ const DropdownContent = styled.div`
   min-height: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  // Adjust the left position for right-aligned dropdown
+  left: ${(props) => (props.alignRight ? 'auto' : '0')};
+  right: ${(props) => (props.alignRight ? '0' : 'auto')};
+
   // for width
   ${(props) =>
     props.width &&

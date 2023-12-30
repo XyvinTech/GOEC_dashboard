@@ -101,16 +101,21 @@ export const Label = styled.label`
 
 // Modal style
 const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  //position: "absolute",
+   top: "50%",
+  // left: "50%",
+  // transform: "translate(-50%, -50%)",
   maxwidth: "auto", // Adjust width to fit your content or screen
   bgcolor: "#27292F", // Dark background color
   boxShadow: 2,
   p: 4,
   color: "#fff", // White text for better visibility on dark background
   outline: "none", // Remove the focus ring
+  height: '100%',
+  display: "flex",
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '50vh',
 };
 
 
