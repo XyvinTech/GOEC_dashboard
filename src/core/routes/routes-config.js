@@ -30,6 +30,7 @@ import SearchCustomer from "../../pages/SearchCustomer";
 import CustomerList from "../../pages/CustomerList";
 import LiveStatus from "../../pages/LiveStatus";
 import Reports from "../../pages/Reports";
+import UserDetails from "../../components/crm/userDetails";
 
 const RoutesConfig = () => {
 
@@ -50,6 +51,10 @@ const RoutesConfig = () => {
         {
             path: 'charge-point-detail',
             element: <ChargePointDetail />,
+        },
+        {
+            path:'user-details',
+            element:<UserDetails/>
         },
         {
             path: '/login',

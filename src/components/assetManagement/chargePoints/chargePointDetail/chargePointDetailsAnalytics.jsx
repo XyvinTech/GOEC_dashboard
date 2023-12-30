@@ -1,10 +1,19 @@
-import React from "react";
-import { Box, Typography, Stack } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, Stack, Dialog } from "@mui/material";
 import { CalendarMonth } from "@mui/icons-material";
+import StyledCalender from "../../../../ui/StyledCalender";
 
 export default function ChargePointDetailsAnalytics() {
+  const [open, setOpen] = useState(false)
+    const onClose = () => { setOpen(false) }
   return (
     <Box sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>
+      <Dialog
+                open={open}
+                onClose={onClose}
+            >
+                <StyledCalender onClose={onClose} onDateChange={(e)=>{console.log(e); }}/>
+            </Dialog>
       <Stack
         direction={"row"}
         sx={{
@@ -17,14 +26,14 @@ export default function ChargePointDetailsAnalytics() {
         <Typography variant="h6" color={"secondary.contrastText"}>
           Analytics
         </Typography>
-        <CalendarMonth color="secondary.contrastText" />
+        <CalendarMonth color="secondary.contrastText" onClick={() => { setOpen(true) }} />
       </Stack>
 
 
       <Box padding={2}>
         <Stack
           direction={{ sm: "column", md: "row" }}
-          spacing={{ xs: 2, md: 4, lg: 10 }}
+          spacing={{ xs: 2, md: 4, xl: 10 }}
           sx={{ justifyContent: "center" }}
         >
           <Stack direction={"column"}>
