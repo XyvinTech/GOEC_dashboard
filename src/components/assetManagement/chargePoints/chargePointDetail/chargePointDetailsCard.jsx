@@ -6,8 +6,8 @@ import StyledDivider from "../../../../ui/styledDivider";
 import StyledInput from "../../../../ui/styledInput";
 export default function ChargePointDetailsCard() {
   return (
-    <Box px={3} pb={2} sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>
-      <Stack pt={2} spacing={2}>
+    <Box pb={2} sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>
+      <Stack px={3} pt={2} spacing={2}>
         <Stack direction={"row"} spacing={2}>
           <Station />
           <Typography
@@ -18,16 +18,16 @@ export default function ChargePointDetailsCard() {
         </Stack>
       </Stack>
       <StyledDivider />
-
-      <Typography sx={{ color: "primary.contrastText", fontWeight: "500", fontSize: '14px' }}>
-        Configuration URL
-      </Typography>
-      <Stack spacing={2}>
-        <StyledInput placeholder={"ws://goeccms.numocity.com:9033/ocpp/go1"} disabled iconright={<ContentCopy />} />
+      <Stack px={2}>
+        <Typography sx={{ color: "primary.contrastText", fontWeight: "500", fontSize: '14px' }}>
+          Configuration URL
+        </Typography>
+        <Stack spacing={2}>
+          <StyledInput placeholder={"ws://goeccms.numocity.com:9033/ocpp/go1"} disabled iconright={<ContentCopy />} style={{ height: '40px' }} />
+        </Stack>
       </Stack>
 
-
-      <Stack my={2} mt={2} sx={{ borderRadius: "10px", fontSize: '14px' }}>
+      <Stack my={2} px={2} sx={{ borderRadius: "10px", fontSize: '14px' }}>
 
         <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
           <Typography

@@ -24,7 +24,7 @@ export default function ChargePointDetailsAnalytics() {
       <Box padding={2}>
         <Stack
           direction={{ sm: "column", md: "row" }}
-          spacing={{ xs: 2, md: 5, lg: 20 }}
+          spacing={{ xs: 2, md: 4, lg: 10 }}
           sx={{ justifyContent: "center" }}
         >
           <Stack direction={"column"}>
