@@ -3,11 +3,12 @@ import { Box, Stack, Typography } from "@mui/material";
 import StyledSearchField from "../ui/styledSearchField.jsx";
 import { ReactComponent as ReloadIcon } from "../assets/icons/reload.svg";
 import StyledButton from '../ui/styledButton.jsx';
+import StyledDropdown from '../ui/StyledDropdown.jsx';
 
 
 
 
-export default function LastSynced({heading,showButton,showSearchField,handleClick }) {
+export default function LastSynced({heading,showButton,showSearchField,handleClick,showFilterButton,component }) {
   return (
     <>
     
@@ -48,6 +49,12 @@ export default function LastSynced({heading,showButton,showSearchField,handleCli
         >
           Add
         </StyledButton>}
+        {showFilterButton && <StyledDropdown 
+          
+          
+        >
+          {component}
+        </StyledDropdown>}
       </Box>
     
     

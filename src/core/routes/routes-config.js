@@ -31,6 +31,7 @@ import CustomerList from "../../pages/CustomerList";
 import LiveStatus from "../../pages/LiveStatus";
 import Reports from "../../pages/Reports";
 import UserDetails from "../../components/crm/userDetails";
+import FilterNetwork from "../../components/chargingNetwork/FilterNetwork";
 
 const RoutesConfig = () => {
 
@@ -59,6 +60,8 @@ const RoutesConfig = () => {
         {
             path: '/login',
             element: <Login />,
+            path: '/test',
+            element: <FilterNetwork />,
         },
 
         {

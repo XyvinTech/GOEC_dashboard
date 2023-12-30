@@ -11,7 +11,7 @@ export default function AddAdmin({action, data}) {
   return (
     <TableContainer>
       <Container fixed>
-        <Grid container spacing={4}>
+        <Grid container spacing={1}>
           <Grid item md={12}>
             <Typography sx={{ marginBottom: 1 }}>Name</Typography>
             <InputField placeholder={"Enter Admin Name"} value={action==="edit"? data.Name: ""}/>
@@ -70,4 +70,5 @@ export const TableContainer = styled.div`
   background: #27292f; // Dark background for the table
   overflow-x: auto; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
+  max-width:500px;
 `;
