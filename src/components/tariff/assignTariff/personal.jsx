@@ -10,6 +10,8 @@ import StyledWarning from "../../../ui/styledWarning";
 import { ReactComponent as Warn } from "../../../assets/icons/textWarn.svg";
 import StyledDivider from "../../../ui/styledDivider";
 import Assign from "./assign";
+import { ReactComponent as UserIcon } from '../../../assets/icons/Frame 42744.svg'
+import { ReactComponent as Refresh } from '../../../assets/icons/autorenew.svg'
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
 export default function Personal() {
   const [open, setOpen] = useState(false);
@@ -48,6 +50,9 @@ export default function Personal() {
                 icon={<Warn />}
                 value={"Please enter Person Phone number"}
               />
+            </Grid>
+            <Grid item md={12}>
+              <InputField placeholder={"Anish Vinkede"} icon={<UserIcon />} iconright={<Refresh/>}/>
             </Grid>
             <Grid item md={12}>
               <Typography sx={{ marginBottom: 1 }}>Change Location</Typography>
