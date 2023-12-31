@@ -3,10 +3,20 @@ import React, { useState } from "react";
 import StyledSelectField from "../../../ui/styledSelectField";
 import InputField from "../../../ui/styledInput";
 import StyledButton from "../../../ui/styledButton";
-import StyledStatusChip from "../../../ui/styledStatusChip";
 import ProgressBar from "../../../ui/ProgressBar";
 import NotificationUpload from "../../../utils/NotificationUpload";
-
+import styled from "styled-components";
+const LocalStyledStatusChip = styled.span`
+  padding: 4px 8px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+  display: inline-block;
+  min-width: 60px;
+  border-radius: 45px;
+  background: var(--Secondary, #322f3b);
+`;
 export default function AppNotification() {
   const [selectedFileName, setSelectedFileName] = useState(null);
   const [uploadPercentage, setUploadPercentage] = useState(0);
@@ -41,22 +51,24 @@ export default function AppNotification() {
             specialAlign={true}
           />
 
-          <StyledStatusChip
-            $status="INACTIVE"
+          <LocalStyledStatusChip
             style={{ alignSelf: "flex-start", fontSize: "14px" }}
           >
-            {user_name}
-          </StyledStatusChip>
+            {"{" + user_name + "}"}
+          </LocalStyledStatusChip>
           <Typography sx={TextStyle}>Target Url</Typography>
           <InputField placeholder={"Enter Target URL"} />
           <NotificationUpload onFileSelect={handleFileSelect} />
-          {selectedFileName && ( <ProgressBar
-                UploadProgress={uploadPercentage}
-                filename={selectedFileName}
-              />  )}
+          {selectedFileName && (
+            <ProgressBar
+              UploadProgress={uploadPercentage}
+              filename={selectedFileName}
+            />
+          )}
           <StyledButton
             variant={"primary"}
-            width="316"height="46"
+            width="316"
+            height="46"
             style={{ borderRadius: "8px" }}
           ></StyledButton>
         </Box>
