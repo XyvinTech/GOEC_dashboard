@@ -30,6 +30,7 @@ import SearchCustomer from "../../pages/SearchCustomer";
 import CustomerList from "../../pages/CustomerList";
 import LiveStatus from "../../pages/LiveStatus";
 import Reports from "../../pages/Reports";
+import Notification from "../../pages/Notification";
 
 const RoutesConfig = () => {
 
@@ -222,11 +223,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'email-notification',
-                    element: <UnderConstruction />,
+                    element: <Notification />,
                 },
                 {
                     path: 'app-notifications',
-                    element: <UnderConstruction />,
+                    element: <Notification />,
                 }
 
             ]
