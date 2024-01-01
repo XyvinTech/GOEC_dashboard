@@ -1,10 +1,10 @@
-import React from 'react'
-import { Box, Stack, Typography } from '@mui/material'
+import React,{useState} from 'react'
+import { Box, Dialog, Stack, Typography } from '@mui/material'
 import { ReactComponent as ReloadIcon } from '../../../../assets/icons/reload.svg'
 import StyledButton from '../../../../ui/styledButton'
 import StyledTable from '../../../../ui/styledTable'
 import { chargePointsData } from '../../../../assets/json/chargepoints'
-
+import AddChargePoint from '../../chargePoints/AddChargePoint'
 export default function ChargePoints() {
   const tableHeader = [
     'CPID',
@@ -14,8 +14,15 @@ export default function ChargePoints() {
     'Status',
     'Published'
   ]
+
+  const [open,setOpen] = useState(false)
   return (
     <>
+          <Dialog
+      open={open}
+    >
+         <AddChargePoint/>
+    </Dialog>
       <Box
         sx={{
           display: 'flex',
@@ -34,7 +41,7 @@ export default function ChargePoints() {
         </Stack>
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{px:1}}>
-          <StyledButton variant='primary' style={{width:'100%',height:'45px',fontSize:'14px',fontWeight:'400'}}> Add Chargepoint</StyledButton>
+          <StyledButton variant='primary' style={{width:'100%',height:'45px',fontSize:'14px',fontWeight:'400'}} onClick={()=>setOpen(true)}> Add Chargepoint</StyledButton>
         </Box>
       </Box>
       <Box sx={{p:3}}>
