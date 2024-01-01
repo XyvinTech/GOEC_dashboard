@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 export default function AllChargePoint() {
   const navigate = useNavigate()
   const tableActionClick = (e)=>{
+    console.log(e);
     if(e.action==='View'){
       navigate('/charge-point-detail')
     }

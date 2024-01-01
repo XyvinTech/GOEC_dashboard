@@ -12,7 +12,6 @@ import ATariff from "../../pages/aTariff";
 import ChargeStationDetail from "../../components/assetManagement/chargeStations/chargeStationDetail";
 import ChargingPoints from "../../pages/chargePoints";
 import ChargePointDetail from "../../components/assetManagement/chargePoints/chargePointDetail";
-import ActiveSession from "../../components/cpoSupport/activeSession/AllActiveSession";
 import RfidCards from "../../pages/RfidCards";
 import CTax from "../../pages/cTax";
 import VidCards from "../../pages/VidCards";
@@ -24,7 +23,14 @@ import ActiveSessionPage from "../../pages/ActiveSession";
 import AMSettings from "../../pages/AMSettings";
 import AASettings from "../../pages/AASettings";
 import RMSettings from "../../pages/RMSettings";
-
+import ChargingTransactions from "../../pages/ChargingTransactions";
+import ChargerLogs from "../../pages/ChargerLogs";
+import BookingTransactions from "../../pages/BookingTransactions";
+import SearchCustomer from "../../pages/SearchCustomer";
+import CustomerList from "../../pages/CustomerList";
+import LiveStatus from "../../pages/LiveStatus";
+import Reports from "../../pages/Reports";
+import Notification from "../../pages/Notification";
 
 const RoutesConfig = () => {
 
@@ -47,8 +53,14 @@ const RoutesConfig = () => {
             element: <ChargePointDetail />,
         },
         {
+            path:'user-details',
+            element:<UserDetails/>
+        },
+        {
             path: '/login',
             element: <Login />,
+            path: '/test',
+            element: <FilterNetwork />,
         },
 
         {
@@ -62,7 +74,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'live-status',
-                    element: <UnderConstruction />,
+                    element: <LiveStatus />,
                 },
                 {
                     path: 'analytics',
@@ -132,15 +144,15 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'charging-transaction',
-                    element: <UnderConstruction />,
+                    element: <ChargingTransactions />,
                 },
                 {
                     path: 'charger-logs',
-                    element: <UnderConstruction />,
+                    element: <ChargerLogs />,
                 },
                 {
                     path: 'booking-transaction',
-                    element: <UnderConstruction />,
+                    element: <BookingTransactions />,
                 }
             ]
         },
@@ -154,7 +166,7 @@ const RoutesConfig = () => {
                     element: <UnderConstruction />,
                 },
                 {
-                    path: 'customer-list',
+                    path: 'financials',
                     element: <UnderConstruction />,
                 }
             ]
@@ -166,11 +178,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'search-customer',
-                    element: <UnderConstruction />,
+                    element: <SearchCustomer />,
                 },
                 {
                     path: 'customer-list',
-                    element: <UnderConstruction />,
+                    element: <CustomerList />,
                 }
             ]
         },
@@ -217,11 +229,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'email-notification',
-                    element: <UnderConstruction />,
+                    element: <Notification />,
                 },
                 {
                     path: 'app-notifications',
-                    element: <UnderConstruction />,
+                    element: <Notification />,
                 }
 
             ]
@@ -233,7 +245,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: '',
-                    element: <UnderConstruction />,
+                    element: <Reports />,
                 }
             ]
         },

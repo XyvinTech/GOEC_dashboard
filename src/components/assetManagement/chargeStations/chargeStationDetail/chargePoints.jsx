@@ -29,7 +29,7 @@ export default function ChargePoints() {
           flexDirection: 'row',
           alignItems: 'center',
           backgroundColor: 'primary.grey',
-          p: 2,
+          p: {sx:1,md:2},
         }}>
         <Stack direction={'column'} sx={{ ml: 2 }}>
           <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>Charge-points</Typography>
@@ -40,8 +40,8 @@ export default function ChargePoints() {
           </Stack>
         </Stack>
         <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ mr: 3 }}>
-          <StyledButton variant='primary' style={{width:'200px',height:'45px',fontSize:'17px',fontWeight:'300'}} onClick={()=>setOpen(true)}> Add Chargepoint</StyledButton>
+        <Box sx={{px:1}}>
+          <StyledButton variant='primary' style={{width:'100%',height:'45px',fontSize:'14px',fontWeight:'400'}} onClick={()=>setOpen(true)}> Add Chargepoint</StyledButton>
         </Box>
       </Box>
       <Box sx={{p:3}}>

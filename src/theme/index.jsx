@@ -175,7 +175,9 @@ export const theme = createTheme({
       greytext: '#bdbdbd',
       button:'#4A4458',
       contrast: '#171717',
-      lightGray: '#39383D'
+      lightGray: '#39383D',
+      cardbg: '#2B2930'
+
       
     },
     success: {

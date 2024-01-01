@@ -31,14 +31,12 @@ export default function AddRole({ action, data }) {
               value={action === "edit" ? data.Description : ""}
             />
           </Grid>
-          <Box pl={1} pt={3}>
-            <Container fixed>
+          <Box pl={4} pt={3} sx={{width:'100%', borderRadius:'5'}}>
               <StyledTab
                 buttons={["Functional Access", "Locational Access"]}
                 onChanged={buttonChanged}
               />
             {togglePage === 0 ? <FunctionalAccess /> : <LocationalAccess />}
-            </Container>
           </Box>
           <Grid
             item

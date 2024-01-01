@@ -33,7 +33,7 @@ export default function CPSidebar({ open, onClose, ...props }) {
                         return (
                             <Button sx={{
                                 backgroundColor: activeIndex === index ? 'secondary.button' : 'secondary.main',
-                                borderRadius: 0.5,
+                                borderRadius: 1,
                                 height: '45px',
                                 width: '180px',
                                 my: 0.5,

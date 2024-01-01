@@ -2,22 +2,26 @@ import { CalendarMonth } from '@mui/icons-material'
 import { Box, Dialog, Modal, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import React from 'react'
-import WeekPicker from '../../../../ui/StyledCalender'
+import StyledCalender from '../../../../ui/StyledCalender'
+import { useState } from 'react'
 
 export default function Analytics() {
+    const [open, setOpen] = useState(false)
+    const onClose = () => { setOpen(false) }
     return (
         <Box
             sx={{ backgroundColor: 'secondary.main', borderRadius: '4px' }}>
-                {/* <Dialog
-        open={true}
-      >
-                    <WeekPicker />
-      </Dialog> */}
+            <Dialog
+                open={open}
+                onClose={onClose}
+            >
+                <StyledCalender onClose={onClose} onDateChange={(e)=>{console.log(e); }}/>
+            </Dialog>
             <Stack direction={'row'} sx={{ borderBottom: '1px solid rgba(255, 255, 255, 0.20)', justifyContent: 'space-between', px: 3, py: 1 }}>
                 <Typography variant='h6' color={'secondary.contrastText'}>Analytics</Typography>
-                <CalendarMonth color='secondary.contrastText' />
+                <CalendarMonth color='secondary.contrastText' onClick={() => { setOpen(true) }} />
             </Stack>
-            <Box padding={2}>
+            <Box p={2}>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 2, md: 15 }} sx={{ justifyContent: 'center' }}>
                     <Stack direction={'column'}>
                         <Typography variant='caption' sx={{ color: 'primary.DimText', fontSize: '14px', fontWeight: '400' }}>Revenue</Typography>

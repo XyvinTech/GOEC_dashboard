@@ -1,0 +1,87 @@
+export const ChargingTransactionDummyData = [
+    {
+        "Transaction ID": "TXN6819",
+        "Date": "2023-07-10",
+        "Username": "UserC",
+        "Transaction Mode": "PayPal",
+        "Units Consumed": 421.26,
+        "Location Name": "Location1",
+        "Duration (hh:mm:ss)": "8:46:56",
+        "Chargepoint ID": "CP004",
+        "Connector ID": "Con1",
+        "Total Amount": 336.6,
+        "CP Stop txn reason": "Interrupted",
+        "Closed by": "User"
+    },
+    {
+        "Transaction ID": "TXN2061",
+        "Date": "2023-05-29",
+        "Username": "UserB",
+        "Transaction Mode": "Credit Card",
+        "Units Consumed": 352.74,
+        "Location Name": "Location4",
+        "Duration (hh:mm:ss)": "9:59:48",
+        "Chargepoint ID": "CP003",
+        "Connector ID": "Con3",
+        "Total Amount": 445.41,
+        "CP Stop txn reason": "Timeout",
+        "Closed by": "User"
+    },
+    {
+        "Transaction ID": "TXN7968",
+        "Date": "2023-10-02",
+        "Username": "UserC",
+        "Transaction Mode": "PayPal",
+        "Units Consumed": 374.44,
+        "Location Name": "Location1",
+        "Duration (hh:mm:ss)": "0:01:40",
+        "Chargepoint ID": "CP002",
+        "Connector ID": "Con1",
+        "Total Amount": 371.26,
+        "CP Stop txn reason": "Error",
+        "Closed by": "System"
+    },
+    {
+        "Transaction ID": "TXN6951",
+        "Date": "2023-05-27",
+        "Username": "UserD",
+        "Transaction Mode": "Cash",
+        "Units Consumed": 660.2,
+        "Location Name": "Location3",
+        "Duration (hh:mm:ss)": "1:36:42",
+        "Chargepoint ID": "CP003",
+        "Connector ID": "Con3",
+        "Total Amount": 28.29,
+        "CP Stop txn reason": "Completed",
+        "Closed by": "Operator"
+    },
+    {
+        "Transaction ID": "TXN6802",
+        "Date": "2023-04-20",
+        "Username": "UserA",
+        "Transaction Mode": "Debit Card",
+        "Units Consumed": 59.01,
+        "Location Name": "Location1",
+        "Duration (hh:mm:ss)": "9:57:32",
+        "Chargepoint ID": "CP004",
+        "Connector ID": "Con4",
+        "Total Amount": 458.36,
+        "CP Stop txn reason": "Interrupted",
+        "Closed by": "User"
+    },
+    {
+        "Transaction ID": "TXN7268",
+        "Date": "2023-06-01",
+        "Username": "UserA",
+        "Transaction Mode": "PayPal",
+        "Units Consumed": 542.45,
+        "Location Name": "Location4",
+        "Duration (hh:mm:ss)": "7:39:37",
+        "Chargepoint ID": "CP002",
+        "Connector ID": "Con3",
+        "Total Amount": 484.09,
+        "CP Stop txn reason": "Timeout",
+        "Closed by": "Operator"
+    }
+
+];

@@ -117,8 +117,8 @@ const items = [
                 title: 'Account Transaction',
             },
             {
-                href: 'accounts/customer-list',
-                title: 'Customer List',
+                href: 'accounts/financials',
+                title: 'Financials',
             }
         ]
     },

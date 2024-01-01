@@ -49,7 +49,7 @@ export default function Reviews() {
         </Stack>
         <Box sx={{ flexGrow: 1 }} />
       </Box>
-      <Box sx={{ backgroundColor: 'secondary.main', maxHeight: {xs:'1000px',md:'500px'}, borderRadius: '4px', m: {xs:1,md:4}, p: 2 }}>
+      <Box sx={{ backgroundColor: 'secondary.main', /*maxHeight: {xs:'1000px',md:'500px'},*/ borderRadius: '4px', m: {xs:1,md:4}, p: 2 }}>
         <Grid container spacing={{xs:1,md:3}}>
           {
             [1, 2, 3, 4, 5].map((item) => (
