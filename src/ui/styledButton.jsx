@@ -10,6 +10,7 @@ const StyledButton = styled.button`
   font-style: normal;
   gap:16px;
   display: flex;
+  width:100%;
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s, box-shadow 0.3s;

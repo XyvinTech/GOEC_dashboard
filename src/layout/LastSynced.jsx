@@ -8,58 +8,26 @@ import StyledDropdown from '../ui/StyledDropdown.jsx';
 
 
 
-export default function LastSynced({heading,showButton,showSearchField,handleClick,showFilterButton,component }) {
+export default function LastSynced({ heading, children }) {
   return (
-    <>
-    
-    <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: "primary.grey",
-          p: 2,
-        }}
-      >
-        <Stack direction={"column"} sx={{ ml: 2 }}>
-          <Typography variant="body1" sx={{ color: "secondary.contrastText" }}>
-            {heading}
+    <Stack direction={{ xs: 'column', md: 'row' }} sx={{ alignItems: {md:'center'}, justifyContent: 'space-between', backgroundColor: 'primary.grey', p: 2, }}>
+      <Stack direction={"column"} sx={{ ml: 2 }}>
+        <Typography variant="body1" sx={{ color: "secondary.contrastText" }}>
+          {heading}
+        </Typography>
+        <Stack direction={"row"} spacing={1}>
+          <Typography sx={{ color: "secondary.greytext", fontSize: 12 }}>
+            Last synced
           </Typography>
-          <Stack direction={"row"} spacing={1}>
-            <Typography sx={{ color: "secondary.greytext", fontSize: 12 }}>
-              Last synced
-            </Typography>
-            <Typography sx={{ color: "success.main", fontSize: 12 }}>
-              4 minutes ago
-            </Typography>
-            <ReloadIcon style={{ cursor: "pointer" }} />
-          </Stack>
+          <Typography sx={{ color: "success.main", fontSize: 12 }}>
+            4 minutes ago
+          </Typography>
+          <ReloadIcon style={{ cursor: "pointer" }} />
         </Stack>
-        <Box sx={{ flexGrow: 1 }} />
-        {showSearchField &&
-        <Box sx={{ mr: 3 }}>
-          <StyledSearchField placeholder={"Search"} />
-        </Box>
-        }
-        {showButton && <StyledButton 
-          variant="primary" 
-          width="153"
-          height="51"
-          onClick={handleClick}
-        >
-          Add
-        </StyledButton>}
-        {showFilterButton && <StyledDropdown 
-          
-          
-        >
-          {component}
-        </StyledDropdown>}
-      </Box>
-    
-    
-    
-    
-    </>
+      </Stack>
+      <Stack direction={{ sm: 'column', md: 'row' }} spacing={2}>
+        {children}
+      </Stack>
+    </Stack>
   )
 }
