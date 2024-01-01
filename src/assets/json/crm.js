@@ -172,5 +172,106 @@ export const customerListData = [
     },
     // Add more entries as needed
   ];
+
+  export const RFIDData = [
+    {
+      'RFID tag': 'ABC123',
+      'Created on': '2023-01-15',
+      'Expires on': '2023-12-31',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    {
+      'RFID tag': 'XYZ789',
+      'Created on': '2023-03-02',
+      'Expires on': '2023-11-30',
+      'Validity': 'Expired',
+      'Status': 'Inactive'
+    },
+    {
+      'RFID tag': 'DEF456',
+      'Created on': '2023-02-10',
+      'Expires on': '2024-02-09',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    {
+      'RFID tag': 'GHI789',
+      'Created on': '2023-04-20',
+      'Expires on': '2024-04-19',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    {
+      'RFID tag': 'JKL012',
+      'Created on': '2023-06-05',
+      'Expires on': '2023-12-05',
+      'Validity': 'Expired',
+      'Status': 'Inactive'
+    },
+    {
+      'RFID tag': 'MNO345',
+      'Created on': '2023-08-12',
+      'Expires on': '2024-08-11',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    {
+      'RFID tag': 'PQR678',
+      'Created on': '2023-09-25',
+      'Expires on': '2023-12-31',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    {
+      'RFID tag': 'STU901',
+      'Created on': '2023-11-10',
+      'Expires on': '2024-11-09',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    // Add more entries as needed
+  ];
+
+  export const VIDData = [
+    {
+      'RFID tag': 'LMN456',
+      'Created on': '2023-07-08',
+      'Expires on': '2024-07-07',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    {
+      'RFID tag': 'OPQ789',
+      'Created on': '2023-09-15',
+      'Expires on': '2023-12-31',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    {
+      'RFID tag': 'RST012',
+      'Created on': '2023-12-01',
+      'Expires on': '2024-11-30',
+      'Validity': 'Expired',
+      'Status': 'Inactive'
+    },
+    {
+      'RFID tag': 'UVW345',
+      'Created on': '2023-10-20',
+      'Expires on': '2024-10-19',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    {
+      'RFID tag': 'XYZ678',
+      'Created on': '2023-05-05',
+      'Expires on': '2024-05-04',
+      'Validity': 'Active',
+      'Status': 'Active'
+    },
+    // Add more entries as needed
+  ];
+  
+  
   
   
