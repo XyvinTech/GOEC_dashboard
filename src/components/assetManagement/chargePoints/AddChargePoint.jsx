@@ -45,7 +45,7 @@ const AddChargePoint = ({ headers, data }) => {
         </Grid>
 
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color:'primary.contrastText' }}>
           Location Name
         </Typography>
         <Grid container spacing={2}>
@@ -55,7 +55,7 @@ const AddChargePoint = ({ headers, data }) => {
         </Grid>
 
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3 , color:'primary.contrastText'}}>
           Charge Point OEM
         </Typography>
         <Grid container spacing={2}>
@@ -64,7 +64,7 @@ const AddChargePoint = ({ headers, data }) => {
           </Grid>
         </Grid>
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color:'primary.contrastText' }}>
           Model Name
         </Typography>
         <Grid container spacing={2}>
@@ -75,7 +75,7 @@ const AddChargePoint = ({ headers, data }) => {
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+            <Typography sx={{ marginBottom: 3, marginTop: 3, color:'primary.contrastText' }}>
               Charge point display name
             </Typography>
 
@@ -84,15 +84,14 @@ const AddChargePoint = ({ headers, data }) => {
             </Stack>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography sx={{ marginBottom: 3, marginTop: 3 }}>CPID</Typography>
+            <Typography sx={{ marginBottom: 3, marginTop: 3, color:'primary.contrastText' }}>CPID</Typography>
             <Stack direction="column">
               <InputField placeholder={"GO1"} />
             </Stack>
           </Grid>
         </Grid>
-        sdfsd
-
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+       
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color:'primary.contrastText' }}>
           Authorisation key
         </Typography>
         <Grid container spacing={2}>
@@ -101,7 +100,7 @@ const AddChargePoint = ({ headers, data }) => {
           </Grid>
         </Grid>
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color:'primary.contrastText' }}>
           Serial number
         </Typography>
         <Grid container spacing={2}>
@@ -110,7 +109,7 @@ const AddChargePoint = ({ headers, data }) => {
           </Grid>
         </Grid>
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color:'primary.contrastText' }}>
           Commissioned date
         </Typography>
         <Grid container spacing={2}>
@@ -125,7 +124,7 @@ const AddChargePoint = ({ headers, data }) => {
         <Grid container spacing={2}>
           <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
             <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-              <Typography>Published</Typography>
+              <Typography sx={{color:'primary.contrastText'}}>Published</Typography>
               <StyledSwitch />
             </Stack>
           </Grid>
@@ -146,5 +145,5 @@ export const TableContainer = styled.div`
   background: #27292f; // Dark background for the table
   overflow-x: auto; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
-  margin: 20px 0; // Margin for spacing, adjust as needed
+ 
 `;

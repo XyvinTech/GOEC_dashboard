@@ -8,11 +8,11 @@ export default function Analytics() {
     return (
         <Box
             sx={{ backgroundColor: 'secondary.main', borderRadius: '4px' }}>
-                <Dialog
+                {/* <Dialog
         open={true}
       >
                     <WeekPicker />
-      </Dialog>
+      </Dialog> */}
             <Stack direction={'row'} sx={{ borderBottom: '1px solid rgba(255, 255, 255, 0.20)', justifyContent: 'space-between', px: 3, py: 1 }}>
                 <Typography variant='h6' color={'secondary.contrastText'}>Analytics</Typography>
                 <CalendarMonth color='secondary.contrastText' />
