@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommonLayout from "../../../layout/CommonLayout";
 import StyledInput from "../../../ui/styledInput";
 import { FormControlLabel, Grid, Switch, Typography } from "@mui/material";
@@ -7,41 +7,121 @@ import CalendarInput from "../../../ui/CalendarInput";
 import StyledFooter from "../../../ui/StyledFooter";
 import StyledButton from "../../../ui/styledButton";
 import StyledSwitch from "../../../ui/styledSwitch";
+import { useForm, Controller } from "react-hook-form"
 
-const EditRfidCard = ({Close,Save}) => {
+const EditRfidCard = ({existingData,Close,Save}) => {
 
-  const [checked, setChecked] = useState(true);
+  const isOnline = existingData['Status'] === 'online';
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    clearErrors,
+  } = useForm({
+    defaultValues: {
+      rfidTag: existingData['RFID Tag'],
+      serialno: '2324235345',
+      expiryDate: existingData['Expires On'],
+      activate: isOnline,
+    },
+  });
 
+  const onSubmit = (data) => {
+    // Handle form submission with data
+    console.log(data);
+    // Close your form or perform other actions
+    Close();
+  };
+
+  const handleDateChangeInParent = (date) => {
+    setValue('expiryDate', date); // Assuming you have 'expiryDate' in your form state
+    clearErrors('expiryDate');
+  };
+  const expiryDate = watch('expiryDate', existingData['Expires On']); // Watching the value for 'expiryDate'
+  
   const handleChange = (event) => {
-    setChecked(event.target.checked);
+    setValue('activate',event.target.checked);
   };
 
-  // date update
-  const [parentDateValue, setParentDateValue] = useState('15-02-2024');
 
-  const handleDateChangeInParent = (formattedDate) => {
-    setParentDateValue(formattedDate);
-  };
+  // Inside EditRfidCard component
+  useEffect(() => {
+    //console.log("existingData in EditRfidCard:", existingData);
+  }, [existingData]);
 
   return (
     <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <CommonLayout header="Edit RFID Card"  onClick={Close}>
-        <Typography align="left">RFID tag</Typography>
-        <StyledInput placeholder="Enter RFID Tag" value="2324235345" />
-        <Typography align="left">Serial number</Typography>
-        <StyledInput placeholder="Enter Serial number" value="2324235345" />
-        <Typography align="left">RFID Expiry date</Typography>
-        <StyledInput
-          placeholder="Enter RFID Expiry date"
-          iconright={<CalendarInput dateValue={parentDateValue} onDateChange={handleDateChangeInParent} />}
-          value={parentDateValue}
+      <Typography align="left">RFID tag</Typography>
+        <Controller
+          name="rfidTag"
+          control={control}
+          render={({ field }) => (
+          <>
+            <StyledInput {...field} placeholder="Enter RFID Tag"  />
+            {errors.rfidTag && <span style={errorMessageStyle}>{errors.rfidTag.message}</span>}
+          </>
+        )}
+        // Adding 'required' attribute here
+        rules={{ required: 'RFID tag is required' }}
         />
+        <Typography align="left">Serial number</Typography>
+        <Controller
+          name="serialno"
+          control={control}
+          render={({ field }) => (
+            <>
+              <StyledInput {...field} placeholder="Enter Serial number"  />
+              {errors.serialno && <span style={errorMessageStyle}>{errors.serialno.message}</span>}
+            </>
+          )}
+          rules={{ required: 'Serial number is required' }}
+        />
+        
+        <Typography align="left">RFID Expiry date</Typography>
+        <Controller
+            name="expiryDate"
+            control={control}
+            render={({ field }) => (
+              <>
+                <StyledInput
+                  {...field}
+                  placeholder="Enter RFID Expiry date"
+                  iconright={<CalendarInput dateValue={expiryDate} onDateChange={handleDateChangeInParent} />}
+                  value={expiryDate}
+                  readOnly
+                />
+                {errors.expiryDate && <span style={errorMessageStyle}>{errors.expiryDate.message}</span>}
+              </>
+            )}
+            // Adding 'required' attribute here
+            rules={{ required: 'RFID Expiry date is required' }}
+          />
+        
         <Grid container spacing={2} direction="row">
           <Grid item xs={6}>
             <Typography align="left">Activate RFID</Typography>
           </Grid>
           <Grid item xs={6} textAlign={"right"} justifyContent={"flex-end"} display={"flex"}>
-            <StyledSwitch/>
+              <Controller
+                name="activate"
+                control={control}
+                render={({ field }) => (
+                  <StyledSwitch
+                    {...field}
+                    onChange={(e) => {
+                      handleChange(e);
+                      // Additional logic if needed
+                    }}
+                    defaultChecked={field.value}
+                    // Adding 'required' attribute
+                  />
+                )}
+              />
+           
           </Grid>
         </Grid>
       </CommonLayout>
@@ -49,14 +129,19 @@ const EditRfidCard = ({Close,Save}) => {
         <StyledButton variant="secondary" width="103" mr="20" onClick={Close}>
           Cancel
         </StyledButton>
-        <StyledButton variant="primary" width="160" onClick={Save}>
+        <StyledButton variant="primary" width="160" type="submit">
           Save
         </StyledButton>
       </StyledFooter>
+      </form>
     </>
   );
 };
 
-
+const errorMessageStyle = {
+  color: 'red',
+ // margin: '1px 0',
+  // Add any other styles as needed
+};
 
 export default EditRfidCard;

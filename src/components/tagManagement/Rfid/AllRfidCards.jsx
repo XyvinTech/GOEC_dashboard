@@ -42,14 +42,17 @@ const AllRfidCards = () => {
   };
 
   const handleClick = (e) => {
-    if (e.action === "Edit") {
+   
+    // if (e.action === "Edit") {
+      console.log('edit')
       setAction("edit");
-      setIsComponent('2');
+      setIsComponent(2);
       setOpen(true);
       setTableData(e.data);
-    }
+    // }
   };
-  console.log("status :"+isComponent);
+
+  //console.log("status :"+isComponent);
 
   return (
     <>
@@ -62,7 +65,7 @@ const AllRfidCards = () => {
         <StyledTable 
           headers={tableHeader} 
           data={DummyData}
-          onActionClick={() => toggleAddMode(2)}/>
+          onActionClick={(e) => handleClick(e)}/>
       </Box>
        {/* Modal */}
        <Modal
@@ -71,15 +74,7 @@ const AllRfidCards = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        {/* <Box sx={modalStyle}>
-          {isComponent ? (
-            <AddRfidCard Close={handleClose} />
-          ) : (
-            <AddBulkRfidCard Close={handleClose} />
-          )}
-          <EditRfidCard Close={handleClose} /> 
-        </Box>*/}
-          
+                  
         <Box sx={modalStyle}>
          
           {isComponent === 0 ? (
@@ -87,7 +82,7 @@ const AllRfidCards = () => {
           ) : isComponent === 1 ? (
             <AddBulkRfidCard Close={handleClose} />
           ) : isComponent === 2 ?(
-            <EditRfidCard Close={handleClose} />
+            <EditRfidCard Close={handleClose} existingData={tableData}/>
           ):null}
         </Box>
        

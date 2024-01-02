@@ -66,6 +66,7 @@ const StyledInput = ({ icon, placeholder,iconright,value, lineHeight,specialAlig
     <InputContainer {...props}>
       {icon && <IconContainer>{icon}</IconContainer>}
       <InputField 
+        autoComplete="off"
         placeholder={placeholder} 
         value={value} 
         onChange={handleInputChange} 
