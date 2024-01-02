@@ -9,6 +9,7 @@ import ChargerAvailable from "./CPAction/chargerAvailable";
 import TriggerMessage from "./CPAction/triggerMessage";
 import GetDiagnostics from "./CPAction/getDiagnostics";
 import SendLocalList from "./CPAction/sendLocalList";
+import LastSynced from "../../../../layout/LastSynced";
 
 
 
@@ -19,30 +20,14 @@ export default function CPAction() {
     }
     return (
         <>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    backgroundColor: 'primary.grey',
-                    p: 2
-                }}>
-                <Stack direction={'column'} sx={{ ml: 2 }}>
-                    <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>CP Action</Typography>
-                    <Stack direction={'row'} sx={{alignItems:'center'}} spacing={1}>
-                        <Typography sx={{ color: 'secondary.greytext', fontSize: 12 }}>Last synced</Typography>
-                        <Typography sx={{ color: 'success.main', fontSize: 12 }}>4 minutes ago</Typography>
-                        <ReloadIcon style={{ cursor: 'pointer' }} />
-                    </Stack>
-                </Stack>
-            </Box>
+            <LastSynced heading={'CP Action'} />
             <Stack direction={"row"}>
-                    <CPSidebar onChanged={onOptionChanged} />
-                    <Box sx={{px:{xs:1,md:6},py:{xs:1,md:3},flexGrow:1}}>
-                        {
-                            optionIndex === 0 ? <ChargerAvailable/> : optionIndex === 1 ? <TriggerMessage/> : optionIndex === 2 ? <GetDiagnostics/> : optionIndex === 3 ? <SendLocalList/> : <GetDiagnostics/>
-                        }
-                    </Box>
+                <CPSidebar onChanged={onOptionChanged} />
+                <Box sx={{ px: { xs: 1, md: 6 }, py: { xs: 1, md: 3 }, flexGrow: 1 }}>
+                    {
+                        optionIndex === 0 ? <ChargerAvailable /> : optionIndex === 1 ? <TriggerMessage /> : optionIndex === 2 ? <GetDiagnostics /> : optionIndex === 3 ? <SendLocalList /> : <GetDiagnostics />
+                    }
+                </Box>
             </Stack>
         </>
     )
