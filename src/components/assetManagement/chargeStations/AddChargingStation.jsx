@@ -3,10 +3,9 @@ import {
   Container,
   Grid,
   Stack,
-  Switch,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import InputField from "../../../ui/styledInput";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledCheckButton from "../../../ui/styledCheckButton";
@@ -39,7 +38,7 @@ const AddChargingStation = ({ headers, data }) => {
   return (
     <TableContainer>
       <Container maxWidth="lg">
-        <Grid container sx={{ alignItems: "center" }}>
+        <Grid container sx={{ alignItems: "center" }} spacing={2}>
           <Grid item xs={12} md={8}>
             <Stack direction="column">
               <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
