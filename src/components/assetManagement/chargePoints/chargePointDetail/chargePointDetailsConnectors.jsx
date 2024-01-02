@@ -42,7 +42,8 @@ export default function ChargePointDetailsConnectors() {
                 justifyContent: "center",
                 display: "flex",
                 backgroundColor: "#4A4458",
-                borderRadius: "4px"
+                borderRadius: "4px",
+                cursor:'pointer'
               }}
             >
               <Mdi_unlocked />
@@ -67,7 +68,8 @@ export default function ChargePointDetailsConnectors() {
                 justifyContent: "center",
                 display: "flex",
                 backgroundColor: "#4A4458",
-                borderRadius: "4px"
+                borderRadius: "4px",
+                cursor:'pointer'
               }}
             >
               <Mdi_unlocked />

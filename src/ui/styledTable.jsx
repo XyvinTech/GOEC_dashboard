@@ -4,7 +4,9 @@ import StyledPagination from "./styledPagination";
 import StyledStopButton from "./styledStopButton";
 import StyledActionCell from "./styledActionCell";
 import StyledStatusChip from "./styledStatusChip";
+import StyledPayloadTableCell from "./styledPayloadTableCell";
 // StyledTable component
+
 const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=['Edit','View','Delete'] }) => {
   const [page, setPage] = useState(0);
   const rowsPerPage = 10;
@@ -41,6 +43,7 @@ const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=
             <tr key={rowIndex}>
               {headers.map((header, cellIndex) => {
                 const isStatusColumn = header.toLowerCase() === "status";
+                const isPayload = header.toLowerCase() === "payload data";
                 const isTerminateSession =
                   header.toLowerCase() === "terminate session";
                 return (
@@ -56,7 +59,8 @@ const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=
                       <StyledStopButton onClick={() => handleStopClick(row.id)}>
                         Stop
                       </StyledStopButton>
-                    ) : (
+                    ) : isPayload ? <StyledPayloadTableCell value={row[header]}/> 
+                     : (
                       row[header]
                     )}
                   </TableCell>
