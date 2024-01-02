@@ -5,6 +5,7 @@ import { DummyData } from '../../../assets/json/VidTableData'
 import StyledButton from '../../../ui/styledButton'
 import LastSynced from '../../../layout/LastSynced'
 import AddVidCards from './AddVidCards'
+import EditVidCards from './EditVidCards'
 
 const tableHeader = [
   'VID Tag',
@@ -18,6 +19,7 @@ const tableHeader = [
 export default function AllVidCards() {
 
   const [open, setOpen] = useState(false);
+  const [isComponent, setIsComponent] = useState(true); // State to track which component to render
 
 
   // Function to open the modal
@@ -29,15 +31,22 @@ export default function AllVidCards() {
   const handleClose = () => {
     setOpen(false);
   };
+  const toggleAddMode = (status) => {
+    setIsComponent(status);
+    setOpen(true);
+  };
 
   return (
     <>
       <LastSynced heading="VID Cards"/>
       <Box sx={{p:3}}>
         <Box display="flex" justifyContent="flex-end">
-            <StyledButton variant='secondary' width='150' mr='10' onClick={handleOpen}>Add</StyledButton>
+            <StyledButton variant='secondary' width='150' mr='10'  onClick={() => toggleAddMode(true)}>Add</StyledButton>
         </Box>
-        <StyledTable headers={tableHeader} data={DummyData}/>
+        <StyledTable 
+        headers={tableHeader} 
+        data={DummyData}
+        onActionClick={() => toggleAddMode(false)}/>
       </Box>
       {/* Modal */}
       <Modal
@@ -47,7 +56,12 @@ export default function AllVidCards() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
+          {isComponent ? (
             <AddVidCards Close={handleClose} />
+          ) : (
+            <EditVidCards Close={handleClose} />
+          )}
+          
         </Box>
        
       </Modal>
@@ -64,7 +78,7 @@ const modalStyle = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 'auto', // Adjust width to fit your content or screen
-  boxShadow: 24,
+  boxShadow: 10,
   borderRadius: 2,
   color: '#fff', // White text for better visibility on dark background
   outline: 'none', // Remove the focus ring
