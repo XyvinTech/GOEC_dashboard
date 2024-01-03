@@ -37,22 +37,17 @@ border:none;
 
 
 const StyledPhoneNumber = ({ onChange,placeholder }) => {
-  const [selectedCountryCode, setSelectedCountryCode] = useState('');
+  // const [selectedCountryCode, setSelectedCountryCode] = useState('');
 
-  const handleCountryCodeChange = (selectedOption) => {
-    if (selectedOption) {
-      setSelectedCountryCode(selectedOption.value);
-      // You can also propagate the selected country code to the parent component if needed
-      onChange(selectedOption.value);
-    }
-  };
+  // const handleCountryCodeChange = (selectedOption) => {
+  //   if (selectedOption) {
+  //     setSelectedCountryCode(selectedOption.value);
+  //     // You can also propagate the selected country code to the parent component if needed
+  //     onChange(selectedOption.value);
+  //   }
+  // };
 
 
-  const options = [
-    { value: '+91', label: '+91' },
-    { value: '+971', label: '+971' },
-    // Add more options as needed
-  ];
 
   const customStyles = {
     control: (provided, state) => ({
@@ -99,20 +94,38 @@ const StyledPhoneNumber = ({ onChange,placeholder }) => {
     },
   });
 
+  const options = [
+    { value: '+91', label: '+91' },
+    { value: '+971', label: '+971' },
+    // Add more options as needed
+  ];
+
+
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
+
+  const handleCountryCodeChange = (selectedOption) => {
+    const countryCode = selectedOption.value;
+    setSelectedCountryCode(countryCode);
+    //onChange({ countryCode, phoneNumber: '' });
+  };
+
+  const handlePhoneNumberChange = (event) => {
+    const phoneNumber = event.target.value;
+    onChange({ countryCode: selectedCountryCode, phoneNumber });
+  };
 
   return (
     <PhoneNumberContainer>
       <Select
         placeholder="+91"
         onChange={handleCountryCodeChange}
+        options={options}
         styles={customStyles}
         theme={customTheme}
       />
       <PhoneNumberInput
-        type="tel"
         placeholder={placeholder}
-        value={selectedCountryCode}
-        onChange={(e) => setSelectedCountryCode(e.target.value)}
+        onChange={handlePhoneNumberChange}
       />
     </PhoneNumberContainer>
   );
