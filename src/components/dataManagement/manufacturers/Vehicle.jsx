@@ -25,7 +25,7 @@ export default function Vehicles() {
         }}/>
       <StyledButton variant={'primary'} style={{ width: '100%',minWidth:'160px' }} onClick={()=>{setOpen(true)}}>Add</StyledButton>
     </LastSynced>
-
+    
     <Box sx={{ p: 3 }}>
       <StyledTable headers={tableHeader} data={searchAndFilter(DummyVehicle, filterValue)} />
     </Box>
