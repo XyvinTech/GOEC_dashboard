@@ -141,7 +141,6 @@ const EditRfidCard = ({existingData,Close,Save}) => {
 const errorMessageStyle = {
   color: 'red',
  // margin: '1px 0',
-  // Add any other styles as needed
 };
 
 export default EditRfidCard;
