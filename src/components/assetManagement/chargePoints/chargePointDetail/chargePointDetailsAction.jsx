@@ -15,7 +15,7 @@ export default function ChargePointDetailsAction() {
       <StyledDivider />
 
       <Stack sx={{ justifyContent: 'center',px:1,py:4,px:2 }} spacing={3}>
-        <Box sx={{ backgroundColor: "#6C3333", borderRadius: "4px", justifyContent: "center", px: 3, py: 1 }} >
+        <Box sx={{ backgroundColor: "#6C3333", borderRadius: "4px", justifyContent: "center",cursor:'pointer', px: 3, py: 1.5 }} >
           <Typography
             sx={{ textAlign: 'center', color: "info.text", fontWeight: "500", fontSize: "14px" }}
           >
@@ -23,7 +23,7 @@ export default function ChargePointDetailsAction() {
           </Typography>
         </Box>
 
-        <Box sx={{ backgroundColor: "#885324", borderRadius: "4px", justifyContent: "center", px: 3, py: 1.5 }} >
+        <Box sx={{ backgroundColor: "#885324", borderRadius: "4px", justifyContent: "center",cursor:'pointer', px: 3, py: 1.5 }} >
           <Typography
             sx={{ textAlign: 'center', color: "info.text", fontWeight: "500", fontSize: "14px" }}
           >
@@ -31,7 +31,7 @@ export default function ChargePointDetailsAction() {
           </Typography>
         </Box>
 
-        <Box sx={{ backgroundColor: "#26426F", borderRadius: "4px", justifyContent: "center", px: 3, py: 1.5 }} >
+        <Box sx={{ backgroundColor: "#26426F", borderRadius: "4px", justifyContent: "center" , cursor:'pointer', px: 3, py: 1.5 }} >
           <Typography
             sx={{ textAlign: 'center', color: "info.text", fontWeight: "500", fontSize: "14px" }}
           >

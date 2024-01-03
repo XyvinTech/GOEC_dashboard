@@ -6,6 +6,7 @@ import StyledButton from '../../../ui/styledButton'
 import LastSynced from '../../../layout/LastSynced'
 import AddRfidCard from '../Rfid/AddRfidCard'
 import AddBulkRfidCard from './AddBulkRfidCard'
+import EditRfidCard from './EditRfidCard'
 
 const tableHeader = [
     'RFID Tag',
@@ -19,8 +20,10 @@ const tableHeader = [
 
 const AllRfidCards = () => {
   const [open, setOpen] = useState(false);
-  const [isAddRfid, setIsAddRfid] = useState(true); // State to track which component to render
+  const [isComponent, setIsComponent] = useState(0); // State to track which component to render
 
+  const [action, setAction] = useState("add");
+  const [tableData, setTableData] = useState();
 
   // Function to open the modal
   const handleOpen = () => {
@@ -33,20 +36,36 @@ const AllRfidCards = () => {
   };
 
   // Function to switch between AddRfidCard and AddBulkRfidCard
-  const toggleAddMode = (addRfid) => {
-    setIsAddRfid(addRfid);
+  const toggleAddMode = (status) => {
+    setIsComponent(status);
     setOpen(true);
   };
+
+  const handleClick = (e) => {
+   
+    // if (e.action === "Edit") {
+      console.log('edit')
+      setAction("edit");
+      setIsComponent(2);
+      setOpen(true);
+      setTableData(e.data);
+    // }
+  };
+
+  //console.log("status :"+isComponent);
 
   return (
     <>
      <LastSynced heading="RFID Cards"/>
       <Box sx={{p:3}}>
         <Box display="flex" justifyContent="flex-end">
-            <StyledButton variant='secondary' width='150' mr='10'  onClick={() => toggleAddMode(true)}>Add</StyledButton>
-            <StyledButton variant='primary' width='150' onClick={() => toggleAddMode(false)}>Add Bulk</StyledButton>
+            <StyledButton variant='secondary' width='150' mr='10'  onClick={() => toggleAddMode(0)}>Add</StyledButton>
+            <StyledButton variant='primary' width='150' onClick={() => toggleAddMode(1)}>Add Bulk</StyledButton>
         </Box>
-        <StyledTable headers={tableHeader} data={DummyData}/>
+        <StyledTable 
+          headers={tableHeader} 
+          data={DummyData}
+          onActionClick={(e) => handleClick(e)}/>
       </Box>
        {/* Modal */}
        <Modal
@@ -55,12 +74,16 @@ const AllRfidCards = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+                  
         <Box sx={modalStyle}>
-          {isAddRfid ? (
+         
+          {isComponent === 0 ? (
             <AddRfidCard Close={handleClose} />
-          ) : (
+          ) : isComponent === 1 ? (
             <AddBulkRfidCard Close={handleClose} />
-          )}
+          ) : isComponent === 2 ?(
+            <EditRfidCard Close={handleClose} existingData={tableData}/>
+          ):null}
         </Box>
        
       </Modal>
@@ -77,7 +100,7 @@ const modalStyle = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 'auto', // Adjust width to fit your content or screen
-  boxShadow: 24,
+  boxShadow: 10,
   borderRadius: 2,
   color: '#fff', // White text for better visibility on dark background
   outline: 'none', // Remove the focus ring

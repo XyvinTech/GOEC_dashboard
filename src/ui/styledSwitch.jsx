@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import { useForm, Controller } from 'react-hook-form';
 
 const IOSSwitch = styled((props) => (
     <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -54,15 +55,15 @@ const IOSSwitch = styled((props) => (
       }),
     },
   }));
-  
-  export default function StyledSwitch() {
-    return (
+
+  export default function StyledSwitch({ onChange,defaultChecked }) {
+      return (
         <FormGroup>
           <FormControlLabel
-            control={<IOSSwitch  defaultChecked />}
+            control={<IOSSwitch  defaultChecked={defaultChecked} onChange={onChange} />}
             
           />
-         
+          
         </FormGroup>
       );
     }

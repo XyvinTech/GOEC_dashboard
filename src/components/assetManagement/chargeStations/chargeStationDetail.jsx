@@ -1,16 +1,16 @@
-import { Box, Container, Grid, Typography, IconButton } from '@mui/material'
+import { Box, Container, Grid, Typography, IconButton, Dialog } from '@mui/material'
 import React, { useState } from 'react'
 import StationDetail from './chargeStationDetail/stationDetail'
 import OwnerDetail from './chargeStationDetail/ownerDetail'
 import Analytics from './chargeStationDetail/analytics'
 import { Stack } from '@mui/system'
-import { ArrowBackIosNew } from '@mui/icons-material'
+import { Add, ArrowBackIosNew } from '@mui/icons-material'
 import StyledTab from '../../../ui/styledTab'
 import ChargePoints from './chargeStationDetail/chargePoints'
 import Reviews from './chargeStationDetail/reviews'
 import { useNavigate } from 'react-router-dom'
 
-
+import AddChargePoint from '../chargePoints/AddChargePoint'
 export default function ChargeStationDetail() {
     const [toggleOption, setToggleoption] = useState(0)
     const navigate = useNavigate()
@@ -39,6 +39,8 @@ export default function ChargeStationDetail() {
                 </Grid>
             </Box>
             <StyledTab buttons={['Charge-points', 'Reviews']} onChanged={onChangeToggleOption} />
+           
+         
             {toggleOption === 0 ? <ChargePoints /> : <Reviews />}
         </>
     )
