@@ -1,30 +1,39 @@
 import React from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, Marker,useJsApiLoader } from '@react-google-maps/api';
 import operationalIconUrl from '../../../assets/icons/MapIcons/blueGoec.svg';
 import nonOperationalIconUrl from '../../../assets/icons/MapIcons/greyGoec.svg';
+import busyOperationalIconUrl from '../../../assets/icons/MapIcons/orangeGoec.svg';
+import faultOperationalIconUrl from '../../../assets/icons/MapIcons/redGoec.svg';
+import { Box } from '@mui/material';
 
 
 
 export default function MapContainer({ chargingStations }) {
 
-  const mapStyles = {        
-    height: "100vh",
-    width: "100%"};
-  
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyCGj0hRgN-cr02TaGzHjCY9QilpB5nsMAs'
+  })
+
+  const mapStyles = {
+    height: "80vh",
+    width: "100%"
+  };
+
   const defaultCenter = {
-    lat: 41.3851, lng: 2.1734
+    lat: 10.013938, lng: 76.311999
   }
-  
+
 
   return (
-    <>
-    
-    <LoadScript
-       googleMapsApiKey='AIzaSyCGj0hRgN-cr02TaGzHjCY9QilpB5nsMAs'>
+    <Box sx={{ borderRadius: '8px', overflow: 'hidden' }}>
+      { isLoaded &&
         <GoogleMap
           mapContainerStyle={mapStyles}
           zoom={13}
-          center={defaultCenter}>
+          center={defaultCenter}
+          streetViewControl={false}
+          >
           {
             chargingStations.map((item) => {
 
@@ -36,19 +45,18 @@ export default function MapContainer({ chargingStations }) {
 
               return (
                 <Marker key={item.id}
-                position={position}
-                icon={{
-                  url: item.status === 'active' ? operationalIconUrl : nonOperationalIconUrl,
-                  scaledSize: new window.google.maps.Size(30, 30), // Scale the icon size
-                  anchor: new window.google.maps.Point(15, 15), // Anchor the icon
-                }}
-              />
+                  position={position}
+                  icon={{
+                    url: item.status === 'active' ? operationalIconUrl : item.status === 'busy' ? busyOperationalIconUrl : item.status === 'faulted' ? faultOperationalIconUrl : nonOperationalIconUrl,
+                    scaledSize: new window.google.maps.Size(35, 35), // Scale the icon size
+                    anchor: new window.google.maps.Point(10, 10), // Anchor the icon
+                  }} />
               )
             })
          }
         </GoogleMap>
-     </LoadScript>
-    
-    </>
+}
+
+    </Box>
   )
 }

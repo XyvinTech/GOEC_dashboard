@@ -8,6 +8,14 @@ export const ChargeStationData = [
       'status': 'active'
     },
     {
+      'Charge Station': 'Obrean Mall',
+      'Address': 'Delta Street, Cityville',
+      'Latitude': '10.013938',
+      'Longitude': '76.311999',
+      'Owner': 'Delta Power Solutions',
+      'status': 'active'
+    },
+    {
       'Charge Station': 'Green Park Plaza',
       'Address': 'Alpha Avenue, Energy City',
       'Latitude': '13.022141',
@@ -29,7 +37,7 @@ export const ChargeStationData = [
       'Latitude': '12.971923',
       'Longitude': '77.593762',
       'Owner': 'EcoCharge Solutions',
-      'status': 'active'
+      'status': 'faulted'
       
     },
     {
@@ -46,7 +54,7 @@ export const ChargeStationData = [
       'Latitude': '12.963031',
       'Longitude': '77.625787',
       'Owner': 'PowerCity Networks',
-      'status': 'active'
+      'status': 'busy'
     },
     {
       'Charge Station': 'Sunset Strip Charging Station',
@@ -62,7 +70,7 @@ export const ChargeStationData = [
       'Latitude': '12.925909',
       'Longitude': '77.634625',
       'Owner': 'UrbanCharge Networks',
-      'status': 'active'
+      'status': 'faulted'
     },
     {
       'Charge Station': 'GreenTech Plaza',
@@ -70,7 +78,7 @@ export const ChargeStationData = [
       'Latitude': '12.970568',
       'Longitude': '77.596256',
       'Owner': 'GreenTech Energy Solutions',
-      'status': 'active'
+      'status': 'busy'
     },
     {
       'Charge Station': 'InnoPark EV Center',
