@@ -31,6 +31,7 @@ import CustomerList from "../../pages/CustomerList";
 import LiveStatus from "../../pages/LiveStatus";
 import Reports from "../../pages/Reports";
 import Notification from "../../pages/Notification";
+import UserDetails from "../../components/crm/userDetails";
 
 const RoutesConfig = () => {
 
@@ -41,7 +42,10 @@ const RoutesConfig = () => {
             element: <Navigate to="/dashboard/live-status" replace />,
         },
         // Test purpose
-        
+        {
+            path: '/user-details',
+            element: <UserDetails />,
+        },
         // 
         {
             path: 'charge-station-detail',
@@ -52,15 +56,11 @@ const RoutesConfig = () => {
             path: 'charge-point-detail',
             element: <ChargePointDetail />,
         },
-        {
-            path:'user-details',
-            element:<UserDetails/>
-        },
+   
         {
             path: '/login',
             element: <Login />,
-            path: '/test',
-            element: <FilterNetwork />,
+         
         },
 
         {
@@ -152,7 +152,7 @@ const RoutesConfig = () => {
                 },
                 {
                     path: 'booking-transaction',
-                    element: <BookingTransactions />,
+                    element: <UnderConstruction />,
                 }
             ]
         },
