@@ -20,7 +20,7 @@ export default function AllVidCards() {
 
   const [open, setOpen] = useState(false);
   const [isComponent, setIsComponent] = useState(true); // State to track which component to render
-
+  const [tableData, setTableData] = useState();
 
   // Function to open the modal
   const handleOpen = () => {
@@ -35,6 +35,12 @@ export default function AllVidCards() {
     setIsComponent(status);
     setOpen(true);
   };
+  const handleClick = (e) => {
+      setIsComponent(false);
+      setOpen(true);
+      setTableData(e.data);
+  };
+
 
   return (
     <>
@@ -46,7 +52,7 @@ export default function AllVidCards() {
         <StyledTable 
         headers={tableHeader} 
         data={DummyData}
-        onActionClick={() => toggleAddMode(false)}/>
+        onActionClick={(e) => handleClick(e)}/>
       </Box>
       {/* Modal */}
       <Modal
@@ -59,7 +65,7 @@ export default function AllVidCards() {
           {isComponent ? (
             <AddVidCards Close={handleClose} />
           ) : (
-            <EditVidCards Close={handleClose} />
+            <EditVidCards Close={handleClose} existingData={tableData} />
           )}
           
         </Box>

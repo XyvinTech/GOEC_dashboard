@@ -33,6 +33,8 @@ import Reports from "../../pages/Reports";
 import Notification from "../../pages/Notification";
 import FilterNetwork from "../../components/chargingNetwork/FilterNetwork";
 import UserDetails from "../../components/crm/userDetails";
+import AccountTransactions from "../../pages/AccountTransactions";
+import Help from "../../pages/Help";
 
 const RoutesConfig = () => {
 
@@ -164,7 +166,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'account-transaction',
-                    element: <UnderConstruction />,
+                    element: <AccountTransactions />,
                 },
                 {
                     path: 'financials',
@@ -278,7 +280,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: '',
-                    element: <UnderConstruction />,
+                    element: <Help />,
                 }
             ]
         },

@@ -80,6 +80,7 @@ const CalendarInput = ({dateValue,onDateChange }) => {
             dropdownMode="select"
             popperPlacement="bottom-start"
             open
+            onClickOutside={() => setDatePickerOpen(false)} // Close calendar on outside click
              // Use CustomInput prop for a simplified input
              customInput={<StyledInput value={dateValue || ''} readOnly />}
           />
