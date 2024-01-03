@@ -19,7 +19,7 @@ export default function AddEvCharger() {
   return (
     <Box>
       <LastSynced heading={'EV Charger'} />
-      <Container maxWidth="lg" sx={{ backgroundColor: 'secondary.main', p: 2, m: { md: 4 }, border: '1px solid #fff6', borderRadius: '4px' }}>
+      <Container maxWidth="md" sx={{ backgroundColor: 'secondary.main', p: 2, m: { md: 4 }, border: '1px solid #fff6', borderRadius: '4px' }}>
         <ConnectorDetails open={connectorDetailOpen} onClose={() => { setConnectorDetailOpen(false) }} />
 
 

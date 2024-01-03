@@ -1,16 +1,16 @@
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import { UploadFile } from '@mui/icons-material';
-import {  Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 
-export default function FileUpload({onFileSelect}) {
+export default function FileUpload({ onFileSelect }) {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     multiple: false,
     onDrop: (acceptedFiles) => {
       console.log(acceptedFiles);
-      onFileSelect && onFileSelect({files:acceptedFiles})
+      onFileSelect && onFileSelect({ files: acceptedFiles })
     }
   });
   return (
@@ -30,8 +30,7 @@ export default function FileUpload({onFileSelect}) {
       {...getRootProps({})}
     >
       <input {...getInputProps({})} />
-        <UploadFile sx={{ fontSize: '24px',color:'secondary.contrastText' }} />
-
+      <UploadFile sx={{ fontSize: '24px', color: 'secondary.contrastText' }} />
       <Typography variant="caption" color={'secondary.contrastText'}>
         Drop your files or browse
       </Typography>
