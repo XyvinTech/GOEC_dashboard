@@ -1,7 +1,13 @@
+import { Box } from '@mui/material'
 import React from 'react'
+import BookingTrans from '../components/chargingNetwork/bookingTransactions/BookingTrans'
 
-export default function BookingTransactions() {
+function BookingTransactions() {
   return (
-    <div>BookingTransactions</div>
+    <Box>
+      <BookingTrans />
+    </Box>
   )
 }
+
+export default BookingTransactions

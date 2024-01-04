@@ -155,7 +155,7 @@ const RoutesConfig = () => {
                 },
                 {
                     path: 'booking-transaction',
-                    element: <UnderConstruction />,
+                    element: <BookingTransactions />,
                 }
             ]
         },
