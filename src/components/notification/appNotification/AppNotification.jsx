@@ -150,6 +150,7 @@ export default function AppNotification() {
                   )}
                 </>
               )}
+              rules={{ required: "file is required" }}
             />
 
             {selectedFileName && (

@@ -35,7 +35,7 @@ export default function EmailNotification() {
 
     setUploadPercentage(0);
     reset();
-    // window.location.reload();
+    window.location.reload();
   };
   const selectedFileName = watch("file");
   const [uploadPercentage, setUploadPercentage] = useState(0);
@@ -132,7 +132,7 @@ export default function EmailNotification() {
                 </>
               )}
               rules={{ required: "Target Url is required" }}
-            />{" "}
+            />
             <Controller
               name="file"
               control={control}
@@ -147,6 +147,7 @@ export default function EmailNotification() {
                   )}
                 </>
               )}
+              rules={{ required: "file is required" }}
             />
             {selectedFileName && (
               <ProgressBar
