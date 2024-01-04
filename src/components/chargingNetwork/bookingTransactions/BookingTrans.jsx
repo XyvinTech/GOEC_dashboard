@@ -4,10 +4,10 @@ import StyledSearchField from "../../../ui/styledSearchField";
 import { Box } from "@mui/material";
 import StyledTable from "../../../ui/styledTable";
 import { searchAndFilter } from "../../../utils/search";
-import { DummyData } from "../../../assets/json/AccountTransactions";
+import { DummyData } from "../../../assets/json/BookingTransactions";
 import RightDrawer from "../../../ui/RightDrawer";
 
-export default function AccountTrans() {
+export default function BookingTrans() {
   const [filterValue, setFilterValue] = useState("");
 
   const tableActionClick = (e) => {
@@ -15,20 +15,18 @@ export default function AccountTrans() {
   };
 
   const tableHeader = [
-    'User name',
-    'Date',
-    'Invoice Type',
-    'Invoice ID',
-    'Total Amount',
-    'Status',
-    'Transaction',
-    'Order ID',
-    'External Payment reference',
+    'Booking Id',
+    'CPID',
+    'Connector Id',
+    'Booked Through',
+    'User Number',
+    'User Name',
+    'Booking Time',
   ]
 
   return (
     <>
-      <LastSynced heading="Charge Points">
+      <LastSynced heading="Booking Transactions">
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {
