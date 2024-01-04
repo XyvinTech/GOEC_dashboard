@@ -7,7 +7,7 @@ const SelectContainer = styled.div`
   width: 100%; /* Adjust width as needed */
 `;
 
-const StyledSelectField = ({ placeholder,options, onChange }) => {
+const StyledSelectField = ({ placeholder,options, onChange,value }) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -27,11 +27,15 @@ const StyledSelectField = ({ placeholder,options, onChange }) => {
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "#4a4a4a" : "var(--inner, #39383D)",
+      backgroundColor: state.isFocused ? "#242424" : " #39383D",
       color: state.isFocused ? "#fff" : "#B5B8C5",
       cursor: "pointer",
       backgroundColor: state.isSelected ? "#242424" : "initial",
       // fontSize:'12px'
+      // Add a :active pseudo-class for selected option
+      ":active": {
+        backgroundColor: "#242424",
+      },
     }),
     menu: (provided) => ({
       ...provided,
@@ -41,7 +45,7 @@ const StyledSelectField = ({ placeholder,options, onChange }) => {
     singleValue: (provided) => ({
       ...provided,
       color: "##F7F8FC", // Set the text color for the selected value
-    }),
+    })
   };
 
   const customTheme = (theme) => ({
@@ -52,12 +56,12 @@ const StyledSelectField = ({ placeholder,options, onChange }) => {
     },
   });
 
+
   return (
     <SelectContainer>
       <Select
         placeholder={placeholder}
         options={options}
-   
         onChange={onChange}
         styles={customStyles}
         theme={customTheme}

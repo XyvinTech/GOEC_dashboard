@@ -114,7 +114,7 @@ const items = [
         sub: [
             {
                 href: 'accounts/account-transaction',
-                title: 'Account Transaction',
+                title: 'Account Transactions',
             },
             {
                 href: 'accounts/financials',

@@ -30,7 +30,7 @@ const EditRfidCard = ({existingData,Close,Save}) => {
 
   const onSubmit = (data) => {
     // Handle form submission with data
-    console.log(data);
+    console.log('Form data submitted:',data);
     // Close your form or perform other actions
     Close();
   };
@@ -141,7 +141,6 @@ const EditRfidCard = ({existingData,Close,Save}) => {
 const errorMessageStyle = {
   color: 'red',
  // margin: '1px 0',
-  // Add any other styles as needed
 };
 
 export default EditRfidCard;
