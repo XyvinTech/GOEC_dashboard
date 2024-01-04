@@ -4,8 +4,9 @@ import { DashboardNavbar } from "./navbar";
 import { Box } from '@mui/material';
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { registerChartJs } from "../utils/register-chart";
 
-
+registerChartJs()
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
     display: 'flex',
     flex: '1 1 auto',

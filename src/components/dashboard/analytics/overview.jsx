@@ -1,8 +1,14 @@
 import React from 'react'
 import LastSynced from '../../../layout/LastSynced'
 import { Box, Grid, Stack, Typography } from '@mui/material'
-import { PieChart } from '@mui/x-charts'
 import { Circle } from '@mui/icons-material';
+import { Pie } from 'react-chartjs-2';
+import { useTheme } from '@emotion/react';
+import DashboardDataCard from '../../../ui/dashboardDataCard';
+
+
+
+
 
 const items = [
     { value: 70, label: 'Available' },
@@ -21,56 +27,130 @@ const labels = [
     { color: '#BA6ADF', label: 'Preparing' },
     { color: '#39383D', label: 'Unavailable' },
 ]
+
+
+
+
+
 export default function Overview() {
+    const theme = useTheme();
+
+    const data = {
+        datasets: [
+            {
+                data: items.map((e) => e.value),
+                backgroundColor: labels.map((e) => e.color),
+                borderWidth: 0,
+                borderColor: '#FFFFFF',
+                hoverBorderColor: '#FFFFFF'
+            },
+        ],
+        labels: labels.map((e) => e.label)
+    };
+
+    const options = {
+        animation: true,
+        plugins: {
+            legend: {
+                display: false,
+                position: 'right',
+                labels: {
+                    boxWidth: 10,
+                    boxHeight: 10,
+                    borderRadius: 5,
+                }
+            },
+        },
+        responsive: true,
+        tooltips: {
+            backgroundColor: theme.palette.background.paper,
+            bodyFontColor: theme.palette.text.secondary,
+            borderColor: theme.palette.divider,
+            borderWidth: 1,
+            enabled: true,
+            footerFontColor: theme.palette.text.secondary,
+            intersect: false,
+            mode: 'index',
+            titleFontColor: theme.palette.text.primary
+        }
+    };
     return (
-        <><LastSynced heading={'Analytics - Overview'} /><Box>
-            <Grid container p={2}>
-                <Grid item xs={12} md={4}>
+        <><LastSynced heading={'Analytics - Overview'} />
+            <Grid container p={{ xs: 1, md: 2 }} spacing={1}>
+                <Grid item xs={12} md={5} lg={4}>
                     <Box sx={{ backgroundColor: 'secondary.main', borderRadius: '4px' }}>
-                        <Stack direction={'column'} p={2}>
+                        <Stack direction={'column'} p={{ xs: 1, md: 2 }}>
                             <Typography variant='subtitle2' color={'secondary.contrastText'}>Connector Status</Typography>
                             <Typography variant='subtitle2' color={'secondary.contrastText'}>115 total connectors</Typography>
-                            <Grid container >
+                            <Grid container spacing={2} mt={2} >
                                 <Grid item xs={8}>
-                                    <PieChart
-                                        colors={['#3CEE88', '#E29A5B', '#EB7575', '#378EAA', '#BA6ADF', '#39383D']}
-                                        series={[
-                                            {
-                                                data: items,
-                                                highlightScope: { faded: 'global', highlighted: 'item' },
-                                                faded: { innerRadius: 20, additionalRadius: -20, color: 'gray' },
-                                            },
-                                        ]}
-                                        width={370}
-                                        height={370}
-                                        slotProps={{
-                                            legend: {
-                                                hidden: true
-                                            },
-
-                                        }
-                                        }
+                                    <Pie
+                                        data={data}
+                                        options={options}
                                     />
                                 </Grid>
-                                <Grid item xs={4} sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Stack direction={'column'} sx={{ alignItems: 'start' }} spacing={2}>
+                                <Grid item xs={4} display={"flex"} alignItems={'center'}>
+                                    <Stack direction={'column'} pr={2} spacing={1}>
                                         {
                                             labels.map((item) => (
-                                                <Stack direction={'row'} spacing={1}>
-                                                    <Circle sx={{color:`${item.color}`}} />
-                                                    <Typography color={'secondary.contrastText'}>{item.label}</Typography>
+                                                <Stack direction={'row'} alignItems={"center"} spacing={1}>
+                                                    <Circle sx={{ color: `${item.color}`, fontSize: '17px' }} />
+                                                    <Typography variant='body2' color={'secondary.contrastText'}>{item.label}</Typography>
                                                 </Stack>
-                                            )
-
-                                            )
+                                            ))
                                         }
                                     </Stack>
+
                                 </Grid>
                             </Grid>
                         </Stack>
                     </Box>
                 </Grid>
-            </Grid>
-        </Box></>
+
+
+                <Grid item xs={12} md={7} lg={8}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6} sm={3} md={4}>
+                            <DashboardDataCard title={'Charge Stations'} value={'59'} />
+                        </Grid>
+
+                        <Grid item xs={6} sm={3} md={4}>
+                            <DashboardDataCard title={'Charge points'} value={'128'} />
+                        </Grid>
+
+                        <Grid item xs={6} sm={3} md={4}>
+                            <DashboardDataCard title={'Active Sessions'} value={'8'} />
+                        </Grid>
+
+                        <Grid item xs={6} sm={3} md={4}>
+                            <DashboardDataCard title={'Registered User'}  value={'4120'} />
+                        </Grid>
+
+                        <Grid item xs={6} sm={3} md={4}>
+                            <DashboardDataCard title={'RFID'} value={'280'} />
+                        </Grid>
+
+                        <Grid item xs={6} sm={3} md={4}>
+                            <DashboardDataCard title={'VID'}  value={'3'} />
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} md={4}>
+                            <DashboardDataCard title={'Revenue'} subTitle={'Earned(INR)'} value={'59'} />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <DashboardDataCard title={'Energy'} subTitle={'Delivered(kWh)'} value={'128'} />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <DashboardDataCard title={'Charging'} subTitle={'Transactions'} value={'59'} />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid >
+
+        </>
     )
 }
