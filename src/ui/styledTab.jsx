@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function StyledTab({ buttons, onChanged, ...props }) {
   const [activeInd, setActiveInd] = useState(0);
   return (
-    <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", justifyContent:{xs:'center',md:'flex-start'},pl:2 }}>
+    <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", justifyContent:{xs:'center',md:'flex-start'},pl:2 }} {...props}>
         {buttons.map((item, ind) => {
           let isActive = ind === activeInd;
           return (

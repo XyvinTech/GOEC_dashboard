@@ -35,6 +35,7 @@ import FilterNetwork from "../../components/chargingNetwork/FilterNetwork";
 import UserDetails from "../../components/crm/userDetails";
 import AccountTransactions from "../../pages/AccountTransactions";
 import Help from "../../pages/Help";
+import Analytics from "../../pages/analytics";
 
 const RoutesConfig = () => {
 
@@ -81,7 +82,7 @@ const RoutesConfig = () => {
                 },
                 {
                     path: 'analytics',
-                    element: <UnderConstruction />,
+                    element: <Analytics />,
                 },
                 {
                     path: 'alarms',
