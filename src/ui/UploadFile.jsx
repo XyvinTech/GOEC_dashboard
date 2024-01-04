@@ -33,7 +33,8 @@ const UploadFile = ({ onFileSelect }) => {
       }
 
       // Invoke the callback function from the parent with the file name and upload percentage
-      onFileSelect(file.name, 100);
+      //onFileSelect(file.name, 100);
+      onFileSelect([file],100);
     }
   };
 
@@ -46,7 +47,7 @@ const UploadFile = ({ onFileSelect }) => {
         <input
           type="file"
           id="fileInput"
-          accept=".pdf, .doc, .docx, .zip" // Specify accepted file types if needed
+          accept=".pdf, .doc, .docx, .zip,.csv" // Specify accepted file types if needed
           style={{ display: 'none' }}
           onChange={handleFileChange}
         />
