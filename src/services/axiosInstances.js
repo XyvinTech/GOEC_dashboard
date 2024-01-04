@@ -3,7 +3,7 @@ import axios from "axios";
 let token = sessionStorage.getItem("userToken");
 
 const tokenInstance = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: process.env.REACT_APP_API_KEY,
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",
@@ -11,7 +11,7 @@ const tokenInstance = axios.create({
 });
 
 const loginInstance = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: process.env.REACT_APP_API_KEY,
 });
 
 module.exports = { tokenInstance, loginInstance };
