@@ -156,6 +156,7 @@ export default function EmailNotification() {
               />
             )}
             <StyledButton
+            type="submit"
               variant={"primary"}
               width="316"
               height="46"

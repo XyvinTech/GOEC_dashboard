@@ -7,10 +7,23 @@ import StyledPhoneNumber from "../../../ui/StyledPhoneNumber";
 import LastSynced from "../../../layout/LastSynced";
 import StyledDivider from "../../../ui/styledDivider";
 import { ReactComponent as SearchButtonIcon } from "../../../assets/icons/searchGlass.svg";
+import { useForm, Controller } from "react-hook-form";
+export default function RemoteSession() {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+    reset,
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    clearErrors();
+    reset();
+  };
 
-export default function RemoteSession( {handleSubmit}) {
-  const handlePhoneNumberChange = (e) => {
-    console.log(e.target.value);
+  const handlePhoneNumberChange = (value) => {
+    console.log(value);
   };
 
   return (
@@ -56,30 +69,135 @@ export default function RemoteSession( {handleSubmit}) {
 
           {/* Other Sections */}
           <Grid item xs={12} md={6} sx={{ marginTop: { xs: 2, sm: 0 } }}>
-            <Box sx={{ backgroundColor: "#1C1D22", padding: 2, margin: 2 }}>
-              <Typography sx={typoLabel}>User Name</Typography>
-              <InputField placeholder={"Anish Vikende"} />
-              <Typography sx={typoLabel}>Location</Typography>
-              <StyledSelectField placeholder={"Select Location"} />
-              <Typography sx={typoLabel}>CPID</Typography>
-              <StyledSelectField placeholder={"Select Chargepoint"} />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {" "}
+              <Box sx={{ backgroundColor: "#1C1D22", padding: 2, margin: 2 }}>
+                <Typography sx={typoLabel}>User Name</Typography>
+                <Controller
+                  name="username"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <InputField placeholder={"Anish Vikende"} {...field} />
+                      {errors.username && (
+                        <span style={errorMessageStyle}>
+                          {errors.username.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                  rules={{ required: "User is required" }}
+                />
+                <Typography sx={typoLabel}>Location</Typography>
+                <Controller
+                  name="location"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        placeholder={"Select Location"}
+                        {...field}
+                      />
+                      {errors.location && (
+                        <span style={errorMessageStyle}>
+                          {errors.location.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                  rules={{ required: "Location is required" }}
+                />
+                <Typography sx={typoLabel}>CPID</Typography>
+                <Controller
+                  name="cpid"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        placeholder={"Select Chargepoint"}
+                        {...field}
+                      />
+                      {errors.cpid && (
+                        <span style={errorMessageStyle}>
+                          {errors.cpid.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                  rules={{ required: "CPID is required" }}
+                />
+                <Typography sx={typoLabel}>Connector ID</Typography>
+                <Controller
+                  name="connectorId"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        placeholder={"Select Connector"}
+                        {...field}
+                      />
+                      {errors.connectorId && (
+                        <span style={errorMessageStyle}>
+                          {errors.connectorId.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                  rules={{ required: "Connector ID is required" }}
+                />
+                <Typography sx={typoLabel}>Session Mode</Typography>
 
-              <Typography sx={typoLabel}>Connector ID</Typography>
-              <StyledSelectField placeholder={"Select Connector"} />
-              <Typography sx={typoLabel}>Session Mode</Typography>
-              <StyledSelectField placeholder={"Select Session Mode"} />
-              <Typography sx={typoLabel}>Value</Typography>
-              <Grid container spacing={2} item xs={12} md={12}>
-                <Grid item xs={12} md={9}>
-                  <InputField placeholder={"Enter Value"} />
+                <Controller
+                  name="sessionMode"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        placeholder={"Select Session Mode"}
+                        {...field}
+                      />
+                      {errors.sessionMode && (
+                        <span style={errorMessageStyle}>
+                          {errors.sessionMode.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                  rules={{ required: "Session Mode is required" }}
+                />
+                <Typography sx={typoLabel}>Value</Typography>
+
+                <Grid container spacing={2} item xs={12} md={12}>
+                  <Grid item xs={12} md={9}>
+                    <Controller
+                      name="value"
+                      control={control}
+                      render={({ field }) => (
+                        <>
+                          <InputField placeholder={"Enter Value"} {...field} />
+                          {errors.value && (
+                            <span style={errorMessageStyle}>
+                              {errors.value.message}
+                            </span>
+                          )}
+                        </>
+                      )}
+                      rules={{ required: "Value is required" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3} sx={{ px: 1 }}>
+                    <StyledButton
+                      variant="primary"
+                      type="submit"
+                      width="100"
+                      height="50"
+                    >
+                      Start
+                    </StyledButton>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} md={3} sx={{ px: 1 }}>
-                  <StyledButton variant="primary" width="100" height="50" onClick={handleSubmit}>
-                    Start
-                  </StyledButton>
-                </Grid>
-              </Grid>
-            </Box>
+              </Box>
+            </form>
           </Grid>
         </Grid>
       </Container>
@@ -97,4 +215,7 @@ const typoLabel = {
   fontStyle: "normal",
   fontWeight: 500,
   lineHeight: "16px",
+};
+const errorMessageStyle = {
+  color: "red",
 };
