@@ -6,6 +6,7 @@ import StyledButton from "../../../ui/styledButton";
 import ProgressBar from "../../../ui/ProgressBar";
 import NotificationUpload from "../../../utils/NotificationUpload";
 import styled from "styled-components";
+import { Controller, useForm } from "react-hook-form";
 const LocalStyledStatusChip = styled.span`
   padding: 4px 8px;
   border-radius: 10px;
@@ -18,62 +19,157 @@ const LocalStyledStatusChip = styled.span`
   background: var(--Secondary, #322f3b);
 `;
 export default function AppNotification() {
-  const [selectedFileName, setSelectedFileName] = useState(null);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+    reset,
+    setValue,
+    watch,
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    clearErrors();
+
+    setUploadPercentage(0);
+    reset();
+    window.location.reload();
+  };
+  const selectedFileName = watch("file");
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const handleFileSelect = (fileName, percentage) => {
-    setSelectedFileName(fileName);
+    setValue("file", fileName);
     setUploadPercentage(percentage);
   };
   const user_name = "username";
   return (
-    <Box
-      sx={{
-        overflowX: "auto",
-        borderRadius: "8px",
-        margin: "20px 16px",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      <Stack direction={"column"} spacing={2}>
-        <Box sx={BoxStyle}>
-          <Typography sx={HeadingStyle}>Create In App Notification</Typography>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Box
+        sx={{
+          overflowX: "auto",
+          borderRadius: "8px",
+          margin: "20px 16px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Stack direction={"column"} spacing={2}>
+          <Box sx={BoxStyle}>
+            <Typography sx={HeadingStyle}>
+              Create In App Notification
+            </Typography>
 
-          <Typography sx={TextStyle}>Send To</Typography>
-          <StyledSelectField placeholder={"Select User"} />
-          <Typography sx={TextStyle}>Subject</Typography>
-          <InputField placeholder={"Enter Subject line"} />
-          <Typography sx={TextStyle}>Content</Typography>
-          <InputField
-            placeholder={"Add message"}
-            lineHeight="173px"
-            specialAlign={true}
-          />
-
-          <LocalStyledStatusChip
-            style={{ alignSelf: "flex-start", fontSize: "14px" }}
-          >
-            {"{" + user_name + "}"}
-          </LocalStyledStatusChip>
-          <Typography sx={TextStyle}>Target Url</Typography>
-          <InputField placeholder={"Enter Target URL"} />
-          <NotificationUpload onFileSelect={handleFileSelect} />
-          {selectedFileName && (
-            <ProgressBar
-              UploadProgress={uploadPercentage}
-              filename={selectedFileName}
+            <Typography sx={TextStyle}>Send To</Typography>
+            <Controller
+              name="sendTo"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledSelectField placeholder={"Select User"} {...field} />
+                  {errors.sendTo && (
+                    <span style={errorMessageStyle}>
+                      {errors.sendTo.message}
+                    </span>
+                  )}
+                </>
+              )}
+              rules={{ required: "User is required" }}
             />
-          )}
-          <StyledButton
-            variant={"primary"}
-            width="316"
-            height="46"
-            style={{ borderRadius: "8px" }}
-          ></StyledButton>
-        </Box>
-      </Stack>
-    </Box>
+            <Typography sx={TextStyle}>Subject</Typography>
+            <Controller
+              name="subject"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <InputField placeholder={"Enter Subject line"} {...field} />
+                  {errors.subject && (
+                    <span style={errorMessageStyle}>
+                      {errors.subject.message}
+                    </span>
+                  )}
+                </>
+              )}
+              rules={{ required: "Subject is required" }}
+            />
+            <Typography sx={TextStyle}>Content</Typography>
+            <Controller
+              name="content"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <InputField
+                    placeholder={"Add message"}
+                    lineHeight="173px"
+                    specialAlign={true}
+                    {...field}
+                  />
+                  {errors.content && (
+                    <span style={errorMessageStyle}>
+                      {errors.content.message}
+                    </span>
+                  )}
+                </>
+              )}
+              rules={{ required: "Content is required" }}
+            />
+            <LocalStyledStatusChip
+              style={{ alignSelf: "flex-start", fontSize: "14px" }}
+            >
+              {"{" + user_name + "}"}
+            </LocalStyledStatusChip>
+            <Typography sx={TextStyle}>Target Url</Typography>
+            <Controller
+              name="targetUrl"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <InputField placeholder={"Enter Target URL"} {...field} />
+                  {errors.targetUrl && (
+                    <span style={errorMessageStyle}>
+                      {errors.targetUrl.message}
+                    </span>
+                  )}
+                </>
+              )}
+              rules={{ required: "Target Url is required" }}
+            />
+            <Controller
+              name="file"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <NotificationUpload
+                    onFileSelect={handleFileSelect}
+                    {...field}
+                  />
+
+                  {errors.file && (
+                    <span style={errorMessageStyle}>{errors.file.message}</span>
+                  )}
+                </>
+              )}
+              rules={{ required: "file is required" }}
+            />
+
+            {selectedFileName && (
+              <ProgressBar
+                UploadProgress={uploadPercentage}
+                filename={selectedFileName}
+              />
+            )}
+            <StyledButton
+              type="submit"
+              variant={"primary"}
+              width="316"
+              height="46"
+              style={{ borderRadius: "8px" }}
+            ></StyledButton>
+          </Box>
+        </Stack>
+      </Box>
+    </form>
   );
 }
 const TextStyle = {
@@ -108,4 +204,7 @@ const HeadingStyle = {
   fontWeight: "700",
   lineHeight: "normal",
   letterSpacing: "0.3px",
+};
+const errorMessageStyle = {
+  color: "red",
 };

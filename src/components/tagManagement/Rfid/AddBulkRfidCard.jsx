@@ -6,17 +6,105 @@ import StyledButton from "../../../ui/styledButton";
 import { ReactComponent as ArrowDown } from "../../../assets/icons/arrow-down.svg";
 import UploadFile from "../../../ui/UploadFile";
 import ProgressBar from "../../../ui/ProgressBar";
+import { useForm } from 'react-hook-form';
 
 const AddBulkRfidCard = ({Close,Save}) => {
-  const [selectedFileName, setSelectedFileName] = useState(null);
-  const [uploadPercentage, setUploadPercentage] = useState(0);
 
-  const handleFileSelect = (fileName, percentage) => {
-    setSelectedFileName(fileName);
-    setUploadPercentage(percentage);
+  const { register, handleSubmit, watch, setValue } = useForm();
+  
+  const selectedFile = watch('file'); // Watch the 'file' field
+
+  const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [selectedFileName, setselectedFileName] = useState(null);
+
+
+  const handleFileSelect = (fileList, percentage) => {
+    // console.log("filelist:", fileList);
+    // console.log("length:", fileList.length);
+  
+    if (fileList && fileList.length > 0) {
+      const file = fileList[0];
+      // console.log("file is:", file);
+  
+      setValue('file', fileList); // Set the entire FileList object for the form
+      setselectedFileName(file.name)
+      setUploadPercentage(percentage);
+    } else {
+      console.log("No file selected");
+    }
   };
+
+  const onSubmit = async (data) => {
+    // Handle form submission here
+    console.log('Form data submitted:',data);
+  
+    const fileList = data.file;
+    // console.log("file input:", data.file);
+  
+    if (fileList && fileList.length > 0 ) {
+      const fileInput = fileList[0];
+  
+      try {
+        const fileData = await readFileAsText(fileInput);
+        console.log('File Data:', fileData);
+  
+        // Extract the file name for display
+        const fileName = fileInput.name;
+        console.log('File Name:', fileName);
+  
+        // Now you can parse the CSV data
+        const parsedData = parseCSV(fileData);
+        console.log('Parsed Data:', parsedData);
+      } catch (error) {
+        console.error('Error reading file:', error);
+      }
+    } else {
+      console.log("No file selected");
+    }
+  
+    Close();
+  };
+
+
+  const readFileAsText = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (e) => resolve(e.target.result);
+      reader.onerror = (e) => reject(e);
+
+      reader.readAsText(file);
+    });
+  };
+
+  function parseCSV(csvData) {
+    const rows = csvData.split('\n');
+    const header = rows[0].split(',');
+    const parsedData = [];
+  
+    for (let i = 1; i < rows.length; i++) {
+      const rowData = rows[i].split(',');
+      const entry = {};
+  
+      for (let j = 0; j < header.length; j++) {
+        entry[header[j]] = rowData[j];
+      }
+  
+      parsedData.push(entry);
+    }
+  
+    return parsedData;
+  }
+  
+  const handleBrowseClick = () => {
+    // trigger file input click
+    document.getElementById('fileInput').click();
+  };
+
+
   return (
     <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <CommonLayout header="Add bulk RFID Card" onClick={Close}>
         <Grid
           container
@@ -33,6 +121,13 @@ const AddBulkRfidCard = ({Close,Save}) => {
             sx={{ mb: 2 }}
           >
             <UploadFile onFileSelect={handleFileSelect} />
+            <input
+                type="file"
+                id="fileInput"
+                style={{ display: 'none' }}
+                onChange={(e) => handleFileSelect(e.target.files, 0)}
+                {...register('file')}
+              />
           </Grid>
           <Grid
             item
@@ -41,7 +136,8 @@ const AddBulkRfidCard = ({Close,Save}) => {
             display="flex"
             justifyContent="flex-end"
           >
-            <StyledButton variant="gray" width="180" mr="20" fontSize="10">
+            <StyledButton variant="gray" width="180" mr="20" fontSize="10" type="button"
+                 onClick={handleBrowseClick}>
               Browse
             </StyledButton>
           </Grid>
@@ -111,13 +207,14 @@ const AddBulkRfidCard = ({Close,Save}) => {
         </Grid>
       </CommonLayout>
       <StyledFooter>
-        <StyledButton variant="secondary" width="103" mr="20" onClick={Close}>
+        <StyledButton variant="secondary" width="103" mr="20" onClick={Close} type="button">
           Cancel
         </StyledButton>
-        <StyledButton variant="primary" width="160" onClick={Save}>
+        <StyledButton variant="primary" width="160" type="submit">
           Upload
         </StyledButton>
       </StyledFooter>
+      </form>
     </>
   );
 };
