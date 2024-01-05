@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import LastSynced from '../../../layout/LastSynced'
-import { Box, Button, Grid, IconButton, Stack } from '@mui/material'
+import { Box, Button, Grid, IconButton, Stack, Typography } from '@mui/material'
 import { Tune } from '@mui/icons-material'
 import DashboardDataCard from '../../../ui/dashboardDataCard'
 import Revenue from './trends/revenue'
@@ -53,6 +53,29 @@ export default function Trends() {
                     }
                 </Stack>
                 {buttonIndex == 0 ? <Revenue/> : buttonIndex == 1 ? <ChargingTransaction/> : <Energy/>}
+                <Typography variant='subtitle2' color={'secondary.contrastText'} my={2}>Authorized by</Typography>
+                <Grid container spacing={2}>
+
+                    <Grid item xs={12} md={4}>
+                        <DashboardDataCard title={'Mobile'} value={59}/>
+                    </Grid>
+
+                    <Grid item xs={12} md={4}>
+                        <DashboardDataCard title={'RFID'} value={128}/>
+                    </Grid>
+
+                    <Grid item xs={12} md={4}>
+                        <DashboardDataCard title={'Offline Transaction'} value={59}/>
+                    </Grid>
+
+                    <Grid item xs={12} md={4}>
+                        <DashboardDataCard title={'CPO assistances'} value={59}/>
+                    </Grid>
+
+                    <Grid item xs={12} md={4}>
+                        <DashboardDataCard title={'VID'} value={59}/>
+                    </Grid>
+                </Grid>
             </Box>
         </>
     )
