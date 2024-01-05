@@ -35,7 +35,6 @@ export default function EmailNotification() {
 
     setUploadPercentage(0);
     reset();
-    window.location.reload();
   };
   const selectedFileName = watch("file");
   const [uploadPercentage, setUploadPercentage] = useState(0);
@@ -45,6 +44,11 @@ export default function EmailNotification() {
     setUploadPercentage(percentage);
   };
   const user_name = "username";
+  const user = [
+    { value: "Anish Vikende", label: "Anish Vikende" },
+
+    // Add more options as needed
+  ];
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
@@ -65,7 +69,7 @@ export default function EmailNotification() {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField placeholder={"Select User"} {...field} />
+                  <StyledSelectField options={user}placeholder={"Select User"} {...field} />
                   {errors.sendTo && (
                     <span style={errorMessageStyle}>
                       {errors.sendTo.message}

@@ -25,7 +25,10 @@ export default function RemoteSession() {
   const handlePhoneNumberChange = (value) => {
     console.log(value);
   };
-
+  const cpid = [{ value: "GOEC117", label: "GOEC117" }];
+  const connectorId = [{ value: "1", label: "1" }];
+  const session = [{ value: "session", label: "session" }];
+  const location = [{ value: "location", label: "location" }];
   return (
     <>
       <LastSynced heading="Start Remote Sessions" />
@@ -95,6 +98,7 @@ export default function RemoteSession() {
                   render={({ field }) => (
                     <>
                       <StyledSelectField
+                        options={location}
                         placeholder={"Select Location"}
                         {...field}
                       />
@@ -114,6 +118,7 @@ export default function RemoteSession() {
                   render={({ field }) => (
                     <>
                       <StyledSelectField
+                        options={cpid}
                         placeholder={"Select Chargepoint"}
                         {...field}
                       />
@@ -133,6 +138,7 @@ export default function RemoteSession() {
                   render={({ field }) => (
                     <>
                       <StyledSelectField
+                        options={connectorId}
                         placeholder={"Select Connector"}
                         {...field}
                       />
@@ -153,6 +159,7 @@ export default function RemoteSession() {
                   render={({ field }) => (
                     <>
                       <StyledSelectField
+                        options={session}
                         placeholder={"Select Session Mode"}
                         {...field}
                       />
