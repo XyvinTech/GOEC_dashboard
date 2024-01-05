@@ -16,7 +16,7 @@ export default function MapContainer({ chargingStations }) {
   })
 
   const mapStyles = {
-    height: "80vh",
+    height: "75vh",
     width: "100%"
   };
 
