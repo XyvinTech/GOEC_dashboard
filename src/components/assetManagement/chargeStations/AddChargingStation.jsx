@@ -36,8 +36,7 @@ const AddChargingStation = ({ headers, data }) => {
   // pagination
 
   return (
-    <TableContainer>
-      <Container maxWidth="lg">
+      <Container maxWidth="md" sx={{p:2}}>
         <Grid container sx={{ alignItems: "center" }} spacing={2}>
           <Grid item xs={12} md={8}>
             <Stack direction="column">
@@ -214,7 +213,6 @@ const AddChargingStation = ({ headers, data }) => {
           </Grid>
         </Grid>
       </Container>
-    </TableContainer>
   );
 };
 

@@ -6,7 +6,7 @@ import AddChargingStation from '../components/assetManagement/chargeStations/Add
 import { getChargingStationList } from '../services/stationAPI';
 
 export default function ChargingStation() {
-
+  const [togglePage, setTogglePage] = useState(0);
   const [chargeStationListData, setChargeStationListData] = useState([])
 
   const init = () => {
@@ -15,7 +15,6 @@ export default function ChargingStation() {
         setChargeStationListData(res.result)
       }
     }
-
     )
   }
 
@@ -23,7 +22,7 @@ export default function ChargingStation() {
     init();
   }, [])
 
-  const [togglePage, setTogglePage] = useState(0);
+  
 
   const buttonChanged = (e) => {
     console.log(e);
