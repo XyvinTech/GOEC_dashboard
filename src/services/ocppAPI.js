@@ -1,9 +1,9 @@
-import { tokenInstance } from "./axiosInstances";
+import { OCPP_INSTANCE } from "./axiosInstances";
 
 export async function remoteStart(data) {
   // ? GOEC123 is id or  not?
   try {
-    const response = await tokenInstance.post(
+    const response = await OCPP_INSTANCE.post(
       `ocpp/remoteStartTransaction/GOEC123`,
       data
     );
@@ -16,7 +16,7 @@ export async function remoteStart(data) {
 export async function remoteStop(data) {
   // ? GOEC123 is id or  not?
   try {
-    const response = await tokenInstance.post(
+    const response = await OCPP_INSTANCE.post(
       `ocpp/remoteStopTransaction/GOEC123`,
       data
     );
@@ -29,7 +29,7 @@ export async function remoteStop(data) {
 export async function clearCache() {
   // ? GOEC123 is id or  not?
   try {
-    const response = await tokenInstance.get(`ocpp/clear-cache/GOEC123`);
+    const response = await OCPP_INSTANCE.get(`ocpp/clear-cache/GOEC123`);
     return response.data;
   } catch (error) {
     throw error;
@@ -39,7 +39,7 @@ export async function clearCache() {
 export async function unlock(data) {
   // ? GOEC123 is id or  not?
   try {
-    const response = await tokenInstance.post(
+    const response = await OCPP_INSTANCE.post(
       `ocpp/unlock-connector/GOEC123`,
       data
     );
@@ -52,7 +52,7 @@ export async function unlock(data) {
 export async function reset() {
   // ? GOEC123 is id or  not?
   try {
-    const response = await tokenInstance.get(`ocpp/reset/GOEC123`);
+    const response = await OCPP_INSTANCE.get(`ocpp/reset/GOEC123`);
     return response.data;
   } catch (error) {
     throw error;
@@ -62,7 +62,7 @@ export async function reset() {
 export async function changeConfig(data) {
   // ? GOEC123 is id or  not?
   try {
-    const response = await tokenInstance.post(
+    const response = await OCPP_INSTANCE.post(
       `ocpp/unlock-connector/GOEC123`,
       data
     );

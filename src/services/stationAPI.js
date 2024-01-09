@@ -1,8 +1,8 @@
-import { tokenInstance } from "./axiosInstances";
+import { CHARGING_STATION_INSTANCE } from "./axiosInstances";
 
 export async function createChargingStation(data) {
   try {
-    const response = await tokenInstance.post(`chargingStations/create`, data);
+    const response = await CHARGING_STATION_INSTANCE.post(`chargingStations/create`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export async function createChargingStation(data) {
 
 export async function editChargingStation(Id, data) {
   try {
-    const response = await tokenInstance.put(`chargingStations/${Id}`, data);
+    const response = await CHARGING_STATION_INSTANCE.put(`chargingStations/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,7 +20,7 @@ export async function editChargingStation(Id, data) {
 
 export async function deleteChargingStation(Id) {
   try {
-    const response = await tokenInstance.delete(`chargingStations/${Id}`);
+    const response = await CHARGING_STATION_INSTANCE.delete(`chargingStations/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -29,7 +29,7 @@ export async function deleteChargingStation(Id) {
 
 export async function getChargingStationById(Id) {
   try {
-    const response = await tokenInstance.get(`chargingStations/${Id}`);
+    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -38,7 +38,7 @@ export async function getChargingStationById(Id) {
 
 export async function getChargingStationList() {
   try {
-    const response = await tokenInstance.get(`chargingStations/list`);
+    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/list`);
     return response.data;
   } catch (error) {
     throw error;
@@ -47,7 +47,7 @@ export async function getChargingStationList() {
 
 export async function updateChargingStationByList(data) {
   try {
-    const response = await tokenInstance.post(
+    const response = await CHARGING_STATION_INSTANCE.post(
       `chargingStations/nearBy/list`,
       data
     );

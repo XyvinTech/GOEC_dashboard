@@ -1,8 +1,8 @@
-import { tokenInstance } from "./axiosInstances";
+import { LAMBDA_INSTANCES } from "./axiosInstances";
 
 export async function createWalletTransaction(data) {
   try {
-    const response = await tokenInstance.post(`walletTransaction/create`, data);
+    const response = await LAMBDA_INSTANCES.post(`walletTransaction/create`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export async function createWalletTransaction(data) {
 
 export async function editWalletTransaction(Id, data) {
   try {
-    const response = await tokenInstance.post(`walletTransaction/${Id}`, data);
+    const response = await LAMBDA_INSTANCES.post(`walletTransaction/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,7 +20,7 @@ export async function editWalletTransaction(Id, data) {
 
 export async function deleteWalletTransaction(Id) {
   try {
-    const response = await tokenInstance.delete(`walletTransaction/${Id}`);
+    const response = await LAMBDA_INSTANCES.delete(`walletTransaction/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -29,7 +29,7 @@ export async function deleteWalletTransaction(Id) {
 
 export async function getWalletTransactionById(Id) {
   try {
-    const response = await tokenInstance.get(`walletTransaction/${Id}`);
+    const response = await LAMBDA_INSTANCES.get(`walletTransaction/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -38,7 +38,7 @@ export async function getWalletTransactionById(Id) {
 
 export async function getWalletTransactionList() {
   try {
-    const response = await tokenInstance.get(`walletTransaction/list`);
+    const response = await LAMBDA_INSTANCES.get(`walletTransaction/list`);
     return response.data;
   } catch (error) {
     throw error;
@@ -47,7 +47,7 @@ export async function getWalletTransactionList() {
 
 export async function getWalletTransactionFilteredList(start, end) {
   try {
-    const response = await tokenInstance.get(
+    const response = await LAMBDA_INSTANCES.get(
       `walletTransaction/filteredList?fromDate=${start}&toDate=${end}`
     );
     return response.data;

@@ -1,8 +1,8 @@
-import { tokenInstance } from "./axiosInstances";
+import { EV_MACHINE_INSTANCE } from "./axiosInstances";
 
 export async function createEvMachine(data) {
   try {
-    const response = await tokenInstance.post(`evMachine`, data);
+    const response = await EV_MACHINE_INSTANCE.post(`evMachine`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export async function createEvMachine(data) {
 
 export async function editEvMachine(Id, data) {
   try {
-    const response = await tokenInstance.put(`evMachine/${Id}`, data);
+    const response = await EV_MACHINE_INSTANCE.put(`evMachine/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,7 +20,7 @@ export async function editEvMachine(Id, data) {
 
 export async function deleteEvMachine(Id) {
   try {
-    const response = await tokenInstance.delete(`evMachine/${Id}`);
+    const response = await EV_MACHINE_INSTANCE.delete(`evMachine/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -29,7 +29,7 @@ export async function deleteEvMachine(Id) {
 
 export async function getEvMachineById(Id) {
   try {
-    const response = await tokenInstance.get(`evMachine/${Id}`);
+    const response = await EV_MACHINE_INSTANCE.get(`evMachine/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -38,7 +38,7 @@ export async function getEvMachineById(Id) {
 
 export async function listEvMachine() {
   try {
-    const response = await tokenInstance.get(`evMachine/list/`);
+    const response = await EV_MACHINE_INSTANCE.get(`evMachine/list/`);
     return response.data;
   } catch (error) {
     throw error;
@@ -47,7 +47,7 @@ export async function listEvMachine() {
 
 export async function updateEvMachineStatus(data) {
   try {
-    const response = await tokenInstance.post(
+    const response = await EV_MACHINE_INSTANCE.post(
       `evMachine/updateStatusConnector/CP 1`,
       data
     );
@@ -59,7 +59,7 @@ export async function updateEvMachineStatus(data) {
 
 export async function addConnector(Id, data) {
   try {
-    const response = await tokenInstance.put(
+    const response = await EV_MACHINE_INSTANCE.put(
       `evMachine/addConnector/${Id}`,
       data
     );
@@ -71,7 +71,7 @@ export async function addConnector(Id, data) {
 
 export async function removeConnector(Id, data) {
   try {
-    const response = await tokenInstance.put(
+    const response = await EV_MACHINE_INSTANCE.put(
       `evMachine/removeConnector/${Id}`,
       data
     );

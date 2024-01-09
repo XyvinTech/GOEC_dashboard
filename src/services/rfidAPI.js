@@ -1,8 +1,8 @@
-import { tokenInstance } from "./axiosInstances";
+import { LAMBDA_INSTANCES } from "./axiosInstances";
 
 export async function createRfid(data) {
   try {
-    const response = await tokenInstance.post(`rfid/create`, data);
+    const response = await LAMBDA_INSTANCES.post(`rfid/create`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export async function createRfid(data) {
 
 export async function editRfid(Id, data) {
   try {
-    const response = await tokenInstance.put(`vehicle/${Id}`, data);
+    const response = await LAMBDA_INSTANCES.put(`vehicle/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,7 +20,7 @@ export async function editRfid(Id, data) {
 
 export async function deleteRfid(Id) {
   try {
-    const response = await tokenInstance.delete(`vehicle/${Id}`);
+    const response = await LAMBDA_INSTANCES.delete(`vehicle/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -29,7 +29,7 @@ export async function deleteRfid(Id) {
 
 export async function getRfidById(Id) {
   try {
-    const response = await tokenInstance.get(`vehicle/${Id}`);
+    const response = await LAMBDA_INSTANCES.get(`vehicle/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -39,7 +39,7 @@ export async function getRfidById(Id) {
 export async function getRfidBySNo() {
   try {
     // ? 111222333444 is id or  not?
-    const response = await tokenInstance.get(
+    const response = await LAMBDA_INSTANCES.get(
       `rfid/rfidbySerialNumber/111222333444`
     );
     return response.data;
@@ -50,7 +50,7 @@ export async function getRfidBySNo() {
 
 export async function getRfidList() {
   try {
-    const response = await tokenInstance.get(`rfid/list`);
+    const response = await LAMBDA_INSTANCES.get(`rfid/list`);
     return response.data;
   } catch (error) {
     throw error;
