@@ -2,10 +2,10 @@ import { Box } from '@mui/material'
 import React, { useState } from 'react'
 import StyledTable from '../../../ui/styledTable'
 import LastSynced from '../../../layout/LastSynced'
-import { ChargeStationData } from '../../../assets/json/chargestations'
 import { useNavigate } from 'react-router-dom'
 import StyledSearchField from '../../../ui/styledSearchField'
 import { searchAndFilter } from '../../../utils/search'
+import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
 
 const tableHeader = [
   'Charge Station',
@@ -16,9 +16,9 @@ const tableHeader = [
   'status'
 ]
 
-export default function AllChargeStation() {
+export default function AllChargeStation({data, ...props}) {
   const navigate = useNavigate()
-
+  const chargeStationData = tableHeaderReplace(data,['name','address','longitude','latitude','_id','status'],tableHeader) 
   const [filterValue, setFilterValue] = useState('')
 
   const tableActionClick = (e) => {
@@ -35,7 +35,7 @@ export default function AllChargeStation() {
         }} />
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(ChargeStationData, filterValue)} onActionClick={tableActionClick} />
+        <StyledTable headers={tableHeader} data={searchAndFilter(chargeStationData, filterValue)} onActionClick={tableActionClick} />
       </Box>
     </>
   )
