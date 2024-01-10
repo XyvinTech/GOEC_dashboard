@@ -5,6 +5,7 @@ import StyledStopButton from "./styledStopButton";
 import StyledActionCell from "./styledActionCell";
 import StyledStatusChip from "./styledStatusChip";
 import StyledPayloadTableCell from "./styledPayloadTableCell";
+import TableSkeleton from "./tableSkeleton";
 // StyledTable component
 
 const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=['Edit','View','Delete'] }) => {
@@ -39,7 +40,9 @@ const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=
         </TableHeader>
 
         <TableBody>
-          {paginatedData.map((row, rowIndex) => (
+          {paginatedData.length === 0 ? 
+          <TableSkeleton tableHeader={headers}/> :
+          paginatedData.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {headers.map((header, cellIndex) => {
                 const isStatusColumn = header.toLowerCase() === "status";
@@ -120,7 +123,6 @@ export const HeaderCell = styled.th`
   color: var(--greyish, #b5b8c5);
   font-family: Inter;
   font-size: 14px;
-
   font-style: normal;
   font-weight: 600;
   line-height: normal;

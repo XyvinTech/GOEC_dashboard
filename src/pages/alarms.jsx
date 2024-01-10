@@ -1,9 +1,6 @@
 import { Box } from '@mui/material'
 import React, { useState } from 'react'
 import StyledTab from '../ui/styledTab'
-import Overview from '../components/dashboard/analytics/overview'
-import Trends from '../components/dashboard/analytics/trends'
-import Utilization from '../components/dashboard/analytics/utilization'
 import AlarmsList from '../components/dashboard/alarms/alarmsList'
 import AlarmSummary from '../components/dashboard/alarms/alarmSummary'
 

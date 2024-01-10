@@ -18,12 +18,14 @@ const tableHeader = [
 
 export default function AllChargeStation({data, ...props}) {
   const navigate = useNavigate()
-  const chargeStationData = tableHeaderReplace(data,['name','address','longitude','latitude','_id','status'],tableHeader) 
-  const [filterValue, setFilterValue] = useState('')
+  
 
+  const [filterValue, setFilterValue] = useState('')
+  
+  const chargeStationData = tableHeaderReplace(data,['name','address','longitude','latitude','owner','status'],tableHeader) 
   const tableActionClick = (e) => {
     if (e.action === 'View') {
-      navigate('/charge-station-detail')
+      navigate('/charge-station-detail',{state:e.data})
     }
   }
   return (

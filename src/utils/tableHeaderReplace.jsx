@@ -12,6 +12,7 @@ export const tableHeaderReplace = (data, headers1, headers2) => {
                return headers2[index]
             }
          }
+         return key
       });
       return newObj;
    })

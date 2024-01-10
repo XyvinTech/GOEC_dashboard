@@ -18,7 +18,7 @@ export default function AllChargePoint() {
   const tableActionClick = (e) => {
     console.log(e);
     if (e.action === 'View') {
-      navigate('/charge-point-detail')
+      navigate(`/charge-point-detail`)
     }
   }
   const tableHeader = [
