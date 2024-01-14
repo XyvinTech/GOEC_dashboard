@@ -5,7 +5,7 @@ import React from 'react'
 import StyledCalender from '../../../../ui/StyledCalender'
 import { useState } from 'react'
 
-export default function Analytics() {
+export default function Analytics({data}) {
     const [open, setOpen] = useState(false)
     const onClose = () => { setOpen(false) }
     return (
@@ -28,7 +28,7 @@ export default function Analytics() {
                         <Typography variant='caption' sx={{ color: 'primary.DimText', fontSize: '14px', fontWeight: '400' }}>Earned(INR)</Typography>
                         <Box sx={{ height: '91 px' }}>
                             <Box direction={'column'} spacing={'5px'} sx={{ mt: 2, borderLeft: '3px solid ', borderImage: 'linear-gradient(100deg, #ED5DCD -2.24%, rgba(95, 93, 215, 0.71) 98.06%) 10', borderRadius: 8, pl: 2, py: 0 }}>
-                                <Typography variant='h5'>24234345</Typography>
+                                <Typography variant='h5'>{data && data.total_revenue}</Typography>
                             </Box>
                         </Box>
                     </Stack>
@@ -37,7 +37,7 @@ export default function Analytics() {
                         <Typography variant='caption' sx={{ color: 'primary.DimText', fontSize: '14px', fontWeight: '400' }}>Delivered(kWh)</Typography>
                         <Box sx={{ height: '70px' }}>
                             <Box direction={'column'} spacing={'5px'} sx={{ mt: 2, borderLeft: '3px solid ', borderImage: 'linear-gradient(100deg, #ED5DCD -2.24%, rgba(95, 93, 215, 0.71) 98.06%) 10', borderRadius: 8, pl: 2, py: 0 }}>
-                                <Typography variant='h5'>24234345</Typography>
+                                <Typography variant='h5'>{data && data.total_units}</Typography>
                             </Box>
                         </Box>
                     </Stack>

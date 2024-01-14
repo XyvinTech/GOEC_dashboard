@@ -5,32 +5,36 @@ import StyledTable from '../../../ui/styledTable'
 import { ReactComponent as ReloadIcon } from '../../../assets/icons/reload.svg'
 
 
-import { AllChargePointsData } from '../../../assets/json/chargepoints'
+// import { AllChargePointsData } from '../../../assets/json/chargepoints'
 import LastSynced from '../../../layout/LastSynced'
 import { useNavigate } from 'react-router-dom'
 import StyledButton from '../../../ui/styledButton'
 import { searchAndFilter } from '../../../utils/search'
+import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
 
-export default function AllChargePoint() {
+const tableHeader = [
+  'CPID',
+  'OEM',
+  'Model',
+  'Tariff',
+  'Station',
+  'Status',
+  'Published'
+]
+
+export default function AllChargePoint({ data, ...props }) {
   const navigate = useNavigate()
 
   const [filterValue, setFilterValue] = useState('')
   const tableActionClick = (e) => {
-    console.log(e);
     if (e.action === 'View') {
       navigate(`/charge-point-detail`)
     }
   }
-  const tableHeader = [
-    'CPID',
-    'OEM',
-    'Model',
-    'Tariff',
-    'Station',
-    'Status',
-    'Published'
-  ]
 
+  const AllChargePointsData = tableHeaderReplace(data, ['CPID', 'name', 'type', 'charger_tariff', 'power', 'cpidStatus','type'], tableHeader)
+  console.log(data);
+  console.log(AllChargePointsData);
   return (
     <>
       <LastSynced heading="Charge Points" >

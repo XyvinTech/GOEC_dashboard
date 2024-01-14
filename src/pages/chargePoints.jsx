@@ -10,8 +10,9 @@ export default function ChargingPoints() {
 
   const init = () => {
     listEvMachine().then((res) => {
-      if (res.status) {
-        setChargePointListData(res.result)
+      console.log(res);
+      if (res) {
+        setChargePointListData(res)
       }
     }
     )
