@@ -5,6 +5,9 @@ import InputField from "../../ui/styledInput";
 import StyledSelectField from "../../ui/styledSelectField";
 import StyledButton from "../../ui/styledButton";
 import { ReactComponent as CalendarMonth } from "../../assets/icons/calendar_month.svg";
+import { useForm, Controller } from "react-hook-form";
+import StyledInput from "../../ui/styledInput";
+import CalendarInput from "../../ui/CalendarInput";
 
 const locations = [
   { value: "option1", label: "Account Transaction" },
@@ -16,37 +19,156 @@ const locations = [
 ];
 
 export default function FilterNetwork() {
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    clearErrors,
+  } = useForm({
+    defaultValues: {
+      published: false, // Set the default value for "activate"
+    },
+  });
+  const onSubmit = (data) => {
+    // Handle form submission with data
+    console.log("Form data submitted:", data);
+    // Close your form or perform other actions
+  };
+
+  const handleDateChangeInParent = (date) => {
+    setValue("startDate", date); // Assuming you have 'expiryDate' in your form state
+    clearErrors("startDate");
+   
+  };
+  const startDate = watch("startDate", ""); // Watching the value for 'expiryDate'
+
+
+  const handleEndDateChangeInParent = (date) => {
+    setValue("endDate", date); // Assuming you have 'expiryDate' in your form state
+    clearErrors("endDate");
+
+  };
+  const endDate = watch("endDate", ""); // Watching the value for 'expiryDate'
+
   return (
     <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={modalStyle}>
         <Stack direction={"column"} spacing={2}>
           <FormContainer>
             <Label>Start date</Label>
-            <InputField
-              iconright={<CalendarMonth />}
-              placeholder={"mm/dd/yyyy"}
+
+            <Controller
+              name="startDate"
+              control={control}
+              render={({ field }) => (
+                <>
+              
+
+<StyledInput
+                  {...field}
+                
+                  iconright={
+                    <CalendarInput
+                      onDateChange={handleDateChangeInParent}
+                    />}
+                  placeholder={"mm/dd/yyyy"}
+                  value={startDate}
+                  readOnly
+                 
+                />
+                  {errors.startDate && (
+                    <span style={errorMessageStyle}>
+                      {errors.startDate.message}
+                    </span>
+                  )}
+                </>
+              )}
+              
             />
+           
 
             <Label>End date</Label>
-            <InputField
-              iconright={<CalendarMonth />}
-              placeholder={"mm/dd/yyyy"}
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field }) => (
+                <>
+              
+
+<StyledInput
+                  {...field}
+                
+                  iconright={
+                    <CalendarInput
+                      onDateChange={handleEndDateChangeInParent}
+                    />}
+                  placeholder={"mm/dd/yyyy"}
+                  value={endDate}
+                  readOnly
+                 
+                />
+                  {errors.endDate && (
+                    <span style={errorMessageStyle}>
+                      {errors.endDate.message}
+                    </span>
+                  )}
+                </>
+              )}
+        
             />
             <Label>Location</Label>
-            <StyledSelectField
+
+            <Controller
+                name="location"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <StyledSelectField
               placeholder={"Select Report"}
               options={locations}
             />
+                    {errors.location && (
+                      <span style={errorMessageStyle}>
+                        {errors.location.message}
+                      </span>
+                    )}
+                  </>
+                )}
+               
+              />
+
+           
 
             <Label>CPID</Label>
-            <StyledSelectField
+
+            <Controller
+                name="cpid"
+                control={control}
+                render={({ field }) => (
+                  <>
+                      <StyledSelectField
               placeholder={"Select Report"}
               options={locations}
             />
+                    {errors.cpid && (
+                      <span style={errorMessageStyle}>
+                        {errors.cpid.message}
+                      </span>
+                    )}
+                  </>
+                )}
+               
+              />
+
+         
             <Grid container spacing={6}>
               <Grid item xs={12} md={6} >
               
-                <StyledButton width={120} variant="primary" fontSize="14">
+                <StyledButton width={120} variant="primary" fontSize="14" type="submit">
                   Apply
                 </StyledButton>
               </Grid>
@@ -59,6 +181,7 @@ export default function FilterNetwork() {
           </FormContainer>
         </Stack>
       </Box>
+      </form>
     </>
   );
 }
@@ -131,3 +254,16 @@ const CustomLabel = styled('div')(({ theme }) => ({
     display: 'inline-block',
     marginRight: theme.spacing(1),
   }));
+
+  // Styled table container
+export const TableContainer = styled.div`
+background: #27292f; // Dark background for the table
+overflow-x: auto; // Allows table to be scrollable horizontally
+border-radius: 8px; // Rounded corners
+margin: 20px 0; // Margin for spacing, adjust as needed
+`;
+
+const errorMessageStyle = {
+color: "red",
+// margin: '1px 0',
+};
