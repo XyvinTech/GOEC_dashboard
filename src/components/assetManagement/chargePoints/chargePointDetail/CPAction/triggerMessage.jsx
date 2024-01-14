@@ -117,6 +117,7 @@ export default function TriggerMessage() {
                       )}
                     </>
                   )}
+                  rules={{ required: "Connector ID is required" }}
                 />
               </Stack>
             </Grid>

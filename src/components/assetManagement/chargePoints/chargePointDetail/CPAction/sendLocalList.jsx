@@ -44,7 +44,7 @@ export default function SendLocalList() {
                     )}
                   </>
                 )}
-               
+                rules={{ required: "Update Firmware is required" }}
               />
                    
                 </Stack>
