@@ -3,9 +3,7 @@ import { Box, Dialog, Stack, Typography } from '@mui/material'
 import { ReactComponent as ReloadIcon } from '../../../../assets/icons/reload.svg'
 import StyledButton from '../../../../ui/styledButton'
 import StyledTable from '../../../../ui/styledTable'
-import { chargePointsData } from '../../../../assets/json/chargepoints'
 import AddChargePoint from '../../chargePoints/AddChargePoint'
-import { tableHeaderReplace } from '../../../../utils/tableHeaderReplace'
 
 const tableHeader = [
   'CPID',
@@ -24,7 +22,17 @@ export default function ChargePoints({ data, ...props }) {
 
   const [allChargePointsData, setAllChargePointsData] = useState([])
   useEffect(() => {
-    setAllChargePointsData(tableHeaderReplace(data, ['CPID', 'name', 'type', 'charger_tariff', 'cpidStatus', 'cpidStatus', 'type'], tableHeader))
+    const dt = data.map((item) => (
+      {
+        '_id': item._id,
+        'CPID': item.CPID,
+        'OEM': item.evModelDetails[0].oem,
+        'Model': item.evModelDetails[0].model_name,
+        'Tariff': item.chargingTariffDetails[0].tax_name,
+        'Status': item.cpidStatus,
+        'Published': item.published
+      }))
+    setAllChargePointsData(dt)
   }, [data])
 
 

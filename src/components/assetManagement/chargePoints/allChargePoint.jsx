@@ -31,9 +31,9 @@ export default function AllChargePoint({ data, ...props }) {
       navigate(`/charge-point-detail`)
     }
   }
-
-  const AllChargePointsData = tableHeaderReplace(data, ['CPID', 'name', 'type', 'charger_tariff', 'power', 'cpidStatus','type'], tableHeader)
   console.log(data);
+  const AllChargePointsData = tableHeaderReplace(data, ['CPID', 'oem', 'evModel', 'chargingTariff', 'chargingStation', 'cpidStatus','published'], tableHeader)
+  
   console.log(AllChargePointsData);
   return (
     <>
@@ -44,7 +44,7 @@ export default function AllChargePoint({ data, ...props }) {
         <StyledButton variant={'primary'} style={{ width: '100%' }}>Add Chargpoint</StyledButton>
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(AllChargePointsData, filterValue)} onActionClick={tableActionClick} />
+        <StyledTable headers={tableHeader} data={searchAndFilter(AllChargePointsData, filterValue)} showActionCell={true} onActionClick={tableActionClick} />
       </Box>
     </>
   )

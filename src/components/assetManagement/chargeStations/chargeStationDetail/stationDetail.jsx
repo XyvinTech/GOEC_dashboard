@@ -21,7 +21,7 @@ export default function StationDetail({ data, ...props }) {
           <Stack direction={'column'}>
             <Stack direction={'row'} sx={{ color: '#F2994A', backgroundColor: '#FFFAEA', borderRadius: '15px', width: '50px', justifyContent: 'center' }}>
               <Star fontSize='12px' />
-              <Typography fontSize={'12px'}>{data && data.overall_rating}</Typography>
+              <Typography fontSize={'12px'}>{data && data.average_rating}</Typography>
             </Stack>
             <Stack direction={'column'} spacing={'5px'} sx={{ mt: 2 }}>
               <Typography variant='h6' fontSize={20}>{data && data.name}</Typography>
