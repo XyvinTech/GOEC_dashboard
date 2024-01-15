@@ -25,7 +25,8 @@ export default function FileUpload({ onFileSelect }) {
         height: '100%',
         borderRadius: '10px', border: '3px dashed #fff6',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        cursor:'pointer'
       }}
       {...getRootProps({})}
     >

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import StyledTab from '../ui/styledTab'
 import AllChargeStation from '../components/assetManagement/chargeStations/allChargeStation';
 import AddChargingStation from '../components/assetManagement/chargeStations/AddChargingStation';
-import { getChargingStationList } from '../services/stationAPI';
+import { getChargingStationList,createChargingStation } from '../services/stationAPI';
 
 export default function ChargingStation() {
   const [togglePage, setTogglePage] = useState(0);
@@ -14,6 +14,14 @@ export default function ChargingStation() {
       if (res.status) {
         setChargeStationListData(res.result)
       }
+    }
+    )
+  }
+
+  const addChargeStation = (data) => {
+    createChargingStation(data).then((res) => {
+      console.log(res)
+    
     }
     )
   }
@@ -32,7 +40,7 @@ export default function ChargingStation() {
     <Box>
       <StyledTab
         buttons={['All Charge stations', 'Add Charge Station']} onChanged={buttonChanged} />
-      {togglePage === 0 ? <AllChargeStation data={chargeStationListData} /> : <AddChargingStation />}
+      {togglePage === 0 ? <AllChargeStation data={chargeStationListData} /> : <AddChargingStation addChargeStation={addChargeStation} />}
     </Box>
   );
 }

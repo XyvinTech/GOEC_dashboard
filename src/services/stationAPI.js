@@ -29,7 +29,7 @@ export async function deleteChargingStation(Id) {
 
 export async function getChargingStationById(Id) {
   try {
-    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/${Id}`);
+    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/dashboard/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -38,7 +38,7 @@ export async function getChargingStationById(Id) {
 
 export async function getChargingStationList() {
   try {
-    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/list`);
+    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/dashboard/list`);
     return response.data;
   } catch (error) {
     throw error;

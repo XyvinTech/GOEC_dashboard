@@ -6,8 +6,47 @@ import StyledSelectField from "../../ui/styledSelectField";
 import StyledButton from "../../ui/styledButton";
 import LastSynced from "../../layout/LastSynced";
 import { ReactComponent as CalendarMonth } from "../../assets/icons/calendar_month.svg";
-
+import { useForm, Controller } from "react-hook-form";
+import CalendarInput from "../../ui/CalendarInput";
+import StyledInput from "../../ui/styledInput";
 export default function DownloadReport() {
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    clearErrors,
+  } = useForm({
+    defaultValues: {
+      published: false, // Set the default value for "activate"
+    },
+  });
+  const onSubmit = (data) => {
+    // Handle form submission with data
+    data= {...data,report:selectedOption}
+    console.log("Form data submitted:", data);
+    // Close your form or perform other actions
+  };
+
+  const handleDateChangeInParent = (date) => {
+    setValue("startDate", date); // Assuming you have 'expiryDate' in your form state
+    clearErrors("startDate");
+   
+  };
+  const startDate = watch("startDate", ""); // Watching the value for 'expiryDate'
+
+
+  const handleEndDateChangeInParent = (date) => {
+    setValue("endDate", date); // Assuming you have 'expiryDate' in your form state
+    clearErrors("endDate");
+
+  };
+  const endDate = watch("endDate", ""); // Watching the value for 'expiryDate'
+
+
+
   const options = [
     { value: "option1", label: "Account Transaction" },
     { value: "option2", label: "Feedback" },
@@ -24,6 +63,7 @@ export default function DownloadReport() {
   };
   return (
     <>
+     <form onSubmit={handleSubmit(onSubmit)}>
       <LastSynced heading="Reports" />
 
       <TableContainer>
@@ -41,44 +81,125 @@ export default function DownloadReport() {
           </FormContainer>
           <FormContainer>
             <Label>Start date</Label>
-            <InputField
-              iconright={<CalendarMonth />}
-              placeholder={"mm/dd/yyyy"}
+            <Controller
+              name="startDate"
+              control={control}
+              render={({ field }) => (
+                <>
+              
+
+<StyledInput
+                  {...field}
+                
+                  iconright={
+                    <CalendarInput
+                      onDateChange={handleDateChangeInParent}
+                    />}
+                  placeholder={"mm/dd/yyyy"}
+                  value={startDate}
+                  readOnly
+                 
+                />
+                  {errors.startDate && (
+                    <span style={errorMessageStyle}>
+                      {errors.startDate.message}
+                    </span>
+                  )}
+                </>
+              )}
+              
             />
 
             <Label>End date</Label>
-            <InputField
-              iconright={<CalendarMonth />}
-              placeholder={"mm/dd/yyyy"}
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field }) => (
+                <>
+              
+
+<StyledInput
+                  {...field}
+                
+                  iconright={
+                    <CalendarInput
+                      onDateChange={handleEndDateChangeInParent}
+                    />}
+                  placeholder={"mm/dd/yyyy"}
+                  value={endDate}
+                  readOnly
+                 
+                />
+                  {errors.endDate && (
+                    <span style={errorMessageStyle}>
+                      {errors.endDate.message}
+                    </span>
+                  )}
+                </>
+              )}
+        
             />
 
             {selectedOption !== "Account Transaction" &&
               selectedOption !== "User Registration" && (
                 <>
                   <Label>Location</Label>
-                  <StyledSelectField
-                    placeholder={"Select Report"}
-                    options={options}
-                  />
+              
+
+<Controller
+                name="location"
+                control={control}
+                render={({ field }) => (
+                  <>
+                      <StyledSelectField
+              placeholder={"Select Report"}
+              options={options}
+            />
+                    {errors.location && (
+                      <span style={errorMessageStyle}>
+                        {errors.location.message}
+                      </span>
+                    )}
+                  </>
+                )}
+               
+              />
                 </>
               )}
 
             {selectedOption === "Alarms" && (
               <>
                 <Label>CPID</Label>
-                <StyledSelectField
-                  placeholder={"Select Report"}
-                  options={options}
-                />
+              
+
+<Controller
+                name="cpid"
+                control={control}
+                render={({ field }) => (
+                  <>
+                      <StyledSelectField
+              placeholder={"Select Report"}
+              options={options}
+            />
+                    {errors.cpid && (
+                      <span style={errorMessageStyle}>
+                        {errors.cpid.message}
+                      </span>
+                    )}
+                  </>
+                )}
+               
+              />
               </>
             )}
 
-            <StyledButton variant="primary" fontSize="14">
+            <StyledButton variant="primary" fontSize="14" type="submit">
               Download
             </StyledButton>
           </FormContainer>
         </Stack>
       </TableContainer>
+      </form>
     </>
   );
 }
@@ -127,3 +248,9 @@ export const Label = styled.label`
   letter-spacing: 0.3px;
   text-transform: capitalize;
 `;
+
+const errorMessageStyle = {
+  color: "red",
+  // margin: '1px 0',
+  };
+  

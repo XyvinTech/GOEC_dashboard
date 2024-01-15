@@ -38,7 +38,7 @@ export async function getEvMachineById(Id) {
 
 export async function listEvMachine() {
   try {
-    const response = await EV_MACHINE_INSTANCE.get(`evMachine/list/`);
+    const response = await EV_MACHINE_INSTANCE.get(`evMachine/dashboard/list`);
     return response.data;
   } catch (error) {
     throw error;

@@ -7,6 +7,7 @@ import { AccountCircle, Autorenew, ErrorOutlineOutlined, Phone, WarehouseOutline
 import StyledDivider from '../../../../ui/styledDivider';
 import StyledButton from '../../../../ui/styledButton';
 import StyledSelectField from '../../../../ui/styledSelectField';
+import { useForm, Controller } from "react-hook-form";
 
 
 const UserNameComponent = ({ isuser = false }) => {
@@ -26,33 +27,104 @@ const UserNameComponent = ({ isuser = false }) => {
 
 
 export default function AssignTariff({ open, onClose, ...props }) {
+
+
+    const {
+        control,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors },
+        clearErrors,
+      } = useForm({
+        defaultValues: {
+          published: false, // Set the default value for "activate"
+        },
+      });
+      const onSubmit = (data) => {
+        // Handle form submission with data
+        console.log("Form data submitted:", data);
+        // Close your form or perform other actions
+      };
+    
     return (
         <Dialog open={open} maxWidth={'sm'} fullWidth onClose={onClose && onClose}>
             <Box sx={{ backgroundColor: 'secondary.main' }}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack sx={{ p: 4 }} spacing={1}>
                     <Stack direction={'column'} spacing={2} >
                         <Typography variant='subtitle2' sx={{ color: 'secondary.contrastText' }}>Person</Typography>
-                        <StyledInput icon={<Phone />} placeholder={'Enter Person Phone number'} value={250} />
-                        <StyledWarning icon={<ErrorOutlineOutlined sx={{ color: 'error.main' }} />} value={'Please enter the Amount'} />
+                       
+                        <Controller
+                name="phoneNumber"
+                control={control}
+                render={({ field }) => (
+                  <>
+                     <StyledInput placeholder={'Enter Person Phone number'} value={250} />
+                    {errors.phoneNumber && (
+        
+                         <StyledWarning icon={<ErrorOutlineOutlined sx={{ color: 'error.main' }} />} value={errors.phoneNumber.message}  />
+                    )}
+                  </>
+                )}
+                rules={{ required: "Please enter the Phone number" }}
+               
+              />
+              
                     </Stack>
 
                     <UserNameComponent isuser={true} />
 
                     <Stack direction={'column'} spacing={2} >
+
                         <Typography variant='subtitle2' sx={{ color: 'secondary.contrastText' }}>Charger Location </Typography>
+                    <Controller
+                name="location"
+                control={control}
+                render={({ field }) => (
+                  <>
                         <StyledSelectField placeholder={'Select Location'} />
+                    {errors.location && (
+                         <StyledWarning icon={<ErrorOutlineOutlined sx={{ color: 'error.main' }} />} value=  {errors.location.message} />
+                      
+                    )}
+                  </>
+                )}
+                rules={{ required: "Please Select Location" }}
+               
+              />
+              
+                   
                     </Stack>
 
                     <Stack direction={'column'} spacing={2} >
                         <Typography variant='subtitle2' sx={{ color: 'secondary.contrastText' }}>CPID </Typography>
-                        <StyledSelectField placeholder={'Select Location'} />
+
+
+                        <Controller
+                name="cpid"
+                control={control}
+                render={({ field }) => (
+                  <>
+                       <StyledSelectField placeholder={'Select CPID'} />
+                    {errors.cpid && (
+                         <StyledWarning icon={<ErrorOutlineOutlined sx={{ color: 'error.main' }} />} value=  {errors.cpid.message} />
+                      
+                    )}
+                  </>
+                )}
+                rules={{ required: "Please enter the cpid" }}
+               
+              />
+                     
                     </Stack>
 
                 </Stack>
                 <Stack direction={'row'} sx={{ backgroundColor: 'secondary.main', px: 3, py: 2 }} spacing={2} justifyContent={'center'}>
                     <StyledButton variant={'secondary'} style={{ width: '130px', height: '48px' }} onClick={() => { onClose && onClose() }}>Cancel</StyledButton>
-                    <StyledButton variant={'primary'} style={{ width: '180px', height: '48px' }}>Assign</StyledButton>
+                    <StyledButton variant={'primary'} style={{ width: '180px', height: '48px' }} type="submit">Assign</StyledButton>
                 </Stack>
+            </form>
             </Box>
         </Dialog>
     )
