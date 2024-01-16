@@ -58,8 +58,21 @@ export const PAYMENT_INSTANCE = axios.create({
 });
 
 
+
+
 export const OCPP_INSTANCE = axios.create({
   baseURL: 'http://65.0.248.79:6500/api/v1',
+  headers: {
+    Authorization: "Bearer " + token,
+    "Content-Type": "application/json",
+  },
+});
+
+
+
+
+export const IMAGE_UPLOAD_URL = axios.create({
+  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5100/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",

@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import {
+  Alert,
   Container,
   Grid,
+  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -18,9 +20,22 @@ import { ReactComponent as SMS } from "../../../assets/icons/sms.svg";
 import { useForm, Controller } from "react-hook-form";
 import StyledInput from "../../../ui/styledInput";
 import CalendarInput from "../../../ui/CalendarInput";
+import { imageUploadAPI } from "../../../services/imageAPI";
+import { categoryDropdownData, vendorDropdownData } from "../../../assets/json/chargestations";
+import { Country, State, City } from "country-state-city";
 // StyledTable component
 const AddChargingStation = ({ data }) => {
+  // console.log(Country.getAllCountries());
+  // console.log(State.getStatesOfCountry('IN'));
+  // console.log(City.getCitiesOfState('IN', 'KL'));
   const [amenities, setAmenities] = useState([]);
+  const [image, setImage] = useState();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(<></>);
+
+  //address data country state city
+  const [states, setStates] = useState([])
+  const [cities, setCities] = useState([])
 
   const getCheckButtonData = (checkBtndata) => {
     if (checkBtndata.active == true) {
@@ -34,6 +49,7 @@ const AddChargingStation = ({ data }) => {
     handleSubmit,
     setValue,
     watch,
+    resetField,
     formState: { errors },
     clearErrors,
   } = useForm({
@@ -43,7 +59,16 @@ const AddChargingStation = ({ data }) => {
   });
   const onSubmit = (data) => {
     // Handle form submission with data
-    data = { ...data,amenities}
+    if (image) {
+      imageUploadAPI(image).then((res) => {
+        if (res.status) {
+          setImage(res.url)
+        }
+      })
+    } else {
+      setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}> This is a success message!</Alert >)
+    }
+    data = { ...data, amenities }
     console.log("Form data submitted:", data);
     // Close your form or perform other actions
   };
@@ -53,14 +78,17 @@ const AddChargingStation = ({ data }) => {
   };
 
 
-  
+  const fileSelectHandle = (files) => {
+    setImage(files[0])
+  }
+
   const handleDateChangeInParent = (date) => {
     setValue('commissionedDate', date); // Assuming you have 'expiryDate' in your form state
     clearErrors('commissionedDate');
     console.log(date)
   };
   const commissionedDate = watch('commissionedDate', ''); // Watching the value for 'expiryDate'
-  
+
 
   let AmenitiesData = [
     "Mall",
@@ -73,6 +101,11 @@ const AddChargingStation = ({ data }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        onClose={() => { setSnackbarOpen(false) }}
+      >{errorMsg}</Snackbar>
       <Container maxWidth="md" sx={{ p: 2 }}>
         <Grid container sx={{ alignItems: "center" }} spacing={2}>
           <Grid item xs={12} md={8}>
@@ -82,14 +115,14 @@ const AddChargingStation = ({ data }) => {
               </Typography>
 
               <Controller
-                name="locationName"
+                name="name"
                 control={control}
                 render={({ field }) => (
                   <>
                     <StyledInput {...field} placeholder="Enter Location Name" />
-                    {errors.locationName && (
+                    {errors.name && (
                       <span style={errorMessageStyle}>
-                        {errors.locationName.message}
+                        {errors.name.message}
                       </span>
                     )}
                   </>
@@ -102,7 +135,7 @@ const AddChargingStation = ({ data }) => {
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <FileUpload />
+            <FileUpload onFileSelect={fileSelectHandle} />
           </Grid>
         </Grid>
 
@@ -153,7 +186,13 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="Country" />
+                  <StyledSelectField {...field} placeholder="Country"
+                    options={Country.getAllCountries().map((e) => ({ label: e.name, value: e }))}
+                    onChange={(e) => {
+                      setValue("country", e)
+                      setCities([])
+                      setStates(State.getStatesOfCountry(e.value.isoCode).map((e) => ({ label: e.name, value: e })))
+                    }} />
                   {errors.country && (
                     <span style={errorMessageStyle}>
                       {errors.country.message}
@@ -171,7 +210,12 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="State" />
+                  <StyledSelectField {...field} placeholder="State" options={states}
+                    onChange={(e) => {
+                      setValue("state", e)
+                      setCities(City.getCitiesOfState(e.value.countryCode, e.value.isoCode).map((e) => ({ label: e.name, value: e })))
+                    }}
+                  />
                   {errors.state && (
                     <span style={errorMessageStyle}>
                       {errors.state.message}
@@ -189,7 +233,7 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="City" />
+                  <StyledSelectField {...field} placeholder="City" options={cities} />
                   {errors.city && (
                     <span style={errorMessageStyle}>{errors.city.message}</span>
                   )}
@@ -260,7 +304,7 @@ const AddChargingStation = ({ data }) => {
                       {...field}
                       icon={<ClockOutline />}
                       placeholder={"Start time"}
-                      
+
                     />
                     {errors.startTime && (
                       <span style={errorMessageStyle}>
@@ -302,17 +346,17 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-              
 
-<StyledInput
-                  {...field}
-                  placeholder="Commissioned Date"
-                  icon={<Calendar />}
-                  iconright={<CalendarInput onDateChange={handleDateChangeInParent} />}
-                  value={commissionedDate}
-                  readOnly
-                 
-                />
+
+                  <StyledInput
+                    {...field}
+                    placeholder="Commissioned Date"
+                    icon={<Calendar />}
+                    iconright={<CalendarInput onDateChange={handleDateChangeInParent} />}
+                    value={commissionedDate}
+                    readOnly
+
+                  />
                   {errors.commissionedDate && (
                     <span style={errorMessageStyle}>
                       {errors.commissionedDate.message}
@@ -501,7 +545,7 @@ const AddChargingStation = ({ data }) => {
                       // Additional logic if needed
                     }}
                     defaultChecked={field.value}
-                    // Adding 'required' attribute
+                  // Adding 'required' attribute
                   />
                 )}
               />
@@ -516,7 +560,7 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="Select Vendor" />
+                  <StyledSelectField {...field} placeholder="Select Vendor" options={vendorDropdownData} />
                   {errors.vendor && (
                     <span style={errorMessageStyle}>
                       {errors.vendor.message}
@@ -537,7 +581,7 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="Select category" />
+                  <StyledSelectField {...field} placeholder="Select category" options={categoryDropdownData} />
                   {errors.category && (
                     <span style={errorMessageStyle}>
                       {errors.category.message}
