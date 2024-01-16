@@ -23,11 +23,9 @@ import CalendarInput from "../../../ui/CalendarInput";
 import { imageUploadAPI } from "../../../services/imageAPI";
 import { categoryDropdownData, vendorDropdownData } from "../../../assets/json/chargestations";
 import { Country, State, City } from "country-state-city";
+import { createChargingStation } from "../../../services/stationAPI";
 // StyledTable component
 const AddChargingStation = ({ data }) => {
-  // console.log(Country.getAllCountries());
-  // console.log(State.getStatesOfCountry('IN'));
-  // console.log(City.getCitiesOfState('IN', 'KL'));
   const [amenities, setAmenities] = useState([]);
   const [image, setImage] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -49,7 +47,6 @@ const AddChargingStation = ({ data }) => {
     handleSubmit,
     setValue,
     watch,
-    resetField,
     formState: { errors },
     clearErrors,
   } = useForm({
@@ -59,18 +56,63 @@ const AddChargingStation = ({ data }) => {
   });
   const onSubmit = (data) => {
     // Handle form submission with data
+    console.log(image);
     if (image) {
       imageUploadAPI(image).then((res) => {
         if (res.status) {
-          setImage(res.url)
+          let dt = {
+            amenities: amenities,
+            name: data.name,
+            address: `${data.address}, ${data.city.value.name}, ${data.state.value.name}, ${data.country.value.name}, ${data.pincode}`,
+            owner: data.owner,
+            owner_email: data.ownerEmailId,
+            owner_phone: data.ownerPhone,
+            location_support_name: data.lspName,
+            location_support_email: data.lpsemailId,
+            location_support__phone: data.lpsPhoneNumber,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            commissioned_on: data.commissionedDate,
+            image: res.url,
+            startTime: data.startTime,
+            stopTime: data.endTime,
+            staff: data.staff,
+            vendor: data.vendor.value,
+            category: data.category.value,
+          }
+          console.log("Form data INTO API:", dt);
         }
+
       })
     } else {
-      setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}> This is a success message!</Alert >)
+      setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}> Please Select Image!</Alert >)
+      setSnackbarOpen(true)
     }
-    data = { ...data, amenities }
-    console.log("Form data submitted:", data);
+
     // Close your form or perform other actions
+    let dt = {
+      amenities: amenities,
+      name: data.name,
+      address: `${data.address}, ${data.city.value.name}, ${data.state.value.name}, ${data.country.value.name}, ${data.pincode}`,
+      owner: data.owner,
+      owner_email: data.ownerEmailId,
+      owner_phone: data.ownerPhone,
+      location_support_name: data.lspName,
+      location_support_email: data.lpsemailId,
+      location_support__phone: data.lpsPhoneNumber,
+      latitude: data.latitude,
+      longitude: data.longitude,
+      commissioned_on: data.commissionedDate,
+      image: '',
+      startTime: data.startTime,
+      stopTime: data.endTime,
+      staff: data.staff,
+      vendor: data.vendor.value,
+      category: data.category.value,
+    }
+    createChargingStation(dt).then((res)=>{
+      console.log(res);
+    })
   };
 
   const handleChange = (event) => {
@@ -79,7 +121,8 @@ const AddChargingStation = ({ data }) => {
 
 
   const fileSelectHandle = (files) => {
-    setImage(files[0])
+    console.log(files.files[0]);
+    setImage(files.files[0])
   }
 
   const handleDateChangeInParent = (date) => {
@@ -102,6 +145,7 @@ const AddChargingStation = ({ data }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={snackbarOpen}
         autoHideDuration={2000}
         onClose={() => { setSnackbarOpen(false) }}
@@ -399,7 +443,7 @@ const AddChargingStation = ({ data }) => {
           <Grid item xs={12} md={6}>
             <Stack direction="column">
               <Controller
-                name="phoneNumber"
+                name="lpsPhoneNumber"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -408,9 +452,9 @@ const AddChargingStation = ({ data }) => {
                       icon={<Phone />}
                       placeholder={"Enter Phone number"}
                     />
-                    {errors.phoneNumber && (
+                    {errors.lpsPhoneNumber && (
                       <span style={errorMessageStyle}>
-                        {errors.phoneNumber.message}
+                        {errors.lpsPhoneNumber.message}
                       </span>
                     )}
                   </>
@@ -422,7 +466,7 @@ const AddChargingStation = ({ data }) => {
 
           <Grid item xs={12} md={6}>
             <Controller
-              name="emailId"
+              name="lpsemailId"
               control={control}
               render={({ field }) => (
                 <>
@@ -431,9 +475,9 @@ const AddChargingStation = ({ data }) => {
                     icon={<SMS />}
                     placeholder={"Enter Email ID"}
                   />
-                  {errors.emailId && (
+                  {errors.lpsemailId && (
                     <span style={errorMessageStyle}>
-                      {errors.emailId.message}
+                      {errors.lpsemailId.message}
                     </span>
                   )}
                 </>
@@ -467,14 +511,14 @@ const AddChargingStation = ({ data }) => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Controller
-              name="bussinessName"
+              name="owner"
               control={control}
               render={({ field }) => (
                 <>
                   <StyledInput {...field} placeholder={"enter Business name"} />
-                  {errors.bussinessName && (
+                  {errors.owner && (
                     <span style={errorMessageStyle}>
-                      {errors.bussinessName.message}
+                      {errors.owner.message}
                     </span>
                   )}
                 </>
@@ -486,7 +530,7 @@ const AddChargingStation = ({ data }) => {
           <Grid item xs={12} md={6}>
             <Stack direction="column">
               <Controller
-                name="bussinessPhone"
+                name="ownerPhone"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -495,9 +539,9 @@ const AddChargingStation = ({ data }) => {
                       icon={<Phone />}
                       placeholder={"Enter Phone number"}
                     />
-                    {errors.bussinessPhone && (
+                    {errors.ownerPhone && (
                       <span style={errorMessageStyle}>
-                        {errors.bussinessPhone.message}
+                        {errors.ownerPhone.message}
                       </span>
                     )}
                   </>
@@ -509,7 +553,7 @@ const AddChargingStation = ({ data }) => {
 
           <Grid item xs={12} md={6}>
             <Controller
-              name="bussinessEmailId"
+              name="ownerEmailId"
               control={control}
               render={({ field }) => (
                 <>
@@ -518,9 +562,9 @@ const AddChargingStation = ({ data }) => {
                     icon={<SMS />}
                     placeholder={"Enter Email ID"}
                   />
-                  {errors.bussinessEmailId && (
+                  {errors.ownerEmailId && (
                     <span style={errorMessageStyle}>
-                      {errors.bussinessEmailId.message}
+                      {errors.ownerEmailId.message}
                     </span>
                   )}
                 </>

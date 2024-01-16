@@ -75,7 +75,7 @@ export const IMAGE_UPLOAD_URL = axios.create({
   baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5100/api/v1',
   headers: {
     Authorization: "Bearer " + token,
-    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
   },
 });
 
