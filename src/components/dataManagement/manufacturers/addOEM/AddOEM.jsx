@@ -1,18 +1,43 @@
 import { Box, Dialog, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import StyledDivider from "../../../../ui/styledDivider";
-import StyledSelectField from "../../../../ui/styledSelectField";
 import StyledInput from "../../../../ui/styledInput";
 import { ReactComponent as Close } from "../../../../assets/icons/close-icon-large.svg";
 import StyledButton from "../../../../ui/styledButton";
 import { useForm } from "react-hook-form";
+import { createOem } from "../../../../services/evMachineAPI";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddOEM({ open, onClose, editStatus = false }) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,reset } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    onClose && onClose();
+  const onSubmit = async (data) => {
+    try {
+      let res = await createOem(data);
+      if (res.status) {
+        const successToastId = toast.success("OEM created successfully", {
+          position: "bottom-right",
+        });
+        const onCloseCallback = () => {
+          onClose && onClose();
+          reset();
+        };
+
+        toast.update(successToastId, { onClose: onCloseCallback });
+      }
+    } catch (error) {
+      console.log(error);
+      const errorToastId = toast.error("Failed to create OEM", {
+        position: "bottom-right",
+      });
+      const onCloseCallback = () => {
+        onClose && onClose();
+        reset();
+      };
+
+      toast.update(errorToastId, { onClose: onCloseCallback });
+    }
   };
 
   return (
@@ -45,7 +70,7 @@ export default function AddOEM({ open, onClose, editStatus = false }) {
                 <Typography variant="subtitle2" color={"primary.contrastText"}>
                   Add Charger OEM
                 </Typography>
-                <StyledInput {...register('chargerOEM')} />
+                <StyledInput {...register("name")} />
               </Stack>
             </Grid>
           </Grid>
@@ -71,7 +96,7 @@ export default function AddOEM({ open, onClose, editStatus = false }) {
             </StyledButton>
             <StyledButton
               variant="primary"
-              type='submit'
+              type="submit"
               style={{ width: "140px", height: "45px" }}
             >
               Save
@@ -79,6 +104,7 @@ export default function AddOEM({ open, onClose, editStatus = false }) {
           </Stack>
         </form>
       </Box>
+      <ToastContainer />
     </Dialog>
   );
 }

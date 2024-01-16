@@ -85,7 +85,7 @@ export async function removeConnector(Id, data) {
 //OEM
 export async function createOem(data) {
   try {
-    const response = await EV_MACHINE_INSTANCE.post(`evmodel/create`, data);
+    const response = await EV_MACHINE_INSTANCE.post(`oem/create`, data);
     return response.data;
   } catch (error) {
     throw error;
