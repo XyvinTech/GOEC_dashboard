@@ -8,14 +8,23 @@ import StyledButton from '../../../ui/styledButton';
 import { Height } from '@mui/icons-material';
 import { searchAndFilter } from '../../../utils/search';
 import AddOEM from './addOEM/AddOEM';
-export default function OEM() {
+import { tableHeaderReplace } from '../../../utils/tableHeaderReplace';
+
+
+const tableHeader = [
+  "Company Name",
+  "Created On"
+];
+
+
+
+
+export default function OEM({data}) {
   const [open,setOpen] = useState(false)
   const [filterValue, setFilterValue] = useState('')
+  const oemData = tableHeaderReplace(data,['name','createdAt'],tableHeader) 
 
-  const tableHeader = [
-    "Company Name",
-    "Created On"
-  ];
+
 
   return (
     <>
@@ -28,7 +37,7 @@ export default function OEM() {
       </LastSynced>
 
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(DummyVehicle, filterValue)} />
+        <StyledTable headers={tableHeader} data={oemData} />
       </Box>
     </>)
 }

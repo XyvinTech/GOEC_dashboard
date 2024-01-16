@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef } from 'react'
 import styled, { css } from 'styled-components';
 
 const InputContainer = styled.div`
@@ -58,7 +58,7 @@ flex-shrink: 0;
 color:#87898E;
 `;
 
-const StyledInput = ({ icon, placeholder,iconright,value, lineHeight,specialAlign, ...props }) => {
+const StyledInput = forwardRef(({ icon, placeholder,iconright,value, lineHeight,specialAlign, ...props },ref) => {
   const [inputValue, setInputValue] = useState(value); 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -73,10 +73,11 @@ const StyledInput = ({ icon, placeholder,iconright,value, lineHeight,specialAlig
         onChange={handleInputChange} 
         lineHeight={lineHeight}
         specialAlign={specialAlign}
+        ref={ref}
         {...props} />
       {iconright && <IconContainer>{iconright}</IconContainer>}
     </InputContainer>
   );
-};
+});
 
 export default StyledInput;
