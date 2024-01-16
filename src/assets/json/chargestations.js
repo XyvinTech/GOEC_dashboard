@@ -89,4 +89,38 @@ export const ChargeStationData = [
       'status': 'active'
     }
   ];
+
+  export const vendorDropdownData = [
+    {
+      label:'FOCO',
+      value:'FOCO'
+    },
+    {
+      label:'COCO',
+      value:'COCO'
+    }
+  ]
+
+  export const categoryDropdownData = [
+    {
+      label:'On The GO',
+      value:'On The GO'
+    },
+    {
+      label:'Hub',
+      value:'Hub'
+    },
+    {
+      label:'Home Charging',
+      value:'Home Charging'
+    },
+    {
+      label:'Captive',
+      value:'Captive'
+    },
+    {
+      label:'Bus charging',
+      value:'Bus charging'
+    }
+  ]
   

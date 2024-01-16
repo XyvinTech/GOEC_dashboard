@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import {
+  Alert,
   Container,
   Grid,
+  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -18,9 +20,20 @@ import { ReactComponent as SMS } from "../../../assets/icons/sms.svg";
 import { useForm, Controller } from "react-hook-form";
 import StyledInput from "../../../ui/styledInput";
 import CalendarInput from "../../../ui/CalendarInput";
+import { imageUploadAPI } from "../../../services/imageAPI";
+import { categoryDropdownData, vendorDropdownData } from "../../../assets/json/chargestations";
+import { Country, State, City } from "country-state-city";
+import { createChargingStation } from "../../../services/stationAPI";
 // StyledTable component
 const AddChargingStation = ({ data }) => {
   const [amenities, setAmenities] = useState([]);
+  const [image, setImage] = useState();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(<></>);
+
+  //address data country state city
+  const [states, setStates] = useState([])
+  const [cities, setCities] = useState([])
 
   const getCheckButtonData = (checkBtndata) => {
     if (checkBtndata.active == true) {
@@ -43,9 +56,63 @@ const AddChargingStation = ({ data }) => {
   });
   const onSubmit = (data) => {
     // Handle form submission with data
-    data = { ...data,amenities}
-    console.log("Form data submitted:", data);
+    console.log(image);
+    if (image) {
+      imageUploadAPI(image).then((res) => {
+        if (res.status) {
+          let dt = {
+            amenities: amenities,
+            name: data.name,
+            address: `${data.address}, ${data.city.value.name}, ${data.state.value.name}, ${data.country.value.name}, ${data.pincode}`,
+            owner: data.owner,
+            owner_email: data.ownerEmailId,
+            owner_phone: data.ownerPhone,
+            location_support_name: data.lspName,
+            location_support_email: data.lpsemailId,
+            location_support__phone: data.lpsPhoneNumber,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            commissioned_on: data.commissionedDate,
+            image: res.url,
+            startTime: data.startTime,
+            stopTime: data.endTime,
+            staff: data.staff,
+            vendor: data.vendor.value,
+            category: data.category.value,
+          }
+          console.log("Form data INTO API:", dt);
+        }
+
+      })
+    } else {
+      setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}> Please Select Image!</Alert >)
+      setSnackbarOpen(true)
+    }
+
     // Close your form or perform other actions
+    let dt = {
+      amenities: amenities,
+      name: data.name,
+      address: `${data.address}, ${data.city.value.name}, ${data.state.value.name}, ${data.country.value.name}, ${data.pincode}`,
+      owner: data.owner,
+      owner_email: data.ownerEmailId,
+      owner_phone: data.ownerPhone,
+      location_support_name: data.lspName,
+      location_support_email: data.lpsemailId,
+      location_support__phone: data.lpsPhoneNumber,
+      latitude: data.latitude,
+      longitude: data.longitude,
+      commissioned_on: data.commissionedDate,
+      image: '',
+      startTime: data.startTime,
+      stopTime: data.endTime,
+      staff: data.staff,
+      vendor: data.vendor.value,
+      category: data.category.value,
+    }
+    createChargingStation(dt).then((res)=>{
+      console.log(res);
+    })
   };
 
   const handleChange = (event) => {
@@ -53,14 +120,18 @@ const AddChargingStation = ({ data }) => {
   };
 
 
-  
+  const fileSelectHandle = (files) => {
+    console.log(files.files[0]);
+    setImage(files.files[0])
+  }
+
   const handleDateChangeInParent = (date) => {
     setValue('commissionedDate', date); // Assuming you have 'expiryDate' in your form state
     clearErrors('commissionedDate');
     console.log(date)
   };
   const commissionedDate = watch('commissionedDate', ''); // Watching the value for 'expiryDate'
-  
+
 
   let AmenitiesData = [
     "Mall",
@@ -73,6 +144,12 @@ const AddChargingStation = ({ data }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        onClose={() => { setSnackbarOpen(false) }}
+      >{errorMsg}</Snackbar>
       <Container maxWidth="md" sx={{ p: 2 }}>
         <Grid container sx={{ alignItems: "center" }} spacing={2}>
           <Grid item xs={12} md={8}>
@@ -82,14 +159,14 @@ const AddChargingStation = ({ data }) => {
               </Typography>
 
               <Controller
-                name="locationName"
+                name="name"
                 control={control}
                 render={({ field }) => (
                   <>
                     <StyledInput {...field} placeholder="Enter Location Name" />
-                    {errors.locationName && (
+                    {errors.name && (
                       <span style={errorMessageStyle}>
-                        {errors.locationName.message}
+                        {errors.name.message}
                       </span>
                     )}
                   </>
@@ -102,7 +179,7 @@ const AddChargingStation = ({ data }) => {
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <FileUpload />
+            <FileUpload onFileSelect={fileSelectHandle} />
           </Grid>
         </Grid>
 
@@ -153,7 +230,13 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="Country" />
+                  <StyledSelectField {...field} placeholder="Country"
+                    options={Country.getAllCountries().map((e) => ({ label: e.name, value: e }))}
+                    onChange={(e) => {
+                      setValue("country", e)
+                      setCities([])
+                      setStates(State.getStatesOfCountry(e.value.isoCode).map((e) => ({ label: e.name, value: e })))
+                    }} />
                   {errors.country && (
                     <span style={errorMessageStyle}>
                       {errors.country.message}
@@ -171,7 +254,12 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="State" />
+                  <StyledSelectField {...field} placeholder="State" options={states}
+                    onChange={(e) => {
+                      setValue("state", e)
+                      setCities(City.getCitiesOfState(e.value.countryCode, e.value.isoCode).map((e) => ({ label: e.name, value: e })))
+                    }}
+                  />
                   {errors.state && (
                     <span style={errorMessageStyle}>
                       {errors.state.message}
@@ -189,7 +277,7 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="City" />
+                  <StyledSelectField {...field} placeholder="City" options={cities} />
                   {errors.city && (
                     <span style={errorMessageStyle}>{errors.city.message}</span>
                   )}
@@ -260,7 +348,7 @@ const AddChargingStation = ({ data }) => {
                       {...field}
                       icon={<ClockOutline />}
                       placeholder={"Start time"}
-                      
+
                     />
                     {errors.startTime && (
                       <span style={errorMessageStyle}>
@@ -302,17 +390,17 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-              
 
-<StyledInput
-                  {...field}
-                  placeholder="Commissioned Date"
-                  icon={<Calendar />}
-                  iconright={<CalendarInput onDateChange={handleDateChangeInParent} />}
-                  value={commissionedDate}
-                  readOnly
-                 
-                />
+
+                  <StyledInput
+                    {...field}
+                    placeholder="Commissioned Date"
+                    icon={<Calendar />}
+                    iconright={<CalendarInput onDateChange={handleDateChangeInParent} />}
+                    value={commissionedDate}
+                    readOnly
+
+                  />
                   {errors.commissionedDate && (
                     <span style={errorMessageStyle}>
                       {errors.commissionedDate.message}
@@ -355,7 +443,7 @@ const AddChargingStation = ({ data }) => {
           <Grid item xs={12} md={6}>
             <Stack direction="column">
               <Controller
-                name="phoneNumber"
+                name="lpsPhoneNumber"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -364,9 +452,9 @@ const AddChargingStation = ({ data }) => {
                       icon={<Phone />}
                       placeholder={"Enter Phone number"}
                     />
-                    {errors.phoneNumber && (
+                    {errors.lpsPhoneNumber && (
                       <span style={errorMessageStyle}>
-                        {errors.phoneNumber.message}
+                        {errors.lpsPhoneNumber.message}
                       </span>
                     )}
                   </>
@@ -378,7 +466,7 @@ const AddChargingStation = ({ data }) => {
 
           <Grid item xs={12} md={6}>
             <Controller
-              name="emailId"
+              name="lpsemailId"
               control={control}
               render={({ field }) => (
                 <>
@@ -387,9 +475,9 @@ const AddChargingStation = ({ data }) => {
                     icon={<SMS />}
                     placeholder={"Enter Email ID"}
                   />
-                  {errors.emailId && (
+                  {errors.lpsemailId && (
                     <span style={errorMessageStyle}>
-                      {errors.emailId.message}
+                      {errors.lpsemailId.message}
                     </span>
                   )}
                 </>
@@ -423,14 +511,14 @@ const AddChargingStation = ({ data }) => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Controller
-              name="bussinessName"
+              name="owner"
               control={control}
               render={({ field }) => (
                 <>
                   <StyledInput {...field} placeholder={"enter Business name"} />
-                  {errors.bussinessName && (
+                  {errors.owner && (
                     <span style={errorMessageStyle}>
-                      {errors.bussinessName.message}
+                      {errors.owner.message}
                     </span>
                   )}
                 </>
@@ -442,7 +530,7 @@ const AddChargingStation = ({ data }) => {
           <Grid item xs={12} md={6}>
             <Stack direction="column">
               <Controller
-                name="bussinessPhone"
+                name="ownerPhone"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -451,9 +539,9 @@ const AddChargingStation = ({ data }) => {
                       icon={<Phone />}
                       placeholder={"Enter Phone number"}
                     />
-                    {errors.bussinessPhone && (
+                    {errors.ownerPhone && (
                       <span style={errorMessageStyle}>
-                        {errors.bussinessPhone.message}
+                        {errors.ownerPhone.message}
                       </span>
                     )}
                   </>
@@ -465,7 +553,7 @@ const AddChargingStation = ({ data }) => {
 
           <Grid item xs={12} md={6}>
             <Controller
-              name="bussinessEmailId"
+              name="ownerEmailId"
               control={control}
               render={({ field }) => (
                 <>
@@ -474,9 +562,9 @@ const AddChargingStation = ({ data }) => {
                     icon={<SMS />}
                     placeholder={"Enter Email ID"}
                   />
-                  {errors.bussinessEmailId && (
+                  {errors.ownerEmailId && (
                     <span style={errorMessageStyle}>
-                      {errors.bussinessEmailId.message}
+                      {errors.ownerEmailId.message}
                     </span>
                   )}
                 </>
@@ -501,7 +589,7 @@ const AddChargingStation = ({ data }) => {
                       // Additional logic if needed
                     }}
                     defaultChecked={field.value}
-                    // Adding 'required' attribute
+                  // Adding 'required' attribute
                   />
                 )}
               />
@@ -516,7 +604,7 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="Select Vendor" />
+                  <StyledSelectField {...field} placeholder="Select Vendor" options={vendorDropdownData} />
                   {errors.vendor && (
                     <span style={errorMessageStyle}>
                       {errors.vendor.message}
@@ -537,7 +625,7 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="Select category" />
+                  <StyledSelectField {...field} placeholder="Select category" options={categoryDropdownData} />
                   {errors.category && (
                     <span style={errorMessageStyle}>
                       {errors.category.message}
