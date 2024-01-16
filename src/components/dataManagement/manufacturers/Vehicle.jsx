@@ -7,19 +7,24 @@ import StyledSearchField from '../../../ui/styledSearchField';
 import StyledButton from '../../../ui/styledButton';
 import { searchAndFilter } from '../../../utils/search';
 import AddVehicle from './addVehicle/AddVehicle';
-export default function Vehicles() {
+import { tableHeaderReplace } from '../../../utils/tableHeaderReplace';
+
+
+const tableHeader = [
+  "Company Name",
+  "Created On"
+];
+
+export default function Vehicles({data}) {
   const [open,setOpen] = useState(false)
   const [filterValue, setFilterValue] = useState('')
+  const brandData = tableHeaderReplace(data,['brandName','createdAt'],tableHeader) 
 
-  const tableHeader = [
-    "Company Name",
-    "Created On"
-  ];
 
   return (
     <>
     <AddVehicle open={open} onClose={()=>{setOpen(false)}}/>
-    <LastSynced heading="Vehicle" >
+    <LastSynced heading="Brand" >
       <StyledSearchField placeholder={"Search"} onChange={(e) => {
           setFilterValue(e.target.value)
         }}/>
@@ -27,7 +32,7 @@ export default function Vehicles() {
     </LastSynced>
     
     <Box sx={{ p: 3 }}>
-      <StyledTable headers={tableHeader} data={searchAndFilter(DummyVehicle, filterValue)} />
+      <StyledTable headers={tableHeader} data={brandData} />
     </Box>
   </>  )
 }
