@@ -17,7 +17,7 @@ const tableHeader = [
   // 'status'
 ]
 
-export default function AllChargeStation({ data, deleteData, ...props }) {
+export default function AllChargeStation({ data, deleteData,editData, ...props }) {
   const navigate = useNavigate()
 
 
@@ -29,6 +29,8 @@ export default function AllChargeStation({ data, deleteData, ...props }) {
       navigate('/charge-station-detail', { state: e.data })
     } else if (e.action === 'Delete') {
       deleteData(e.data)
+    }else if (e.action === 'Edit') {
+      editData(e.data)
     }
   }
   return (

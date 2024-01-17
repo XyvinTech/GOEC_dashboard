@@ -7,7 +7,7 @@ const SelectContainer = styled.div`
   width: 100%; /* Adjust width as needed */
 `;
 
-const StyledSelectField = ({ placeholder,options, onChange, ...props }) => {
+const StyledSelectField = ({ placeholder, options, onChange, value, ...props }) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -56,7 +56,13 @@ const StyledSelectField = ({ placeholder,options, onChange, ...props }) => {
     },
   });
 
-
+  var selectedIndex = -1;
+  for (var i = 0; i < options.length && value; i++) {
+    if (options[i].value == value || options[i].label == value) {
+      selectedIndex = i;
+      break;
+    }
+  }
   return (
     <SelectContainer>
       <Select
@@ -65,6 +71,7 @@ const StyledSelectField = ({ placeholder,options, onChange, ...props }) => {
         onChange={onChange}
         styles={customStyles}
         theme={customTheme}
+        defaultValue={options[selectedIndex]}
         {...props}
       />
     </SelectContainer>

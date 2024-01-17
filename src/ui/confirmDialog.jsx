@@ -17,8 +17,8 @@ const ConfirmDialog = ({ open=false, onClose, title="Action", subtitle="Action T
       <Box sx={{backgroundColor:'primary.main'}}>
         <DialogTitle color={'secondary.contrastText'}>{title}</DialogTitle>
         <Box position="absolute" top={0} right={0}>
-          <IconButton>
-            <Close onClick={onClose && onClose}/>
+          <IconButton onClick={onClose && onClose}>
+            <Close />
           </IconButton>
         </Box>
         <DialogContent>

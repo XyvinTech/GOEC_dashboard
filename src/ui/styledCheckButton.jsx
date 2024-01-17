@@ -47,8 +47,8 @@ flex-shrink: 0;
 color:#87898E;
 `;
 
-const StyledCheckButton = ({ icon, children,checkButtonChange, ...props }) => {
-  const [active, setActive] = useState(false);
+const StyledCheckButton = ({ actived=false,icon, children,checkButtonChange, ...props }) => {
+  const [active, setActive] = useState(actived);
 
   return (
     <CheckbutonContainer  active={active} onClick={() =>{
