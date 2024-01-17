@@ -8,30 +8,76 @@ import StyledFooter from "../../../ui/StyledFooter";
 import StyledButton from "../../../ui/styledButton";
 import StyledSwitch from "../../../ui/styledSwitch";
 import { useForm, Controller } from "react-hook-form"
+import {createRfid} from "../../../services/rfidAPI"
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddRfidCard = ({Close,Save}) => {
   
-  const { control, handleSubmit, setValue, watch, formState: { errors },clearErrors } = useForm({
+  const { control, handleSubmit, setValue, watch, formState: { errors },clearErrors,reset } = useForm({
     defaultValues: {
-      activate: false, // Set the default value for "activate"
+      status: "inactive", // Set the default value for "status"
     },
+    
   });
-  const onSubmit = (data) => {
-    // Handle form submission with data
-    console.log('Form data submitted:',data);
-    // Close your form or perform other actions
-    Close();
+  // const onSubmit = (data) => {
+  //   // Handle form submission with data
+  //   console.log('Form data submitted:',data);
+  //   createRfid(data);
+  //   // Close your form or perform other actions
+  //   Close();
+  // };
+
+  const onSubmit = async (data) => {
+    try {
+      console.log('Form data submitted:',data);
+      let res = await createRfid(data);
+      console.log("status :"+res.status)
+      if (res.status) {
+        const successToastId = toast.success(
+          "Rfid cards created successfully",
+          {
+            position: "bottom-right",
+          }
+        );
+        const onCloseCallback = () => {
+          //onClose && onClose();
+          Close();
+          reset();
+        };
+
+        toast.update(successToastId, { onClose: onCloseCallback });
+      }
+    } catch (error) {
+      console.log(error);
+      const errorToastId = toast.error("Failed to create rfid cards", {
+        position: "bottom-right",
+      });
+      const onCloseCallback = () => {
+        //onClose && onClose();
+        Close();
+        reset();
+      };
+
+      toast.update(errorToastId, { onClose: onCloseCallback });
+    }
   };
+
 
 
   const handleDateChangeInParent = (date) => {
-    setValue('expiryDate', date); // Assuming you have 'expiryDate' in your form state
-    clearErrors('expiryDate');
+    setValue('expiry', date); // Assuming you have 'expiry' in your form state
+    clearErrors('expiry');
   };
-  const expiryDate = watch('expiryDate', ''); // Watching the value for 'expiryDate'
+  const expiry = watch('expiry', ''); // Watching the value for 'expiry'
   
   const handleChange = (event) => {
-    setValue('activate',event.target.checked);
+    const isChecked = event.target.checked;
+    const statusValue = isChecked ? 'active' : 'inactive'; // Set to 'active' if checked, otherwise empty string
+
+    setValue('status',statusValue);
+   // setValue('status',event.target.checked);
   };
 
   return (
@@ -39,7 +85,8 @@ const AddRfidCard = ({Close,Save}) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <CommonLayout header="Add RFID Card" onClick={Close}>
         <Typography align="left">RFID tag</Typography>
-        <Controller
+        <StyledInput placeholder="Enter RFID Tag"  />
+        {/* <Controller
           name="rfidTag"
           control={control}
           render={({ field }) => (
@@ -50,15 +97,15 @@ const AddRfidCard = ({Close,Save}) => {
         )}
         // Adding 'required' attribute here
         rules={{ required: 'RFID tag is required' }}
-        />
+        /> */}
         <Typography align="left">Serial number</Typography>
         <Controller
-          name="serialno"
+          name="serialNumber"
           control={control}
           render={({ field }) => (
             <>
               <StyledInput {...field} placeholder="Enter Serial number"  />
-              {errors.serialno && <span style={errorMessageStyle}>{errors.serialno.message}</span>}
+              {errors.serialNumber && <span style={errorMessageStyle}>{errors.serialNumber.message}</span>}
             </>
           )}
           rules={{ required: 'Serial number is required' }}
@@ -66,7 +113,7 @@ const AddRfidCard = ({Close,Save}) => {
         
         <Typography align="left">RFID Expiry date</Typography>
         <Controller
-            name="expiryDate"
+            name="expiry"
             control={control}
             render={({ field }) => (
               <>
@@ -74,11 +121,11 @@ const AddRfidCard = ({Close,Save}) => {
                   {...field}
                   placeholder="Enter RFID Expiry date"
                   iconright={<CalendarInput onDateChange={handleDateChangeInParent} />}
-                  value={expiryDate}
+                  value={expiry}
                   readOnly
                  
                 />
-                {errors.expiryDate && <span style={errorMessageStyle}>{errors.expiryDate.message}</span>}
+                {errors.expiry && <span style={errorMessageStyle}>{errors.expiry.message}</span>}
               </>
             )}
             // Adding 'required' attribute here
@@ -91,7 +138,7 @@ const AddRfidCard = ({Close,Save}) => {
           </Grid>
           <Grid item xs={6} textAlign={"right"} justifyContent={"flex-end"} display={"flex"}>
               <Controller
-                name="activate"
+                name="status"
                 control={control}
                 render={({ field }) => (
                  
@@ -101,14 +148,14 @@ const AddRfidCard = ({Close,Save}) => {
                       handleChange(e);
                       // Additional logic if needed
                     }}
-                    defaultChecked={field.value}
+                    defaultChecked={false}
                     // Adding 'required' attribute
                   />
                 )}
                 rules={{ required: 'Activate RFID is required' }}
               />
           </Grid>  
-          {errors.activate && <span style={{ paddingLeft: '16px',marginTop:'10px', ...errorMessageStyle }}>{errors.activate.message}</span>}
+          {errors.status && <span style={{ paddingLeft: '16px',marginTop:'10px', ...errorMessageStyle }}>{errors.status.message}</span>}
         </Grid>
         </CommonLayout>
         <StyledFooter>
@@ -120,6 +167,7 @@ const AddRfidCard = ({Close,Save}) => {
             </StyledButton>
           </StyledFooter>
       </form>
+      <ToastContainer />
       </>
   );
 };

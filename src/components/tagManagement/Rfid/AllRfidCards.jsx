@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, Modal, Stack, Typography } from '@mui/material'
 import StyledTable from '../../../ui/styledTable'
 import { DummyData } from '../../../assets/json/RfidTableData'
@@ -7,6 +7,7 @@ import LastSynced from '../../../layout/LastSynced'
 import AddRfidCard from '../Rfid/AddRfidCard'
 import AddBulkRfidCard from './AddBulkRfidCard'
 import EditRfidCard from './EditRfidCard'
+import {getRfidList} from '../../../services/rfidAPI'
 
 const tableHeader = [
     'RFID Tag',
@@ -24,6 +25,8 @@ const AllRfidCards = () => {
 
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
+
+  const [rfidData, setRfiddata] = useState('');
 
   // Function to open the modal
   const handleOpen = () => {
@@ -52,7 +55,19 @@ const AllRfidCards = () => {
     // }
   };
 
-  //console.log("status :"+isComponent);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getRfidList();
+      setRfiddata(data); // Use setRfiddata to update the state
+      //console.log("data is", data);
+    } catch (error) {
+      console.error("Error fetching RFID data:", error);
+    }
+  };
+
+    fetchData();
+  }, []); 
 
   return (
     <>
