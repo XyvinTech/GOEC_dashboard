@@ -5,8 +5,8 @@ let token = sessionStorage.getItem("userToken") || null;
 //! For Vehicle/Brand/transaction/Configuration/RFID/Notification services only
 
 export const LAMBDA_INSTANCES = axios.create({
-  baseURL: 'https://dlupfxb3p6.execute-api.ap-south-1.amazonaws.com/api/v1',
-  // baseURL: 'http://localhost:5689/api/v1',
+  // baseURL: 'https://dlupfxb3p6.execute-api.ap-south-1.amazonaws.com/api/v1',
+  baseURL: 'http://localhost:5689/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",
