@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import StyledSearchField from '../../../ui/styledSearchField'
 import { searchAndFilter } from '../../../utils/search'
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
+import { deleteChargingStation } from '../../../services/stationAPI'
 
 const tableHeader = [
   'Charge Station',
@@ -13,19 +14,21 @@ const tableHeader = [
   'Longitude',
   'Latitude',
   'Owner',
-  'status'
+  // 'status'
 ]
 
-export default function AllChargeStation({data, ...props}) {
+export default function AllChargeStation({ data, deleteData, ...props }) {
   const navigate = useNavigate()
-  
+
 
   const [filterValue, setFilterValue] = useState('')
-  
-  const chargeStationData = tableHeaderReplace(data,['name','address','longitude','latitude','owner','status'],tableHeader) 
+
+  const chargeStationData = tableHeaderReplace(data, ['name', 'address', 'longitude', 'latitude', 'owner', 'status'], tableHeader)
   const tableActionClick = (e) => {
     if (e.action === 'View') {
-      navigate('/charge-station-detail',{state:e.data})
+      navigate('/charge-station-detail', { state: e.data })
+    } else if (e.action === 'Delete') {
+      deleteData(e.data)
     }
   }
   return (

@@ -25,7 +25,7 @@ import { categoryDropdownData, vendorDropdownData } from "../../../assets/json/c
 import { Country, State, City } from "country-state-city";
 import { createChargingStation } from "../../../services/stationAPI";
 // StyledTable component
-const AddChargingStation = ({ data }) => {
+const AddChargingStation = ({ data, formSubmited }) => {
   const [amenities, setAmenities] = useState([]);
   const [image, setImage] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -80,7 +80,15 @@ const AddChargingStation = ({ data }) => {
             vendor: data.vendor.value,
             category: data.category.value,
           }
-          console.log("Form data INTO API:", dt);
+          createChargingStation(dt).then((res) => {
+            console.log(res);
+            setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Added Successfully</Alert >)
+            setSnackbarOpen(true)
+            setTimeout(() => {
+              formSubmited()
+            }, 2000);
+            
+          })
         }
 
       })
@@ -88,31 +96,6 @@ const AddChargingStation = ({ data }) => {
       setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}> Please Select Image!</Alert >)
       setSnackbarOpen(true)
     }
-
-    // Close your form or perform other actions
-    let dt = {
-      amenities: amenities,
-      name: data.name,
-      address: `${data.address}, ${data.city.value.name}, ${data.state.value.name}, ${data.country.value.name}, ${data.pincode}`,
-      owner: data.owner,
-      owner_email: data.ownerEmailId,
-      owner_phone: data.ownerPhone,
-      location_support_name: data.lspName,
-      location_support_email: data.lpsemailId,
-      location_support__phone: data.lpsPhoneNumber,
-      latitude: data.latitude,
-      longitude: data.longitude,
-      commissioned_on: data.commissionedDate,
-      image: '',
-      startTime: data.startTime,
-      stopTime: data.endTime,
-      staff: data.staff,
-      vendor: data.vendor.value,
-      category: data.category.value,
-    }
-    createChargingStation(dt).then((res)=>{
-      console.log(res);
-    })
   };
 
   const handleChange = (event) => {
