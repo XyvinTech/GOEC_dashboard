@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { UploadFile } from '@mui/icons-material';
+import { CheckCircle, UploadFile } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 
 
 export default function FileUpload({ onFileSelect }) {
+  const [fileStatus, setFileStatus] = useState(false)
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     multiple: false,
     onDrop: (acceptedFiles) => {
-      console.log(acceptedFiles);
+      setFileStatus(true)
       onFileSelect && onFileSelect({ files: acceptedFiles })
     }
   });
   return (
     <Stack
       spacing={1}
-      padding={5}
+      padding={fileStatus ? 3 : 5}
       direction="column"
       sx={{
         backgroundColor: 'secondary.lightGray',
@@ -26,14 +27,14 @@ export default function FileUpload({ onFileSelect }) {
         borderRadius: '10px', border: '3px dashed #fff6',
         justifyContent: 'center',
         alignItems: 'center',
-        cursor:'pointer'
+        cursor: 'pointer'
       }}
       {...getRootProps({})}
     >
       <input {...getInputProps({})} />
-      <UploadFile sx={{ fontSize: '24px', color: 'secondary.contrastText' }} />
+      {fileStatus ? <CheckCircle sx={{ color: 'success.main', fontSize: 58 }} /> : <UploadFile sx={{ fontSize: '26px', color: 'secondary.contrastText' }} />}
       <Typography variant="caption" color={'secondary.contrastText'}>
-        Drop your files or browse
+        {fileStatus ? 'selected' : 'Drop your files or browse'}
       </Typography>
     </Stack>
   );

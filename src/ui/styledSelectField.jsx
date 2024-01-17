@@ -7,7 +7,7 @@ const SelectContainer = styled.div`
   width: 100%; /* Adjust width as needed */
 `;
 
-const StyledSelectField = ({ register,placeholder,options, onChange,value }) => {
+const StyledSelectField = ({ placeholder,options, onChange, ...props }) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -65,7 +65,6 @@ const StyledSelectField = ({ register,placeholder,options, onChange,value }) => 
         onChange={onChange}
         styles={customStyles}
         theme={customTheme}
-        value={value}
       />
     </SelectContainer>
   );
