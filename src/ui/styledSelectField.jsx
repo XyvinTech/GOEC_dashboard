@@ -71,8 +71,11 @@ const StyledSelectField = ({ placeholder, options, onChange, value, ...props }) 
         onChange={onChange}
         styles={customStyles}
         theme={customTheme}
+<<<<<<< HEAD
         defaultValue={options[selectedIndex]}
         {...props}
+=======
+>>>>>>> 0073ad5337cdd33e0b4dfe538365a5c23ae9a6e5
       />
     </SelectContainer>
   );
