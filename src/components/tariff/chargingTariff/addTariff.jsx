@@ -1,51 +1,141 @@
 import { Grid, Typography, Container, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledButton from "../../../ui/styledButton";
 import InputField from "../../../ui/styledInput";
+import { Controller, useForm } from "react-hook-form";
+import { createChargingTariff, editChargingTariff } from "../../../services/chargingTariffAPI";
+import { toast } from "react-toastify";
+import { getTaxList } from "../../../services/taxAPI";
 
-export default function AddTariff({action, data}) {
+export default function AddTariff({ action, data, onIsChange, isChange }) {
+  const [taxListData, setTaxListData] = useState([]);
+  const getTariffData = () => {
+    getTaxList().then((res) => {
+      if (res) {
+        setTaxListData(res);
+      }
+    });
+  };
+
+  const defaultValues = useMemo(() => {
+    return action === "edit"
+      ? {
+          name: data.Name,
+          value: data.Value,
+          tax: data.Tax,
+          serviceFee: data["Service fee(INR)"]
+        }
+      : {};
+  }, [action, data]);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    control,
+  } = useForm({ defaultValues });
+
+  useEffect(() => {
+    getTariffData();
+    if (action === "edit") {
+      reset(defaultValues);
+    }
+  }, [action, defaultValues, reset]);
+
+  const onSubmit = async (formData) => {
+    try {
+      if (action === "add") {
+        const res = await createChargingTariff(formData);
+        if (res) {
+          const successToastId = toast.success("Charging Tariff created successfully", {
+            position: "top-right",
+          });
+          onIsChange(!isChange);
+          toast.update(successToastId);
+          reset();
+        }
+      } else if (action === "edit") {
+        const res = await editChargingTariff(data._id, formData);
+        if (res) {
+          const successToastId = toast.success("Charging Tariff updated successfully", {
+            position: "top-right",
+          });
+          onIsChange(!isChange);
+          toast.update(successToastId);
+          reset();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      const errorToastId = toast.error("Something went wrong", {
+        position: "top-right",
+      });
+      toast.update(errorToastId);
+    }
+  };
+
+  const options = taxListData.map((res) => ({
+    value: res.percentage,
+    label: res.name,
+  }));
+
   return (
     <TableContainer>
       <Container fixed>
-        <Grid container spacing={4}>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Name</Typography>
-            <InputField placeholder={"Enter Name"} value={action==="edit"? data.Name: ""}/>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={4}>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>Name</Typography>
+              <InputField placeholder={"Enter Name"} {...register("name")} />
+            </Grid>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>Value (per kWH)</Typography>
+              <InputField placeholder={"Enter Value"} {...register("value")} />
+            </Grid>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>TAX</Typography>
+              <Controller
+                name="tax"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <StyledSelectField {...field} options={options} placeholder="None" />
+                    {errors.locationName && (
+                      <span style={errorMessageStyle}>{errors.locationName.message}</span>
+                    )}
+                  </>
+                )}
+                rules={{ required: "Tax is required" }}
+              />
+            </Grid>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>Service fee</Typography>
+              <InputField placeholder={"Enter Amount"} {...register("serviceFee")} />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={12}
+              sx={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
+                <StyledButton variant={"secondary"} width="103">
+                  Cancel
+                </StyledButton>
+                <StyledButton variant={"primary"} width="160">
+                  Save
+                </StyledButton>
+              </Stack>
+            </Grid>
           </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Value (per kWH)</Typography>
-            <InputField placeholder={"Enter Value"} value={action==="edit"? data.value: ""}/>
-          </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Service fee</Typography>
-            <InputField placeholder={"Enter Amount"} value={action==="edit"? data.fee: ""}/>
-          </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>TAX</Typography>
-            <StyledSelectField placeholder={"None"} value={action==="edit"? data.Tax: ""}/>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={12}
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              alignItems: "center",
-            }}
-          >
-            <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-              <StyledButton variant={"secondary"} width="103">
-                Cancel
-              </StyledButton>
-              <StyledButton variant={"primary"} width="160">
-                Save
-              </StyledButton>
-            </Stack>
-          </Grid>
-        </Grid>
+        </form>
       </Container>
     </TableContainer>
   );
@@ -59,3 +149,7 @@ export const TableContainer = styled.div`
   overflow-x: auto; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
 `;
+
+const errorMessageStyle = {
+  color: "red",
+};

@@ -6,13 +6,29 @@ import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg"
 import StyledDivider from "../../../ui/styledDivider";
 import AddTariff from "./addTariff";
 import StyledButton from "../../../ui/styledButton";
-function ChargingTariff({ data, headers }) {
+import { deleteChargingTariff } from "../../../services/chargingTariffAPI";
+import { ToastContainer, toast } from "react-toastify";
+import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
+
+function restructureData(dataArray) {
+  return dataArray.map(item => ({
+    name: item.name,
+    serviceAmount: item.serviceAmount,
+    value: item.value,
+    createdAt: item.createdAt,
+    updatedAt: item.updatedAt,
+    taxDataName: item.taxData?.name
+  }));
+}
+
+function ChargingTariff({ data, headers, onIsChange, isChange }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);
+    setAction("add");
   };
 
   // Function to close the modal
@@ -25,8 +41,23 @@ function ChargingTariff({ data, headers }) {
       setAction("edit");
       setOpen(true);
       setTableData(e.data);
+    } else if (e.action === "Delete") {
+      setAction("delete");
+      const res = deleteChargingTariff(e.data._id);
+      if (res) {
+        const successToastId = toast.success("Tax deleted successfully", {
+          position: "top-right",
+        });
+        toast.update(successToastId);
+        onIsChange(!isChange);
+      }
     }
   };
+
+  const restructuredData = restructureData(data);
+
+  const chargingTariffData = tableHeaderReplace(restructuredData, ["name", "value", "serviceAmount", "createdAt", "updatedAt", "taxDataName"], headers);
+
 
   return (
     <>
@@ -44,11 +75,11 @@ function ChargingTariff({ data, headers }) {
         </Box>
         <StyledTable
           headers={headers}
-          data={data}
+          data={chargingTariffData}
           onActionClick={handleClick}
         />
       </Box>
-
+      <ToastContainer />
       {/* Modal */}
       <Modal
         open={open}
@@ -76,7 +107,7 @@ function ChargingTariff({ data, headers }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTariff action={action} data={tableData} />
+          <AddTariff action={action} data={tableData} onIsChange={onIsChange} isChange={isChange}/>
         </Box>
       </Modal>
     </>
