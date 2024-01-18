@@ -32,8 +32,13 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
   const [errorMsg, setErrorMsg] = useState(<></>);
 
   //address data country state city
-  const [states, setStates] = useState([])
-  const [cities, setCities] = useState([])
+  const [states, setStates] = useState(editStatus ? State.getStatesOfCountry(data.country).map((e) => ({ label: e.name, value: e })) : [])
+  const [cities, setCities] = useState(editStatus ? City.getCitiesOfState(data.country,data.state).map((e) => ({ label: e.name, value: e })) : [])
+
+  const [countryCode, setCountryCode] = useState('')
+  const [stateCode, setStateCode] = useState('')
+  const [cityCode, setCityCode] = useState('')
+
   console.log(data);
   const getCheckButtonData = (checkBtndata) => {
     if (checkBtndata.active == true) {
@@ -46,8 +51,6 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
     control,
     handleSubmit,
     setValue,
-    watch,
-    reset,
     formState: { errors },
     clearErrors,
   } = useForm({
@@ -91,6 +94,8 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
             amenities: amenities,
             name: data.name,
             address: `${data.address}, ${data.city.value.name}, ${data.state.value.name}, ${data.country.value.name}, ${data.pincode}`,
+            country: countryCode,
+            state: stateCode,
             owner: data.owner,
             owner_email: data.ownerEmailId,
             owner_phone: data.ownerPhone,
@@ -244,6 +249,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                     onChange={(e) => {
                       setValue("country", e)
                       setCities([])
+                      setCountryCode(e.value.isoCode)
                       setStates(State.getStatesOfCountry(e.value.isoCode).map((e) => ({ label: e.name, value: e })))
                     }} />
                   {errors.country && (
@@ -266,6 +272,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                   <StyledSelectField {...field} placeholder="State" options={states}
                     onChange={(e) => {
                       setValue("state", e)
+                      setStateCode(e.value.isoCode)
                       setCities(City.getCitiesOfState(e.value.countryCode, e.value.isoCode).map((e) => ({ label: e.name, value: e })))
                     }}
                   />

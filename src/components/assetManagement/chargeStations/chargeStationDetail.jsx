@@ -42,23 +42,25 @@ export default function ChargeStationDetail() {
             <Stack direction={'row'} sx={{ backgroundColor: 'secondary.main', p: 3 }} spacing={2}>
                 <ArrowBackIosNew sx={{ cursor: 'pointer' }} onClick={() => { navigate(-1) }} />
                 <Typography variant='h6' color={'secondary.contrastText'}>Charge Station Details</Typography></Stack>
-            <Box sx={{ p: { xs: 1, md: 4 } }}>
-                <Grid container spacing={4}>
-                    <Grid item xs={12} md={12} lg={6}>
-                        <StationDetail data={stationDetails} />
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={6}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} md={12} lg={12}>
-                                <OwnerDetail data={stationDetails} />
-                            </Grid>
-                            <Grid item xs={12} md={12} lg={12}>
-                                <Analytics data={stationDetails} />
+            {stationDetails &&
+                <Box sx={{ p: { xs: 1, md: 4 } }}>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={12} lg={6}>
+                            <StationDetail data={stationDetails} />
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={6}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} md={12} lg={12}>
+                                    <OwnerDetail data={stationDetails} />
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={12}>
+                                    <Analytics data={stationDetails} />
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Box>
+                </Box>
+            }
             <StyledTab buttons={['Charge-points', 'Reviews']} onChanged={onChangeToggleOption} />
 
             {stationDetails && (toggleOption === 0 ? <ChargePoints data={stationDetails && stationDetails.chargers} /> : <Reviews data={stationDetails && stationDetails.reviews} />)}
