@@ -23,18 +23,20 @@ import CalendarInput from "../../../ui/CalendarInput";
 import { imageUploadAPI } from "../../../services/imageAPI";
 import { categoryDropdownData, vendorDropdownData } from "../../../assets/json/chargestations";
 import { Country, State, City } from "country-state-city";
-import { createChargingStation } from "../../../services/stationAPI";
+import { createChargingStation, editChargingStation } from "../../../services/stationAPI";
 // StyledTable component
-const AddChargingStation = ({ data }) => {
-  const [amenities, setAmenities] = useState([]);
+const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...props }) => {
+  const [amenities, setAmenities] = useState(editStatus ? data['amenities'] : []);
   const [image, setImage] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState(<></>);
 
   //address data country state city
-  const [states, setStates] = useState([])
-  const [cities, setCities] = useState([])
+  const [states, setStates] = useState(editStatus ? State.getStatesOfCountry(data.country).map((e) => ({ label: e.name, value: e })) : [])
+  const [cities, setCities] = useState(editStatus ? City.getCitiesOfState(data.country, data.state).map((e) => ({ label: e.name, value: e })) : [])
 
+  const [countryCode, setCountryCode] = useState(editStatus ? data["country"] : '')
+  const [stateCode, setStateCode] = useState(editStatus ? data["state"] : '')
   const getCheckButtonData = (checkBtndata) => {
     if (checkBtndata.active == true) {
       setAmenities([...amenities, checkBtndata.value]);
@@ -46,41 +48,76 @@ const AddChargingStation = ({ data }) => {
     control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
     clearErrors,
   } = useForm({
     defaultValues: {
-      staff: false, // Set the default value for "activate"
+      staff: editStatus && data['staff'], // Set the default value for "activate"
+      name: editStatus ? data['Charge Station'] : '',
+      address: editStatus ? data['Address'].split(', ')[0] : '',
+      country: editStatus ? data['Address'].split(', ')[3] : '',
+      state: editStatus ? data['Address'].split(', ')[2] : '',
+      city: editStatus ? data['Address'].split(', ')[1] : '',
+      pincode: editStatus ? data['Address'].split(', ')[4] : '',
+      latitude: editStatus ? data['Latitude'] : '',
+      longitude: editStatus ? data['Longitude'] : '',
+      commissionedDate: editStatus ? data['commissioned_on'] : '',
+      startTime: editStatus ? data['startTime'] : '',
+      endTime: editStatus ? data['stopTime'] : '',
+      owner: editStatus ? data['Owner'] : '',
+      ownerPhone: editStatus ? data['owner_phone'] : '',
+      ownerEmailId: editStatus ? data['owner_email'] : '',
+      lspName: editStatus ? data['location_support_name'] : '',
+      lpsPhoneNumber: editStatus ? data['location_support__phone'] : '',
+      lpsemailId: editStatus ? data['location_support_email'] : '',
+      vendor: editStatus ? data['vendor'] : '',
+      category: editStatus ? data['category'] : ''
     },
   });
-  const onSubmit = (data) => {
+  const onSubmit = (values) => {
     // Handle form submission with data
-    console.log(image);
+    console.log(values);
+    if (editStatus) {
+      updateChargingStation(values)
+    } else {
+      addChargingStation(values)
+    }
+  };
+
+  const addChargingStation = (values) => {
     if (image) {
       imageUploadAPI(image).then((res) => {
         if (res.status) {
           let dt = {
             amenities: amenities,
-            name: data.name,
-            address: `${data.address}, ${data.city.value.name}, ${data.state.value.name}, ${data.country.value.name}, ${data.pincode}`,
-            owner: data.owner,
-            owner_email: data.ownerEmailId,
-            owner_phone: data.ownerPhone,
-            location_support_name: data.lspName,
-            location_support_email: data.lpsemailId,
-            location_support__phone: data.lpsPhoneNumber,
-            latitude: data.latitude,
-            longitude: data.longitude,
-            commissioned_on: data.commissionedDate,
+            name: values.name,
+            address: `${values.address}, ${values.city.value.name}, ${values.state.value.name}, ${values.country.value.name}, ${values.pincode}`,
+            country: countryCode,
+            state: stateCode,
+            owner: values.owner,
+            owner_email: values.ownerEmailId,
+            owner_phone: values.ownerPhone,
+            location_support_name: values.lspName,
+            location_support_email: values.lpsemailId,
+            location_support__phone: values.lpsPhoneNumber,
+            latitude: values.latitude,
+            longitude: values.longitude,
+            commissioned_on: values.commissionedDate,
             image: res.url,
-            startTime: data.startTime,
-            stopTime: data.endTime,
-            staff: data.staff,
-            vendor: data.vendor.value,
-            category: data.category.value,
+            startTime: values.startTime,
+            stopTime: values.endTime,
+            staff: values.staff,
+            vendor: values.vendor.value,
+            category: values.category.value,
           }
-          console.log("Form data INTO API:", dt);
+          createChargingStation(dt).then((res) => {
+            setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Added Successfully</Alert >)
+            setSnackbarOpen(true)
+            setTimeout(() => {
+              formSubmited()
+            }, 2000);
+
+          })
         }
 
       })
@@ -88,32 +125,55 @@ const AddChargingStation = ({ data }) => {
       setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}> Please Select Image!</Alert >)
       setSnackbarOpen(true)
     }
+  }
 
-    // Close your form or perform other actions
+
+  const updateChargingStation = (values) => {
+
     let dt = {
       amenities: amenities,
-      name: data.name,
-      address: `${data.address}, ${data.city.value.name}, ${data.state.value.name}, ${data.country.value.name}, ${data.pincode}`,
-      owner: data.owner,
-      owner_email: data.ownerEmailId,
-      owner_phone: data.ownerPhone,
-      location_support_name: data.lspName,
-      location_support_email: data.lpsemailId,
-      location_support__phone: data.lpsPhoneNumber,
-      latitude: data.latitude,
-      longitude: data.longitude,
-      commissioned_on: data.commissionedDate,
-      image: '',
-      startTime: data.startTime,
-      stopTime: data.endTime,
-      staff: data.staff,
-      vendor: data.vendor.value,
-      category: data.category.value,
+      name: values.name,
+      address: `${values.address}, ${values.city.value ? values.city.value.name : data['Address'].split(', ')[1]}, ${values.state.value ? values.state.value.name : data['Address'].split(', ')[2]}, ${values.country.value ? values.state.value.name : data['Address'].split(', ')[3]}, ${values.pincode}`,
+      country: countryCode,
+      state: stateCode,
+      owner: values.owner,
+      owner_email: values.ownerEmailId,
+      owner_phone: values.ownerPhone,
+      location_support_name: values.lspName,
+      location_support_email: values.lpsemailId,
+      location_support__phone: values.lpsPhoneNumber,
+      latitude: values.latitude,
+      longitude: values.longitude,
+      commissioned_on: values.commissionedDate,
+      startTime: values.startTime,
+      stopTime: values.endTime,
+      staff: values.staff,
+      vendor: values.vendor.value ? values.vendor.value : data['vendor'],
+      category: values.category.value ? values.category.value : data['category'],
     }
-    createChargingStation(dt).then((res)=>{
-      console.log(res);
-    })
-  };
+    if (image) {
+      imageUploadAPI(image).then((res) => {
+        if (res.status) {
+          editChargingStation(data['_id'],{...dt, image:res.url}).then((res)=>{
+            setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Updated Successfully</Alert >)
+            setSnackbarOpen(true)
+            setTimeout(() => {
+              formSubmited()
+            }, 2000);
+          })
+        }
+
+      })
+    } else {
+      editChargingStation(data['_id'],{...dt,image: data['image']}).then((res)=>{
+        setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Updated Successfully</Alert >)
+        setSnackbarOpen(true)
+        setTimeout(() => {
+          formSubmited()
+        }, 2000);
+      })
+    }
+  }
 
   const handleChange = (event) => {
     setValue("staff", event.target.checked);
@@ -121,16 +181,14 @@ const AddChargingStation = ({ data }) => {
 
 
   const fileSelectHandle = (files) => {
-    console.log(files.files[0]);
     setImage(files.files[0])
   }
 
   const handleDateChangeInParent = (date) => {
     setValue('commissionedDate', date); // Assuming you have 'expiryDate' in your form state
     clearErrors('commissionedDate');
-    console.log(date)
   };
-  const commissionedDate = watch('commissionedDate', ''); // Watching the value for 'expiryDate'
+
 
 
   let AmenitiesData = [
@@ -139,7 +197,7 @@ const AddChargingStation = ({ data }) => {
     "Restaurant",
     "Restroom",
     "Waitingroom",
-    "BAR",
+    "Bar",
   ];
 
   return (
@@ -150,11 +208,11 @@ const AddChargingStation = ({ data }) => {
         autoHideDuration={2000}
         onClose={() => { setSnackbarOpen(false) }}
       >{errorMsg}</Snackbar>
-      <Container maxWidth="md" sx={{ p: 2 }}>
+      <Container maxWidth="md" sx={{ p: 2, backgroundColor: 'primary.main' }}>
         <Grid container sx={{ alignItems: "center" }} spacing={2}>
           <Grid item xs={12} md={8}>
             <Stack direction="column">
-              <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+              <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>
                 Location name
               </Typography>
 
@@ -179,12 +237,12 @@ const AddChargingStation = ({ data }) => {
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <FileUpload onFileSelect={fileSelectHandle} />
+            <FileUpload onFileSelect={fileSelectHandle} image={editStatus && `${data['image']}`} />
           </Grid>
         </Grid>
 
         {/* ----address */}
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>Address</Typography>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>Address</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
             <Stack direction="column">
@@ -209,10 +267,11 @@ const AddChargingStation = ({ data }) => {
           <Grid item xs={6} md={4}>
             <Controller
               name="pincode"
+              type="number"
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledInput {...field} placeholder="Pincode" />
+                  <StyledInput {...field} placeholder="Pincode" type="number" />
                   {errors.pincode && (
                     <span style={errorMessageStyle}>
                       {errors.pincode.message}
@@ -235,6 +294,7 @@ const AddChargingStation = ({ data }) => {
                     onChange={(e) => {
                       setValue("country", e)
                       setCities([])
+                      setCountryCode(e.value.isoCode)
                       setStates(State.getStatesOfCountry(e.value.isoCode).map((e) => ({ label: e.name, value: e })))
                     }} />
                   {errors.country && (
@@ -257,6 +317,7 @@ const AddChargingStation = ({ data }) => {
                   <StyledSelectField {...field} placeholder="State" options={states}
                     onChange={(e) => {
                       setValue("state", e)
+                      setStateCode(e.value.isoCode)
                       setCities(City.getCitiesOfState(e.value.countryCode, e.value.isoCode).map((e) => ({ label: e.name, value: e })))
                     }}
                   />
@@ -290,7 +351,7 @@ const AddChargingStation = ({ data }) => {
 
         {/* ----Map co-ordinates*/}
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>
           Map co-ordinates
         </Typography>
         <Grid container spacing={2}>
@@ -301,7 +362,7 @@ const AddChargingStation = ({ data }) => {
                 control={control}
                 render={({ field }) => (
                   <>
-                    <StyledInput {...field} placeholder="Longitude" />
+                    <StyledInput {...field} placeholder="Longitude" type="number" />
                     {errors.longitude && (
                       <span style={errorMessageStyle}>
                         {errors.longitude.message}
@@ -320,7 +381,7 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledInput {...field} placeholder="Latitude" />
+                  <StyledInput {...field} placeholder="Latitude" type="number" />
                   {errors.latitude && (
                     <span style={errorMessageStyle}>
                       {errors.latitude.message}
@@ -333,7 +394,7 @@ const AddChargingStation = ({ data }) => {
           </Grid>
         </Grid>
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>
           Operating hours
         </Typography>
         <Grid container spacing={2}>
@@ -390,14 +451,11 @@ const AddChargingStation = ({ data }) => {
               control={control}
               render={({ field }) => (
                 <>
-
-
                   <StyledInput
                     {...field}
                     placeholder="Commissioned Date"
                     icon={<Calendar />}
                     iconright={<CalendarInput onDateChange={handleDateChangeInParent} />}
-                    value={commissionedDate}
                     readOnly
 
                   />
@@ -413,7 +471,7 @@ const AddChargingStation = ({ data }) => {
           </Grid>
         </Grid>
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>
           Location Support
         </Typography>
         <Grid container spacing={2}>
@@ -487,7 +545,7 @@ const AddChargingStation = ({ data }) => {
           </Grid>
         </Grid>
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>
           Amenities
         </Typography>
         <Grid container spacing={2}>
@@ -497,6 +555,7 @@ const AddChargingStation = ({ data }) => {
                 <StyledCheckButton
                   checkButtonChange={getCheckButtonData}
                   color="gray"
+                  actived={editStatus && data['amenities'].includes(Amenity)}
                 >
                   {Amenity}
                 </StyledCheckButton>
@@ -505,7 +564,7 @@ const AddChargingStation = ({ data }) => {
           })}
         </Grid>
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>
           Business name
         </Typography>
         <Grid container spacing={2}>
@@ -577,7 +636,7 @@ const AddChargingStation = ({ data }) => {
         <Grid container spacing={2}>
           <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
             <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-              <Typography>Staff</Typography>
+              <Typography sx={{ color: 'primary.contrastText' }}>Staff</Typography>
               <Controller
                 name="staff"
                 control={control}
@@ -596,7 +655,7 @@ const AddChargingStation = ({ data }) => {
             </Stack>
           </Grid>
         </Grid>
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>Vendor</Typography>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>Vendor</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Controller
@@ -617,7 +676,7 @@ const AddChargingStation = ({ data }) => {
           </Grid>
         </Grid>
 
-        <Typography sx={{ marginBottom: 3, marginTop: 3 }}>Category</Typography>
+        <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>Category</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Controller
@@ -653,7 +712,7 @@ const AddChargingStation = ({ data }) => {
                 Save{" "}
               </StyledButton>
 
-              <StyledButton variant={"secondary"} width="160">
+              <StyledButton variant={"secondary"} width="160" >
                 {" "}
                 Cancel{" "}
               </StyledButton>
