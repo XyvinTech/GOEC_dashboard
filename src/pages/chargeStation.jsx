@@ -62,7 +62,7 @@ export default function ChargingStation() {
           <Typography sx={{ color: 'secondary.contrastText' }}>Edit ChargeStation</Typography>
           <Close style={{ cursor: 'pointer' }} onClick={() => { setEditDialogOpen(false) }} />
         </Stack>
-        <AddChargingStation formSubmited={() => { init(); }} data={selectedData} editStatus={true} />
+        <AddChargingStation formSubmited={() => { init(); setEditDialogOpen(false) }} data={selectedData} editStatus={true} />
       </Dialog>
       <StyledTab
         buttons={['All Charge stations', 'Add Charge Station']} onChanged={buttonChanged} />
