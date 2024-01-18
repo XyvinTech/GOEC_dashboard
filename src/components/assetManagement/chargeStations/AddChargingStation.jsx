@@ -111,12 +111,16 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
             category: values.category.value,
           }
           createChargingStation(dt).then((res) => {
-            setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Added Successfully</Alert >)
-            setSnackbarOpen(true)
-            setTimeout(() => {
-              formSubmited()
-            }, 2000);
-
+            if (res.status) {
+              setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Added Successfully</Alert >)
+              setSnackbarOpen(true)
+              setTimeout(() => {
+                formSubmited()
+              }, 2000);
+            }else{
+              setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}>{res.message}</Alert >)
+              setSnackbarOpen(true)
+            }
           })
         }
 
@@ -154,7 +158,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
     if (image) {
       imageUploadAPI(image).then((res) => {
         if (res.status) {
-          editChargingStation(data['_id'],{...dt, image:res.url}).then((res)=>{
+          editChargingStation(data['_id'], { ...dt, image: res.url }).then((res) => {
             setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Updated Successfully</Alert >)
             setSnackbarOpen(true)
             setTimeout(() => {
@@ -165,12 +169,17 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
 
       })
     } else {
-      editChargingStation(data['_id'],{...dt,image: data['image']}).then((res)=>{
-        setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Updated Successfully</Alert >)
-        setSnackbarOpen(true)
-        setTimeout(() => {
-          formSubmited()
-        }, 2000);
+      editChargingStation(data['_id'], { ...dt, image: data['image'] }).then((res) => {
+        if (res.status) {
+          setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Updated Successfully</Alert >)
+          setSnackbarOpen(true)
+          setTimeout(() => {
+            formSubmited()
+          }, 2000);
+        }else{
+          setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}>{res.message}</Alert >)
+          setSnackbarOpen(true)
+        }
       })
     }
   }
@@ -267,7 +276,6 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
           <Grid item xs={6} md={4}>
             <Controller
               name="pincode"
-              type="number"
               control={control}
               render={({ field }) => (
                 <>
@@ -509,6 +517,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                       {...field}
                       icon={<Phone />}
                       placeholder={"Enter Phone number"}
+                      type="number"
                     />
                     {errors.lpsPhoneNumber && (
                       <span style={errorMessageStyle}>
@@ -540,7 +549,13 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                   )}
                 </>
               )}
-              rules={{ required: "Email ID is required" }}
+              rules={{
+                required: "Email ID is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "invalid email address"
+                }
+              }}
             />
           </Grid>
         </Grid>
@@ -597,6 +612,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                       {...field}
                       icon={<Phone />}
                       placeholder={"Enter Phone number"}
+                      type="number"
                     />
                     {errors.ownerPhone && (
                       <span style={errorMessageStyle}>
@@ -628,7 +644,13 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                   )}
                 </>
               )}
-              rules={{ required: "Email ID is required" }}
+              rules={{
+                required: "Email ID is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "invalid email address"
+                }
+              }}
             />
           </Grid>
         </Grid>

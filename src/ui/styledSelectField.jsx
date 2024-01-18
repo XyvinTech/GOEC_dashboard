@@ -56,10 +56,12 @@ const StyledSelectField = ({ placeholder, options, onChange, value, ...props }) 
   });
 
   var selectedIndex = -1;
-  for (var i = 0; i < options.length && value; i++) {
-    if (options[i].value === value || options[i].label === value) {
-      selectedIndex = i;
-      break;
+  if (options) {
+    for (var i = 0; i < options.length && value; i++) {
+      if (options[i].value === value || options[i].label === value) {
+        selectedIndex = i;
+        break;
+      }
     }
   }
   return (
@@ -70,7 +72,7 @@ const StyledSelectField = ({ placeholder, options, onChange, value, ...props }) 
         onChange={onChange}
         styles={customStyles}
         theme={customTheme}
-        defaultValue={options[selectedIndex]}
+        defaultValue={options && options[selectedIndex]}
         {...props}
       />
     </SelectContainer>
