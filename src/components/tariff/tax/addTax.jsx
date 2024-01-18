@@ -50,7 +50,7 @@ export default function AddTax({ action, data, onIsChange, isChange }) {
         }
       }
     } catch (error) {
-      const errorToastId = toast.error("Failed to update tax", {
+      const errorToastId = toast.error("Something went wrong", {
         position: "top-right",
       });
       toast.update(errorToastId);
