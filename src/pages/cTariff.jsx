@@ -1,21 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import { DummyData } from "../assets/json/ChargingTariffData.js";
 import ChargingTariff from "../components/tariff/chargingTariff/ChargingTariff.jsx";
+import { getChargingTariffList } from "../services/chargingTariffAPI.js";
 
-export default function cTariff() {
+export default function CTariff() {
+
+  const [tariffListData, setTariffListData] = useState([]);
+  const [isChange, setIsChange] = useState(false);
+
   const headers = [
     "Name",
+    "Value",
     "Service fee(INR)",
     "Created on",
     "Last updated",
     "Tax",
-    "Status",
   ];
+
+  const getTariffData = ()=>{
+    getChargingTariffList().then((res)=>{
+      if(res){
+        setTariffListData(res.result);
+      }
+    })
+  }
+
+  useEffect(() => {
+    getTariffData()
+  }, [isChange])
 
   return (
     <Box>
-      <ChargingTariff data={DummyData} headers={headers} />
+      <ChargingTariff data={tariffListData} headers={headers} onIsChange={setIsChange} isChange={isChange}/>
     </Box>
   );
 }
