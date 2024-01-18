@@ -34,7 +34,7 @@ const AddChargingStation = ({ data={}, formSubmited,editStatus=false, ...props})
   //address data country state city
   const [states, setStates] = useState([])
   const [cities, setCities] = useState([])
-  console.log(data);
+  console.log(Contr);
   const getCheckButtonData = (checkBtndata) => {
     if (checkBtndata.active == true) {
       setAmenities([...amenities, checkBtndata.value]);
