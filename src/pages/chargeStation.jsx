@@ -18,6 +18,7 @@ export default function ChargingStation() {
   const init = () => {
     getChargingStationList().then((res) => {
       if (res.status) {
+        console.log(res.result);
         setChargeStationListData(res.result)
       }
     }
@@ -36,7 +37,7 @@ export default function ChargingStation() {
     init();
   }, [])
 
-  const deleteData = (data) => {
+  const deleteData = () => {
     deleteChargingStation(selectedData._id).then((res) => {
       init();
     })
@@ -56,16 +57,20 @@ export default function ChargingStation() {
         onClose={() => { setDialogOpen(false) }}
         confirmButtonHandle={deleteData} />
 
-        <Dialog open={editDialogOpen} maxWidth='md' fullWidth>
-          <Stack direction={'row'} sx={{p:2,backgroundColor:'primary.main',justifyContent:'space-between',borderBottom:'solid 1px #fff3'}}>
-            <Typography sx={{color:'secondary.contrastText'}}>Edit ChargeStation</Typography>
-            <Close style={{cursor:'pointer'}} onClick={()=>{setEditDialogOpen(false) }}/>
-          </Stack>
-          <AddChargingStation data={selectedData} editStatus={true} />
-        </Dialog>
+      <Dialog open={editDialogOpen} maxWidth='md' fullWidth>
+        <Stack direction={'row'} sx={{ p: 2, backgroundColor: 'primary.main', justifyContent: 'space-between', borderBottom: 'solid 1px #fff3' }}>
+          <Typography sx={{ color: 'secondary.contrastText' }}>Edit ChargeStation</Typography>
+          <Close style={{ cursor: 'pointer' }} onClick={() => { setEditDialogOpen(false) }} />
+        </Stack>
+        <AddChargingStation formSubmited={() => { init(); }} data={selectedData} editStatus={true} />
+      </Dialog>
       <StyledTab
         buttons={['All Charge stations', 'Add Charge Station']} onChanged={buttonChanged} />
-      {togglePage === 0 ? <AllChargeStation data={chargeStationListData} deleteData={(data) => { setSelectedData(data); setDialogOpen(true) }}  editData={(data)=>{setSelectedData(data); setEditDialogOpen(true)}}/> :
+      {togglePage === 0 ?
+        <AllChargeStation
+          data={chargeStationListData}
+          deleteData={(data) => { setSelectedData(data); setDialogOpen(true) }}
+          editData={(data) => { setSelectedData(data); setEditDialogOpen(true) }} /> :
         <AddChargingStation formSubmited={() => { init(); setTogglePage(0) }} addChargeStation={addChargeStation} />}
     </Box>
   );

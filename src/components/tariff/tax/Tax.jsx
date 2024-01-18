@@ -4,15 +4,22 @@ import StyledTable from "../../../ui/styledTable";
 import LastSynced from "../../../layout/LastSynced";
 import StyledDivider from "../../../ui/styledDivider";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
+import { ToastContainer, toast } from "react-toastify";
 
 import AddTax from "./addTax";
 import StyledButton from "../../../ui/styledButton";
-function Tax({ data, headers }) {
+import StyledSearchField from "../../../ui/styledSearchField";
+import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
+import { deleteTax } from "../../../services/taxAPI";
+function Tax({ data, headers, onIsChange, isChange }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
+  const [filterValue, setFilterValue] = useState("");
+
   // Function to open the modal
   const handleOpen = () => {
+    setAction("add");
     setOpen(true);
   };
 
@@ -26,29 +33,40 @@ function Tax({ data, headers }) {
       setAction("edit");
       setOpen(true);
       setTableData(e.data);
+    } else if (e.action === "Delete") {
+      setAction("delete");
+      const res = deleteTax(e.data._id);
+      if (res) {
+        const successToastId = toast.success("Tax deleted successfully", {
+          position: "top-right",
+        });
+        toast.update(successToastId);
+        onIsChange(!isChange);
+      }
     }
   };
 
+  const taxData = tableHeaderReplace(data, ["name", "percentage", "createdAt"], headers);
+
   return (
     <>
-      <LastSynced heading="Tax" showSearchField={true} />
+      <LastSynced heading="Tax">
+        <StyledSearchField
+          placeholder={"Search"}
+          onChange={(e) => {
+            setFilterValue(e.target.value);
+          }}
+        />
+      </LastSynced>
       <Box sx={{ p: 3 }}>
         <Box display="flex" justifyContent="flex-end">
-          <StyledButton
-            variant="primary"
-            width="150"
-            mr="10"
-            onClick={handleOpen}
-          >
+          <StyledButton variant="primary" width="150" mr="10" onClick={handleOpen}>
             Add
           </StyledButton>
         </Box>
-        <StyledTable
-          headers={headers}
-          data={data}
-          onActionClick={handleClick}
-        />
+        <StyledTable headers={headers} data={taxData} onActionClick={handleClick} />
       </Box>
+      <ToastContainer />
       {/* Modal */}
       <Modal
         open={open}
@@ -76,7 +94,7 @@ function Tax({ data, headers }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTax action={action} data={tableData} />
+          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange}/>
         </Box>
       </Modal>
     </>
