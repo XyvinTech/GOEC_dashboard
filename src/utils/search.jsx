@@ -5,8 +5,10 @@ export const searchAndFilter = (array, filterValue) => {
     if (filterValue) {
         return filter(array, (ele) => {
             for (const key in ele) {
-                if (ele[key].toLowerCase().indexOf(filterValue.toLowerCase()) !== -1) {
-                    return  true
+                if (typeof ele[key] == 'string') {
+                    if (ele[key].toLowerCase().indexOf(filterValue.toLowerCase()) !== -1) {
+                        return true
+                    }
                 }
             }
             return false

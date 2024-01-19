@@ -4,10 +4,10 @@ import { CheckCircle, UploadFile } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 
 
-export default function FileUpload({ onFileSelect }) {
+export default function FileUpload({ onFileSelect, image, accept }) {
   const [fileStatus, setFileStatus] = useState(false)
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
+    accept: accept ? accept : {'image/*' : ['.png','.jpeg','.jpg']},
     multiple: false,
     onDrop: (acceptedFiles) => {
       setFileStatus(true)
@@ -21,6 +21,9 @@ export default function FileUpload({ onFileSelect }) {
       direction="column"
       sx={{
         backgroundColor: 'secondary.lightGray',
+        backgroundImage: image && `url("${image}")`,
+        backgroundSize: '100%',
+        backgroundRepeat: 'no-repeat',
         boxShadow: 3,
         width: '100%',
         height: '100%',
@@ -31,7 +34,7 @@ export default function FileUpload({ onFileSelect }) {
       }}
       {...getRootProps({})}
     >
-      <input {...getInputProps({})} />
+      <input {...getInputProps({})} accept={accept ? accept : ''} />
       {fileStatus ? <CheckCircle sx={{ color: 'success.main', fontSize: 58 }} /> : <UploadFile sx={{ fontSize: '26px', color: 'secondary.contrastText' }} />}
       <Typography variant="caption" color={'secondary.contrastText'}>
         {fileStatus ? 'selected' : 'Drop your files or browse'}

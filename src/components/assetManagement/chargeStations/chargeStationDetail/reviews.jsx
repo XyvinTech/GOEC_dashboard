@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Grid, Stack, Typography } from '@mui/material'
 import { ReactComponent as ReloadIcon } from '../../../../assets/icons/reload.svg'
 import { Star, DeleteOutline } from '@mui/icons-material'
+import LastSynced from '../../../../layout/LastSynced'
 
 
 const ReviewComponent = ({ review }) => {
@@ -31,24 +32,7 @@ const ReviewComponent = ({ review }) => {
 export default function Reviews({ data, ...props }) {
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: 'primary.grey',
-          p: 2,
-        }}>
-        <Stack direction={'column'} sx={{ ml: 2 }} >
-          <Typography variant='body1' sx={{ color: 'secondary.contrastText' }}>Charge-points</Typography>
-          <Stack direction={'row'} spacing={1}>
-            <Typography sx={{ color: 'secondary.greytext', fontSize: 12 }}>Last synced</Typography>
-            <Typography sx={{ color: 'success.main', fontSize: 12 }}>4 minutes ago</Typography>
-            <ReloadIcon style={{ cursor: 'pointer' }} />
-          </Stack>
-        </Stack>
-        <Box sx={{ flexGrow: 1 }} />
-      </Box>
+    <LastSynced heading={'Reviews'} />
       <Box sx={{ backgroundColor: 'secondary.main', /*maxHeight: {xs:'1000px',md:'500px'},*/ borderRadius: '4px', m: { xs: 1, md: 4 }, p: 2 }}>
         <Grid container spacing={{ xs: 1, md: 3 }}>
           {
