@@ -22,7 +22,6 @@ export default function ChargeStationDetail() {
     }
     const init = () => {
         getChargingStationById(state._id).then((res) => {
-            console.log(res);
             if (res.status) {
                 setStationDetails(res.result)
             }

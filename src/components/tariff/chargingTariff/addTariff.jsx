@@ -46,9 +46,15 @@ export default function AddTariff({ action, data, onIsChange, isChange }) {
   }, [action, defaultValues, reset]);
 
   const onSubmit = async (formData) => {
+    const addData = {
+      name : formData.name,
+      value: formData.value,
+      tax: formData.tax.value,
+      serviceAmount: formData.serviceFee
+    }
     try {
       if (action === "add") {
-        const res = await createChargingTariff(formData);
+        const res = await createChargingTariff(addData);
         if (res) {
           const successToastId = toast.success("Charging Tariff created successfully", {
             position: "top-right",
@@ -58,7 +64,8 @@ export default function AddTariff({ action, data, onIsChange, isChange }) {
           reset();
         }
       } else if (action === "edit") {
-        const res = await editChargingTariff(data._id, formData);
+        console.log(data);
+        const res = await editChargingTariff(data._id, addData);
         if (res) {
           const successToastId = toast.success("Charging Tariff updated successfully", {
             position: "top-right",
@@ -78,7 +85,7 @@ export default function AddTariff({ action, data, onIsChange, isChange }) {
   };
 
   const options = taxListData.map((res) => ({
-    value: res.percentage,
+    value: res._id,
     label: res.name,
   }));
 
@@ -103,8 +110,8 @@ export default function AddTariff({ action, data, onIsChange, isChange }) {
                 render={({ field }) => (
                   <>
                     <StyledSelectField {...field} options={options} placeholder="None" />
-                    {errors.locationName && (
-                      <span style={errorMessageStyle}>{errors.locationName.message}</span>
+                    {errors.tax && (
+                      <span style={errorMessageStyle}>{errors.tax.message}</span>
                     )}
                   </>
                 )}

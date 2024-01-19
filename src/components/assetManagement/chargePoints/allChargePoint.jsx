@@ -41,7 +41,6 @@ export default function AllChargePoint({ data, ...props }) {
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
           setFilterValue(e.target.value)
         }} />
-        <StyledButton variant={'primary'} style={{ width: '100%' }}>Add Chargpoint</StyledButton>
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader} data={searchAndFilter(AllChargePointsData, filterValue)} showActionCell={true} onActionClick={tableActionClick} />
