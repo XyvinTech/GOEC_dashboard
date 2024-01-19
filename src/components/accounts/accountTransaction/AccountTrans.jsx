@@ -6,26 +6,31 @@ import StyledTable from "../../../ui/styledTable";
 import { searchAndFilter } from "../../../utils/search";
 import { DummyData } from "../../../assets/json/AccountTransactions";
 import RightDrawer from "../../../ui/RightDrawer";
+import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 
-export default function AccountTrans() {
+
+const tableHeader = [
+  'User name',
+  'Date',
+  'Invoice Type',
+  'Invoice ID',
+  'Total Amount',
+  'Status',
+  'Initiated By',
+  'Order ID',
+  'Reference',
+]
+
+
+export default function AccountTrans({data}) {
   const [filterValue, setFilterValue] = useState("");
+  const accData = tableHeaderReplace(data, ["name", "percentage", "createdAt"], tableHeader);
 
   const tableActionClick = (e) => {
     console.log(e);
   };
 
-  const tableHeader = [
-    'User name',
-    'Date',
-    'Invoice Type',
-    'Invoice ID',
-    'Total Amount',
-    'Status',
-    'Transaction',
-    'Order ID',
-    'External Payment reference',
-  ]
-
+ 
   return (
     <>
       <LastSynced heading="Charge Points">

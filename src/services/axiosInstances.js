@@ -5,8 +5,8 @@ let token = sessionStorage.getItem("userToken") || null;
 //! For Vehicle/Brand/transaction/Configuration/RFID/Notification services only
 
 export const LAMBDA_INSTANCES = axios.create({
-  // baseURL: 'https://dlupfxb3p6.execute-api.ap-south-1.amazonaws.com/api/v1',
-  baseURL: 'http://localhost:5689/api/v1',
+  baseURL: 'https://dlupfxb3p6.execute-api.ap-south-1.amazonaws.com/api/v1',
+  // baseURL: 'http://localhost:5689/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",
@@ -76,6 +76,15 @@ export const OCPP_INSTANCE = axios.create({
 
 export const IMAGE_UPLOAD_URL = axios.create({
   baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5100/api/v1',
+  headers: {
+    Authorization: "Bearer " + token,
+    "Content-Type": "multipart/form-data",
+  },
+});
+
+
+export const TRANSACTION_URL = axios.create({
+  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5687/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "multipart/form-data",

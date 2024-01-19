@@ -1,11 +1,30 @@
 import { Box } from '@mui/material'
-import React from 'react'
+import React ,{ useEffect, useState } from 'react'
 import AccountTrans from '../components/accounts/accountTransaction/AccountTrans'
+import { getTransactionList } from '../services/transactionApi'
 
 function AccountTransactions() {
+
+  const [transactData, setTransactData] = useState([]);
+
+  const getTaxData = ()=>{
+    getTransactionList().then((res)=>{
+      if(res){
+        setTransactData(res);
+      }
+    })
+  }
+
+  useEffect(() => {
+    getTaxData()
+  }, [])
+  
+
+
+
   return (
     <Box>
-        <AccountTrans />
+        <AccountTrans data={transactData} />
     </Box>
   )
 }
