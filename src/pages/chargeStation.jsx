@@ -18,7 +18,6 @@ export default function ChargingStation() {
   const init = () => {
     getChargingStationList().then((res) => {
       if (res.status) {
-        console.log(res.result);
         setChargeStationListData(res.result)
       }
     }
@@ -27,8 +26,6 @@ export default function ChargingStation() {
 
   const addChargeStation = (data) => {
     createChargingStation(data).then((res) => {
-      console.log(res)
-
     }
     )
   }
