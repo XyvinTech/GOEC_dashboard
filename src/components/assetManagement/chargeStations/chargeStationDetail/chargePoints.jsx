@@ -43,13 +43,13 @@ export default function ChargePoints({ data, ...props }) {
       <Dialog
         open={open}
       >
-        <AddChargePoint />
+        <AddChargePoint onClose={()=>setOpen(false)} />
       </Dialog>
       <LastSynced heading={'Charge-points'}>
         <StyledButton variant='primary' style={{ width: '100%', height: '45px', fontSize: '14px', fontWeight: '400' }} onClick={() => setOpen(true)}> Add Chargepoint</StyledButton>
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        {data.lenght > 0 && <StyledTable headers={tableHeader} data={allChargePointsData} />}
+        {data.length > 0 && <StyledTable headers={tableHeader} data={allChargePointsData} />}
       </Box>
     </>
   )
