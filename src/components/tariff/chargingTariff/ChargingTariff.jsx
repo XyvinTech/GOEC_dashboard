@@ -12,6 +12,7 @@ import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 
 function restructureData(dataArray) {
   return dataArray.map(item => ({
+    _id: item._id,
     name: item.name,
     serviceAmount: item.serviceAmount,
     value: item.value,
@@ -48,8 +49,8 @@ function ChargingTariff({ data, headers, onIsChange, isChange }) {
         const successToastId = toast.success("Tax deleted successfully", {
           position: "top-right",
         });
-        toast.update(successToastId);
         onIsChange(!isChange);
+        toast.update(successToastId);
       }
     }
   };
