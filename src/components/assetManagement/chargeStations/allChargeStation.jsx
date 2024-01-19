@@ -13,8 +13,7 @@ const tableHeader = [
   'Address',
   'Longitude',
   'Latitude',
-  'Owner',
-  // 'status'
+  'Owner'
 ]
 
 export default function AllChargeStation({ data, deleteData,editData, ...props }) {

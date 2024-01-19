@@ -3,7 +3,6 @@ import { Box, Chip, Grid, Stack, Typography, Button } from '@mui/material'
 import React from 'react'
 
 export default function StationDetail({ data, ...props }) {
-  console.log(data);
   return (
     <Box
       sx={{ p: { xs: 1, md: 5 }, backgroundColor: 'secondary.main', borderRadius: '4px' }}>

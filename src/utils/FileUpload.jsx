@@ -5,10 +5,9 @@ import { Stack, Typography } from '@mui/material';
 
 
 export default function FileUpload({ onFileSelect, image, accept }) {
-  console.log(accept);
   const [fileStatus, setFileStatus] = useState(false)
   const { getRootProps, getInputProps } = useDropzone({
-    accept: accept ? accept : 'image/*',
+    accept: accept ? accept : {'image/*' : ['.png','.jpeg','.jpg']},
     multiple: false,
     onDrop: (acceptedFiles) => {
       setFileStatus(true)

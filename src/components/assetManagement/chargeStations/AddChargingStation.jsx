@@ -76,7 +76,6 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
   });
   const onSubmit = (values) => {
     // Handle form submission with data
-    console.log(values);
     if (editStatus) {
       updateChargingStation(values)
     } else {
@@ -170,16 +169,11 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
       })
     } else {
       editChargingStation(data['_id'], { ...dt, image: data['image'] }).then((res) => {
-        if (res.status) {
           setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Station Updated Successfully</Alert >)
           setSnackbarOpen(true)
           setTimeout(() => {
             formSubmited()
           }, 2000);
-        }else{
-          setErrorMsg(<Alert severity="error" sx={{ width: '100%' }}>{res.message}</Alert >)
-          setSnackbarOpen(true)
-        }
       })
     }
   }
