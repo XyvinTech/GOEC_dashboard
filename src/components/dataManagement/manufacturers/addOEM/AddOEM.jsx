@@ -1,20 +1,32 @@
 import { Box, Dialog, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import StyledDivider from "../../../../ui/styledDivider";
 import StyledInput from "../../../../ui/styledInput";
 import { ReactComponent as Close } from "../../../../assets/icons/close-icon-large.svg";
 import StyledButton from "../../../../ui/styledButton";
-import { useForm } from "react-hook-form";
-import { createOem } from "../../../../services/evMachineAPI";
+import { Controller, useForm } from "react-hook-form";
+import { createOem, editOem } from "../../../../services/evMachineAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function AddOEM({ open, onClose, editStatus = false }) {
-  const { register, handleSubmit,reset } = useForm();
+export default function AddOEM({ open, onClose, editStatus = false, editData = {} }) {
+  const { handleSubmit, setValue ,reset, formState: { errors }, control } = useForm();
+  useEffect(()=>{
+    setValue("name",editStatus ? editData["Company Name"]:'')
+  },[editData])
 
-  const onSubmit = async (data) => {
-    try {
-      let res = await createOem(data);
+  const onSubmit = (data) => {
+    if (editStatus) {
+      updateOEM(data)
+    }else{
+      createOEM(data)
+    }
+    
+  };
+
+  const createOEM = (data) => {
+    console.log(data);
+    createOem(data).then((res) => {
       if (res.status) {
         const successToastId = toast.success("OEM created successfully", {
           position: "bottom-right",
@@ -22,23 +34,45 @@ export default function AddOEM({ open, onClose, editStatus = false }) {
         const onCloseCallback = () => {
           onClose && onClose();
           reset();
+          
         };
 
         toast.update(successToastId, { onClose: onCloseCallback });
       }
-    } catch (error) {
+    }).catch((error) => {
       console.log(error);
       const errorToastId = toast.error("Failed to create OEM", {
         position: "bottom-right",
       });
-      const onCloseCallback = () => {
-        onClose && onClose();
-        reset();
-      };
 
-      toast.update(errorToastId, { onClose: onCloseCallback });
-    }
-  };
+      toast.update(errorToastId);
+    })
+  }
+
+
+
+  const updateOEM = (data) => {
+    editOem(editData._id,data).then((res) => {
+        const successToastId = toast.success("OEM Updated successfully", {
+          position: "bottom-right",
+        });
+        console.log("closeeeeeeee");
+        const onCloseCallback = () => {
+          onClose && onClose();
+          reset();
+          console.log("closeeeeeeee");
+        };
+
+        toast.update(successToastId, { onClose: onCloseCallback });
+    }).catch((error) => {
+      console.log(error);
+      const errorToastId = toast.error("Failed to update OEM", {
+        position: "bottom-right",
+      });
+
+      toast.update(errorToastId);
+    })
+  }
 
   return (
     <Dialog open={open} fullWidth>
@@ -60,6 +94,7 @@ export default function AddOEM({ open, onClose, editStatus = false }) {
               style={{ cursor: "pointer" }}
               onClick={() => {
                 onClose && onClose();
+                reset()
               }}
             />
           </Stack>
@@ -68,9 +103,25 @@ export default function AddOEM({ open, onClose, editStatus = false }) {
             <Grid item xs={12}>
               <Stack spacing={1} p={2}>
                 <Typography variant="subtitle2" color={"primary.contrastText"}>
-                  Add Charger OEM
+                  {editStatus ? 'Edit' : 'Add'} Charger OEM
                 </Typography>
-                <StyledInput {...register("name")} />
+
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <StyledInput {...field} placeholder="Enter OEM" />
+                      {errors.name && (
+                        <span style={{ color: 'red' }}>
+                          {errors.name.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                  rules={{ required: "OEM is required" }}
+                />
+
               </Stack>
             </Grid>
           </Grid>
@@ -104,7 +155,6 @@ export default function AddOEM({ open, onClose, editStatus = false }) {
           </Stack>
         </form>
       </Box>
-      <ToastContainer />
     </Dialog>
   );
 }

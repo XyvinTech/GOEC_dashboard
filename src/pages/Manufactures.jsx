@@ -41,7 +41,7 @@ export default function Manufactures() {
       <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
         <StyledTab buttons={["OEM", "Brand"]} onChanged={buttonChanged} />
       </Stack>
-      {togglePage === 0 ? <OEM data={oemListData} /> : <Vehicles data={brandListData} />}
+      {togglePage === 0 ? oemListData && <OEM data={oemListData} updateData={init}/> : brandListData && <Vehicles data={brandListData} />}
     </Box>
   );
 }

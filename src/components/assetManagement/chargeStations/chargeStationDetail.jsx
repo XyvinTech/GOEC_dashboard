@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Alert, Box, Grid, Snackbar, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import StationDetail from './chargeStationDetail/stationDetail'
 import OwnerDetail from './chargeStationDetail/ownerDetail'
@@ -11,16 +11,27 @@ import Reviews from './chargeStationDetail/reviews'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getChargingStationById } from '../../../services/stationAPI'
 import StyledBackdropLoader from '../../../ui/styledBackdropLoader'
+import { deleteReview, getReviewBySation } from '../../../services/reviewApi'
+import ConfirmDialog from '../../../ui/confirmDialog'
 export default function ChargeStationDetail() {
     const { state } = useLocation();
     const [stationDetails, setStationDetails] = useState()
     const [toggleOption, setToggleoption] = useState(0)
     const [loaderOpen, setLoaderOpen] = useState(true)
+    const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
+    const [selectedReview, setSelectedReview] = useState(false)
+    const [errorMsg, setErrorMsg] = useState();
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
     const navigate = useNavigate()
     const onChangeToggleOption = (e) => {
         setToggleoption(e.index)
     }
     const init = () => {
+        stationDetailGet()
+    }
+
+    const stationDetailGet = () => {
         getChargingStationById(state._id).then((res) => {
             if (res.status) {
                 setStationDetails(res.result)
@@ -29,15 +40,39 @@ export default function ChargeStationDetail() {
         }
         )
     }
+
+    const reviewsGet = () => {
+        getReviewBySation(state._id).then(() => {
+
+        })
+    }
     useEffect(() => {
         init()
     }, [])
+
+
+    const reviewDelete = () => {
+        console.log(selectedReview._id);
+        deleteReview(selectedReview._id).then((res) => {
+            setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Review deleted </Alert >)
+            setSnackbarOpen(true)
+            init()
+        })
+    }
+
 
 
 
     return (
         <>
             <StyledBackdropLoader open={loaderOpen} />
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={snackbarOpen}
+                autoHideDuration={2000}
+                onClose={() => { setSnackbarOpen(false) }}
+            >{errorMsg}</Snackbar>
+            <ConfirmDialog title='Delete Review' subtitle='Do you want to delete review?' open={confirmDialogOpen} onClose={() => { setConfirmDialogOpen(false) }} confirmButtonHandle={reviewDelete} />
             <Stack direction={'row'} sx={{ backgroundColor: 'secondary.main', p: 3 }} spacing={2}>
                 <ArrowBackIosNew sx={{ cursor: 'pointer' }} onClick={() => { navigate(-1) }} />
                 <Typography variant='h6' color={'secondary.contrastText'}>Charge Station Details</Typography></Stack>
@@ -61,8 +96,8 @@ export default function ChargeStationDetail() {
                 </Box>
             }
             <StyledTab buttons={['Charge-points', 'Reviews']} onChanged={onChangeToggleOption} />
-
-            {stationDetails && (toggleOption === 0 ? <ChargePoints data={stationDetails && stationDetails.chargers} /> : <Reviews data={stationDetails && stationDetails.reviews} />)}
+            {stationDetails && (toggleOption === 0 ? <ChargePoints data={stationDetails && stationDetails.chargers} /> :
+                <Reviews data={stationDetails && stationDetails.reviews} deleteClickHandle={(data) => { setConfirmDialogOpen(true); setSelectedReview(data) }} />)}
         </>
     )
 }

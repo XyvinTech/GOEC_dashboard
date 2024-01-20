@@ -8,6 +8,7 @@ import { ReactComponent as Calendar } from "../../../assets/icons/calendar.svg";
 import { ReactComponent as Calendar_month } from "../../../assets/icons/calendar_month.svg";
 import { ReactComponent as Close } from "../../../assets/icons/close-icon-large.svg";
 import { useForm, Controller } from "react-hook-form";
+
 import StyledInput from "../../../ui/styledInput";
 import CalendarInput from "../../../ui/CalendarInput";
 import StyledButton from "../../../ui/styledButton";
@@ -47,7 +48,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box maxWidth="lg" p={2}>
+      <Box maxWidth="lg" p={2} sx={{backgroundColor:'primary.main'}}>
         <Grid container spacing={2}>
           <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
             <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
@@ -56,7 +57,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
               >
                 Add Chargepoint
               </Typography>
-              {onClose && <Close onClick={() => { onClose() }} />}
+              {onClose && <Close onClick={() => { onClose() }} style={{cursor:'pointer'}}/>}
             </Stack>
           </Grid>
         </Grid>
