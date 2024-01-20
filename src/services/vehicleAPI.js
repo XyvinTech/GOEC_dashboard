@@ -1,8 +1,8 @@
-import { LAMBDA_INSTANCES } from "./axiosInstances";
+import { VEHICLE_INSTANCES, LAMBDA_INSTANCES } from "./axiosInstances";
 
 export async function createVehicle(data) {
   try {
-    const response = await LAMBDA_INSTANCES.post(`vehicle/create`, data);
+    const response = await VEHICLE_INSTANCES.post(`vehicle/create`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export async function createVehicle(data) {
 
 export async function editVehicle(Id, data) {
   try {
-    const response = await LAMBDA_INSTANCES.put(`vehicle/${Id}`, data);
+    const response = await VEHICLE_INSTANCES.put(`vehicle/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;

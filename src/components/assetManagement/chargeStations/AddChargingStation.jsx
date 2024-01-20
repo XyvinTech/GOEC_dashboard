@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledCheckButton from "../../../ui/styledCheckButton";
 import StyledSwitch from "../../../ui/styledSwitch";
@@ -111,38 +111,19 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
           }
           createChargingStation(dt).then((res) => {
             if (res.status) {
-              const successToastId = toast.success("Charging Station created successfully", {
-                position: "bottom-right",
-              });
-              const onCloseCallback = () => {
-                reset();
-              };
-      
-              toast.update(successToastId, { onClose: onCloseCallback });
-            }else{
-
-              const successToastId = toast.error(`${res.message}`, {
-                position: "bottom-right",
-              });
-              const onCloseCallback = () => {
-                reset();
-              };
-        
-              toast.update(successToastId, { onClose: onCloseCallback });
+              toast.success("Charging Station created successfully")
+              reset();
+              formSubmited();
+            } else {
+              toast.error(`${res.message}`);
+              reset();
             }
           })
         }
 
       })
     } else {
-      const successToastId = toast.error("Please Select Image!", {
-        position: "bottom-right",
-      });
-      const onCloseCallback = () => {
-        reset();
-      };
-
-      toast.update(successToastId, { onClose: onCloseCallback });
+      toast.error("Please Select Image!");
     }
   }
 
@@ -174,32 +155,18 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
       imageUploadAPI(image).then((res) => {
         if (res.status) {
           editChargingStation(data['_id'], { ...dt, image: res.url }).then((res) => {
-
-            const successToastId = toast.success("Charging Station updated successfully", {
-              position: "bottom-right",
-            });
-            const onCloseCallback = () => {
-              reset();
-              formSubmited();
-            };
-    
-            toast.update(successToastId, { onClose: onCloseCallback });
+            toast.success("Charging Station updated successfully");
+            console.log("sfgasdgsd");
+            formSubmited();
           })
         }
 
       })
     } else {
       editChargingStation(data['_id'], { ...dt, image: data['image'] }).then((res) => {
-
-        const successToastId = toast.success("Charging Station updated successfully", {
-          position: "bottom-right",
-        });
-        const onCloseCallback = () => {
-          reset();
-          formSubmited();
-        };
-
-        toast.update(successToastId, { onClose: onCloseCallback });
+        toast.success("Charging Station updated successfully");
+        reset();
+        formSubmited();
       })
     }
   }
@@ -231,7 +198,6 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ToastContainer/>
       <Container maxWidth="md" sx={{ p: 2, backgroundColor: 'primary.main' }}>
         <Grid container sx={{ alignItems: "center" }} spacing={2}>
           <Grid item xs={12} md={8}>

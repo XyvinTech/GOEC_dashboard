@@ -33,7 +33,6 @@ export default function Manufactures() {
   }, []);
 
   const buttonChanged = (e) => {
-    console.log(e);
     setTogglePage(e.index);
   };
   return (
@@ -41,7 +40,7 @@ export default function Manufactures() {
       <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
         <StyledTab buttons={["OEM", "Brand"]} onChanged={buttonChanged} />
       </Stack>
-      {togglePage === 0 ? oemListData && <OEM data={oemListData} updateData={init}/> : brandListData && <Vehicles data={brandListData} />}
+      {togglePage === 0 ? oemListData && <OEM data={oemListData} updateData={init}/> : brandListData && <Vehicles data={brandListData} updateData={init2} />}
     </Box>
   );
 }

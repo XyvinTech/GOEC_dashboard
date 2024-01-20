@@ -6,7 +6,7 @@ import { DummyVehicle } from '../../../assets/json/DummyVehicle';
 import StyledSearchField from '../../../ui/styledSearchField';
 import StyledButton from '../../../ui/styledButton';
 import { searchAndFilter } from '../../../utils/search';
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import AddOEM from './addOEM/AddOEM';
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace';
 import ConfirmDialog from '../../../ui/confirmDialog';
@@ -47,29 +47,17 @@ export default function OEM({ data, updateData }) {
 
   const deleteOEM = () => {
     deleteOem(selectData._id).then((res) => {
-      const successToastId = toast.success("OEM Deleted successfully", {
-        position: "bottom-right",
-      });
-      const onCloseCallback = () => {
-        updateData && updateData()
-      };
-      toast.update(successToastId, { onClose: onCloseCallback });
+      toast.success("OEM Deleted successfully");
+      updateData && updateData()
 
     }).catch((error) => {
-      const successToastId = toast.success(`${error}`, {
-        position: "bottom-right",
-      });
-      const onCloseCallback = () => {
-        updateData && updateData()
-      };
-
-      toast.update(successToastId, { onClose: onCloseCallback });
+      toast.error(`${error}`);
+      updateData && updateData()
     })
   }
 
   return (
     <>
-      <ToastContainer autoClose={1500} />
       <AddOEM open={open} onClose={() => { setOpen(false); setEditStatus(false); updateData() }} editStatus={editStatus} editData={selectData} />
       <ConfirmDialog title='OEM Delete' subtitle='Do you want to Delete OEM?' open={confirmOpen} onClose={() => { setConfirmOpen(false) }} confirmButtonHandle={deleteOEM} />
       <LastSynced heading="OEM"  >
