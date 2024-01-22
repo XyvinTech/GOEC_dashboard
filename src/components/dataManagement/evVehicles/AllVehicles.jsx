@@ -32,7 +32,6 @@ const EditVehicle = ({data, open, onClose, ...props }) => {
 
 export default function AllVehicles({ data, updateData, ...props }) {
 console.log(data);
-  const navigate = useNavigate()
   const [filterValue, setFilterValue] = useState("");
   const [selectData, setSelectedData] = useState();
   const [editOpen, setEditOpen] = useState(false)

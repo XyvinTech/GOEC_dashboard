@@ -12,10 +12,10 @@ import StyledInput from "../../../ui/styledInput";
 import StyledButton from "../../../ui/styledButton";
 import { Add } from "@mui/icons-material";
 import ConnectorDetails from "./addEvcharger/connectorDetails";
-import LastSynced from "../../../layout/LastSynced";
 import { Controller, useForm } from "react-hook-form";
-import { getOem } from "../../../services/evMachineAPI";
+import { createEvModel, getOem } from "../../../services/evMachineAPI";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 // StyledTable component
 
 const outputTypeData = [
@@ -32,43 +32,54 @@ const outputTypeData = [
 const OCCPVersionData = [
   {
     label: '1.6',
-    value: '1.6'
+    value: 1.6
   },
   {
     label: '2.0',
-    value: '2.0'
+    value: 2.0
   }
 ]
 
 const numberOfPorts = [
   {
     label: '1',
-    value: '1'
+    value: 1
   },
   {
     label: '2',
-    value: '2'
+    value: 2
   },
   {
     label: '3',
-    value: '3'
+    value: 3
   },
   {
     label: '4',
-    value: '4'
+    value: 4
   }
 ]
 
 
 
-export default function AddEvCharger() {
+export default function AddEvCharger({editStatus=false,chargerData={}, formSubmitted}) {
+  console.log(chargerData);
   const [connectorDetailOpen, setConnectorDetailOpen] = useState(false)
   const [oemData, setOemData] = useState([])
-  const { control, handleSubmit, setValue, reset, formState: { errors }, clearErrors } = useForm();
+  const [noOfPorts, setNoOfPorts] = useState(editStatus ? chargerData["Number of Ports"] : 0)
+  const [connectors, setConnectors] = useState([])
+  const { control, handleSubmit, setValue, reset, formState: { errors }, clearErrors } = useForm({
+    defaultValues:{
+      oem: editStatus ? chargerData["Company Name"] : '',
+      model_name: editStatus ? chargerData["Model name"] : '',
+      output_type: editStatus ? chargerData["Output Type"] : '',
+      ocpp_version:editStatus ? chargerData["OCPP Version"] : '',
+      capacity:editStatus ? chargerData["Capacity (kW)"] : '',
+      no_of_ports:editStatus ? chargerData["Number of Ports"] : ''
+    }
+  });
 
   const getOEMApi = () => {
     getOem().then((res) => {
-      console.log(res.result);
       if (res.status) {
         const formattedOEM = res.result.map((brand) => ({
           label: brand.name,
@@ -82,16 +93,46 @@ export default function AddEvCharger() {
     getOEMApi()
   }, [])
 
-  const onSubmit = (data)=>{
+  const onSubmit = (data) => {
+    if (connectors.length == 0) {
+      toast.error("Enter connecters details")
+    } else {
+      let obj = {
+        oem:data.oem.value,
+        model_name:data.model_name,
+        no_of_ports:data.no_of_ports.value,
+        ocpp_version:data.ocpp_version.value,
+        output_type:data.output_type.value,
+        capacity:data.capacity,
+        connectors:connectors
+      }
+      console.log(obj);
+      createEvModel(obj).then((res)=>{
+        console.log(res);
+        if (res.status) {
+          toast.success("EV charger Created Successfully")
+          formSubmitted && formSubmitted()
+        }
+      }).catch((error)=>{
+        toast.error("could not create EV Charger")
+      })
+    }
 
   }
 
 
+  const connectorDetailsHandle = () => {
+    if (noOfPorts === 0) {
+      toast.error("select No of ports");
+    } else {
+      setConnectorDetailOpen(true)
+    }
+  }
+
   return (
     <Box>
-      <LastSynced heading={'EV Charger'} />
-      <Container maxWidth="md" sx={{ backgroundColor: 'secondary.main', p: 2, m: { md: 4 }, border: '1px solid #fff6', borderRadius: '4px' }}>
-        <ConnectorDetails open={connectorDetailOpen} onClose={() => { setConnectorDetailOpen(false) }} />
+      <Container maxWidth="md" sx={{ backgroundColor: 'secondary.main', p: 2, m: { md: editStatus ? 0 : 4 }, border: !editStatus && '1px solid #fff6', borderRadius: '4px' }}>
+        <ConnectorDetails open={connectorDetailOpen} onClose={() => { setConnectorDetailOpen(false) }} connectorNumber={noOfPorts} onSubmited={(dt) => setConnectors(dt)} />
         <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>
           Add Charger OEM
         </Typography>
@@ -217,7 +258,7 @@ export default function AddEvCharger() {
                     control={control}
                     render={({ field }) => (
                       <>
-                        <StyledSelectField options={numberOfPorts} {...field} placeholder={"Enter Output type"} />
+                        <StyledSelectField options={numberOfPorts} menuPlacement="auto" {...field} placeholder={"Enter Output type"} onChange={(e) => { setValue("no_of_ports", e); setNoOfPorts(e.value) }} />
                         {errors.no_of_ports && (
                           <span style={{ color: 'red' }}>
                             {errors.no_of_ports.message}
@@ -229,13 +270,13 @@ export default function AddEvCharger() {
                   />
                 </Grid>
                 <Grid item xs={12} md={5}>
-                  <StyledButton style={{ width: '100%' }} onClick={() => { setConnectorDetailOpen(true) }}><Add /> Connector details</StyledButton>
+                  <StyledButton type="button" style={{ width: '100%' }} onClick={connectorDetailsHandle}><Add /> Connector details</StyledButton>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
           <Stack direction={"row"} sx={{ justifyContent: 'end' }} p={2} spacing={2}>
-            <StyledButton style={{ width: '150px' }} variant={'secondary'}>Cancel</StyledButton>
+            <StyledButton type="reset" style={{ width: '150px' }} variant={'secondary'}>Cancel</StyledButton>
             <StyledButton style={{ width: '200px' }} variant={'primary'} type="submit">Save</StyledButton>
           </Stack>
         </form>
