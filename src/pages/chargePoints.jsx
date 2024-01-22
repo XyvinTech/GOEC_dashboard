@@ -10,7 +10,6 @@ export default function ChargingPoints() {
 
   const init = () => {
     listEvMachine().then((res) => {
-      console.log(res);
       if (res) {
         setChargePointListData(res.result)
       }

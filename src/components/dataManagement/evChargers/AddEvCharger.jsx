@@ -13,7 +13,7 @@ import StyledButton from "../../../ui/styledButton";
 import { Add } from "@mui/icons-material";
 import ConnectorDetails from "./addEvcharger/connectorDetails";
 import { Controller, useForm } from "react-hook-form";
-import { createEvModel, getOem } from "../../../services/evMachineAPI";
+import { createEvModel, editEvModel, getOem } from "../../../services/evMachineAPI";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 // StyledTable component
@@ -61,20 +61,19 @@ const numberOfPorts = [
 
 
 
-export default function AddEvCharger({editStatus=false,chargerData={}, formSubmitted}) {
-  console.log(chargerData);
+export default function AddEvCharger({ editStatus = false, chargerData = {}, formSubmitted }) {
   const [connectorDetailOpen, setConnectorDetailOpen] = useState(false)
   const [oemData, setOemData] = useState([])
   const [noOfPorts, setNoOfPorts] = useState(editStatus ? chargerData["Number of Ports"] : 0)
-  const [connectors, setConnectors] = useState([])
+  const [connectors, setConnectors] = useState(editStatus ? chargerData["connectors"] : [])
   const { control, handleSubmit, setValue, reset, formState: { errors }, clearErrors } = useForm({
-    defaultValues:{
+    defaultValues: {
       oem: editStatus ? chargerData["Company Name"] : '',
       model_name: editStatus ? chargerData["Model name"] : '',
       output_type: editStatus ? chargerData["Output Type"] : '',
-      ocpp_version:editStatus ? chargerData["OCPP Version"] : '',
-      capacity:editStatus ? chargerData["Capacity (kW)"] : '',
-      no_of_ports:editStatus ? chargerData["Number of Ports"] : ''
+      ocpp_version: editStatus ? chargerData["OCPP Version"] : '',
+      capacity: editStatus ? chargerData["Capacity (kW)"] : '',
+      no_of_ports: editStatus ? chargerData["Number of Ports"] : ''
     }
   });
 
@@ -107,22 +106,22 @@ export default function AddEvCharger({editStatus=false,chargerData={}, formSubmi
       toast.error("Enter connecters details")
     } else {
       let obj = {
-        oem:data.oem.value,
-        model_name:data.model_name,
-        no_of_ports:data.no_of_ports.value,
-        ocpp_version:data.ocpp_version.value,
-        output_type:data.output_type.value,
-        capacity:data.capacity,
-        connectors:connectors
+        oem: data.oem.value,
+        model_name: data.model_name,
+        no_of_ports: data.no_of_ports.value,
+        ocpp_version: data.ocpp_version.value,
+        output_type: data.output_type.value,
+        capacity: data.capacity,
+        connectors: connectors
       }
       console.log(obj);
-      createEvModel(obj).then((res)=>{
+      createEvModel(obj).then((res) => {
         console.log(res);
         if (res.status) {
           toast.success("EV charger Created Successfully")
           formSubmitted && formSubmitted()
         }
-      }).catch((error)=>{
+      }).catch((error) => {
         toast.error("could not create EV Charger")
       })
     }
@@ -174,7 +173,13 @@ export default function AddEvCharger({editStatus=false,chargerData={}, formSubmi
   return (
     <Box>
       <Container maxWidth="md" sx={{ backgroundColor: 'secondary.main', p: 2, m: { md: editStatus ? 0 : 4 }, border: !editStatus && '1px solid #fff6', borderRadius: '4px' }}>
-        <ConnectorDetails open={connectorDetailOpen} onClose={() => { setConnectorDetailOpen(false) }} connectorNumber={noOfPorts} onSubmited={(dt) => setConnectors(dt)} />
+        <ConnectorDetails
+          open={connectorDetailOpen}
+          onClose={() => { setConnectorDetailOpen(false) }}
+          connectorNumber={noOfPorts}
+          onSubmited={(dt) => setConnectors(dt)}
+          editStatus={editStatus}
+          data={connectors} />
         <Typography sx={{ marginBottom: 3, marginTop: 3, color: 'primary.contrastText' }}>
           Add Charger OEM
         </Typography>

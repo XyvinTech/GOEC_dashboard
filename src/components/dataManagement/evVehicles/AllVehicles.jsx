@@ -25,7 +25,7 @@ const EditVehicle = ({data, open, onClose, ...props }) => {
         <Typography sx={{ color: 'secondary.contrastText' }}>Edit Vehicle</Typography>
         <Close style={{ cursor: 'pointer' }} onClick={onClose} />
       </Stack>
-      <AddVehicles editStatus={true} vehicleData={data} />
+      <AddVehicles editStatus={true} vehicleData={data} onClose={onClose} />
     </Dialog>
   )
 }

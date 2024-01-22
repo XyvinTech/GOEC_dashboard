@@ -3,16 +3,13 @@ import React, { useEffect, useState } from 'react'
 import StyledTab from '../ui/styledTab'
 import AllEvChargers from '../components/dataManagement/evChargers/AllEvChargers';
 import AddEvCharger from '../components/dataManagement/evChargers/AddEvCharger';
-import { deleteEvModel, getEvModel } from '../services/evMachineAPI';
-import { toast } from 'react-toastify';
-import ConfirmDialog from '../ui/confirmDialog';
+import { getEvModel } from '../services/evMachineAPI';
 
 
 export default function EvChargers() {
   const [togglePage, setTogglePage] = useState(0);
   const [evModelListData, setEvModelListData] = useState([]);
   
-
   const init = () => {
     getEvModel().then((res) => {
       console.log(res.result);
@@ -34,7 +31,6 @@ export default function EvChargers() {
   
   return (
     <Box>
-      
       <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
         <StyledTab
           buttons={['All EV chargers', 'Add EV charger']} onChanged={buttonChanged} activeIndex={togglePage} />

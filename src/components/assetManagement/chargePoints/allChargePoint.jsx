@@ -23,6 +23,7 @@ const tableHeader = [
 ]
 
 export default function AllChargePoint({ data, ...props }) {
+  console.log(data);
   const navigate = useNavigate()
 
   const [filterValue, setFilterValue] = useState('')
@@ -31,10 +32,8 @@ export default function AllChargePoint({ data, ...props }) {
       navigate(`/charge-point-detail`)
     }
   }
-  console.log(data);
   const AllChargePointsData = tableHeaderReplace(data, ['CPID', 'oem', 'evModel', 'chargingTariff', 'chargingStation', 'cpidStatus','published'], tableHeader)
   
-  console.log(AllChargePointsData);
   return (
     <>
       <LastSynced heading="Charge Points" >
