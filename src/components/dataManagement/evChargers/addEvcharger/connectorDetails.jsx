@@ -18,14 +18,26 @@ let compactable_ports = [
     { label: "Type 2", value: "Type 2" },
 ];
 
-export default function ConnectorDetails({ open, onClose, connectorNumber = 1, data,onSubmited }) {
+export default function ConnectorDetails({ open, onClose, connectorNumber = 1, data = {}, onSubmited, editStatus }) {
+    console.log(data);
+    let defaultValues = {}
+    if (editStatus) {
+        data.map((dt, ind) => {
+            defaultValues[`type_${ind}`] = dt.type
+            defaultValues[`energy_${ind}`] = dt.energy
+        })
+    }
 
-    const { control, handleSubmit, setValue, reset, formState: { errors }, clearErrors } = useForm();
+    const { control, handleSubmit, setValue, reset, formState: { errors }, clearErrors } = useForm({
+        defaultValues: defaultValues
+    });
+
+
 
     const onSubmit = (data) => {
         const dt = [...Array(connectorNumber)].map((dt, ind) => (
             {
-                connectorId:ind+1,
+                connectorId: ind + 1,
                 type: data[`type_${ind}`].value,
                 energy: data[`energy_${ind}`]
             }

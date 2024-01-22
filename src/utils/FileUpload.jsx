@@ -4,7 +4,7 @@ import { CheckCircle, UploadFile } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 
 
-export default function FileUpload({ onFileSelect, image, accept }) {
+export default function FileUpload({ onFileSelect, image, accept,getBase64Data }) {
   const [fileStatus, setFileStatus] = useState(false)
   const { getRootProps, getInputProps } = useDropzone({
     accept: accept ? accept : {'image/*' : ['.png','.jpeg','.jpg']},
@@ -12,8 +12,24 @@ export default function FileUpload({ onFileSelect, image, accept }) {
     onDrop: (acceptedFiles) => {
       setFileStatus(true)
       onFileSelect && onFileSelect({ files: acceptedFiles })
+      // console.log(acceptedFiles[0]);
+      getBase64(acceptedFiles[0],(result)=>{
+        getBase64Data && getBase64Data(result)
+      })
     }
   });
+
+  const getBase64= (file, cb) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
+
   return (
     <Stack
       spacing={1}

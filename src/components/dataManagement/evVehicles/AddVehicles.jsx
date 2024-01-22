@@ -22,7 +22,10 @@ let compactable_ports = [
 ];
 
 // StyledTable component
-export default function AddVehicles({ vehicleData = {}, formSubmited, editStatus = false, ...props }) {
+
+// image has bug it is clear in phase 2 commented sessions are for image 
+
+export default function AddVehicles({ vehicleData = {},onClose, formSubmited, editStatus = false, ...props }) {
   const [brands, setBrands] = useState();
   const [selectedFile, setSelectedFile] = useState();
   console.log(vehicleData);
@@ -51,9 +54,9 @@ export default function AddVehicles({ vehicleData = {}, formSubmited, editStatus
     getBrandApi();
   }, []);
 
-  const handleFileUpload = (file) => {
-    setSelectedFile(file.files[0]);
-  };
+  // const handleFileUpload = (file) => {
+  //   setSelectedFile(file);
+  // };
 
   const onSubmit = (data) => {
     if (editStatus) {
@@ -68,23 +71,23 @@ export default function AddVehicles({ vehicleData = {}, formSubmited, editStatus
 
 
   const createVEHICLE = (data) => {
-
-    const formData = new FormData();
-    if (!selectedFile) {
-      toast.error("Select image");
-      return
+    
+    // if (!selectedFile) {
+    //   toast.error("Select image");
+    //   return
+    // }
+    let dt = {
+      // "image": selectedFile,
+      "brand": data.brand.value,
+      "modelName": data.modelName,
+      "compactable_port": data.compactable_port.map((item) => item.value)
     }
-    formData.append("image", selectedFile);
-    formData.append("brand", data.brand.value);
-    formData.append("modelName", data.modelName);
-    formData.append("compactable_port", data.compactable_port.map((item) => item.value));
 
-    createVehicle(formData).then((res) => {
+    createVehicle(dt).then((res) => {
       if (res.status) {
-        console.log(res);
         toast.success("vehicle created successfully");
         reset();
-        formSubmited();
+        formSubmited()
       }
     }).catch((error) => {
       toast.error("Failed to create Vehicle");
@@ -92,23 +95,27 @@ export default function AddVehicles({ vehicleData = {}, formSubmited, editStatus
   }
 
   const updateVEHICLE = (data) => {
-
-    const formData = new FormData();
-    console.log(data.compactable_port);
-    if (selectedFile) {
-      formData.append("image", selectedFile);
+    let dt = {}
+    // if (selectedFile) {
+    //   dt = {
+    //     "image": selectedFile
+    //   }
+    // }
+    dt = {
+      ...dt,
+      "brand": data.brand.value ? data.brand.value : getBrandId(),
+      "modelName": data.modelName,
+      "compactable_port": typeof(data.compactable_port[0]) === "object" ? data.compactable_port.map((item) => item.value) : vehicleData["compactable_port"]
     }
-    formData.append("brand", data.brand.value ? data.brand.value : getBrandId());
-    formData.append("modelName", data.modelName);
-    formData.append("compactable_port", data.compactable_port ? data.compactable_port.map((item) => item.value) : vehicleData["compactable_port"]);
-    editVehicle(vehicleData["_id"], formData).then((res) => {
+    editVehicle(vehicleData["_id"], dt).then((res) => {
+      console.log(res);
       if (res.status) {
-        console.log(res);
         toast.success("vehicle updated successfully");
         reset();
-        formSubmited();
+        onClose()
       }
     }).catch((error) => {
+      console.log(error);
       toast.error("Failed to update Vehicle");
     })
   }
@@ -136,11 +143,11 @@ export default function AddVehicles({ vehicleData = {}, formSubmited, editStatus
         }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container>
+          {/* <Grid container>
             <Grid item xs={12} sx={{ height: "250px" }}>
-              <FileUpload onFileSelect={handleFileUpload} image={vehicleData["icon"] && vehicleData["icon"]} />
+              <FileUpload getBase64Data={handleFileUpload} image={vehicleData["icon"] && vehicleData["icon"]} />
             </Grid>
-          </Grid>
+          </Grid> */}
 
           <Typography sx={{ marginBottom: 2, marginTop: 2, color: 'primary.contrastText' }}>
             Vehicle Manufacturer Name

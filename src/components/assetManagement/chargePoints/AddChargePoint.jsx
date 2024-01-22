@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../../../ui/styledInput";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledSwitch from "../../../ui/styledSwitch";
@@ -12,8 +12,14 @@ import { useForm, Controller } from "react-hook-form";
 import StyledInput from "../../../ui/styledInput";
 import CalendarInput from "../../../ui/CalendarInput";
 import StyledButton from "../../../ui/styledButton";
+import { getChargingStationList } from "../../../services/stationAPI";
+import { createEvMachine, getEvModel, getOem } from "../../../services/evMachineAPI";
 // StyledTable component
 const AddChargePoint = ({ headers, data, onClose }) => {
+
+  const [stationList, setStationList] = useState([])
+  const [OEMList, setOEMList] = useState([])
+  const [modelList, setModelList] = useState([])
   const {
     control,
     handleSubmit,
@@ -28,13 +34,56 @@ const AddChargePoint = ({ headers, data, onClose }) => {
   });
   const onSubmit = (data) => {
     // Handle form submission with data
-    console.log("Form data submitted:", data);
+    // console.log("Form data submitted:", data);
     // Close your form or perform other actions
+    createChargePoint(data)
   };
+
+  const createChargePoint = (data) => {
+    let dt = {
+      name: data.chargePointDisplayName,
+      type: "AC",
+      charger_tariff: "12",
+      power: "100",
+      CPID: data.CPID,
+      OEM: data.chargePointOEM.value,
+      override_tariff: "655e3a6c73781058a29fa137",
+      voltage: "10",
+      status: "Available",
+      published: data.published
+    }
+    console.log(dt);
+    // createEvMachine(dt).then((res)=>{
+    //   console.log(res);
+    // })
+  }
 
   const handleChange = (event) => {
     setValue("published", event.target.checked);
   };
+
+  const init = () => {
+    getChargingStationList().then((res) => {
+      if (res.status) {
+        setStationList(res.result.map((e) => ({ label: e.name, value: e._id })))
+      }
+    })
+
+    getOem().then((res) => {
+      if (res.status) {
+        setOEMList(res.result.map((e) => ({ label: e.name, value: e._id })))
+      }
+    })
+
+    getEvModel().then((res) => {
+      if (res.status) {
+        setModelList(res.result.map((e) => ({ label: e.modelName, value: e._id })))
+      }
+    })
+  }
+  useEffect(() => {
+    init()
+  }, [])
 
 
   const handleDateChangeInParent = (date) => {
@@ -48,7 +97,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box maxWidth="lg" p={2} sx={{backgroundColor:'primary.main'}}>
+      <Box maxWidth="lg" p={2} sx={{ backgroundColor: 'primary.main' }}>
         <Grid container spacing={2}>
           <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
             <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
@@ -57,7 +106,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
               >
                 Add Chargepoint
               </Typography>
-              {onClose && <Close onClick={() => { onClose() }} style={{cursor:'pointer'}}/>}
+              {onClose && <Close onClick={() => { onClose() }} style={{ cursor: 'pointer' }} />}
             </Stack>
           </Grid>
         </Grid>
@@ -81,6 +130,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
                   <StyledSelectField
                     {...field}
                     placeholder="Select Location Name"
+                    options={stationList}
                   />
                   {errors.locationName && (
                     <span style={errorMessageStyle}>
@@ -110,7 +160,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="DELTA" />
+                  <StyledSelectField options={OEMList} {...field} placeholder="select OEM" />
                   {errors.chargePointOEM && (
                     <span style={errorMessageStyle}>
                       {errors.chargePointOEM.message}
@@ -139,7 +189,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="FNFNF252727" />
+                  <StyledSelectField options={modelList} {...field} placeholder="select model" />
                   {errors.model && (
                     <span style={errorMessageStyle}>
                       {errors.model.message}
@@ -224,7 +274,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Controller
-              name=" authorisationkey"
+              name="authorisationkey"
               control={control}
               render={({ field }) => (
                 <>
