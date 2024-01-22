@@ -94,6 +94,15 @@ export default function AddEvCharger({editStatus=false,chargerData={}, formSubmi
   }, [])
 
   const onSubmit = (data) => {
+    if (editStatus) {
+      updateEVCharger(data)
+    }else{
+      createEVCharger(data)
+    }
+
+  }
+
+  const createEVCharger = (data)=>{
     if (connectors.length == 0) {
       toast.error("Enter connecters details")
     } else {
@@ -117,9 +126,42 @@ export default function AddEvCharger({editStatus=false,chargerData={}, formSubmi
         toast.error("could not create EV Charger")
       })
     }
-
   }
 
+  const updateEVCharger = (data)=>{
+    if (connectors.length == 0) {
+      toast.error("Enter connecters details")
+    } else {
+      let obj = {
+        oem:data.oem.value ? data.oem.value : getListId(oemData,chargerData["oem"]),
+        model_name:data.model_name,
+        no_of_ports:data.no_of_ports.value ? data.no_of_ports.value : getListId(noOfPorts,chargerData["no_of_ports"]),
+        ocpp_version:data.ocpp_version.value ? data.ocpp_version.value : getListId(OCCPVersionData,chargerData["ocpp_version"]),
+        output_type:data.output_type.value ? data.output_type.value : getListId(outputTypeData,chargerData["output_type"]),
+        capacity:data.capacity,
+        connectors:connectors
+      }
+      console.log(obj);
+      createEvModel(obj).then((res)=>{
+        console.log(res);
+        if (res.status) {
+          toast.success("EV charger Created Successfully")
+          formSubmitted && formSubmitted()
+        }
+      }).catch((error)=>{
+        toast.error("could not create EV Charger")
+      })
+    }
+  }
+
+
+  const getListId = (list,value) => {
+    for (let index = 0; index < list.length; index++) {
+      if (list[index].label == value) {
+        return list[index].value
+      }
+    }
+  }
 
   const connectorDetailsHandle = () => {
     if (noOfPorts === 0) {

@@ -118,7 +118,6 @@ export default function AddVehicles({ vehicleData = {}, formSubmited, editStatus
       if (brands[index].label == vehicleData["Company Name"]) {
         return brands[index].value
       }
-
     }
   }
 
