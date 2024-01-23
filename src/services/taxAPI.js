@@ -39,8 +39,10 @@ export async function getTaxById(Id) {
 export async function getTaxList() {
   try {
     const response = await LAMBDA_INSTANCES.get(`tax/list`);
+    console.log('---->',response.data);
     return response.data;
   } catch (error) {
+    console.log('--->',error)
     throw error;
   }
 }
