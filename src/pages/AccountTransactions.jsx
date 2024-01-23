@@ -10,7 +10,7 @@ function AccountTransactions() {
   const getTaxData = ()=>{
     getTransactionList().then((res)=>{
       if(res){
-        setTransactData(res);
+        setTransactData(res.result);
       }
     })
   }

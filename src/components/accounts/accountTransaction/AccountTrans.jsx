@@ -24,7 +24,7 @@ const tableHeader = [
 
 export default function AccountTrans({data}) {
   const [filterValue, setFilterValue] = useState("");
-  const accData = tableHeaderReplace(data, ["name", "percentage", "createdAt"], tableHeader);
+  const accData = tableHeaderReplace(data, ["user", "createdAt", "type","invoice_id","amount","status","initiated_by","transactionId","reference"], tableHeader);
 
   const tableActionClick = (e) => {
     console.log(e);
@@ -44,8 +44,8 @@ export default function AccountTrans({data}) {
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable
-          headers={tableHeader}
-          data={searchAndFilter(DummyData, filterValue)}
+          headers={accData}
+          data={searchAndFilter(data, filterValue)}
           onActionClick={tableActionClick}
         />
       </Box>
