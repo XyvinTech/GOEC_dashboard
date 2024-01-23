@@ -93,4 +93,15 @@ export const IMAGE_UPLOAD_URL = axios.create({
 });
 
 
+export const TRANSACTION_URL = axios.create({
+  // baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5687/api/v1',
+  baseURL: 'http://localhost:5687/api/v1',
+
+  headers: {
+    Authorization: "Bearer " + token,
+    "Content-Type": "multipart/form-data",
+  },
+});
+
+
 
