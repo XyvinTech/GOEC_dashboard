@@ -1,8 +1,12 @@
 import { Button, ButtonGroup, Stack } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function StyledTab({ buttons, onChanged, ...props }) {
-  const [activeInd, setActiveInd] = useState(0);
+export default function StyledTab({ buttons,activeIndex=0, onChanged, ...props }) {
+  const [activeInd, setActiveInd] = useState(activeIndex);
+  useEffect(() => {
+    setActiveInd(activeIndex)
+  }, [activeIndex])
+  
   return (
     <Stack direction={"row"} sx={{ backgroundColor: "secondary.main", justifyContent:{xs:'center',md:'flex-start'},pl:2 }} {...props}>
         {buttons.map((item, ind) => {

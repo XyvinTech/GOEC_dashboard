@@ -1,4 +1,4 @@
-import { LAMBDA_INSTANCES } from "./axiosInstances";
+import { VEHICLE_INSTANCES, LAMBDA_INSTANCES } from "./axiosInstances";
 
 export async function createVehicle(data) {
   try {

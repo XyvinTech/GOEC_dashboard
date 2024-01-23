@@ -7,7 +7,10 @@ import StyledSearchField from '../../../ui/styledSearchField';
 import StyledButton from '../../../ui/styledButton';
 import { searchAndFilter } from '../../../utils/search';
 import AddVehicle from './addVehicle/AddVehicle';
+import { ToastContainer, toast } from "react-toastify";
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace';
+import { deleteBrand } from '../../../services/vehicleAPI';
+import ConfirmDialog from '../../../ui/confirmDialog';
 
 
 const tableHeader = [
@@ -15,15 +18,48 @@ const tableHeader = [
   "Created On"
 ];
 
-export default function Vehicles({data}) {
-  const [open,setOpen] = useState(false)
+export default function Vehicles({data,updateData}) {
+  const [open, setOpen] = useState(false)
   const [filterValue, setFilterValue] = useState('')
+  const [editStatus, setEditStatus] = useState(false)
+  const [selectData, setSelectedData] = useState()
+  const [confirmOpen, setConfirmOpen] = useState(false)
+
+
   const brandData = tableHeaderReplace(data,['brandName','createdAt'],tableHeader) 
+
+
+  const tableActionClick = (e) => {
+    if (e.action === "Edit") {
+      setSelectedData(e.data)
+      setEditStatus(true)
+      setOpen(true)
+    }
+    else {
+      setSelectedData(e.data)
+      setConfirmOpen(true)
+    }
+  }
+
+
+  const deleteBRAND = () => {
+    deleteBrand(selectData._id).then((res) => {
+      toast.success("OEM Deleted successfully");
+        updateData && updateData()
+
+    }).catch((error) => {
+      toast.success(`${error}`);
+        updateData && updateData()
+    })
+  }
+
 
 
   return (
     <>
-    <AddVehicle open={open} onClose={()=>{setOpen(false)}}/>
+
+    <AddVehicle open={open} onClose={() => { setOpen(false); setEditStatus(false); updateData() }} editStatus={editStatus} editData={selectData}/>
+    <ConfirmDialog title='OEM Delete' subtitle='Do you want to Delete OEM?' open={confirmOpen} onClose={() => { setConfirmOpen(false) }} confirmButtonHandle={deleteBRAND} />
     <LastSynced heading="Brand" >
       <StyledSearchField placeholder={"Search"} onChange={(e) => {
           setFilterValue(e.target.value)
@@ -32,7 +68,7 @@ export default function Vehicles({data}) {
     </LastSynced>
     
     <Box sx={{ p: 3 }}>
-      <StyledTable headers={tableHeader} data={brandData} />
+      <StyledTable headers={tableHeader} data={searchAndFilter(brandData, filterValue)} actions={["Edit", "Delete"]} onActionClick={tableActionClick} />
     </Box>
   </>  )
 }

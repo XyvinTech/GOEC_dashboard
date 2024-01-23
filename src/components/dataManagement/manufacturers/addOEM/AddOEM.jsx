@@ -6,71 +6,47 @@ import { ReactComponent as Close } from "../../../../assets/icons/close-icon-lar
 import StyledButton from "../../../../ui/styledButton";
 import { Controller, useForm } from "react-hook-form";
 import { createOem, editOem } from "../../../../services/evMachineAPI";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AddOEM({ open, onClose, editStatus = false, editData = {} }) {
-  const { handleSubmit, setValue ,reset, formState: { errors }, control } = useForm();
-  useEffect(()=>{
-    setValue("name",editStatus ? editData["Company Name"]:'')
-  },[editData])
+  const { handleSubmit, setValue, reset, formState: { errors }, control } = useForm();
+  useEffect(() => {
+    setValue("name", editStatus ? editData["Company Name"] : '')
+  }, [editData])
 
   const onSubmit = (data) => {
     if (editStatus) {
       updateOEM(data)
-    }else{
+    } else {
       createOEM(data)
     }
-    
+
   };
 
   const createOEM = (data) => {
     console.log(data);
     createOem(data).then((res) => {
       if (res.status) {
-        const successToastId = toast.success("OEM created successfully", {
-          position: "bottom-right",
-        });
-        const onCloseCallback = () => {
-          onClose && onClose();
-          reset();
-          
-        };
-
-        toast.update(successToastId, { onClose: onCloseCallback });
+        toast.success("OEM created successfully");
+        onClose && onClose();
+        reset();
       }
     }).catch((error) => {
       console.log(error);
-      const errorToastId = toast.error("Failed to create OEM", {
-        position: "bottom-right",
-      });
-
-      toast.update(errorToastId);
+      toast.error("Failed to create OEM");
     })
   }
 
 
 
   const updateOEM = (data) => {
-    editOem(editData._id,data).then((res) => {
-        const successToastId = toast.success("OEM Updated successfully", {
-          position: "bottom-right",
-        });
-        console.log("closeeeeeeee");
-        const onCloseCallback = () => {
-          onClose && onClose();
-          reset();
-          console.log("closeeeeeeee");
-        };
-
-        toast.update(successToastId, { onClose: onCloseCallback });
+    editOem(editData._id, data).then((res) => {
+      toast.success("OEM Updated successfully");
+      onClose && onClose();
+      reset();
     }).catch((error) => {
-      console.log(error);
-      const errorToastId = toast.error("Failed to update OEM", {
-        position: "bottom-right",
-      });
-
-      toast.update(errorToastId);
+      toast.error("Failed to update OEM");
     })
   }
 

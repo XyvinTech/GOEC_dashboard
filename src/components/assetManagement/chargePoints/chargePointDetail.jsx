@@ -1,5 +1,5 @@
 import { Box, Grid, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Stack } from '@mui/system'
 import { ArrowBackIosNew } from '@mui/icons-material'
 import StyledTab from '../../../ui/styledTab'
@@ -15,32 +15,109 @@ import ChargerLog from './chargePointDetail/chargerLog'
 import Alarm from './chargePointDetail/alarm'
 import Tariff from './chargePointDetail/tariff'
 
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { getEvMachineById } from '../../../services/evMachineAPI'
+import StyledBackdropLoader from '../../../ui/styledBackdropLoader'
+import { clearCache, reset, unlock } from '../../../services/ocppAPI'
+import { toast } from 'react-toastify'
 
 
 export default function ChargePointDetail() {
     const navigate = useNavigate()
+    const { state } = useLocation();
     const [toggleOption, setToggleoption] = useState(0)
+    const [loaderOpen, setLoaderOpen] = useState(true)
+    const [chargepointData, setChargepointData] = useState()
+
+
+
+    const init = () => {
+        getEvMachineById(state._id).then((res) => {
+            console.log(res.result[0]);
+            if (res.status) {
+                setChargepointData(res.result[0])
+            }
+            setLoaderOpen(false)
+        })
+    }
+
+    useEffect(() => {
+        init()
+    }, [])
+
+
+
     const onChangeToggleOption = (e) => {
         setToggleoption(e.index)
     }
+
+    const actionButtonHandle = (button) => {
+        if (button === "hard") {
+            let formData = new FormData()
+            formData.append("type", "Hard")
+            reset(chargepointData.CPID, formData).then((res) => {
+                if (res.status) {
+                    toast.success(res.message)
+                } else {
+                    toast.error(res.message)
+                }
+            }).catch((error) => {
+                toast.error(error)
+            })
+        } else if (button === "soft") {
+            let formData = new FormData()
+            formData.append("type", "Soft")
+            reset(chargepointData.CPID, formData).then((res) => {
+                if (res.status) {
+                    toast.success(res.message)
+                } else {
+                    toast.error(res.message)
+                }
+            }).catch((error) => {
+                toast.error(error)
+            })
+        } else if (button == "cache") {
+            clearCache(chargepointData.CPID).then((res) => {
+                if (res.status) {
+                    toast.success(res.message)
+                } else {
+                    toast.error(res.message)
+                }
+            }).catch((error) => {
+                toast.error(error)
+            })
+        }
+    }
+
+    const connectorUnlock = (connectorId) => {
+        unlock(chargepointData.CPID, { connectorId: connectorId }).then((res) => {
+            if (res.status) {
+                toast.success(res.message)
+            }else{
+                toast.error(res.message)
+            }
+        }).catch((error)=>{
+            toast.error(error)
+        })
+    }
     return (
         <>
+            <StyledBackdropLoader open={loaderOpen} />
             <Stack direction={'row'} sx={{ backgroundColor: 'secondary.main', p: 3 }} spacing={2}>
                 <ArrowBackIosNew sx={{ cursor: 'pointer' }} onClick={() => { navigate(-1) }} />
                 <Typography variant='h6' color={'secondary.contrastText'}>Charge Point Details</Typography>
             </Stack>
             <Grid container spacing={2} sx={{ p: { xs: 1, md: 4 } }}>
                 <Grid item xs={12} md={5} >
-                    <ChargePointDetailsCard />
+                    <ChargePointDetailsCard data={chargepointData} />
                 </Grid>
                 <Grid item xs={12} md={7} >
                     <Grid container spacing={1.5}>
                         <Grid item xs={12} md={5}>
-                            <ChargePointDetailsAction />
+                            <ChargePointDetailsAction buttonClickHandle={actionButtonHandle} />
                         </Grid>
                         <Grid item xs={12} md={7}>
-                            <ChargePointDetailsConnectors />
+                            <ChargePointDetailsConnectors data={chargepointData && chargepointData.connectors} unlockButtonHandle={connectorUnlock} />
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <ChargePointDetailsAnalytics />

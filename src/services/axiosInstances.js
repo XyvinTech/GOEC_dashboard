@@ -13,6 +13,15 @@ export const LAMBDA_INSTANCES = axios.create({
   },
 });
 
+export const VEHICLE_INSTANCES = axios.create({
+  baseURL: 'https://dlupfxb3p6.execute-api.ap-south-1.amazonaws.com/api/v1',
+  // baseURL: 'http://localhost:5689/api/v1',
+  headers: {
+    Authorization: "Bearer " + token,
+    "Content-Type": "multipart/form-data",
+  },
+});
+
 
 //!charging stations
 

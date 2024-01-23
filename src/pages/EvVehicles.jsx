@@ -14,7 +14,9 @@ export default function Vehicles() {
     const init = () => {
       getVehicleListForDashboard().then((res) => {
         if (res.status) {
-          setVehicleListData(res.result);
+          console.log(res.result);
+          setVehicleListData(res.result.map((item)=>({...item,charger_types:item.compactable_port.toString()})));
+          console.log(vehicleListData);
         }
       });
     };
@@ -30,10 +32,11 @@ export default function Vehicles() {
     return (
       <Box>
         <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
-          <StyledTab
+          <StyledTab 
+          activeIndex={togglePage}
            buttons={['All EV Vehicle', 'Add EV Vehicle']} onChanged={buttonChanged} />
         </Stack>
-        {togglePage === 0 ? <AllVehicles data={vehicleListData} /> : <AddVehicles />}
+        {togglePage === 0 ? <AllVehicles data={vehicleListData} updateData={init} /> : <AddVehicles formSubmited={()=>{setTogglePage(0); init()}} />}
       </Box>
     );
   }

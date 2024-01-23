@@ -7,7 +7,7 @@ const SelectContainer = styled.div`
   width: 100%; /* Adjust width as needed */
 `;
 
-const StyledSelectField = ({ placeholder, options, onChange, value, ...props }) => {
+const StyledSelectField = ({ placeholder, options, onChange, value, isMulti = false, ...props }) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -54,15 +54,31 @@ const StyledSelectField = ({ placeholder, options, onChange, value, ...props }) 
       primary: "var(--inner, #39383D)",
     },
   });
-
   var selectedIndex = -1;
+  var multiSelected = [];
   if (options) {
     for (var i = 0; i < options.length && value; i++) {
-      if (options[i].value === value || options[i].label === value) {
-        selectedIndex = i;
-        break;
+      if (isMulti) {
+        for (let index = 0; index < value.length; index++) {
+          if (options[i].value === value[index] || options[i].label === value[index]) {
+            multiSelected.push(options[i])
+          }
+        }
+      } else {
+        
+        if (options[i].value === value || options[i].label === value) {
+          selectedIndex = i;
+          break;
+        }
       }
     }
+  }
+  let valueOptions = {}
+  if (isMulti) {
+    valueOptions.defaultValue = options && (isMulti && multiSelected)
+  }
+  else{
+    valueOptions.value = options && (!isMulti && options[selectedIndex])
   }
   return (
     <SelectContainer>
@@ -72,8 +88,9 @@ const StyledSelectField = ({ placeholder, options, onChange, value, ...props }) 
         onChange={onChange}
         styles={customStyles}
         theme={customTheme}
-        defaultValue={options && options[selectedIndex]}
+        isMulti={isMulti}
         {...props}
+        {...valueOptions}
       />
     </SelectContainer>
   );

@@ -4,7 +4,8 @@ import { ReactComponent as Station } from "../../../../assets/icons/station.svg"
 import { ReactComponent as ContentCopy } from "../../../../assets/icons/content_copy.svg";
 import StyledDivider from "../../../../ui/styledDivider";
 import StyledInput from "../../../../ui/styledInput";
-export default function ChargePointDetailsCard() {
+import { toast } from "react-toastify";
+export default function ChargePointDetailsCard({data}) {
   return (
     <Box pb={2} sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>
       <Stack px={3} pt={2} spacing={2}>
@@ -13,7 +14,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "secondary.contrastText", fontWeight: "700" }}
           >
-            GO14
+            {data && data.CPID}
           </Typography>
         </Stack>
       </Stack>
@@ -23,7 +24,11 @@ export default function ChargePointDetailsCard() {
           Configuration URL
         </Typography>
         <Stack spacing={2}>
-          <StyledInput placeholder={"ws://goeccms.numocity.com:9033/ocpp/go1"} disabled iconright={<ContentCopy />} style={{ height: '40px' }} />
+          <StyledInput 
+          placeholder={ `${data && data.configuration_url}`} 
+          disabled iconright={<ContentCopy style={{cursor:'pointer'}} 
+          onClick={()=>{navigator.clipboard.writeText(`${data && data.configuration_url}`); toast.success("copied")}} />} 
+          style={{ height: '40px' }} />
         </Stack>
       </Stack>
 
@@ -38,7 +43,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            Oberon Mall, Ernakulam
+            {data && data.location_name}
           </Typography>
         </Stack>
 
@@ -51,7 +56,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            DELTA
+            {data && data.oem}
           </Typography>
         </Stack>
 
@@ -64,7 +69,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            DIHEVE50CSCS00
+            {data && data.evModel}
           </Typography>
         </Stack>
 
@@ -77,7 +82,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            DC
+            {data && data.location_name}
           </Typography>
         </Stack>
 
@@ -90,7 +95,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            0651561151
+            {data && data.serial_number}
           </Typography>
         </Stack>
 
@@ -103,7 +108,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            OCPP(1.6)
+            {data && data.location_name}
           </Typography>
         </Stack>
 
@@ -117,7 +122,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            Dec 8, 2021 6:06:42 PM
+            {data && data.commissioned_date}
           </Typography>
         </Stack>
 
@@ -130,7 +135,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            YES
+            {data && data.published}
           </Typography>
         </Stack>
 
@@ -143,7 +148,7 @@ export default function ChargePointDetailsCard() {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            false
+            {data && data.location_name}
           </Typography>
         </Stack>
       </Stack>

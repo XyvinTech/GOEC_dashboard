@@ -2,7 +2,7 @@ import { EV_MACHINE_INSTANCE } from "./axiosInstances";
 
 export async function createEvMachine(data) {
   try {
-    const response = await EV_MACHINE_INSTANCE.post(`evMachine`, data);
+    const response = await EV_MACHINE_INSTANCE.post(`evMachine/create`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -29,7 +29,7 @@ export async function deleteEvMachine(Id) {
 
 export async function getEvMachineById(Id) {
   try {
-    const response = await EV_MACHINE_INSTANCE.get(`evMachine/${Id}`);
+    const response = await EV_MACHINE_INSTANCE.get(`evMachine/dashboard/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -38,7 +38,7 @@ export async function getEvMachineById(Id) {
 
 export async function listEvMachine() {
   try {
-    const response = await EV_MACHINE_INSTANCE.get(`evMachine/dashboard/list`);
+    const response = await EV_MACHINE_INSTANCE.get(`/evMachine/dashboard/list`);
     return response.data;
   } catch (error) {
     throw error;
