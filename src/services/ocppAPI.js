@@ -1,10 +1,10 @@
 import { OCPP_INSTANCE } from "./axiosInstances";
 
-export async function remoteStart(data) {
-  // ? GOEC123 is id or  not?
+export async function remoteStart(data,cpid) {
+ 
   try {
     const response = await OCPP_INSTANCE.post(
-      `ocpp/remoteStartTransaction/GOEC123`,
+      `ocpp/remoteStartTransaction/${cpid}`,
       data
     );
     return response.data;
@@ -13,11 +13,11 @@ export async function remoteStart(data) {
   }
 }
 
-export async function remoteStop(data) {
-  // ? GOEC123 is id or  not?
+export async function remoteStop(data,cpid) {
+
   try {
     const response = await OCPP_INSTANCE.post(
-      `ocpp/remoteStopTransaction/GOEC123`,
+      `ocpp/remoteStopTransaction/${cpid}`,
       data
     );
     return response.data;
@@ -26,21 +26,19 @@ export async function remoteStop(data) {
   }
 }
 
-export async function clearCache() {
-  // ? GOEC123 is id or  not?
+export async function clearCache(cpid) {
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/clear-cache/GOEC123`);
+    const response = await OCPP_INSTANCE.get(`ocpp/clear-cache/${cpid}`);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function unlock(data) {
-  // ? GOEC123 is id or  not?
+export async function unlock(data,cpid) {
   try {
     const response = await OCPP_INSTANCE.post(
-      `ocpp/unlock-connector/GOEC123`,
+      `ocpp/unlock-connector/${cpid}`,
       data
     );
     return response.data;
@@ -49,21 +47,21 @@ export async function unlock(data) {
   }
 }
 
-export async function reset() {
+export async function reset(cpid) {
   // ? GOEC123 is id or  not?
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/reset/GOEC123`);
+    const response = await OCPP_INSTANCE.get(`ocpp/reset/${cpid}`);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function changeConfig(data) {
+export async function changeConfig(data,cpid) {
   // ? GOEC123 is id or  not?
   try {
     const response = await OCPP_INSTANCE.post(
-      `ocpp/unlock-connector/GOEC123`,
+      `ocpp/unlock-connector/${cpid}`,
       data
     );
     return response.data;
