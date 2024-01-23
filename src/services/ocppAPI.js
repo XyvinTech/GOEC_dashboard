@@ -26,21 +26,21 @@ export async function remoteStop(data) {
   }
 }
 
-export async function clearCache() {
+export async function clearCache(CPID) {
   // ? GOEC123 is id or  not?
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/clear-cache/GOEC123`);
+    const response = await OCPP_INSTANCE.get(`ocpp/clear-cache/${CPID}`);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function unlock(data) {
+export async function unlock(CPID,data) {
   // ? GOEC123 is id or  not?
   try {
     const response = await OCPP_INSTANCE.post(
-      `ocpp/unlock-connector/GOEC123`,
+      `ocpp/unlock-connector/${CPID}`,
       data
     );
     return response.data;
@@ -49,10 +49,10 @@ export async function unlock(data) {
   }
 }
 
-export async function reset() {
+export async function reset(CPID,data) {
   // ? GOEC123 is id or  not?
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/reset/GOEC123`);
+    const response = await OCPP_INSTANCE.get(`ocpp/reset/${CPID}`,data);
     return response.data;
   } catch (error) {
     throw error;

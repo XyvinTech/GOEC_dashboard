@@ -141,10 +141,10 @@ export default function AddEvCharger({ editStatus = false, chargerData = {}, for
         connectors:connectors
       }
       console.log(obj);
-      createEvModel(obj).then((res)=>{
+      editEvModel(chargerData._id,obj).then((res)=>{
         console.log(res);
         if (res.status) {
-          toast.success("EV charger Created Successfully")
+          toast.success("EV charger Updated Successfully")
           formSubmitted && formSubmitted()
         }
       }).catch((error)=>{

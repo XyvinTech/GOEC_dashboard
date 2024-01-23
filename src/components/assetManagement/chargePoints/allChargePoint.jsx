@@ -22,14 +22,20 @@ const tableHeader = [
   'Published'
 ]
 
-export default function AllChargePoint({ data, ...props }) {
+export default function AllChargePoint({ data,deleteData,editData, ...props }) {
   console.log(data);
   const navigate = useNavigate()
 
   const [filterValue, setFilterValue] = useState('')
   const tableActionClick = (e) => {
     if (e.action === 'View') {
-      navigate(`/charge-point-detail`)
+      navigate(`/charge-point-detail`,{state:e.data})
+    }
+    else if (e.action === 'Edit') {
+      editData(e.data)
+    }
+    else if (e.action === 'Delete') {
+      deleteData(e.data)
     }
   }
   const AllChargePointsData = tableHeaderReplace(data, ['CPID', 'oem', 'evModel', 'chargingTariff', 'chargingStation', 'cpidStatus','published'], tableHeader)

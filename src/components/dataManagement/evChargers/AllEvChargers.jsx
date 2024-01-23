@@ -9,6 +9,8 @@ import { ReactComponent as Close } from "../../../assets/icons/close-icon-large.
 import ConfirmDialog from "../../../ui/confirmDialog";
 import { toast } from "react-toastify";
 import { deleteEvModel } from "../../../services/evMachineAPI";
+import { searchAndFilter } from "../../../utils/search";
+import StyledSearchField from "../../../ui/styledSearchField";
 
 const tableHeader = [
   "Company Name",
@@ -27,7 +29,7 @@ const EditCharger = ({ data, open, onClose, ...props }) => {
         <Typography sx={{ color: 'secondary.contrastText' }}>Edit Vehicle</Typography>
         <Close style={{ cursor: 'pointer' }} onClick={onClose} />
       </Stack>
-      <AddEvCharger editStatus={true} chargerData={data} />
+      <AddEvCharger editStatus={true} chargerData={data} formSubmitted={onClose} />
     </Dialog>
   )
 }
@@ -40,7 +42,7 @@ export default function AllEvChargers({ data, updateData }) {
   const [dialogOpen, setDialogOpen] = useState(false)
 
 
-  const evChargerData = tableHeaderReplace(data, ['oem', 'modelName', 'output_type', 'ocpp_version', 'charger_type', 'capacity', 'no_of_ports'], tableHeader)
+  const evChargerData = tableHeaderReplace(data, ['oem', 'model_name', 'output_type', 'ocpp_version', 'charger_type', 'capacity', 'no_of_ports'], tableHeader)
 
   const tableActionClick = (e) => {
     setSelectedData(e.data)
@@ -63,8 +65,12 @@ export default function AllEvChargers({ data, updateData }) {
 
   return (
     <>
-      <LastSynced heading="EV Chargers" showSearchField={true} />
-      <EditCharger open={editOpen} data={selectData} onClose={(() => { setEditOpen(false) })} />
+      <LastSynced heading="EV Chargers" >
+        <StyledSearchField placeholder={'Search'} onChange={(e) => {
+          setFilterValue(e.target.value)
+        }} />
+      </LastSynced>
+      <EditCharger open={editOpen} data={selectData} onClose={(() => { setEditOpen(false); updateData(); })} />
       <ConfirmDialog
         open={dialogOpen}
         title={"Confirm Delete"}
@@ -73,7 +79,7 @@ export default function AllEvChargers({ data, updateData }) {
         onClose={() => { setDialogOpen(false) }}
         confirmButtonHandle={deleteData} />
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={evChargerData} onActionClick={tableActionClick} actions={["Edit", "Delete"]} />
+        <StyledTable headers={tableHeader} data={searchAndFilter(evChargerData, filterValue)} onActionClick={tableActionClick} actions={["Edit", "Delete"]} />
       </Box>
     </>
   );

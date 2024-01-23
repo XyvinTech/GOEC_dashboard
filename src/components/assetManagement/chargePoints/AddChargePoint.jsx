@@ -13,10 +13,11 @@ import StyledInput from "../../../ui/styledInput";
 import CalendarInput from "../../../ui/CalendarInput";
 import StyledButton from "../../../ui/styledButton";
 import { getChargingStationList } from "../../../services/stationAPI";
-import { createEvMachine, getEvModel, getOem } from "../../../services/evMachineAPI";
+import { createEvMachine, editEvMachine, getEvModel, getOem } from "../../../services/evMachineAPI";
+import { toast } from "react-toastify";
+import { ContentCopy } from "@mui/icons-material";
 // StyledTable component
-const AddChargePoint = ({ headers, data, onClose }) => {
-
+const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false }) => {
   const [stationList, setStationList] = useState([])
   const [OEMList, setOEMList] = useState([])
   const [modelList, setModelList] = useState([])
@@ -29,33 +30,73 @@ const AddChargePoint = ({ headers, data, onClose }) => {
     clearErrors,
   } = useForm({
     defaultValues: {
-      published: false, // Set the default value for "activate"
+      chargePointDisplayName: editStatus ? chargepointData["name"] : '',
+      locationName: editStatus ? chargepointData["Station"] : '',
+      chargePointOEM: editStatus ? chargepointData["OEM"] : '',
+      authorisationkey: editStatus ? chargepointData["authorization_key"] : '',
+      serialNumber: editStatus ? chargepointData["name"] : '',
+      commissionedDate: editStatus ? chargepointData["commissioned_date"] : '',
+      model: editStatus ? chargepointData["Model"] : '',
+      CPID: editStatus ? chargepointData["CPID"] : '',
+      published: editStatus ? chargepointData["Published"] : false, // Set the default value for "activate"
     },
   });
   const onSubmit = (data) => {
     // Handle form submission with data
     // console.log("Form data submitted:", data);
     // Close your form or perform other actions
-    createChargePoint(data)
+    if (editStatus) {
+      updateChargePoint(data)
+    } else {
+      createChargePoint(data)
+    }
   };
 
   const createChargePoint = (data) => {
     let dt = {
       name: data.chargePointDisplayName,
-      type: "AC",
-      charger_tariff: "12",
-      power: "100",
+      location_name: data.locationName.value,
+      authorization_key: data.authorisationkey,
+      serial_number: data.serialNumber,
+      commissioned_date: data.commissionedDate,
+      evModel: data.model.value,
       CPID: data.CPID,
       OEM: data.chargePointOEM.value,
-      override_tariff: "655e3a6c73781058a29fa137",
-      voltage: "10",
-      status: "Available",
-      published: data.published
+      cpidStatus: chargepointData["Status"] ,
+      published: data.published ? 'Yes' : "No"
     }
     console.log(dt);
-    // createEvMachine(dt).then((res)=>{
-    //   console.log(res);
-    // })
+    createEvMachine(dt).then((res) => {
+      console.log(res);
+      toast.success("Charge point created successfully ")
+      formsubmitted()
+    }).catch((error) => {
+      toast.error(error)
+    })
+  }
+
+
+  const updateChargePoint = (data) => {
+    let dt = {
+      name: data.chargePointDisplayName,
+      location_name: data.locationName.value ? data.locationName.value : getListId(stationList,chargepointData["Station"]),
+      authorization_key: data.authorisationkey,
+      serial_number: data.serialNumber,
+      commissioned_date: data.commissionedDate,
+      evModel: data.model.value ? data.model.value : getListId(modelList,chargepointData["Model"]),
+      CPID: data.CPID,
+      OEM: data.chargePointOEM.value ? data.chargePointOEM.value :  getListId(OEMList,chargepointData["OEM"]),
+      cpidStatus: "Available",
+      published: data.published ? 'Yes' : "No"
+    }
+    console.log(dt);
+    editEvMachine(chargepointData._id, dt).then((res) => {
+      console.log(res);
+      toast.success("Charge point updated successfully ")
+      formsubmitted()
+    }).catch((error) => {
+      toast.error(error)
+    })
   }
 
   const handleChange = (event) => {
@@ -76,8 +117,9 @@ const AddChargePoint = ({ headers, data, onClose }) => {
     })
 
     getEvModel().then((res) => {
+      console.log(res.result);
       if (res.status) {
-        setModelList(res.result.map((e) => ({ label: e.modelName, value: e._id })))
+        setModelList(res.result.map((e) => ({ label: e.model_name, value: e._id })))
       }
     })
   }
@@ -85,6 +127,13 @@ const AddChargePoint = ({ headers, data, onClose }) => {
     init()
   }, [])
 
+  const getListId = (list,value) => {
+    for (let index = 0; index < list.length; index++) {
+      if (list[index].label == value) {
+        return list[index].value
+      }
+    }
+  }
 
   const handleDateChangeInParent = (date) => {
     setValue("commissionedDate", date); // Assuming you have 'expiryDate' in your form state
@@ -98,19 +147,21 @@ const AddChargePoint = ({ headers, data, onClose }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box maxWidth="lg" p={2} sx={{ backgroundColor: 'primary.main' }}>
-        <Grid container spacing={2}>
-          <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
-            <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-              <Typography
-                sx={{ color: "secondary.contrastText", fontWeight: "700" }}
-              >
-                Add Chargepoint
-              </Typography>
-              {onClose && <Close onClick={() => { onClose() }} style={{ cursor: 'pointer' }} />}
+        {
+          editStatus &&
+          <Stack>
+            <Typography sx={{ color: "primary.contrastText", fontWeight: "500", fontSize: '14px' }}>
+              Configuration URL
+            </Typography>
+            <Stack spacing={2}>
+              <StyledInput
+                placeholder={`${chargepointData && chargepointData.configuration_url}`}
+                disabled iconright={<ContentCopy style={{ cursor: 'pointer' }}
+                  onClick={() => { navigator.clipboard.writeText(`${chargepointData && chargepointData.configuration_url}`); toast.success("copied") }} />}
+                style={{ height: '50px', backgroundColor: '#4A4458' }} />
             </Stack>
-          </Grid>
-        </Grid>
-
+          </Stack>
+        }
         <Typography
           sx={{
             marginBottom: 3,
@@ -197,7 +248,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
                   )}
                 </>
               )}
-              rules={{ required: "Model is required" }}
+            // rules={{ required: "Model is required" }}
             />
           </Grid>
         </Grid>
@@ -248,7 +299,7 @@ const AddChargePoint = ({ headers, data, onClose }) => {
                 control={control}
                 render={({ field }) => (
                   <>
-                    <StyledInput {...field} placeholder="GO1" />
+                    <StyledInput {...field} placeholder="gO1" style={{ backgroundColor: '#4A4458' }} />
                     {errors.CPID && (
                       <span style={errorMessageStyle}>
                         {errors.CPID.message}
