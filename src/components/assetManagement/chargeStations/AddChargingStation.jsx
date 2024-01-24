@@ -133,7 +133,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
     let dt = {
       amenities: amenities,
       name: values.name,
-      address: `${values.address}, ${values.city.value ? values.city.value.name : data['Address'].split(', ')[1]}, ${values.state.value ? values.state.value.name : data['Address'].split(', ')[2]}, ${values.country.value ? values.state.value.name : data['Address'].split(', ')[3]}, ${values.pincode}`,
+      address: `${values.address}, ${values.city.value ? values.city.value.name : data['Address'].split(', ')[1]}, ${values.state.value ? values.state.value.name : data['Address'].split(', ')[2]}, ${values.country.value ? values.country.value.name : data['Address'].split(', ')[3]}, ${values.pincode}`,
       country: countryCode,
       state: stateCode,
       owner: values.owner,
@@ -156,7 +156,6 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
         if (res.status) {
           editChargingStation(data['_id'], { ...dt, image: res.url }).then((res) => {
             toast.success("Charging Station updated successfully");
-            console.log("sfgasdgsd");
             formSubmited();
           })
         }

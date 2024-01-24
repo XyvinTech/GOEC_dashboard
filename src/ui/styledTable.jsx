@@ -8,7 +8,7 @@ import StyledPayloadTableCell from "./styledPayloadTableCell";
 import TableSkeleton from "./tableSkeleton";
 // StyledTable component
 
-const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=['Edit','View','Delete'] }) => {
+const StyledTable = ({ headers, data, onActionClick, showActionCell = true, actions = ['Edit', 'View', 'Delete'] }) => {
   const [page, setPage] = useState(0);
   const rowsPerPage = 10;
   const paginatedData = data.slice(
@@ -28,59 +28,57 @@ const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=
   };
 
   return (
-    <TableContainer>
+    <TableContainer >
       <Table>
         <TableHeader>
           <tr>
             {headers.map((header) => (
               <HeaderCell key={header}>{header}</HeaderCell>
             ))}
-            {showActionCell &&<HeaderCell></HeaderCell>}
+            {showActionCell && <HeaderCell></HeaderCell>}
           </tr>
         </TableHeader>
 
         <TableBody>
-          {paginatedData.length === 0 ? 
-          <TableSkeleton tableHeader={headers}/> :
-          paginatedData.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {headers.map((header, cellIndex) => {
-                const isStatusColumn = header.toLowerCase() === "status";
-                const isPayload = header.toLowerCase() === "payload data";
-                const isTerminateSession =
-                  header.toLowerCase() === "terminate session";
-                return (
-                  <TableCell
-                    key={`${rowIndex}-${header}`}
-                    $isfirstcolumn={cellIndex === 0}
-                  >
-                    {isStatusColumn ? (
-                      <StyledStatusChip $status={row[header]}>
-                        {row[header]}
-                      </StyledStatusChip>
-                    ) : isTerminateSession ? (
-                      <StyledStopButton onClick={() => handleStopClick(row.id)}>
-                        Stop
-                      </StyledStopButton>
-                    ) : isPayload ? <StyledPayloadTableCell value={row[header]}/> 
-                     : (
-                      row[header]
-                    )}
-                  </TableCell>
-                );
-              })}
+          {paginatedData.length === 0 ?
+            <TableSkeleton tableHeader={headers} /> :
+            paginatedData.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {headers.map((header, cellIndex) => {
+                  const isStatusColumn = header.toLowerCase() === "status";
+                  const isPayload = header.toLowerCase() === "payload data";
+                  const isTerminateSession = header.toLowerCase() === "terminate session";
+                  const isPublished = header.toLowerCase() === "published";
+                  return (
+                    <TableCell
+                      key={`${rowIndex}-${header}`}
+                      $isfirstcolumn={cellIndex === 0}
+                    >
+                      {
+                        isStatusColumn ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
+                          : isTerminateSession ? (
+                            <StyledStopButton onClick={() => handleStopClick(row.id)}>
+                              Stop
+                            </StyledStopButton>
+                          ) : isPayload ? <StyledPayloadTableCell value={row[header]} />
+                            : isPublished ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
+                              : (row[header] || row[header] === ""  ? row[header] : '_')
+                      }
+                    </TableCell>
+                  );
+                })}
 
-              {showActionCell && (
-                <td>
-                  <StyledActionCell
-                  actions={actions}
-                    id={row.id} // Assuming your row data has an 'id' property
-                    onCliked={ (e)=>{onActionClick && onActionClick({data:row, ...e}) }}
-                  />
-                </td>
-              )}
-            </tr>
-          ))}
+                {showActionCell && (
+                  <td>
+                    <StyledActionCell
+                      actions={actions}
+                      id={row.id} // Assuming your row data has an 'id' property
+                      onCliked={(e) => { onActionClick && onActionClick({ data: row, ...e }) }}
+                    />
+                  </td>
+                )}
+              </tr>
+            ))}
         </TableBody>
       </Table>
       <StyledPagination
@@ -99,7 +97,7 @@ export default StyledTable;
 // Styled table container
 export const TableContainer = styled.div`
   background: #121212; // Dark background for the table
-  overflow-x: auto; // Allows table to be scrollable horizontally
+  overflow-x: scroll; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
   margin: 16px 0; // Margin for spacing, adjust as needed
 `;

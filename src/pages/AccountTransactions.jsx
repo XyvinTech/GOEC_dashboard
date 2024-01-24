@@ -18,13 +18,10 @@ function AccountTransactions() {
   useEffect(() => {
     getTaxData()
   }, [])
-  
-
-
 
   return (
     <Box>
-        <AccountTrans data={transactData} />
+        { transactData && <AccountTrans data={transactData} />}
     </Box>
   )
 }

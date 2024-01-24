@@ -23,7 +23,6 @@ const tableHeader = [
 ]
 
 export default function AllChargePoint({ data,deleteData,editData, ...props }) {
-  console.log(data);
   const navigate = useNavigate()
 
   const [filterValue, setFilterValue] = useState('')

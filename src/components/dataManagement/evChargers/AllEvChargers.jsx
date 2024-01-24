@@ -59,7 +59,7 @@ export default function AllEvChargers({ data, updateData }) {
       toast.success("EV charger Deleted successfull")
       updateData && updateData()
     }).catch((error) => {
-      toast.error("couls not delete EV Charger")
+      toast.error("could not delete EV Charger")
     })
   }
 
