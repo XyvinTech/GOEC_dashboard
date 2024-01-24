@@ -120,7 +120,7 @@ export default function ChargePointDetail() {
                             <ChargePointDetailsConnectors data={chargepointData && chargepointData.connectors} unlockButtonHandle={connectorUnlock} />
                         </Grid>
                         <Grid item xs={12} md={12}>
-                            <ChargePointDetailsAnalytics />
+                            <ChargePointDetailsAnalytics data={chargepointData}/>
                         </Grid>
                     </Grid>
                 </Grid>

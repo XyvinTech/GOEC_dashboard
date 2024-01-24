@@ -22,15 +22,14 @@ const tableHeader = [
 ]
 
 
-export default function AccountTrans({data}) {
+export default function AccountTrans({ data }) {
   const [filterValue, setFilterValue] = useState("");
-  const accData = tableHeaderReplace(data, ["user", "createdAt", "type","invoice_id","amount","status","initiated_by","transactionId","reference"], tableHeader);
-
+  const accData = tableHeaderReplace(data, ["user", "createdAt", "type", "invoice_id", "amount", "status", "initiated_by", "transactionId", "reference"], tableHeader);
   const tableActionClick = (e) => {
     console.log(e);
   };
 
- 
+
   return (
     <>
       <LastSynced heading="Charge Points">
@@ -44,9 +43,10 @@ export default function AccountTrans({data}) {
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable
-          headers={accData}
-          data={searchAndFilter(data, filterValue)}
+          headers={tableHeader}
+          data={searchAndFilter(accData, filterValue)}
           onActionClick={tableActionClick}
+          actions={["Download Invoice","Resend Mail"]}
         />
       </Box>
     </>

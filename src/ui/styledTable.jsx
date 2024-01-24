@@ -28,7 +28,7 @@ const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=
   };
 
   return (
-    <TableContainer>
+    <TableContainer >
       <Table>
         <TableHeader>
           <tr>
@@ -47,8 +47,7 @@ const StyledTable = ({ headers, data,onActionClick, showActionCell=true,actions=
               {headers.map((header, cellIndex) => {
                 const isStatusColumn = header.toLowerCase() === "status";
                 const isPayload = header.toLowerCase() === "payload data";
-                const isTerminateSession =
-                  header.toLowerCase() === "terminate session";
+                const isTerminateSession = header.toLowerCase() === "terminate session";
                 return (
                   <TableCell
                     key={`${rowIndex}-${header}`}
@@ -99,7 +98,7 @@ export default StyledTable;
 // Styled table container
 export const TableContainer = styled.div`
   background: #121212; // Dark background for the table
-  overflow-x: auto; // Allows table to be scrollable horizontally
+  overflow-x: scroll; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
   margin: 16px 0; // Margin for spacing, adjust as needed
 `;

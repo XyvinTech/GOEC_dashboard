@@ -43,7 +43,7 @@ export default function ChargePointDetailsCard({data}) {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            {data && data.location_name}
+            {data && data.chargingStationDetails[0].name}
           </Typography>
         </Stack>
 
@@ -56,7 +56,7 @@ export default function ChargePointDetailsCard({data}) {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            {data && data.oem}
+            {data && data.evModelDetails[0].oem}
           </Typography>
         </Stack>
 
@@ -69,7 +69,7 @@ export default function ChargePointDetailsCard({data}) {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            {data && data.evModel}
+            {data && data.evModelDetails[0].model_name}
           </Typography>
         </Stack>
 
@@ -82,7 +82,7 @@ export default function ChargePointDetailsCard({data}) {
           <Typography
             sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
           >
-            {data && data.location_name}
+            {data && data.evModelDetails[0].charger_type}
           </Typography>
         </Stack>
 

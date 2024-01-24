@@ -52,7 +52,7 @@ export default function ChargingPoints() {
           <Typography sx={{ color: 'secondary.contrastText' }}>Edit ChargeStation</Typography>
           <Close style={{ cursor: 'pointer' }} onClick={() => { setEditDialogOpen(false) }} />
         </Stack>
-        <AddChargePoint formSubmited={() => { init(); setEditDialogOpen(false) }} chargepointData={selectedData} editStatus={true} />
+        <AddChargePoint formsubmitted={() => { init(); setEditDialogOpen(false); }} chargepointData={selectedData} editStatus={true} />
       </Dialog>
       <StyledTab activeIndex={togglePage} buttons={['All Chargepoints', 'Add chargepoints']} onChanged={buttonChanged} />
       {togglePage === 0 ? <AllChargePoint
