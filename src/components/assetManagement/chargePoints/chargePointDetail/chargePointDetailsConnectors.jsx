@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Stack, Grid, Button, Dialog } from "@mui/material";
 import StyledDivider from "../../../../ui/styledDivider";
 import { ReactComponent as Qr_evplug } from "../../../../assets/icons/material-symbols_qr-code.svg";
@@ -13,7 +13,7 @@ const QRPopUp = ({ open, onClose, url }) => {
     <Dialog open={open} onClose={onClose}>
       <Stack direction={"column"} sx={{ backgroundColor: 'primary.main' }}>
         <Box p={2}>
-          <img src={`https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png`} height={200}
+          <img src={ url ? url : `https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png`} height={200}
             style={{ aspectRatio: 1 / 1, filter: 'invert(100%)' }} />
         </Box>
         <Button m={1} p={1} mt={3}
@@ -31,9 +31,8 @@ const QRPopUp = ({ open, onClose, url }) => {
             }
           }}
           onClick={() => {
-     
             // using Java Script method to get PDF file
-            fetch("https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png").then((response) => {
+            fetch(url ? url : `https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png`).then((response) => {
                 response.blob().then((blob) => {
                  
                     // Creating new object of PDF file
@@ -66,10 +65,17 @@ const QRPopUp = ({ open, onClose, url }) => {
 export default function ChargePointDetailsConnectors({ data, unlockButtonHandle }) {
   const [qrOpen, setQropen] = useState(false)
   const [qrURL, setQrURL] = useState('')
-  console.log(data);
+  const [connectors, setConnectors] = useState([])
+
+  useEffect(()=>{
+    if (data) {
+      setConnectors(data.connectors.map((dt,index)=>(
+        {...dt,...data.evModelDetails[0].connectors[index]}
+      )))
+    }
+  },[data])
   return (
     <Box
-
       sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}
     >
       <QRPopUp open={qrOpen} onClose={() => { setQropen(false) }} url={qrURL} />
@@ -89,7 +95,7 @@ export default function ChargePointDetailsConnectors({ data, unlockButtonHandle 
         sx={{ alignItems: "center", justifyContent: "center", py: 2, px: 2 }}
       >
         {
-          data && data.map((item) => (
+          connectors && connectors.map((item) => (
             <Grid item xs={6} sm={4} md={6}>
               <Stack direction={"column"}
                 sx={{ backgroundColor: "#2B2930", borderRadius: "4px", justifyContent: 'flex-end' }}
@@ -114,7 +120,7 @@ export default function ChargePointDetailsConnectors({ data, unlockButtonHandle 
                       backgroundColor: 'secondary.main'
                     }
                   }}
-                  onClick={() => { unlockButtonHandle(item.connectorId) }}
+                  onClick={() => { unlockButtonHandle(item.connectorId); setQrURL(item.qrCode) }}
                 >
                   <Mdi_unlocked />
                   <Typography

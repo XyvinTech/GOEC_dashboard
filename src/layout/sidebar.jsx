@@ -76,7 +76,7 @@ const items = [
         sub: [
             {
                 href: 'data-management/ev-chargers',
-                title: 'EV chargers',
+                title: 'EV chargers model',
             },
             {
                 href: 'data-management/ev-vehicles',

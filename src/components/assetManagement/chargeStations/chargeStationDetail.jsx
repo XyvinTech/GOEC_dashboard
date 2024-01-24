@@ -52,7 +52,6 @@ export default function ChargeStationDetail() {
 
 
     const reviewDelete = () => {
-        console.log(selectedReview._id);
         deleteReview(selectedReview._id).then((res) => {
             setErrorMsg(<Alert severity="success" sx={{ width: '100%' }}>Review deleted </Alert >)
             setSnackbarOpen(true)

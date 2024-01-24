@@ -33,9 +33,9 @@ export default function ChargePointDetail() {
 
     const init = () => {
         getEvMachineById(state._id).then((res) => {
-            console.log(res.result[0]);
+            console.log(res.result);
             if (res.status) {
-                setChargepointData(res.result[0])
+                setChargepointData(res.result)
             }
             setLoaderOpen(false)
         })
@@ -62,7 +62,7 @@ export default function ChargePointDetail() {
                     toast.error(res.message)
                 }
             }).catch((error) => {
-                toast.error(error)
+                toast.error(error.message)
             })
         } else if (button === "soft") {
             let formData = new FormData()
@@ -74,7 +74,7 @@ export default function ChargePointDetail() {
                     toast.error(res.message)
                 }
             }).catch((error) => {
-                toast.error(error)
+                toast.error(error.message)
             })
         } else if (button == "cache") {
             clearCache(chargepointData.CPID).then((res) => {
@@ -84,7 +84,7 @@ export default function ChargePointDetail() {
                     toast.error(res.message)
                 }
             }).catch((error) => {
-                toast.error(error)
+                toast.error(error.message)
             })
         }
     }
@@ -97,7 +97,7 @@ export default function ChargePointDetail() {
                 toast.error(res.message)
             }
         }).catch((error)=>{
-            toast.error(error)
+            toast.error(error.message)
         })
     }
     return (
@@ -117,7 +117,7 @@ export default function ChargePointDetail() {
                             <ChargePointDetailsAction buttonClickHandle={actionButtonHandle} />
                         </Grid>
                         <Grid item xs={12} md={7}>
-                            <ChargePointDetailsConnectors data={chargepointData && chargepointData.connectors} unlockButtonHandle={connectorUnlock} />
+                            <ChargePointDetailsConnectors data={chargepointData && chargepointData} unlockButtonHandle={connectorUnlock} />
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <ChargePointDetailsAnalytics data={chargepointData}/>

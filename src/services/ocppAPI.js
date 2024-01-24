@@ -35,7 +35,7 @@ export async function clearCache(cpid) {
   }
 }
 
-export async function unlock(data,cpid) {
+export async function unlock(cpid,data) {
   try {
     const response = await OCPP_INSTANCE.post(
       `ocpp/unlock-connector/${cpid}`,

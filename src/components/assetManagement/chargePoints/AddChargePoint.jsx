@@ -59,10 +59,9 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       evModel: data.model.value,
       CPID: data.CPID,
       OEM: data.chargePointOEM.value,
-      cpidStatus: chargepointData["Status"] ,
+      cpidStatus:  "Available",
       published: data.published ? 'Yes' : "No"
     }
-    console.log(dt);
     createEvMachine(dt).then((res) => {
       toast.success("Chargepoint created successfully ")
       formsubmitted()
@@ -82,7 +81,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       evModel: data.model.value ? data.model.value : getListId(modelList,chargepointData["Model"]),
       CPID: data.CPID,
       OEM: data.chargePointOEM.value ? data.chargePointOEM.value :  getListId(OEMList,chargepointData["OEM"]),
-      cpidStatus: "Available",
+      cpidStatus: chargepointData["Status"],
       published: data.published ? 'Yes' : "No"
     }
     editEvMachine(chargepointData._id, dt).then((res) => {
@@ -111,7 +110,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
     })
 
     getEvModel().then((res) => {
-      console.log(res.result);
       if (res.status) {
         setModelList(res.result.map((e) => ({ label: e.model_name, value: e._id })))
       }
@@ -132,7 +130,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   const handleDateChangeInParent = (date) => {
     setValue("commissionedDate", date); // Assuming you have 'expiryDate' in your form state
     clearErrors("commissionedDate");
-    console.log(date);
   };
   const commissionedDate = watch("commissionedDate", ""); // Watching the value for 'expiryDate'
 

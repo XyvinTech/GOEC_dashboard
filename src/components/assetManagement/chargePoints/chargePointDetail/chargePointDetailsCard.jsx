@@ -5,7 +5,7 @@ import { ReactComponent as ContentCopy } from "../../../../assets/icons/content_
 import StyledDivider from "../../../../ui/styledDivider";
 import StyledInput from "../../../../ui/styledInput";
 import { toast } from "react-toastify";
-export default function ChargePointDetailsCard({data}) {
+export default function ChargePointDetailsCard({ data }) {
   return (
     <Box pb={2} sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>
       <Stack px={3} pt={2} spacing={2}>
@@ -24,17 +24,17 @@ export default function ChargePointDetailsCard({data}) {
           Configuration URL
         </Typography>
         <Stack spacing={2}>
-          <StyledInput 
-          placeholder={ `${data && data.configuration_url}`} 
-          disabled iconright={<ContentCopy style={{cursor:'pointer'}} 
-          onClick={()=>{navigator.clipboard.writeText(`${data && data.configuration_url}`); toast.success("copied")}} />} 
-          style={{ height: '40px' }} />
+          <StyledInput
+            placeholder={`${data && data.configuration_url}`}
+            disabled iconright={<ContentCopy style={{ cursor: 'pointer' }}
+              onClick={() => { navigator.clipboard.writeText(`${data && data.configuration_url}`); toast.success("copied") }} />}
+            style={{ height: '40px' }} />
         </Stack>
       </Stack>
 
       <Stack my={2} px={2} sx={{ borderRadius: "10px", fontSize: '14px' }}>
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -47,7 +47,7 @@ export default function ChargePointDetailsCard({data}) {
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
+        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -60,7 +60,7 @@ export default function ChargePointDetailsCard({data}) {
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -73,7 +73,7 @@ export default function ChargePointDetailsCard({data}) {
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
+        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -86,7 +86,7 @@ export default function ChargePointDetailsCard({data}) {
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -99,7 +99,7 @@ export default function ChargePointDetailsCard({data}) {
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
+        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -113,7 +113,7 @@ export default function ChargePointDetailsCard({data}) {
         </Stack>
 
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -126,7 +126,7 @@ export default function ChargePointDetailsCard({data}) {
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
+        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -139,7 +139,8 @@ export default function ChargePointDetailsCard({data}) {
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+        {/*not need design fro integration*/}
+        {/* <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
           <Typography
             sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
           >
@@ -150,7 +151,7 @@ export default function ChargePointDetailsCard({data}) {
           >
             {data && data.location_name}
           </Typography>
-        </Stack>
+        </Stack> */}
       </Stack>
     </Box>
   );
