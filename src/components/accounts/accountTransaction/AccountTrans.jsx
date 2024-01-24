@@ -44,8 +44,8 @@ export default function AccountTrans({data}) {
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable
-          headers={accData}
-          data={searchAndFilter(data, filterValue)}
+          headers={tableHeader}
+          data={searchAndFilter(accData, filterValue)}
           onActionClick={tableActionClick}
         />
       </Box>
