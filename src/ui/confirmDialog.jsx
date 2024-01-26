@@ -10,10 +10,11 @@ import {
 } from '@mui/material';
 import StyledButton from './styledButton';
 import { Close } from '@mui/icons-material';
+import { Transition } from '../utils/DialogAnimation';
 
 const ConfirmDialog = ({ open=false, onClose, title="Action", subtitle="Action Takes", buttonText = 'Confirm',confirmButtonHandle, ...props }) => {
   return (
-    <Dialog open={open} maxWidth="sm" fullWidth >
+    <Dialog open={open} maxWidth="sm" fullWidth TransitionComponent={Transition}>
       <Box sx={{backgroundColor:'primary.main'}}>
         <DialogTitle color={'secondary.contrastText'}>{title}</DialogTitle>
         <Box position="absolute" top={0} right={0}>

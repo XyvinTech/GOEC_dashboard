@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { deleteEvModel } from "../../../services/evMachineAPI";
 import { searchAndFilter } from "../../../utils/search";
 import StyledSearchField from "../../../ui/styledSearchField";
+import { Transition } from "../../../utils/DialogAnimation";
 
 const tableHeader = [
   "Company Name",
@@ -24,7 +25,7 @@ const tableHeader = [
 
 const EditCharger = ({ data, open, onClose, ...props }) => {
   return (
-    <Dialog open={open} maxWidth='md' fullWidth>
+    <Dialog open={open} maxWidth='md' fullWidth TransitionComponent={Transition}>
       <Stack direction={'row'} sx={{ p: 2, backgroundColor: 'primary.main', justifyContent: 'space-between', borderBottom: 'solid 1px #fff3' }}>
         <Typography sx={{ color: 'secondary.contrastText' }}>Edit Vehicle</Typography>
         <Close style={{ cursor: 'pointer' }} onClick={onClose} />

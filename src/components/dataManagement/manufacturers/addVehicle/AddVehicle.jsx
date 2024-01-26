@@ -10,6 +10,7 @@ import { Controller, useForm } from "react-hook-form";
 import { createBrand, editBrand } from "../../../../services/vehicleAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Transition } from "../../../../utils/DialogAnimation";
 
 export default function AddVehicle({ open, onClose, editStatus = false, editData = {} }) {
   const { handleSubmit, setValue, reset, formState: { errors }, control } = useForm();
@@ -54,7 +55,7 @@ export default function AddVehicle({ open, onClose, editStatus = false, editData
 
 
   return (
-    <Dialog open={open} fullWidth>
+    <Dialog open={open} fullWidth TransitionComponent={Transition}>
       <Box sx={{ backgroundColor: "primary.main" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack

@@ -1,30 +1,37 @@
 import React, { useState } from 'react'
-import { Box, Button, Modal, Stack, Typography } from '@mui/material'
+import { Box, Button, Dialog, Grow } from '@mui/material'
 import StyledTable from '../../../ui/styledTable'
-import { DummyData } from '../../../assets/json/RfidTableData'
 import StyledButton from '../../../ui/styledButton'
 import LastSynced from '../../../layout/LastSynced'
 import AddRfidCard from '../Rfid/AddRfidCard'
 import AddBulkRfidCard from './AddBulkRfidCard'
-import EditRfidCard from './EditRfidCard'
+import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
+import { Transition } from '../../../utils/DialogAnimation'
+import ConfirmDialog from '../../../ui/confirmDialog'
+import { deleteRfid } from '../../../services/rfidAPI'
+import { toast } from 'react-toastify'
+
+
 
 const tableHeader = [
-    'RFID Tag',
-    'User Name',
-    'Created On',
-    'Expires On',
-    'Balance',
-    'Status'
-  ]
+  'RFID Tag',
+  'User Name',
+  'Created On',
+  'Expires On',
+  'Balance',
+  'Status'
+]
 
 
-const AllRfidCards = () => {
+const AllRfidCards = ({ data, updateData }) => {
   const [open, setOpen] = useState(false);
   const [isComponent, setIsComponent] = useState(0); // State to track which component to render
 
-  const [action, setAction] = useState("add");
-  const [tableData, setTableData] = useState();
+  const [selectData, setselectData] = useState()
+  const [editstatus, setEditStatus] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
+  const rfData = tableHeaderReplace(data, ['serialNumber', 'user', 'createdAt', 'expiry', '', 'status'], tableHeader)
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);
@@ -33,77 +40,67 @@ const AllRfidCards = () => {
   // Function to close the modal
   const handleClose = () => {
     setOpen(false);
+    updateData()
   };
 
   // Function to switch between AddRfidCard and AddBulkRfidCard
   const toggleAddMode = (status) => {
+    setEditStatus(false)
     setIsComponent(status);
     setOpen(true);
   };
 
   const handleClick = (e) => {
-   
-    // if (e.action === "Edit") {
-      console.log('edit')
-      setAction("edit");
-      setIsComponent(2);
+
+    if (e.action === "Edit") {
+      setselectData(e.data);
+      setIsComponent(0);
+      setEditStatus(true);
       setOpen(true);
-      setTableData(e.data);
-    // }
+    } else if (e.action === "Delete") {
+      setselectData(e.data);
+      setConfirmOpen(true);
+    }
+
   };
 
-  //console.log("status :"+isComponent);
+  const deleteRFID = () => {
+    deleteRfid(selectData._id).then((res) => {
+      updateData()
+      toast.success("RFID Deleted Successfully")
+      setConfirmOpen(false)
+    }).catch((error) => {
+      toast.error(error.response.data.error)
+    })
+  }
 
   return (
     <>
-     <LastSynced heading="RFID Cards"/>
-      <Box sx={{p:3}}>
+      <ConfirmDialog title='Delete RFID Tag' subtitle='Doyou want to Delete ?' open={confirmOpen} onClose={() => setConfirmOpen(false)} buttonText='Delete' confirmButtonHandle={deleteRFID} />
+      <LastSynced heading="RFID Cards" />
+      <Box sx={{ p: 3 }}>
         <Box display="flex" justifyContent="flex-end">
-            <StyledButton variant='secondary' width='150' mr='10'  onClick={() => toggleAddMode(0)}>Add</StyledButton>
-            <StyledButton variant='primary' width='150' onClick={() => toggleAddMode(1)}>Add Bulk</StyledButton>
+          <StyledButton variant='secondary' width='150' mr='10' onClick={() => toggleAddMode(0)}>Add</StyledButton>
+          <StyledButton variant='primary' width='150' onClick={() => toggleAddMode(1)}>Add Bulk</StyledButton>
         </Box>
-        <StyledTable 
-          headers={tableHeader} 
-          data={DummyData}
-          onActionClick={(e) => handleClick(e)}/>
+        <StyledTable
+          headers={tableHeader}
+          data={rfData}
+          onActionClick={(e) => handleClick(e)}
+          actions={["Edit", "Delete"]} />
       </Box>
-       {/* Modal */}
-       <Modal
+      {/* Modal */}
+      <Dialog
+        fullWidth
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        TransitionComponent={Transition}
       >
-                  
-        <Box sx={modalStyle}>
-         
-          {isComponent === 0 ? (
-            <AddRfidCard Close={handleClose} />
-          ) : isComponent === 1 ? (
-            <AddBulkRfidCard Close={handleClose} />
-          ) : isComponent === 2 ?(
-            <EditRfidCard Close={handleClose} existingData={tableData}/>
-          ):null}
-        </Box>
-       
-      </Modal>
+        {isComponent === 0 ? <AddRfidCard Close={handleClose} editStatus={editstatus} rfidData={selectData} /> : <AddBulkRfidCard Close={handleClose} />}
+
+      </Dialog>
     </>
   )
 }
 
 export default AllRfidCards
-
-// Modal style
-const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'auto', // Adjust width to fit your content or screen
-  boxShadow: 10,
-  borderRadius: 2,
-  color: '#fff', // White text for better visibility on dark background
-  outline: 'none', // Remove the focus ring
-  maxHeight: '100%',
-  overflowY:'auto'
-};

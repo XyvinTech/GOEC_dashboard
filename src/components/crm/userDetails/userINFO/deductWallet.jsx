@@ -7,6 +7,7 @@ import { ErrorOutlineOutlined, WarehouseOutlined, Warning } from '@mui/icons-mat
 import StyledDivider from '../../../../ui/styledDivider';
 import StyledButton from '../../../../ui/styledButton';
 import { useForm, Controller } from "react-hook-form";
+import { Transition } from '../../../../utils/DialogAnimation';
 
 
 export default function DeductWallet({ open, onClose, ...props }) {
@@ -30,7 +31,7 @@ export default function DeductWallet({ open, onClose, ...props }) {
       };
     
     return (
-        <Dialog open={open} maxWidth={'sm'} fullWidth>
+        <Dialog open={open} maxWidth={'sm'} fullWidth TransitionComponent={Transition}>
             <Box sx={{ backgroundColor: 'primary.main' }}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack direction={'row'} sx={{ justifyContent: 'space-between', px: 2, py: 2, alignItems: 'center' }}>

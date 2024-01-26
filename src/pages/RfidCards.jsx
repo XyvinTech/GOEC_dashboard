@@ -1,11 +1,24 @@
 import { Box, Stack } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StyledTab from "../ui/styledTab";
 import AllRfidCards from '../components/tagManagement/Rfid/AllRfidCards';
 import AssignRfid from '../components/tagManagement/Rfid/AssignRfid';
+import { getRfidList } from '../services/rfidAPI';
 
 const RfidCards = () => {
-    const [togglePage, setTogglePage] = useState(0);
+  const [togglePage, setTogglePage] = useState(0);
+  const [rfidData,setRfidData] = useState([])
+
+  const init = () => {
+    getRfidList().then((res) => {
+      setRfidData(res)
+    })
+  }
+
+  useEffect(() => {
+    init()
+  }, [])
+
 
   const buttonChanged = (e) => {
     console.log(e);
@@ -15,12 +28,12 @@ const RfidCards = () => {
     <Box>
       <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
         <StyledTab
-        buttons={["All RFID cards", "Assign RFID"]}
-        onChanged={buttonChanged}
-      />
-    </Stack>
-    {togglePage === 0 ? <AllRfidCards /> : <AssignRfid />}
-  </Box>
+          buttons={["All RFID cards", "Assign RFID"]}
+          onChanged={buttonChanged}
+        />
+      </Stack>
+      {togglePage === 0 ? <AllRfidCards data={rfidData} updateData={init}/> : <AssignRfid />}
+    </Box>
   )
 }
 

@@ -7,6 +7,7 @@ import StyledInput from '../../../../ui/styledInput'
 import { ReactComponent as Close } from "../../../../assets/icons/close-icon-large.svg";
 import StyledButton from '../../../../ui/styledButton'
 import { Controller, useForm } from 'react-hook-form'
+import { Transition } from '../../../../utils/DialogAnimation'
 
 let compactable_ports = [
     { label: "CCS", value: "CCS" },
@@ -50,6 +51,7 @@ export default function ConnectorDetails({ open, onClose, connectorNumber = 1, d
         <Dialog
             open={open}
             fullWidth
+            TransitionComponent={Transition}
         >
             <Box sx={{ backgroundColor: 'primary.main' }}>
                 <Stack direction={'row'} sx={{ justifyContent: 'space-between', px: 2, py: 2, alignItems: 'center' }}>

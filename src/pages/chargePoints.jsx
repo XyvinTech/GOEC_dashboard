@@ -7,6 +7,7 @@ import { deleteEvMachine, listEvMachine } from '../services/evMachineAPI';
 import ConfirmDialog from '../ui/confirmDialog';
 import { ReactComponent as Close } from "../assets/icons/close-icon-large.svg";
 import { toast } from 'react-toastify';
+import { Transition } from '../utils/DialogAnimation';
 export default function ChargingPoints() {
   const [togglePage, setTogglePage] = useState(0);
   const [chargePointListData, setChargePointListData] = useState([])
@@ -47,7 +48,7 @@ export default function ChargingPoints() {
         buttonText={"Delete"}
         onClose={() => { setDialogOpen(false) }}
         confirmButtonHandle={deleteData} />
-      <Dialog open={editDialogOpen} maxWidth='md' fullWidth>
+      <Dialog open={editDialogOpen} maxWidth='md' fullWidth TransitionComponent={Transition}>
         <Stack direction={'row'} sx={{ p: 2, backgroundColor: 'primary.main', justifyContent: 'space-between', borderBottom: 'solid 1px #fff3' }}>
           <Typography sx={{ color: 'secondary.contrastText' }}>Edit ChargeStation</Typography>
           <Close style={{ cursor: 'pointer' }} onClick={() => { setEditDialogOpen(false) }} />
