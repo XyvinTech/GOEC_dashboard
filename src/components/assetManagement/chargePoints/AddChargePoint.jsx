@@ -14,7 +14,7 @@ import { createEvMachine, editEvMachine, getEvModel, getOem } from "../../../ser
 import { toast } from "react-toastify";
 import { ContentCopy } from "@mui/icons-material";
 // StyledTable component
-const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false }) => {
+const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false, isFromStation = false,stationId }) => {
   const [stationList, setStationList] = useState([])
   const [OEMList, setOEMList] = useState([])
   const [modelList, setModelList] = useState([])
@@ -28,7 +28,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   } = useForm({
     defaultValues: {
       chargePointDisplayName: editStatus ? chargepointData["name"] : '',
-      locationName: editStatus ? chargepointData["Station"] : '',
+      locationName: editStatus ? isFromStation ? stationId : chargepointData["Station"] : isFromStation ? stationId : '',
       chargePointOEM: editStatus ? chargepointData["OEM"] : '',
       authorisationkey: editStatus ? chargepointData["authorization_key"] : '',
       serialNumber: editStatus ? chargepointData["serial_number"] : '',
@@ -59,7 +59,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       evModel: data.model.value,
       CPID: data.CPID,
       OEM: data.chargePointOEM.value,
-      cpidStatus:  "Available",
+      cpidStatus: "Available",
       published: data.published ? 'Yes' : "No"
     }
     createEvMachine(dt).then((res) => {
@@ -74,13 +74,13 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   const updateChargePoint = (data) => {
     let dt = {
       name: data.chargePointDisplayName,
-      location_name: data.locationName.value ? data.locationName.value : getListId(stationList,chargepointData["Station"]),
+      location_name: data.locationName.value ? data.locationName.value : getListId(stationList, chargepointData["Station"]),
       authorization_key: data.authorisationkey,
       serial_number: data.serialNumber,
       commissioned_date: data.commissionedDate,
-      evModel: data.model.value ? data.model.value : getListId(modelList,chargepointData["Model"]),
+      evModel: data.model.value ? data.model.value : getListId(modelList, chargepointData["Model"]),
       CPID: data.CPID,
-      OEM: data.chargePointOEM.value ? data.chargePointOEM.value :  getListId(OEMList,chargepointData["OEM"]),
+      OEM: data.chargePointOEM.value ? data.chargePointOEM.value : getListId(OEMList, chargepointData["OEM"]),
       cpidStatus: chargepointData["Status"],
       published: data.published ? 'Yes' : "No"
     }
@@ -119,7 +119,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
     init()
   }, [])
 
-  const getListId = (list,value) => {
+  const getListId = (list, value) => {
     for (let index = 0; index < list.length; index++) {
       if (list[index].label == value) {
         return list[index].value
@@ -153,38 +153,37 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
             </Stack>
           </Stack>
         }
-        <Typography
-          sx={{
-            marginBottom: 3,
-            marginTop: 3,
-            color: "primary.contrastText",
-          }}
-        >
-          Location Name
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Controller
-              name="locationName"
-              control={control}
-              render={({ field }) => (
-                <>
-                  <StyledSelectField
-                    {...field}
-                    placeholder="Select Location Name"
-                    options={stationList}
-                  />
-                  {errors.locationName && (
-                    <span style={errorMessageStyle}>
-                      {errors.locationName.message}
-                    </span>
+        {!isFromStation &&
+          <><Typography
+            sx={{
+              marginBottom: 3,
+              marginTop: 3,
+              color: "primary.contrastText",
+            }}
+          >
+            Location Name
+          </Typography><Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Controller
+                  name="locationName"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        {...field}
+                        placeholder="Select Location Name"
+                        options={stationList} />
+                      {errors.locationName && (
+                        <span style={errorMessageStyle}>
+                          {errors.locationName.message}
+                        </span>
+                      )}
+                    </>
                   )}
-                </>
-              )}
-              rules={{ required: "Location Name is required" }}
-            />
-          </Grid>
-        </Grid>
+                  rules={{ required: "Location Name is required" }} />
+              </Grid>
+            </Grid></>
+        }
 
         <Typography
           sx={{
