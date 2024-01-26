@@ -11,6 +11,7 @@ import {
 import StyledDivider from "../../../../ui/styledDivider";
 import StyledButton from "../../../../ui/styledButton";
 import { useForm, Controller } from "react-hook-form";
+import { Transition } from "../../../../utils/DialogAnimation";
 
 export default function AddTopup({ open, onClose, ...props }) {
   const {
@@ -32,7 +33,7 @@ export default function AddTopup({ open, onClose, ...props }) {
   };
 
   return (
-    <Dialog open={open} maxWidth={"sm"} fullWidth>
+    <Dialog open={open} maxWidth={"sm"} fullWidth TransitionComponent={Transition}>
       <Box sx={{ backgroundColor: "primary.main" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack

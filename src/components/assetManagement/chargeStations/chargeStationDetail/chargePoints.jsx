@@ -5,6 +5,7 @@ import StyledTable from '../../../../ui/styledTable'
 import AddChargePoint from '../../chargePoints/AddChargePoint'
 import LastSynced from '../../../../layout/LastSynced'
 import { useNavigate } from 'react-router-dom'
+import { Transition } from '../../../../utils/DialogAnimation'
 
 const tableHeader = [
   'CPID',
@@ -46,6 +47,7 @@ export default function ChargePoints({ data, ...props }) {
     <>
       <Dialog
         open={open}
+        TransitionComponent={Transition}
       >
         <AddChargePoint onClose={() => setOpen(false)} />
       </Dialog>

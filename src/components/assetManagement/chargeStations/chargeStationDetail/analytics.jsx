@@ -4,6 +4,7 @@ import { Stack } from '@mui/system'
 import React from 'react'
 import StyledCalender from '../../../../ui/StyledCalender'
 import { useState } from 'react'
+import { Transition } from '../../../../utils/DialogAnimation'
 
 export default function Analytics({data}) {
     const [open, setOpen] = useState(false)
@@ -14,6 +15,7 @@ export default function Analytics({data}) {
             <Dialog
                 open={open}
                 onClose={onClose}
+                TransitionComponent={Transition}
             >
                 <StyledCalender onClose={onClose} onDateChange={(e)=>{console.log(e); }}/>
             </Dialog>

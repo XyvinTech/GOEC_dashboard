@@ -1,6 +1,7 @@
 import { Box, Button, Dialog, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import StyledDivider from './styledDivider'
+import { Transition } from '../utils/DialogAnimation'
 
 export default function StyledPayloadTableCell({ value }) {
 
@@ -12,6 +13,7 @@ export default function StyledPayloadTableCell({ value }) {
                 onClose={() => { setOpen(false) }}
                 maxWidth='sm'
                 fullWidth
+                TransitionComponent={Transition}
             >
                 <Box sx={{ backgroundColor: 'secondary.main' }}>
                     <Box sx={{ p: 1 }}>

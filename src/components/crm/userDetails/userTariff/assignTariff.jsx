@@ -8,6 +8,7 @@ import StyledDivider from '../../../../ui/styledDivider';
 import StyledButton from '../../../../ui/styledButton';
 import StyledSelectField from '../../../../ui/styledSelectField';
 import { useForm, Controller } from "react-hook-form";
+import { Transition } from '../../../../utils/DialogAnimation';
 
 
 const UserNameComponent = ({ isuser = false }) => {
@@ -48,7 +49,7 @@ export default function AssignTariff({ open, onClose, ...props }) {
       };
     
     return (
-        <Dialog open={open} maxWidth={'sm'} fullWidth onClose={onClose && onClose}>
+        <Dialog open={open} maxWidth={'sm'} fullWidth onClose={onClose && onClose} TransitionComponent={Transition}>
             <Box sx={{ backgroundColor: 'secondary.main' }}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack sx={{ p: 4 }} spacing={1}>

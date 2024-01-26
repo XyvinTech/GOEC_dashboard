@@ -8,6 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import { createOem, editOem } from "../../../../services/evMachineAPI";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Transition } from "../../../../utils/DialogAnimation";
 
 export default function AddOEM({ open, onClose, editStatus = false, editData = {} }) {
   const { handleSubmit, setValue, reset, formState: { errors }, control } = useForm();
@@ -51,7 +52,7 @@ export default function AddOEM({ open, onClose, editStatus = false, editData = {
   }
 
   return (
-    <Dialog open={open} fullWidth>
+    <Dialog open={open} fullWidth TransitionComponent={Transition}>
       <Box sx={{ backgroundColor: "primary.main" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack

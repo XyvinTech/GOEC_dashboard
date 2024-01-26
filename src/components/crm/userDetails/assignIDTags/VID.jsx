@@ -4,6 +4,7 @@ import LastSynced from '../../../../layout/LastSynced';
 import StyledTable from '../../../../ui/styledTable';
 import { VIDData } from '../../../../assets/json/crm';
 import AssignVID from './assignVID';
+import { Transition } from '../../../../utils/DialogAnimation';
 
 const tableHeader = [
     'RFID tag',
@@ -17,7 +18,7 @@ export default function VID() {
     const [open,setopen] = useState(false)
     return (
         <Box>
-             <Dialog fullWidth maxWidth={'md'} open={open} onClose={()=>{setopen(false)}}>
+             <Dialog fullWidth maxWidth={'md'} open={open} onClose={()=>{setopen(false)}} TransitionComponent={Transition}>
                 <AssignVID />
             </Dialog>
             <LastSynced heading={'Assigned VID'} showButton={true} handleClick={()=>{setopen(true)}}/>
