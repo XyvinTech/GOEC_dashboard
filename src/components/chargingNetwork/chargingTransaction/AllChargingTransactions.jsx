@@ -6,6 +6,7 @@ import { Close } from "@mui/icons-material";
 import StyledDivider from "../../../ui/styledDivider";
 import ChargingSummary from "./ChargingSummary";
 import FilterNetwork from "../FilterNetwork";
+import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 const tableHeader = [
   "Transaction ID",
   "Date",
@@ -23,9 +24,12 @@ const tableHeader = [
 
 const newActions = ["View", "Download Invoice", "Resend Email"];
 
-export default function AllChargingTransactions({ ChargeStationData }) {
+export default function AllChargingTransactions({ data }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
+
+  const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'startTime', 'user', 'transactionMode', 'totalUnits','cpid','endTime','cpid','connectorId','totalAmount','closureReason','closeBy'], tableHeader)
+
 
   // Function to close the modal
   const handleClose = () => {
@@ -44,7 +48,7 @@ export default function AllChargingTransactions({ ChargeStationData }) {
       <Box sx={{ p: 3 }}>
         <StyledTable
           headers={tableHeader}
-          data={ChargeStationData}
+          data={AllOcppTransactionData}
           actions={newActions}
           onActionClick={tableActionClick}
         />

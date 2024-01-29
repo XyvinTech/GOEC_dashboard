@@ -101,10 +101,10 @@ const items = [
                 href: 'charging-network/charger-logs',
                 title: 'Charger Logs',
             },
-            {
-                href: 'charging-network/booking-transaction',
-                title: 'Booking Transaction',
-            }
+            // {
+            //     href: 'charging-network/booking-transaction',
+            //     title: 'Booking Transaction',
+            // }
         ]
     },
     {
