@@ -17,7 +17,6 @@ const StyledStatusChip = styled.span`
   // Dynamically set the background color based on the status
   background-color: ${(props) => {
     // Normalize the status to uppercase for case-insensitive comparison
-    console.log(props);
     const status = props.$status ? props.$status.toUpperCase() : 'UNAVAILABLE'
 
     if (["ACTIVE", "ONLINE", "ASSIGNED", "SUCCESS","AVAILABLE","YES"].includes(status)) {

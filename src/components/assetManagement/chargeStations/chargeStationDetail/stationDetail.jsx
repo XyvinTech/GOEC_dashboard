@@ -50,8 +50,8 @@ export default function StationDetail({ data, ...props }) {
       <Typography variant='caption' color={'primary.DimText'}>Aminities</Typography>
       <Box sx={{ height: '125px', border: '1px solid rgba(255, 255, 255, 0.20)', borderRadius: '4px', p: 1 }}>
         <Grid container spacing={1}>
-          {data.amenities && data.amenities.map((item) => (
-            <Grid item><Button sx={{ backgroundColor: 'primary.subButton', color: 'primary.contrastText', height: '26px', borderRadius: '4px', fontWeight: '5px' }}>{item}</Button></Grid>
+          {data.amenities && data.amenities.map((item,ind) => (
+            <Grid item key={ind}><Button sx={{ backgroundColor: 'primary.subButton', color: 'primary.contrastText', height: '26px', borderRadius: '4px', fontWeight: '5px' }}>{item}</Button></Grid>
           ))
           }
         </Grid>

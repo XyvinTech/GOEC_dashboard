@@ -5,7 +5,7 @@ import StyledDivider from '../ui/styledDivider';
 import { ReactComponent as CloseCircle } from '../assets/icons/close-circle.svg';
 
 const StyledLayout = styled.div`
-width: 772px;
+width: 100%;
 // height: 609px;
 border-radius: var(--borderRadius, 4px);
 background: #27292F;
@@ -26,7 +26,7 @@ border-radius: 8px;
 background: #27292F;
 `;
 const HeaderContainer = styled.div`
-padding: 28px 32px 28px 32px;
+padding: 15px 32px 15px 32px;
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -63,15 +63,14 @@ border-bottom-right-radius: var(--borderRadius, 4px);
 
 
 const CommonLayout = ({ header, children,onClick }) => {
-   
-  
+     
     return (
       <>
        <StyledLayout  >
             <StyledLayout2>
                 {header && 
                 <>
-                    <HeaderContainer>{header}<CloseCircle onClick={onClick}/></HeaderContainer>
+                    <HeaderContainer>{header}<CloseCircle onClick={onClick} style={{cursor:'pointer'}}/></HeaderContainer>
                     <StyledDivider/>
                 </>
                 }

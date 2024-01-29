@@ -4,6 +4,7 @@ import LastSynced from '../../../../layout/LastSynced';
 import StyledTable from '../../../../ui/styledTable';
 import { RFIDData } from '../../../../assets/json/crm';
 import AssignRFID from './assignRFID';
+import { Transition } from '../../../../utils/DialogAnimation';
 
 const tableHeader = [
     'RFID tag',
@@ -18,7 +19,7 @@ export default function RFID() {
     const [open,setopen] = useState(false)
     return (
         <Box>
-            <Dialog fullWidth maxWidth={'md'} open={open} onClose={()=>{setopen(false)}}>
+            <Dialog fullWidth maxWidth={'md'} open={open} onClose={()=>{setopen(false)}} TransitionComponent={Transition}>
                 <AssignRFID />
             </Dialog>
             <LastSynced heading={'Assigned RFID'} showButton={true}  handleClick={()=>{setopen(true)}}/>

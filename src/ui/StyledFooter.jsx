@@ -3,12 +3,11 @@ import styled, { css } from 'styled-components';
 
 
 const FooterContainer = styled.div`
-display: inline-flex;
-padding: 20px 10px 20px 20px;
+display: flex;
+padding: 20px 20px 20px 20px;
 justify-content: flex-end;
 align-items: center;
 background: #1C1D22;
-bottom: 0;
 border-bottom-left-radius: var(--borderRadius, 4px);
 border-bottom-right-radius: var(--borderRadius, 4px);
 // width for different button styles

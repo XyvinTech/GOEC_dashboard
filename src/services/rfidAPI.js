@@ -11,7 +11,7 @@ export async function createRfid(data) {
 
 export async function editRfid(Id, data) {
   try {
-    const response = await LAMBDA_INSTANCES.put(`vehicle/${Id}`, data);
+    const response = await LAMBDA_INSTANCES.put(`rfid/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,7 +20,7 @@ export async function editRfid(Id, data) {
 
 export async function deleteRfid(Id) {
   try {
-    const response = await LAMBDA_INSTANCES.delete(`vehicle/${Id}`);
+    const response = await LAMBDA_INSTANCES.delete(`rfid/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -29,7 +29,7 @@ export async function deleteRfid(Id) {
 
 export async function getRfidById(Id) {
   try {
-    const response = await LAMBDA_INSTANCES.get(`vehicle/${Id}`);
+    const response = await LAMBDA_INSTANCES.get(`rfid/${Id}`);
     return response.data;
   } catch (error) {
     throw error;

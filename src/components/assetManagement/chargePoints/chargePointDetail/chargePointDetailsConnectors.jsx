@@ -6,11 +6,12 @@ import { ReactComponent as Mdi_unlocked } from "../../../../assets/icons/mdi_unl
 import { getConnectorIcon } from "../../../../utils/connectorIcons";
 import { unlock } from "../../../../services/ocppAPI";
 import { Download } from "@mui/icons-material";
+import { Transition } from "../../../../utils/DialogAnimation";
 
 
 const QRPopUp = ({ open, onClose, url }) => {
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} TransitionComponent={Transition}>
       <Stack direction={"column"} sx={{ backgroundColor: 'primary.main' }}>
         <Box p={2}>
           <img src={ url ? url : `https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png`} height={200}
