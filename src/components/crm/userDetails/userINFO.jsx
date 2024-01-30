@@ -5,19 +5,19 @@ import UserInfo from './userINFO/userInfo'
 import WalletInfo from './userINFO/walletInfo'
 import TotalInfo from './userINFO/totalInfo'
 
-export default function UserINFO() {
+export default function UserINFO({userData}) {
     return (
         <Box>
             <LastSynced heading={'User info'} />
             <Grid container sx={{ p: { sx: 2, md: 4 } }} spacing={2}>
                 <Grid item xs={12} md={5}>
-                    <UserInfo />
+                    <UserInfo data={userData}/>
                 </Grid>
                 <Grid item xs={12} md={7}>
-                    <WalletInfo />
+                    <WalletInfo data={userData}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TotalInfo />
+                    <TotalInfo userData={userData}/>
                 </Grid>
             </Grid>
         </Box>

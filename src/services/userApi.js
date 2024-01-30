@@ -66,6 +66,25 @@ export async function getUsersList() {
   }
 }
 
+export async function getUsersListforAdmin() {
+  try {
+    const response = await USER_INSTANCE.get(`admin/userList`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getUserByIdforAdmin(id) {
+  try {
+    const response = await USER_INSTANCE.get(`admin/userDatabyId/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 export async function addFavSatation(stationId, data) {
   try {
     const response = await USER_INSTANCE.put(
