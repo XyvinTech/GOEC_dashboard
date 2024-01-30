@@ -26,6 +26,7 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
   const handleStopClick = (id) => {
     alert(`Terminate session for id: `);
   };
+  let prevHeader = null;
 
   return (
     <TableContainer >
@@ -49,6 +50,9 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
                   const isPayload = header.toLowerCase() === "payload data";
                   const isTerminateSession = header.toLowerCase() === "terminate session";
                   const isPublished = header.toLowerCase() === "published";
+
+                  const command = prevHeader;
+                  prevHeader = header;
                   return (
                     <TableCell
                       key={`${rowIndex}-${header}`}
@@ -60,7 +64,7 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
                             <StyledStopButton onClick={() => handleStopClick(row.id)}>
                               Stop
                             </StyledStopButton>
-                          ) : isPayload ? <StyledPayloadTableCell value={row[header]} />
+                          ) : isPayload ? <StyledPayloadTableCell value={row[header]} command={row[command]} />
                             : isPublished ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
                               : (row[header] || row[header] === ""  ? row[header] : '_')
                       }

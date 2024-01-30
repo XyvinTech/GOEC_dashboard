@@ -2,6 +2,7 @@ import React from 'react';
 import LastSynced from "../../../layout/LastSynced";
 import StyledTable from "../../../ui/styledTable";
 import { Box } from "@mui/material";
+import { tableHeaderReplace } from '../../../utils/tableHeaderReplace';
 
 const tableHeader = [
   "CPID",
@@ -11,7 +12,11 @@ const tableHeader = [
   "Unique ID"
 ];
 
-export default function AllChargerLogs({ChargerLogsData}) {
+export default function AllChargerLogs({data}) {
+  const AllLogsData = tableHeaderReplace(data, ['CPID', 'timestamp', 'messageType', 'payload', '_id'], tableHeader)
+
+
+
   return (
     <>
     
@@ -20,7 +25,7 @@ export default function AllChargerLogs({ChargerLogsData}) {
         <StyledTable
         showActionCell={false}
           headers={tableHeader}
-          data={ChargerLogsData}
+          data={AllLogsData}
         
         />
       </Box>

@@ -1,11 +1,26 @@
-import React from 'react'
-import AllChargerLogs from '../components/chargingNetwork/chargerLogs/AllChargerLogs'
-import  {ChargerLogsData}  from '../assets/json/ChargerLogsData'
+import React, { useEffect, useState } from "react";
+import AllChargerLogs from "../components/chargingNetwork/chargerLogs/AllChargerLogs";
+import { getAllOcppLogs } from "../services/ocppAPI";
+
 export default function ChargerLogs() {
+  const [logs, setLogs] = useState([]);
+
+  const init = () => {
+    getAllOcppLogs().then((res) => {
+      console.log(res.result);
+      if (res) {
+        setLogs(res.result);
+      }
+    });
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <div>
-      <AllChargerLogs ChargerLogsData={ChargerLogsData}  />
-
+      <AllChargerLogs data={logs} />
     </div>
-  )
+  );
 }

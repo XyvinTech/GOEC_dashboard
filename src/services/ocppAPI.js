@@ -48,7 +48,7 @@ export async function unlock(cpid,data) {
 }
 
 export async function reset(cpid) {
-  // ? GOEC123 is id or  not?
+  
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/reset/${cpid}`);
     return response.data;
@@ -64,6 +64,37 @@ export async function changeConfig(data,cpid) {
       `ocpp/unlock-connector/${cpid}`,
       data
     );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function getAllOcppLogs() {
+  
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/logs`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getOcppLogsByCpid(cpid) {
+  
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/logs/${cpid}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllOcppTransactionLogs() {
+  
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transactionList`);
     return response.data;
   } catch (error) {
     throw error;

@@ -8,7 +8,6 @@ import { ReactComponent as ReloadIcon } from '../../../assets/icons/reload.svg'
 // import { AllChargePointsData } from '../../../assets/json/chargepoints'
 import LastSynced from '../../../layout/LastSynced'
 import { useNavigate } from 'react-router-dom'
-import StyledButton from '../../../ui/styledButton'
 import { searchAndFilter } from '../../../utils/search'
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
 
