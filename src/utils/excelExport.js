@@ -19,3 +19,4 @@ export const exportRFIDSampleFile = async ()=>{
    const data = new Blob([excelBuffer],{type:fileType})
    FileSaver.saveAs(data, `sampleRFIDList${fileExtention}`)
 }
+

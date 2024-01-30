@@ -18,26 +18,13 @@ background: var(--Field-inner, #39383D);
 
 
 const UploadFile = ({ onFileSelect }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     onDrop: (acceptedFiles) => {
-      handleFileChange({ target: {files:acceptedFiles} })
+      onFileSelect(acceptedFiles[0])
     }
   });
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    
-    if (file) {
-      setSelectedFile(file);
-      console.log(file);
-      // Invoke the callback function from the parent with the file name and upload percentage
-      //onFileSelect(file.name, 100);
-      onFileSelect([file]);
-    }
-  };
 
   return (
     <FileContainer {...getRootProps({})}>
@@ -45,20 +32,16 @@ const UploadFile = ({ onFileSelect }) => {
         <div>
           <UploadIcon />
         </div>
-        <input
-          type="file"
-          id="fileInput"
-          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" // Specify accepted file types if needed
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-          {...getInputProps({})}
-        />
+        
       </label>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', color: '#fff', alignItems: 'center', fontWeight: 300 }}>
         <span>Drop your file here to upload</span>
         <span>or select from storage</span>
       </div>
-
+      <input
+        style={{display:'none'}}
+          {...getInputProps({})}
+        />
 
     </FileContainer>
 

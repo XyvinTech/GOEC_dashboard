@@ -72,20 +72,9 @@ align-self: stretch;
 color:#fff;
 `;
 
-const ProgressBar = ({ UploadProgress,filename }) => {
-
-    const [isVisible, setIsVisible] = useState(filename ? true : false);
-
-    useEffect(() => {
-      setIsVisible(filename ? true : false)
-    }, [filename])
-    
-    const handleClose = () => {
-        setIsVisible(false);
-    };
-
-
-    return isVisible ? (
+const ProgressBar = ({ UploadProgress,filename,onClose }) => {
+  
+    return (
         <div style={{ width: '100%' }}>
           <ProgressContainer>
             <EllipseLayout>
@@ -101,10 +90,10 @@ const ProgressBar = ({ UploadProgress,filename }) => {
                 </ProgressInfo>
                 <StyledProgress value={UploadProgress} max="100" />
             </ProgressBarLayour>
-            <CloseCircle style={{cursor:'pointer'}} onClick={handleClose} />
+            <CloseCircle style={{cursor:'pointer'}} onClick={onClose} />
           </ProgressContainer>
         </div>
-      ) : null;
+      );
 };
 
 export default ProgressBar
