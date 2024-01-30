@@ -11,7 +11,6 @@ import { createRfid, editRfid } from "../../../services/rfidAPI";
 import { toast } from "react-toastify";
 
 const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
-  console.log(rfidData);
   const { control, handleSubmit, setValue, watch, formState: { errors }, clearErrors } = useForm({
     defaultValues: {
       activate: editStatus && rfidData["Status"] == "active" ? true : false, // Set the default value for "activate"

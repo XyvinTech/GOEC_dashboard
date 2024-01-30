@@ -7,95 +7,77 @@ import { ReactComponent as ArrowDown } from "../../../assets/icons/arrow-down.sv
 import UploadFile from "../../../ui/UploadFile";
 import ProgressBar from "../../../ui/ProgressBar";
 import { useForm } from 'react-hook-form';
+import { excelToJSONConvert, exportRFIDSampleFile } from "../../../utils/excelExport";
+import { toast } from "react-toastify";
+import XLSX from 'sheetjs-style';
+import { createManyRfid } from "../../../services/rfidAPI";
 
-const AddBulkRfidCard = ({Close,Save}) => {
+const AddBulkRfidCard = ({ Close, Save }) => {
 
   const { register, handleSubmit, watch, setValue } = useForm();
-  
+
   const selectedFile = watch('file'); // Watch the 'file' field
 
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [selectedFileName, setselectedFileName] = useState(null);
+  const [buttonDisabled, setButtonDisabled] = useState(true)
+  const [excelData, setExcelData] = useState([])
 
-
-  const handleFileSelect = (fileList, percentage) => {
-    // console.log("filelist:", fileList);
-    // console.log("length:", fileList.length);
-  
-    if (fileList && fileList.length > 0) {
-      const file = fileList[0];
-      // console.log("file is:", file);
-  
-      setValue('file', fileList); // Set the entire FileList object for the form
-      setselectedFileName(file.name)
-      setUploadPercentage(percentage);
-    } else {
-      console.log("No file selected");
+  const handleFileSelect = (file) => {
+    var re = /(\.csv|\.xls|\.xlsx)$/i;
+    if (!re.exec(file.name)) {
+      toast.error("File not supported!");
+      return
     }
-  };
 
-  const onSubmit = async (data) => {
-    // Handle form submission here
-    console.log('Form data submitted:',data);
-  
-    const fileList = data.file;
-    // console.log("file input:", data.file);
-  
-    if (fileList && fileList.length > 0 ) {
-      const fileInput = fileList[0];
-  
-      try {
-        const fileData = await readFileAsText(fileInput);
-        console.log('File Data:', fileData);
-  
-        // Extract the file name for display
-        const fileName = fileInput.name;
-        console.log('File Name:', fileName);
-  
-        // Now you can parse the CSV data
-        const parsedData = parseCSV(fileData);
-        console.log('Parsed Data:', parsedData);
-      } catch (error) {
-        console.error('Error reading file:', error);
+    setselectedFileName(file.name)
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, { type: "binary" });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(worksheet);
+      setExcelData(json)
+    };
+
+    reader.onprogress = (data) => {
+      if (data.lengthComputable) {
+        var progress = parseInt(((data.loaded / data.total) * 100), 10);
+        setUploadPercentage(progress)
+        setButtonDisabled(false)
       }
-    } else {
-      console.log("No file selected");
     }
-  
-    Close();
+    reader.readAsBinaryString(file);
+    // console.log(data);
+    // let i = 5;
+    // const interval = setInterval(() => {
+    //   i += 5
+    //   if (i == 100) {
+    //     clearInterval(interval)
+    //   }
+    //   setUploadPercentage(i);
+    // }, 500);
   };
 
+  const onSubmit =  (data) => {
+    if (excelData.length > 2) {
+      //API call
+      createManyRfid({data:excelData}).then(res=>{
+        toast.success("Rfid Addes Successfull")
+      }).catch(error=>{
+        toast.error(error.response.data.error)
+      })
+      Close();
+    } else if (excelData.length > 50) {
+      toast.error("Datas exceeding Limit! please enter on 50 Data Maximum ")
+    } else if (excelData.length < 2) {
+      toast.error("Datas no exist! please enter atleast 2 data")
+    }
 
-  const readFileAsText = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = (e) => resolve(e.target.result);
-      reader.onerror = (e) => reject(e);
-
-      reader.readAsText(file);
-    });
   };
 
-  function parseCSV(csvData) {
-    const rows = csvData.split('\n');
-    const header = rows[0].split(',');
-    const parsedData = [];
-  
-    for (let i = 1; i < rows.length; i++) {
-      const rowData = rows[i].split(',');
-      const entry = {};
-  
-      for (let j = 0; j < header.length; j++) {
-        entry[header[j]] = rowData[j];
-      }
-  
-      parsedData.push(entry);
-    }
-  
-    return parsedData;
-  }
-  
   const handleBrowseClick = () => {
     // trigger file input click
     document.getElementById('fileInput').click();
@@ -104,116 +86,117 @@ const AddBulkRfidCard = ({Close,Save}) => {
 
   return (
     <>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <CommonLayout header="Add bulk RFID Card" onClick={Close}>
-        <Grid
-          container
-          spacing={2}
-          direction="row"
-          sx={{ pr: 2, pl: 2, fontSize: "14px" }}
-        >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <CommonLayout header="Add bulk RFID Card" onClick={Close}>
           <Grid
-            item
-            xs={12}
-            textAlign="left"
-            display="flex"
-            justifyContent="flex-start"
-            sx={{ mb: 2 }}
+            container
+            spacing={2}
+            direction="row"
+            sx={{ pr: 2, pl: 2, fontSize: "14px" }}
           >
-            <UploadFile onFileSelect={handleFileSelect} />
-            <input
+            <Grid
+              item
+              xs={12}
+              textAlign="left"
+              display="flex"
+              justifyContent="flex-start"
+              sx={{ mb: 2 }}
+            >
+              <UploadFile onFileSelect={handleFileSelect} />
+              <input
                 type="file"
                 id="fileInput"
                 style={{ display: 'none' }}
-                onChange={(e) => handleFileSelect(e.target.files, 0)}
-                {...register('file')}
+                multiple={false}
+                onChange={(e) => { handleFileSelect(e.target.files[0]); }}
               />
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            textAlign="right"
-            display="flex"
-            justifyContent="flex-end"
-          >
-            <StyledButton variant="gray" width="180" mr="20" fontSize="10" type="button"
-                 onClick={handleBrowseClick}>
-              Browse
-            </StyledButton>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            textAlign="left"
-            display="flex"
-            justifyContent="flex-start"
-          >
-            <StyledButton variant="gray" width="180" mr="20" fontSize="10">
-              <ArrowDown />
-              Download Sample
-            </StyledButton>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            textAlign="left"
-            display="flex"
-            justifyContent="flex-start"
-          >
-            {selectedFileName && (
-              <ProgressBar
-                UploadProgress={uploadPercentage}
-                filename={selectedFileName}
-              />
-            )}
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            textAlign="left"
-            display="flex"
-            justifyContent="flex-start"
-          >
-            <Typography align="left">Instructions for bulk import:</Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            textAlign="left"
-            display="flex"
-            justifyContent="flex-start"
-          >
-            <List
-              sx={{
-                listStyleType: "disc",
-                listStylePosition: "inside",
-              }}
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              textAlign="right"
+              display="flex"
+              justifyContent="flex-end"
             >
-              <ListItem sx={{ display: "list-item" }}>
-                RFID Field is mandatory.
-              </ListItem>
-              <ListItem sx={{ display: "list-item" }}>
-                If any value is not present, then please use hyphen ("-") rather
-                than leaving it blank.
-              </ListItem>
-              <ListItem sx={{ display: "list-item" }}>
-                Don't remove headers.
-              </ListItem>
-              <ListItem sx={{ display: "list-item" }}>
-                Maximum of 50 entries allowed at a time.
-              </ListItem>
-            </List>
+              <StyledButton variant="gray" width="180" mr="20" fontSize="10" type="button"
+                onClick={handleBrowseClick}>
+                Browse
+              </StyledButton>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              textAlign="left"
+              display="flex"
+              justifyContent="flex-start"
+            >
+              <StyledButton variant="gray" width="180" mr="20" type="button" fontSize="10" onClick={exportRFIDSampleFile}>
+                <ArrowDown />
+                Download Sample
+              </StyledButton>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              textAlign="left"
+              display="flex"
+              justifyContent="flex-start"
+            >
+              {selectedFileName && (
+                <ProgressBar
+                  UploadProgress={uploadPercentage}
+                  filename={selectedFileName}
+                  onClose={() => { setselectedFileName(); setButtonDisabled(true); setExcelData([]) }}
+                />
+              )}
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              textAlign="left"
+              display="flex"
+              justifyContent="flex-start"
+            >
+              <Typography align="left" color={'secondary.contrastText'}>Instructions for bulk import:</Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              textAlign="left"
+              display="flex"
+              justifyContent="flex-start"
+            >
+              <List
+                sx={{
+                  listStyleType: "disc",
+                  listStylePosition: "inside",
+                }}
+
+              >
+                <ListItem sx={{ display: "list-item", color: 'secondary.contrastText', fontSize: 12 }}>
+                  RFID Field is mandatory.
+                </ListItem>
+                <ListItem sx={{ display: "list-item", color: 'secondary.contrastText' }}>
+                  If any value is not present, then please use hyphen ("-") rather than leaving it blank.
+                </ListItem>
+                <ListItem sx={{ display: "list-item", color: 'secondary.contrastText' }}>
+                  Don't remove headers.
+                </ListItem>
+                <ListItem sx={{ display: "list-item", color: 'secondary.contrastText' }}>
+                  Maximum of 50 entries allowed at a time.
+                </ListItem>
+              </List>
+            </Grid>
           </Grid>
-        </Grid>
-      </CommonLayout>
-      <StyledFooter>
-        <StyledButton variant="secondary" width="103" mr="20" onClick={Close} type="button">
-          Cancel
-        </StyledButton>
-        <StyledButton variant="primary" width="160" type="submit">
-          Upload
-        </StyledButton>
-      </StyledFooter>
+        </CommonLayout>
+        <StyledFooter width={100}>
+          <StyledButton variant="secondary" width={'130'} style={{ height: '50px' }} mr="20" onClick={Close} type="button">
+            Cancel
+          </StyledButton>
+          <StyledButton variant={buttonDisabled ? 'gray' : 'primary'} width={'150'} style={{ height: '50px', cursor: buttonDisabled ? 'no-drop' : 'pointer' }} type="submit" disabled={buttonDisabled} >
+            Upload
+          </StyledButton>
+        </StyledFooter>
       </form>
     </>
   );

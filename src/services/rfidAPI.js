@@ -8,7 +8,14 @@ export async function createRfid(data) {
     throw error;
   }
 }
-
+export async function createManyRfid(data) {
+  try {
+    const response = await LAMBDA_INSTANCES.post(`rfid/createMany`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 export async function editRfid(Id, data) {
   try {
     const response = await RFID_URL.put(`rfid/${Id}`, data);
