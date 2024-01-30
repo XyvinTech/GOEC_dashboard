@@ -55,7 +55,7 @@ export const REVIEW_INSTANCE = axios.create({
 });
 
 export const USER_INSTANCE = axios.create({
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5691/api/v1',
+  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5688/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",

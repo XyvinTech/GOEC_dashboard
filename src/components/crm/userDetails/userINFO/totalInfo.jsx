@@ -3,26 +3,27 @@ import { Box, Dialog, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import React from 'react'
 
-const data = [
-    {
-        label: 'Total Charging',
-        sub: 'sessions',
-        value: '999'
-    },
-    {
-        label: 'Total Amount',
-        sub: 'billed (INR)',
-        value: '24234345'
-    },
-    {
-        label: 'Total units',
-        sub: 'Consumed(kWh)',
-        value: '43274523'
-    }
 
-]
+export default function TotalInfo({userData}) {
 
-export default function TotalInfo() {
+    const data = [
+        {
+            label: 'Total Charging',
+            sub: 'sessions',
+            value: userData?.total_sessions
+        },
+        {
+            label: 'Total Amount',
+            sub: 'billed (INR)',
+            value: userData?.total_units && userData?.total_units.toFixed(2)
+        },
+        {
+            label: 'Total units',
+            sub: 'Consumed(kWh)',
+            value: userData?.totalAmount && userData?.totalAmount.toFixed(2)
+        }
+    
+    ]
     return (
         <Box sx={{ backgroundColor: 'secondary.main', borderRadius: '4px', p: 5 }}>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 2, md: 15 }} sx={{ justifyContent: 'center' }}>
