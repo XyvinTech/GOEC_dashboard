@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ReactComponent as UploadIcon } from '../assets/icons/Group 37.svg'
 import styled from 'styled-components';
+import { useDropzone } from 'react-dropzone';
 
 const FileContainer = styled.div`
 display: flex;
@@ -19,48 +20,48 @@ background: var(--Field-inner, #39383D);
 const UploadFile = ({ onFileSelect }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadPercentage, setUploadPercentage] = useState(0);
- 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
 
+  const { getRootProps, getInputProps } = useDropzone({
+    multiple: false,
+    onDrop: (acceptedFiles) => {
+      handleFileChange({ target: {files:acceptedFiles} })
+    }
+  });
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    
     if (file) {
       setSelectedFile(file);
-
-      // Simulate file upload with a delay and update the percentage
-      for (let i = 0; i <= 100; i += 10) {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setUploadPercentage(i);
-      }
-
+      console.log(file);
       // Invoke the callback function from the parent with the file name and upload percentage
       //onFileSelect(file.name, 100);
-      onFileSelect([file],100);
+      onFileSelect([file]);
     }
   };
 
   return (
-    <FileContainer>
+    <FileContainer {...getRootProps({})}>
       <label htmlFor="fileInput">
         <div>
-          <UploadIcon/>
+          <UploadIcon />
         </div>
         <input
           type="file"
           id="fileInput"
-          accept=".pdf, .doc, .docx, .zip,.csv" // Specify accepted file types if needed
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" // Specify accepted file types if needed
           style={{ display: 'none' }}
           onChange={handleFileChange}
+          {...getInputProps({})}
         />
       </label>
-        <div>
-          Drop your file here to upload
-          <br />
-          or select from storage
-        </div>
-     
-      
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', color: '#fff', alignItems: 'center', fontWeight: 300 }}>
+        <span>Drop your file here to upload</span>
+        <span>or select from storage</span>
+      </div>
+
+
     </FileContainer>
-   
+
   );
 };
 

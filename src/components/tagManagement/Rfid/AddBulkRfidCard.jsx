@@ -7,6 +7,7 @@ import { ReactComponent as ArrowDown } from "../../../assets/icons/arrow-down.sv
 import UploadFile from "../../../ui/UploadFile";
 import ProgressBar from "../../../ui/ProgressBar";
 import { useForm } from 'react-hook-form';
+import { exportRFIDSampleFile } from "../../../utils/excelExport";
 
 const AddBulkRfidCard = ({Close,Save}) => {
 
@@ -28,7 +29,15 @@ const AddBulkRfidCard = ({Close,Save}) => {
   
       setValue('file', fileList); // Set the entire FileList object for the form
       setselectedFileName(file.name)
-      setUploadPercentage(percentage);
+      let i = 5;
+      const interval = setInterval(() => {
+        i+=5
+        if (i == 100) {
+          clearInterval(interval)
+        }
+        setUploadPercentage(i);
+      }, 500);
+      
     } else {
       console.log("No file selected");
     }
@@ -124,6 +133,7 @@ const AddBulkRfidCard = ({Close,Save}) => {
             <input
                 type="file"
                 id="fileInput"
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                 style={{ display: 'none' }}
                 onChange={(e) => handleFileSelect(e.target.files, 0)}
                 {...register('file')}
@@ -148,7 +158,7 @@ const AddBulkRfidCard = ({Close,Save}) => {
             display="flex"
             justifyContent="flex-start"
           >
-            <StyledButton variant="gray" width="180" mr="20" fontSize="10">
+            <StyledButton variant="gray" width="180" mr="20" type="button" fontSize="10" onClick={exportRFIDSampleFile}>
               <ArrowDown />
               Download Sample
             </StyledButton>
@@ -174,7 +184,7 @@ const AddBulkRfidCard = ({Close,Save}) => {
             display="flex"
             justifyContent="flex-start"
           >
-            <Typography align="left">Instructions for bulk import:</Typography>
+            <Typography align="left" color={'secondary.contrastText'}>Instructions for bulk import:</Typography>
           </Grid>
           <Grid
             item
@@ -188,29 +198,29 @@ const AddBulkRfidCard = ({Close,Save}) => {
                 listStyleType: "disc",
                 listStylePosition: "inside",
               }}
+              
             >
-              <ListItem sx={{ display: "list-item" }}>
+              <ListItem sx={{ display: "list-item",color:'secondary.contrastText',fontSize:12 }}>
                 RFID Field is mandatory.
               </ListItem>
-              <ListItem sx={{ display: "list-item" }}>
-                If any value is not present, then please use hyphen ("-") rather
-                than leaving it blank.
+              <ListItem sx={{ display: "list-item",color:'secondary.contrastText' }}>
+                If any value is not present, then please use hyphen ("-") rather than leaving it blank.
               </ListItem>
-              <ListItem sx={{ display: "list-item" }}>
+              <ListItem sx={{ display: "list-item",color:'secondary.contrastText' }}>
                 Don't remove headers.
               </ListItem>
-              <ListItem sx={{ display: "list-item" }}>
+              <ListItem sx={{ display: "list-item",color:'secondary.contrastText' }}>
                 Maximum of 50 entries allowed at a time.
               </ListItem>
             </List>
           </Grid>
         </Grid>
       </CommonLayout>
-      <StyledFooter>
-        <StyledButton variant="secondary" width="103" mr="20" onClick={Close} type="button">
+      <StyledFooter width={100}>
+        <StyledButton variant="secondary" width={'130'} style={{height:'50px'}}  mr="20" onClick={Close} type="button">
           Cancel
         </StyledButton>
-        <StyledButton variant="primary" width="160" type="submit">
+        <StyledButton variant="primary" width={'150'} style={{height:'50px'}} type="submit">
           Upload
         </StyledButton>
       </StyledFooter>

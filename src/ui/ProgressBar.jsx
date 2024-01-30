@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { ReactComponent as DocumentTextIcon } from '../assets/icons/document-text.svg'
 import { ReactComponent as EllipseIcon } from '../assets/icons/Ellipse 4.svg'
@@ -69,12 +69,17 @@ align-self: stretch;
 const ProgressNumber = styled.div`
 width: 25px;
 align-self: stretch;
+color:#fff;
 `;
 
 const ProgressBar = ({ UploadProgress,filename }) => {
 
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, setIsVisible] = useState(filename ? true : false);
 
+    useEffect(() => {
+      setIsVisible(filename ? true : false)
+    }, [filename])
+    
     const handleClose = () => {
         setIsVisible(false);
     };
@@ -96,7 +101,7 @@ const ProgressBar = ({ UploadProgress,filename }) => {
                 </ProgressInfo>
                 <StyledProgress value={UploadProgress} max="100" />
             </ProgressBarLayour>
-            <CloseCircle onClick={handleClose} />
+            <CloseCircle style={{cursor:'pointer'}} onClick={handleClose} />
           </ProgressContainer>
         </div>
       ) : null;
