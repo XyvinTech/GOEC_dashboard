@@ -26,7 +26,7 @@ export const VEHICLE_INSTANCES = axios.create({
 //!charging stations
 
 export const CHARGING_STATION_INSTANCE = axios.create({
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5100/api/v1',
+  baseURL: 'https://alb-762634556.ap-south-1.elb.amazonaws.com:5100/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const CHARGING_STATION_INSTANCE = axios.create({
 
 //!for ev charge  machine, charge points, oem, ev models
 export const EV_MACHINE_INSTANCE = axios.create({
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5691/api/v1',
+  baseURL: 'https://alb-762634556.ap-south-1.elb.amazonaws.com:5691/api/v1',
   // baseURL: 'http://localhost:5691/api/v1',
 
   headers: {
@@ -47,7 +47,7 @@ export const EV_MACHINE_INSTANCE = axios.create({
 
 export const REVIEW_INSTANCE = axios.create({
   
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5685/api/v1',
+  baseURL: 'https://alb-762634556.ap-south-1.elb.amazonaws.com:5685/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export const REVIEW_INSTANCE = axios.create({
 });
 
 export const USER_INSTANCE = axios.create({
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5688/api/v1',
+  baseURL: 'https://alb-762634556.ap-south-1.elb.amazonaws.com:5688/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export const USER_INSTANCE = axios.create({
 });
 
 export const PAYMENT_INSTANCE = axios.create({
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5691/api/v1',
+  baseURL: 'https://alb-762634556.ap-south-1.elb.amazonaws.com:5691/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export const OCPP_INSTANCE = axios.create({
 
 
 export const IMAGE_UPLOAD_URL = axios.create({
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5100/api/v1',
+  baseURL: 'https://alb-762634556.ap-south-1.elb.amazonaws.com:5100/api/v1',
   headers: {
     Authorization: "Bearer " + token,
     "Content-Type": "multipart/form-data",
@@ -96,7 +96,7 @@ export const IMAGE_UPLOAD_URL = axios.create({
 
 
 export const TRANSACTION_URL = axios.create({
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5687/api/v1',
+  baseURL: 'https://alb-762634556.ap-south-1.elb.amazonaws.com:5687/api/v1',  
   // baseURL: 'http://localhost:5687/api/v1',
 
   headers: {
@@ -106,7 +106,7 @@ export const TRANSACTION_URL = axios.create({
 });
 
 export const RFID_URL = axios.create({
-  baseURL: 'http://alb-762634556.ap-south-1.elb.amazonaws.com:5102/api/v1',
+  baseURL: 'https://alb-762634556.ap-south-1.elb.amazonaws.com:5102/api/v1',
   // baseURL: 'http://localhost:5687/api/v1',
 
   headers: {
