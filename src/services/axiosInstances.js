@@ -80,8 +80,8 @@ export const PAYMENT_INSTANCE = axios.create({
 
 
 export const OCPP_INSTANCE = axios.create({
-  // baseURL: 'http://65.0.248.79:6500/api/v1',
-  baseURL: 'http://localhost:6500/api/v1',
+  baseURL: `${baseURL}:6500/api/v1`,
+
   // 
   headers: {
     Authorization: "Bearer " + token,
