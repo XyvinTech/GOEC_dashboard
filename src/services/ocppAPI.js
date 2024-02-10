@@ -110,3 +110,13 @@ export async function getAlarms() {
     throw error;
   }
 }
+
+export async function getAlarmsById(evMachine) {
+  
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineAlarms/${evMachine}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

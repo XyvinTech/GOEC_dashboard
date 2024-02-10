@@ -4,9 +4,8 @@ import StyledSearchField from '../../../ui/styledSearchField'
 import { Box, IconButton } from '@mui/material'
 import { Tune } from '@mui/icons-material'
 import StyledTable from '../../../ui/styledTable'
-import { AlarmListData } from '../../../assets/json/dashboard'
 import { searchAndFilter } from '../../../utils/search'
-import { getAlarms } from '../../../services/ocppAPI'
+import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
 
 
 const tableHeader = [
@@ -18,11 +17,11 @@ const tableHeader = [
   'Error code'
 ]
 
-export default function AlarmsList() {
+export default function AlarmsList({data}) {
 
   const [filterValue, setFilterValue] = useState('')
 
-
+  const tabledata = tableHeaderReplace(data,['cpid','date','summary','connectorId','status','errorCode'],tableHeader)
 
   return (
     <>
@@ -33,7 +32,7 @@ export default function AlarmsList() {
         <IconButton sx={{ backgroundColor: 'secondary.button', borderRadius: '4px', px: 2 }}><Tune /></IconButton>
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(AlarmListData, filterValue)} showActionCell={false} />
+        <StyledTable headers={tableHeader} data={searchAndFilter(tabledata, filterValue)} showActionCell={false} />
       </Box>
     </>
   )
