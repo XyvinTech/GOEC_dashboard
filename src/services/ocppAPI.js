@@ -1,7 +1,7 @@
 import { OCPP_INSTANCE } from "./axiosInstances";
 
-export async function remoteStart(data,cpid) {
- 
+export async function remoteStart(data, cpid) {
+
   try {
     const response = await OCPP_INSTANCE.post(
       `ocpp/remoteStartTransaction/${cpid}`,
@@ -13,7 +13,7 @@ export async function remoteStart(data,cpid) {
   }
 }
 
-export async function remoteStop(data,cpid) {
+export async function remoteStop(data, cpid) {
 
   try {
     const response = await OCPP_INSTANCE.post(
@@ -35,7 +35,7 @@ export async function clearCache(cpid) {
   }
 }
 
-export async function unlock(cpid,data) {
+export async function unlock(cpid, data) {
   try {
     const response = await OCPP_INSTANCE.post(
       `ocpp/unlock-connector/${cpid}`,
@@ -48,7 +48,7 @@ export async function unlock(cpid,data) {
 }
 
 export async function reset(cpid) {
-  
+
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/reset/${cpid}`);
     return response.data;
@@ -57,7 +57,7 @@ export async function reset(cpid) {
   }
 }
 
-export async function changeConfig(data,cpid) {
+export async function changeConfig(data, cpid) {
   // ? GOEC123 is id or  not?
   try {
     const response = await OCPP_INSTANCE.post(
@@ -72,7 +72,7 @@ export async function changeConfig(data,cpid) {
 
 
 export async function getAllOcppLogs() {
-  
+
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/logs`);
     return response.data;
@@ -82,7 +82,7 @@ export async function getAllOcppLogs() {
 }
 
 export async function getOcppLogsByCpid(cpid) {
-  
+
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/logs/${cpid}`);
     return response.data;
@@ -92,7 +92,7 @@ export async function getOcppLogsByCpid(cpid) {
 }
 
 export async function getAllOcppTransactionLogs() {
-  
+
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transactionList`);
     return response.data;
@@ -102,7 +102,7 @@ export async function getAllOcppTransactionLogs() {
 }
 
 export async function getAlarms() {
-  
+
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineAlarms`);
     return response.data;
@@ -120,6 +120,37 @@ export async function getAlarmsById(evMachine) {
     throw error;
   }
 }
+
+export async function ChangeAvailability(cpid, data) {
+
+  try {
+    const response = await OCPP_INSTANCE.post(`ocpp/changeAvailability/${cpid}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function Trigger(cpid, data) {
+
+  try {
+    const response = await OCPP_INSTANCE.post(`/ocpp/triggerMessage/${cpid}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function LocalList(cpid, data) {
+
+  try {
+    const response = await OCPP_INSTANCE.post(`/ocpp/sendLocalList/${cpid}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 export async function getAlarmSummary() {
   

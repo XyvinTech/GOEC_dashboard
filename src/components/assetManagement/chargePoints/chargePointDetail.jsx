@@ -33,9 +33,9 @@ export default function ChargePointDetail() {
 
     const init = () => {
         getEvMachineById(state._id).then((res) => {
-            console.log(res.result);
             if (res.status) {
                 setChargepointData(res.result)
+                sessionStorage.setItem('cpid', res.result.CPID);
             }
             setLoaderOpen(false)
         })

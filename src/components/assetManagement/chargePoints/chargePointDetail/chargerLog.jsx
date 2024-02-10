@@ -13,7 +13,7 @@ import { searchAndFilter } from '../../../../utils/search'
 
 
 const tableHeader = [
-    'CPID',
+    'Connector Id',
     'Time',
     'Command',
     'Payload Data',

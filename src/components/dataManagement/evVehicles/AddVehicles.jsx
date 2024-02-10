@@ -28,7 +28,6 @@ let compactable_ports = [
 export default function AddVehicles({ vehicleData = {},onClose, formSubmited, editStatus = false, ...props }) {
   const [brands, setBrands] = useState();
   const [selectedFile, setSelectedFile] = useState();
-  console.log(vehicleData);
   const { control, handleSubmit, reset, formState: { errors }, clearErrors } = useForm(
     {
       defaultValues: {

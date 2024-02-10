@@ -28,7 +28,7 @@ export default function AllChargingTransactions({ data }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
 
-  const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'startTime', 'user', 'transactionMode', 'totalUnits','cpid','endTime','cpid','connectorId','totalAmount','closureReason','closeBy'], tableHeader)
+  const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed','location','duration','chargePointId','connectorId','totalAmount','closureReason','closeBy'], tableHeader)
 
 
   // Function to close the modal
