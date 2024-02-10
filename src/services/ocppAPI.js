@@ -150,3 +150,34 @@ export async function LocalList(cpid, data) {
     throw error;
   }
 }
+
+
+export async function getAlarmSummary() {
+  
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/alarm/summary`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getTransactionById(evMachine) {
+  
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transactionLog/${evMachine}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getMachineLog(evMachine) {
+  
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineLog/${evMachine}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

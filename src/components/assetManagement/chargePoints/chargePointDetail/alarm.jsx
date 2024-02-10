@@ -43,7 +43,7 @@ export default function Alarm({ CPID }) {
 
     return (
         <>
-            <LastSynced heading="Charge Points">
+            <LastSynced heading="Alarms">
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
                     setFilterValue(e.target.value)
                 }} />
