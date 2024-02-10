@@ -126,7 +126,7 @@ export default function ChargePointDetail() {
                 </Grid>
             </Grid>
             <StyledTab buttons={['CP Action', 'CP config', 'Transaction', 'Charger logs', 'Alarm', 'Tariff']} onChanged={onChangeToggleOption} />
-            {toggleOption === 0 ? <CPAction /> : toggleOption === 1 ? <CPConfig /> : toggleOption === 2 ? <Transactions /> : toggleOption === 3 ? <ChargerLog /> : toggleOption === 4 ? <Alarm /> : <Tariff />}
+            {toggleOption === 0 ? <CPAction /> : toggleOption === 1 ? <CPConfig /> : toggleOption === 2 ? <Transactions /> : toggleOption === 3 ? <ChargerLog /> : toggleOption === 4 ? <Alarm CPID={chargepointData && chargepointData.CPID}/> : <Tariff />}
         </>
     )
 }
