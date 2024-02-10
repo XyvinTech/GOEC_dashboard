@@ -12,7 +12,7 @@ background: #27292F;
 position:relative;
 border-bottom-left-radius: var(--borderRadius, 0px);
 border-bottom-right-radius: var(--borderRadius, 0px);
-}
+
 `;
 
 const StyledLayout2 = styled.div`
