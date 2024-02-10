@@ -1,8 +1,8 @@
-import { LAMBDA_INSTANCES } from "./axiosInstances";
+import { CONFIG_INSTANCES } from "./axiosInstances";
 
 export async function createChargingTariff(data) {
   try {
-    const response = await LAMBDA_INSTANCES.post(`chargingTariff/create`, data);
+    const response = await CONFIG_INSTANCES.post(`chargingTariff/create`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export async function createChargingTariff(data) {
 
 export async function defaultChargingTariff(data) {
   try {
-    const response = await LAMBDA_INSTANCES.post(
+    const response = await CONFIG_INSTANCES.post(
       `chargingTariff/createUpdate/default`,
       data
     );
@@ -23,7 +23,7 @@ export async function defaultChargingTariff(data) {
 
 export async function editChargingTariff(Id, data) {
   try {
-    const response = await LAMBDA_INSTANCES.put(`chargingTariff/${Id}`, data);
+    const response = await CONFIG_INSTANCES.put(`chargingTariff/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -32,7 +32,7 @@ export async function editChargingTariff(Id, data) {
 
 export async function deleteChargingTariff(Id) {
   try {
-    const response = await LAMBDA_INSTANCES.delete(`chargingTariff/${Id}`);
+    const response = await CONFIG_INSTANCES.delete(`chargingTariff/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -41,7 +41,7 @@ export async function deleteChargingTariff(Id) {
 
 export async function getChargingTariffById(Id) {
   try {
-    const response = await LAMBDA_INSTANCES.get(`chargingTariff/${Id}`);
+    const response = await CONFIG_INSTANCES.get(`chargingTariff/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -50,7 +50,7 @@ export async function getChargingTariffById(Id) {
 
 export async function getChargingTariffTotalRate() {
   try {
-    const response = await LAMBDA_INSTANCES.get(
+    const response = await CONFIG_INSTANCES.get(
       `chargingTariff/getTotalRate/default`
     );
     return response.data;
@@ -61,7 +61,7 @@ export async function getChargingTariffTotalRate() {
 
 export async function getChargingTariffList() {
   try {
-    const response = await LAMBDA_INSTANCES.get(`chargingTariff/list`);
+    const response = await CONFIG_INSTANCES.get(`chargingTariff/list`);
     return response.data;
   } catch (error) {
     throw error;

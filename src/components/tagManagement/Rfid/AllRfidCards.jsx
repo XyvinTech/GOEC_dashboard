@@ -31,7 +31,7 @@ const AllRfidCards = ({ data, updateData }) => {
   const [editstatus, setEditStatus] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
 
-  const rfData = tableHeaderReplace(data, ['serialNumber', 'user', 'createdAt', 'expiry', '', 'status'], tableHeader)
+  const rfData = tableHeaderReplace(data, ['serialNumber', 'username', 'createdAt', 'expiry', 'balance', 'status'], tableHeader)
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);

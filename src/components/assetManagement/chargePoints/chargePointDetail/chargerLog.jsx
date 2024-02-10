@@ -15,7 +15,7 @@ const StyledIconButton = ({icon, ...props}) => {
 }
 
 const tableHeader = [
-    'CPID',
+    'Connector Id',
     'Time',
     'Command',
     'Payload Data',

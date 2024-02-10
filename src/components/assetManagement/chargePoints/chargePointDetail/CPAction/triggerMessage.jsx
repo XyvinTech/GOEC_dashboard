@@ -4,6 +4,10 @@ import StyledSelectField from "../../../../../ui/styledSelectField";
 import StyledDivider from "../../../../../ui/styledDivider";
 import StyledButton from "../../../../../ui/styledButton";
 import { useForm, Controller } from "react-hook-form";
+import { Trigger } from "../../../../../services/ocppAPI";
+import { toast } from "react-toastify";
+
+
 const Toast = ({ title, code, variant = "success", ...props }) => {
   return (
     <Stack
@@ -72,21 +76,55 @@ export default function TriggerMessage() {
   const {
     control,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
-    clearErrors,
+    reset,
   } = useForm({
     defaultValues: {
-      published: false, // Set the default value for "activate"
+      connectorId: "",
+      triggerMessage: "",
     },
   });
-  const onSubmit = (data) => {
-    // Handle form submission with data
-    console.log("Form data submitted:", data);
-    // Close your form or perform other actions
-  };
 
+  let connectiorId = [
+    { label: "1", value: 1 },
+    { label: "2", value: 2 },
+  ];
+
+  let message = [
+    {"label":"BootNotification","value":"BootNotification"},
+    {"label":"DiagnosticsStatusNotification","value":"DiagnosticsStatusNotification"},
+    {"label":"FirmwareStatusNotification","value":"FirmwareStatusNotification"},
+    {"label":"Heartbeat","value":"Heartbeat"},
+    {"label":"MeterValues","value":"MeterValues"},
+    {"label":"StatusNotification","value":"StatusNotification"}
+];
+
+  const onSubmit = async (formData) => {
+    const data = {
+      connectorId: formData.connectorId.value,
+      requestedMessage: formData.triggerMessage.value,
+    };
+    const cpid = sessionStorage.getItem("cpid");
+    try {
+      const res = await Trigger(cpid, data);
+      console.log(res);
+      if (res) {
+        const successToastId = toast.success(
+          "Triggered successfully",
+          {
+            position: "top-right",
+          }
+        );
+        toast.update(successToastId);
+        reset();
+      }
+    } catch (error) {
+      const errorToastId = toast.error(error.response.data.error, {
+        position: "top-right",
+      });
+      toast.update(errorToastId);
+    }
+  };
   return (
     <>
       <Box
@@ -105,14 +143,17 @@ export default function TriggerMessage() {
                 <Typography>Connector ID</Typography>
 
                 <Controller
-                  name="connectorID"
+                  name="connectorId"
                   control={control}
                   render={({ field }) => (
                     <>
-                      <StyledSelectField placeholder={"select Connector ID"} />
-                      {errors.connectorID && (
+                      <StyledSelectField
+                       {...field}
+                       options={connectiorId}
+                        placeholder={"select Connector ID"} />
+                      {errors.connectorId && (
                         <span style={errorMessageStyle}>
-                          {errors.connectorID.message}
+                          {errors.connectorId.message}
                         </span>
                       )}
                     </>
@@ -126,14 +167,17 @@ export default function TriggerMessage() {
                 <Typography>Trigger Message</Typography>
 
                 <Controller
-                  name="TriggerMessage"
+                  name="triggerMessage"
                   control={control}
                   render={({ field }) => (
                     <>
-                      <StyledSelectField placeholder={"Meter Values"} />
-                      {errors.TriggerMessage && (
+                      <StyledSelectField 
+                       {...field}
+                       options={message}
+                       placeholder={"Message"} />
+                      {errors.triggerMessage && (
                         <span style={errorMessageStyle}>
-                          {errors.TriggerMessage.message}
+                          {errors.triggerMessage.message}
                         </span>
                       )}
                     </>
