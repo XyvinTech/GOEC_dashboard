@@ -111,10 +111,10 @@ export const siderbarListItems = [
                 href: 'accounts/account-transaction',
                 title: 'Account Transactions',
             },
-            {
-                href: 'accounts/financials',
-                title: 'Financials',
-            }
+            // {
+            //     href: 'accounts/financials',
+            //     title: 'Financials',
+            // }
         ]
     },
     {

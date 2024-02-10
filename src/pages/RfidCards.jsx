@@ -11,7 +11,7 @@ const RfidCards = () => {
 
   const init = () => {
     getRfidList().then((res) => {
-      setRfidData(res)
+      setRfidData(res.result)
     })
   }
 

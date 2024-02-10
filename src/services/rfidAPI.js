@@ -10,7 +10,7 @@ export async function createRfid(data) {
 }
 export async function createManyRfid(data) {
   try {
-    const response = await LAMBDA_INSTANCES.post(`rfid/createMany`, data);
+    const response = await RFID_URL.post(`rfid/createMany`, data);
     return response.data;
   } catch (error) {
     throw error;

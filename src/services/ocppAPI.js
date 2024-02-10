@@ -100,3 +100,13 @@ export async function getAllOcppTransactionLogs() {
     throw error;
   }
 }
+
+export async function getAlarms() {
+  
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineAlarms`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

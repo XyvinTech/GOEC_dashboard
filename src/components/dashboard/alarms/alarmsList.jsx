@@ -6,7 +6,7 @@ import { Tune } from '@mui/icons-material'
 import StyledTable from '../../../ui/styledTable'
 import { AlarmListData } from '../../../assets/json/dashboard'
 import { searchAndFilter } from '../../../utils/search'
-
+import { getAlarms } from '../../../services/ocppAPI'
 
 
 const tableHeader = [
@@ -21,6 +21,9 @@ const tableHeader = [
 export default function AlarmsList() {
 
   const [filterValue, setFilterValue] = useState('')
+
+
+
   return (
     <>
       <LastSynced heading="Charge Points">
