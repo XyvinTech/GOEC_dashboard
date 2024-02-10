@@ -1,4 +1,4 @@
-import { RFID_URL } from "./axiosInstances";
+import { LAMBDA_INSTANCES, RFID_URL } from "./axiosInstances";
 
 export async function createRfid(data) {
   try {
