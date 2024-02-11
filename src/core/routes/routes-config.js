@@ -51,14 +51,13 @@ const RoutesConfig = () => {
             path: '/user-details',
             element: <UserDetails />,
         },
-        // 
         {
-            path: 'charge-station-detail',
+            path: 'charge-station-detail/:id',
             element: <ChargeStationDetail />,
         }
         ,
         {
-            path: 'charge-point-detail',
+            path: 'charge-point-detail/:id',
             element: <ChargePointDetail />,
         },
    

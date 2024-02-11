@@ -25,7 +25,7 @@ export default function AllChargeStation({ data, deleteData,editData, ...props }
   const chargeStationData = tableHeaderReplace(data, ['name', 'address', 'longitude', 'latitude', 'owner', 'status'], tableHeader)
   const tableActionClick = (e) => {
     if (e.action === 'View') {
-      navigate('/charge-station-detail', { state: e.data })
+      navigate(`/charge-station-detail/${e.data._id}`)
     } else if (e.action === 'Delete') {
       deleteData(e.data)
     }else if (e.action === 'Edit') {
