@@ -93,10 +93,10 @@ export default function ChargePointDetail() {
         unlock(chargepointData.CPID, { connectorId: connectorId }).then((res) => {
             if (res.status) {
                 toast.success(res.message)
-            }else{
+            } else {
                 toast.error(res.message)
             }
-        }).catch((error)=>{
+        }).catch((error) => {
             toast.error(error.message)
         })
     }
@@ -120,13 +120,18 @@ export default function ChargePointDetail() {
                             <ChargePointDetailsConnectors data={chargepointData && chargepointData} unlockButtonHandle={connectorUnlock} />
                         </Grid>
                         <Grid item xs={12} md={12}>
-                            <ChargePointDetailsAnalytics data={chargepointData}/>
+                            <ChargePointDetailsAnalytics data={chargepointData} />
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
             <StyledTab buttons={['CP Action', 'CP config', 'Transaction', 'Charger logs', 'Alarm', 'Tariff']} onChanged={onChangeToggleOption} />
-            {toggleOption === 0 ? <CPAction /> : toggleOption === 1 ? <CPConfig /> : toggleOption === 2 ? <Transactions /> : toggleOption === 3 ? <ChargerLog /> : toggleOption === 4 ? <Alarm CPID={chargepointData && chargepointData.CPID}/> : <Tariff />}
+            {toggleOption === 0 ? <CPAction /> :
+                toggleOption === 1 ? <CPConfig /> :
+                    toggleOption === 2 ? <Transactions CPID={chargepointData && chargepointData.CPID} /> :
+                        toggleOption === 3 ? <ChargerLog CPID={chargepointData && chargepointData.CPID} /> :
+                            toggleOption === 4 ? <Alarm CPID={chargepointData && chargepointData.CPID} /> :
+                                <Tariff CPID={chargepointData && chargepointData.CPID} />}
         </>
     )
 }

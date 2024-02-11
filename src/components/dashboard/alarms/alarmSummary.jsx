@@ -2,75 +2,77 @@ import React from 'react'
 import LastSynced from '../../../layout/LastSynced'
 import { Box, Grid, Stack, Typography } from '@mui/material'
 
-const chargePointerErrors = [
-    {
-        label: 'ConnectorLockFailure',
-        value: 0
-    },
-    {
-        label: 'EVCommunicationError',
-        value: 0
-    },
-    {
-        label: 'GroundFailure',
-        value: 0
-    },
-    {
-        label: 'High Temperature',
-        value: 0
-    },
-    {
-        label: 'InternalError',
-        value: 0
-    },
-    {
-        label: 'LocalListConflict',
-        value: 0
-    },
-    {
-        label: 'NoError',
-        value: 0
-    },
-    {
-        label: 'OtherError',
-        value: 0
-    },
-    {
-        label: 'OverCurrentFailure',
-        value: 0
-    },
-    {
-        label: 'OverVoltage',
-        value: 0
-    },
-    {
-        label: 'PowerMeterFailure',
-        value: 0
-    },
-    {
-        label: 'PowerSwitchFailure',
-        value: 0
-    },
-    {
-        label: 'ReaderFailure',
-        value: 0
-    },
-    {
-        label: 'ResetFailure',
-        value: 0
-    },
-    {
-        label: 'UnderVoltage',
-        value: 0
-    },
-    {
-        label: 'WeakSignal',
-        value: 0
-    },
 
-]
 
-export default function AlarmSummary() {
+export default function AlarmSummary({data}) {
+
+    const chargePointerErrors = [
+        {
+            label: 'ConnectorLockFailure',
+            value: data.ConnectorLockFailure ? data.ConnectorLockFailure : 0
+        },
+        {
+            label: 'EVCommunicationError',
+            value: data.EVCommunicationError ? data.EVCommunicationError : 0
+        },
+        {
+            label: 'GroundFailure',
+            value: data.GroundFailure ? data.GroundFailure : 0
+        },
+        {
+            label: 'HighTemperature',
+            value: data.HighTemperature ? data.HighTemperature : 0
+        },
+        {
+            label: 'InternalError',
+            value: data.InternalError ? data.InternalError : 0
+        },
+        {
+            label: 'LocalListConflict',
+            value: data.LocalListConflict ? data.LocalListConflict : 0
+        },
+        {
+            label: 'NoError',
+            value: data.NoError ? data.NoError : 0
+        },
+        {
+            label: 'OtherError',
+            value: data.OtherError ? data.OtherError : 0
+        },
+        {
+            label: 'OverCurrentFailure',
+            value: data.OverCurrentFailure ? data.OverCurrentFailure : 0
+        },
+        {
+            label: 'OverVoltage',
+            value: data.OverVoltage ? data.OverVoltage : 0
+        },
+        {
+            label: 'PowerMeterFailure',
+            value: data.PowerMeterFailure ? data.PowerMeterFailure : 0
+        },
+        {
+            label: 'PowerSwitchFailure',
+            value: data.PowerSwitchFailure ? data.PowerSwitchFailure : 0
+        },
+        {
+            label: 'ReaderFailure',
+            value: data.ReaderFailure ? data.ReaderFailure : 0
+        },
+        {
+            label: 'ResetFailure',
+            value: data.ResetFailure ? data.ResetFailure : 0
+        },
+        {
+            label: 'UnderVoltage',
+            value: data.UnderVoltage ? data.UnderVoltage : 0
+        },
+        {
+            label: 'WeakSignal',
+            value: data.WeakSignal ? data.WeakSignal : 0
+        },
+    
+    ]
     return (
         <>
             <LastSynced heading={'Alarms Summary'} /><Box>

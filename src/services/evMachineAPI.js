@@ -179,3 +179,22 @@ export async function getEvModelById(Id) {
 }
 
 
+//tarrif
+
+export async function getChargerTarrifDetail(evMachine) {
+  try {
+    const response = await EV_MACHINE_INSTANCE.get(`evMachine/dashboard/tariffDetails/${evMachine}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function changeEVTarrif(evMachine,data) {
+  try {
+    const response = await EV_MACHINE_INSTANCE.post(`evMachine/dashboard/changeTariff/${evMachine}`,data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
