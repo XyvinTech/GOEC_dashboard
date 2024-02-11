@@ -9,12 +9,13 @@ import StyledButton from '../../../../ui/styledButton'
 import AssignedTarrif from './tariff/assignedTarrif'
 import LastSynced from '../../../../layout/LastSynced'
 import AssignTarrif from './tariff/assigntTarrif'
-import { getChargerTarrifDetail } from '../../../../services/evMachineAPI'
+import { changeEVTarrif, getChargerTarrifDetail } from '../../../../services/evMachineAPI'
+import { toast } from 'react-toastify'
 
 
 
 
-export default function Tariff({ CPID }) {
+export default function     Tariff({ CPID }) {
     const [addOpen, setAddOpen] = useState(false)
     const [tarrifDetails, setTarrifDetails] = useState([])
 
@@ -31,7 +32,14 @@ export default function Tariff({ CPID }) {
         init()
     }, [])
 
-
+const unAssinHandle = ()=>{
+    changeEVTarrif(CPID, {}).then((res) => {
+        console.log(res);
+        init()
+      }).catch((err) => {
+        toast.error(err.response.data.error)
+      })
+}
 
     return (
         <>
@@ -43,7 +51,7 @@ export default function Tariff({ CPID }) {
                 {
                     tarrifDetails.map((dt, ind) => (
                         <Grid item xs={12} md={3} xl={2} key={ind}>
-                            <AssignedTarrif data={dt} />
+                            <AssignedTarrif data={dt} unassignedHandle={unAssinHandle} />
                         </Grid>
                     ))
                 }

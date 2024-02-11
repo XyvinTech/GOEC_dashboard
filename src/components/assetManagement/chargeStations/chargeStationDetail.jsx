@@ -8,13 +8,13 @@ import { ArrowBackIosNew } from '@mui/icons-material'
 import StyledTab from '../../../ui/styledTab'
 import ChargePoints from './chargeStationDetail/chargePoints'
 import Reviews from './chargeStationDetail/reviews'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { getChargingStationById } from '../../../services/stationAPI'
 import StyledBackdropLoader from '../../../ui/styledBackdropLoader'
 import { deleteReview, getReviewBySation } from '../../../services/reviewApi'
 import ConfirmDialog from '../../../ui/confirmDialog'
 export default function ChargeStationDetail() {
-    const { state } = useLocation();
+    const { id } = useParams();
     const [stationDetails, setStationDetails] = useState()
     const [toggleOption, setToggleoption] = useState(0)
     const [loaderOpen, setLoaderOpen] = useState(true)
@@ -32,7 +32,7 @@ export default function ChargeStationDetail() {
     }
 
     const stationDetailGet = () => {
-        getChargingStationById(state._id).then((res) => {
+        getChargingStationById(id).then((res) => {
             console.log(res.result);
             if (res.status) {
                 setStationDetails(res.result)
@@ -40,12 +40,6 @@ export default function ChargeStationDetail() {
             setLoaderOpen(false)
         }
         )
-    }
-
-    const reviewsGet = () => {
-        getReviewBySation(state._id).then(() => {
-
-        })
     }
     useEffect(() => {
         init()

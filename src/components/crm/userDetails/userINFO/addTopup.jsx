@@ -70,7 +70,7 @@ export default function AddTopup({ open, onClose, ...props }) {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledInput placeholder={"Previous Balance"} value={250} />
+                  <StyledInput placeholder={"Previous Balance"} value={250} disabled />
                   {errors.previousBalance && (
                     <StyledWarning
                       icon={
