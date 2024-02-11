@@ -27,7 +27,7 @@ export default function AllChargePoint({ data,deleteData,editData, ...props }) {
   const [filterValue, setFilterValue] = useState('')
   const tableActionClick = (e) => {
     if (e.action === 'View') {
-      navigate(`/charge-point-detail`,{state:e.data})
+      navigate(`/charge-point-detail/${e.data._id}`)
     }
     else if (e.action === 'Edit') {
       editData(e.data)

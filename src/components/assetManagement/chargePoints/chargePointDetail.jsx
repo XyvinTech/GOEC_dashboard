@@ -15,7 +15,7 @@ import ChargerLog from './chargePointDetail/chargerLog'
 import Alarm from './chargePointDetail/alarm'
 import Tariff from './chargePointDetail/tariff'
 
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { getEvMachineById } from '../../../services/evMachineAPI'
 import StyledBackdropLoader from '../../../ui/styledBackdropLoader'
 import { clearCache, reset, unlock } from '../../../services/ocppAPI'
@@ -24,7 +24,7 @@ import { toast } from 'react-toastify'
 
 export default function ChargePointDetail() {
     const navigate = useNavigate()
-    const { state } = useLocation();
+    const { id } = useParams();
     const [toggleOption, setToggleoption] = useState(0)
     const [loaderOpen, setLoaderOpen] = useState(true)
     const [chargepointData, setChargepointData] = useState()
@@ -32,7 +32,7 @@ export default function ChargePointDetail() {
 
 
     const init = () => {
-        getEvMachineById(state._id).then((res) => {
+        getEvMachineById(id).then((res) => {
             if (res.status) {
                 setChargepointData(res.result)
                 sessionStorage.setItem('cpid', res.result.CPID);
@@ -131,7 +131,7 @@ export default function ChargePointDetail() {
                     toggleOption === 2 ? <Transactions CPID={chargepointData && chargepointData.CPID} /> :
                         toggleOption === 3 ? <ChargerLog CPID={chargepointData && chargepointData.CPID} /> :
                             toggleOption === 4 ? <Alarm CPID={chargepointData && chargepointData.CPID} /> :
-                                <Tariff CPID={chargepointData && chargepointData.CPID} />}
+                                <Tariff CPID={chargepointData && chargepointData._id} />}
         </>
     )
 }

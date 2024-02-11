@@ -1,15 +1,28 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StyledPagination from "./styledPagination";
 import StyledStopButton from "./styledStopButton";
 import StyledActionCell from "./styledActionCell";
 import StyledStatusChip from "./styledStatusChip";
 import StyledPayloadTableCell from "./styledPayloadTableCell";
 import TableSkeleton from "./tableSkeleton";
+import { Typography } from "@mui/material";
 // StyledTable component
 
 const StyledTable = ({ headers, data, onActionClick, showActionCell = true, actions = ['Edit', 'View', 'Delete'] }) => {
   const [page, setPage] = useState(0);
+  const [firstopen, setFirstOpen] = useState(true)
+
+  useEffect(() => {
+    if (data.length > 0) {
+      setFirstOpen(false)
+    }
+  }, [data])
+
+  setTimeout(()=>{
+    setFirstOpen(false)
+  },5000)
+
   const rowsPerPage = 10;
   const paginatedData = data.slice(
     page * rowsPerPage,
@@ -41,48 +54,52 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
         </TableHeader>
 
         <TableBody>
-          {paginatedData.length === 0 ?
-            <TableSkeleton tableHeader={headers} /> :
-            paginatedData.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {headers.map((header, cellIndex) => {
-                  const isStatusColumn = header.toLowerCase() === "status";
-                  const isPayload = header.toLowerCase() === "payload data";
-                  const isTerminateSession = header.toLowerCase() === "terminate session";
-                  const isPublished = header.toLowerCase() === "published";
+          {firstopen ?
+            <TableSkeleton tableHeader={headers} /> : data.length === 0 ? (
+              <TableCell colSpan={headers.length}>
+                <Typography color={'#deb500'} sx={{textAlign:'center'}}>No Data</Typography>
+              </TableCell>
+            ) :
+              paginatedData.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {headers.map((header, cellIndex) => {
+                    const isStatusColumn = header.toLowerCase() === "status";
+                    const isPayload = header.toLowerCase() === "payload data";
+                    const isTerminateSession = header.toLowerCase() === "terminate session";
+                    const isPublished = header.toLowerCase() === "published";
 
-                  const command = prevHeader;
-                  prevHeader = header;
-                  return (
-                    <TableCell
-                      key={`${rowIndex}-${header}`}
-                      $isfirstcolumn={cellIndex === 0}
-                    >
-                      {
-                        isStatusColumn ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
-                          : isTerminateSession ? (
-                            <StyledStopButton onClick={() => handleStopClick(row.id)}>
-                              Stop
-                            </StyledStopButton>
-                          ) : isPayload ? <StyledPayloadTableCell value={row[header]} command={row[command]} />
-                            : isPublished ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
-                              : (row[header] || row[header] === ""  ? row[header] : '_')
-                      }
-                    </TableCell>
-                  );
-                })}
+                    const command = prevHeader;
+                    prevHeader = header;
+                    return (
+                      <TableCell
+                        key={`${rowIndex}-${header}`}
+                        $isfirstcolumn={cellIndex === 0}
+                      >
+                        {
+                          isStatusColumn ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
+                            : isTerminateSession ? (
+                              <StyledStopButton onClick={() => handleStopClick(row.id)}>
+                                Stop
+                              </StyledStopButton>
+                            ) : isPayload ? <StyledPayloadTableCell value={row[header]} command={row[command]} />
+                              : isPublished ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
+                                : (row[header] || row[header] === "" ? row[header] : '_')
+                        }
+                      </TableCell>
+                    );
+                  })}
 
-                {showActionCell && (
-                  <td>
-                    <StyledActionCell
-                      actions={actions}
-                      id={row.id} // Assuming your row data has an 'id' property
-                      onCliked={(e) => { onActionClick && onActionClick({ data: row, ...e }) }}
-                    />
-                  </td>
-                )}
-              </tr>
-            ))}
+                  {showActionCell && (
+                    <td>
+                      <StyledActionCell
+                        actions={actions}
+                        id={row.id} // Assuming your row data has an 'id' property
+                        onCliked={(e) => { onActionClick && onActionClick({ data: row, ...e }) }}
+                      />
+                    </td>
+                  )}
+                </tr>
+              ))}
         </TableBody>
       </Table>
       <StyledPagination

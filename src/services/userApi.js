@@ -85,6 +85,15 @@ export async function getUserByIdforAdmin(id) {
 }
 
 
+export async function getUserByEmailMobile(data) {
+  try {
+    const response = await USER_INSTANCE.get(`admin/userDatabyPhoneOrEmail?${data}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function addFavSatation(stationId, data) {
   try {
     const response = await USER_INSTANCE.put(

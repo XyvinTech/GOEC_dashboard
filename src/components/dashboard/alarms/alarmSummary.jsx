@@ -77,7 +77,7 @@ export default function AlarmSummary({data}) {
         <>
             <LastSynced heading={'Alarms Summary'} /><Box>
                 <Grid container p={2}>
-                    <Grid item xs={6} md={6} sx={{ backgroundColor: '#1D1B20' }}>
+                    <Grid item xs={12} md={4} sx={{ backgroundColor: '#1D1B20' }}>
                         <Stack direction={'row'} justifyContent={'space-between'} p={2}>
                             <Typography variant='subtitle2'>ChargePoint Error Codes</Typography>
                             <Typography variant='subtitle2'>Counts</Typography>
