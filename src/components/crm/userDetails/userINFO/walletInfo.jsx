@@ -7,15 +7,15 @@ import AddTopup from './addTopup'
 import DeductWallet from './deductWallet'
 import moment from 'moment'
 
-export default function WalletInfo({data}) {
+export default function WalletInfo({data, onIsChange, isChange}) {
     const [topupOpen,setTopupOpen] = useState(false)
     const [deductOpen,setDeductOpen] = useState(false)
     // const dateMoment = moment(data.createdAt);
     // ! Last Top-up on data is not available
     return (
         <Box sx={{ backgroundColor: 'secondary.main', borderRadius: '4px', p: {xs:2,md:4} }}>
-            <AddTopup open={topupOpen} onClose={()=>{setTopupOpen(false)}}/>
-            <DeductWallet open={deductOpen} onClose={()=>{setDeductOpen(false)}}/>
+            <AddTopup open={topupOpen} onClose={()=>{setTopupOpen(false)}} userData={data} onIsChange={onIsChange} isChange={isChange}/>
+            <DeductWallet open={deductOpen} onClose={()=>{setDeductOpen(false)}} userData={data} onIsChange={onIsChange} isChange={isChange}/>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={7.5} >
                     <Typography variant='subtitle1' sx={{ py: 0.5, fontWeight: 700 }} >Wallet</Typography>

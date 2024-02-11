@@ -5,7 +5,7 @@ import UserInfo from './userINFO/userInfo'
 import WalletInfo from './userINFO/walletInfo'
 import TotalInfo from './userINFO/totalInfo'
 
-export default function UserINFO({userData}) {
+export default function UserINFO({userData, onIsChange, isChange}) {
     return (
         <Box>
             <LastSynced heading={'User info'} />
@@ -14,7 +14,7 @@ export default function UserINFO({userData}) {
                     <UserInfo data={userData}/>
                 </Grid>
                 <Grid item xs={12} md={7}>
-                    <WalletInfo data={userData}/>
+                    <WalletInfo data={userData} onIsChange={onIsChange} isChange={isChange}/>
                 </Grid>
                 <Grid item xs={12}>
                     <TotalInfo userData={userData}/>

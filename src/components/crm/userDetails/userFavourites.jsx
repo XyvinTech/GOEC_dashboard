@@ -15,7 +15,7 @@ const tableHeader = [
 export default function UserFavourites() {
     return (
         <Box>
-            <LastSynced heading={'Charging Transactions'} />
+            <LastSynced heading={'Favourites'} />
             <Box sx={{ p: { xs: 2, md: 4 } }}>
                 <StyledTable headers={tableHeader} data={favouritesData} showActionCell={true} actions={['view']} onActionClick={(e) => { console.log(e); }} />
             </Box>

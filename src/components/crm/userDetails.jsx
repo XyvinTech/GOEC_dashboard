@@ -10,11 +10,13 @@ import VRDetails from "./userDetails/VRDetails";
 import UserReview from "./userDetails/useReview";
 import { useLocation } from "react-router-dom";
 import { getUserByIdforAdmin } from "../../services/userApi";
+import { getWalletTransactionForAdmin } from "../../services/transactionApi";
 
 export default function UserDetails() {
   const [optionIndex, setOptionIndex] = useState(0);
   const [userData, setUserData] = useState([]);
   const { state } = useLocation();
+  const [isChange, setIsChange] = useState(false);
 
   const getData = () => {
     getUserByIdforAdmin(state).then((res) => {
@@ -26,7 +28,7 @@ export default function UserDetails() {
 
   useEffect(() => {
     getData();
-  }, [state]);
+  }, [state, isChange]);
 
   const onOptionChanged = (e) => {
     setOptionIndex(e.index);
@@ -34,7 +36,7 @@ export default function UserDetails() {
   return (
     <UserDetailsLayout onOptionChanged={onOptionChanged}>
       {optionIndex === 0 ? (
-        <UserINFO userData={userData}/>
+        <UserINFO userData={userData} onIsChange={setIsChange} isChange={isChange}/>
       ) : optionIndex === 1 ? (
         <UserAccountTransactiomn />
       ) : optionIndex === 2 ? (
