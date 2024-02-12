@@ -39,6 +39,8 @@ export default function AddTopup({ userData, onIsChange, isChange, open, onClose
     const postData = {
       amount: data.amount,
       transactionId: data.reference,
+      doneByAdmin:true,
+      type:"admin topup"
     };
     const res = await toWallet(userData._id, postData);
     if (res) {
