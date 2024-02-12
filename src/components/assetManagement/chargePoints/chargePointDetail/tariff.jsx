@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 
 
 
-export default function     Tariff({ CPID }) {
+export default function     Tariff({ CPID,id }) {
     const [addOpen, setAddOpen] = useState(false)
     const [tarrifDetails, setTarrifDetails] = useState([])
 
@@ -33,7 +33,7 @@ export default function     Tariff({ CPID }) {
     }, [])
 
 const unAssinHandle = ()=>{
-    changeEVTarrif(CPID, {}).then((res) => {
+    changeEVTarrif(id, {}).then((res) => {
         console.log(res);
         init()
       }).catch((err) => {
@@ -43,7 +43,7 @@ const unAssinHandle = ()=>{
 
     return (
         <>
-            <AssignTarrif open={addOpen} onClose={() => setAddOpen(false)} CPID={CPID} updated={init} />
+            <AssignTarrif open={addOpen} onClose={() => setAddOpen(false)} CPID={id} updated={init} />
             <LastSynced heading='Tariff'>
                 <StyledButton variant={'primary'} style={{ width: '160px' }} onClick={() => setAddOpen(true)}>Assign Tariff</StyledButton>
             </LastSynced>

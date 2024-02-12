@@ -14,10 +14,13 @@ import { createEvMachine, editEvMachine, getEvModel, getOem } from "../../../ser
 import { toast } from "react-toastify";
 import { ContentCopy } from "@mui/icons-material";
 // StyledTable component
-const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false, isFromStation = false,stationId }) => {
+const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false, isFromStation = false, stationId }) => {
+  console.log(editStatus ? (isFromStation ? stationId : chargepointData["Station"]) : (isFromStation ? stationId : ''));
   const [stationList, setStationList] = useState([])
   const [OEMList, setOEMList] = useState([])
   const [modelList, setModelList] = useState([])
+
+  const [modelOptions, setModelOptions] = useState([])
   const {
     control,
     handleSubmit,
@@ -28,7 +31,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   } = useForm({
     defaultValues: {
       chargePointDisplayName: editStatus ? chargepointData["name"] : '',
-      locationName: editStatus ? isFromStation ? stationId : chargepointData["Station"] : isFromStation ? stationId : '',
+      locationName: editStatus ? chargepointData["Station"] : '',
       chargePointOEM: editStatus ? chargepointData["OEM"] : '',
       authorisationkey: editStatus ? chargepointData["authorization_key"] : '',
       serialNumber: editStatus ? chargepointData["serial_number"] : '',
@@ -52,7 +55,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   const createChargePoint = (data) => {
     let dt = {
       name: data.chargePointDisplayName,
-      location_name: data.locationName.value,
+      location_name: isFromStation ? stationId : data.locationName.value,
       authorization_key: data.authorisationkey,
       serial_number: data.serialNumber,
       commissioned_date: data.commissionedDate,
@@ -62,6 +65,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       cpidStatus: "Available",
       published: data.published ? 'Yes' : "No"
     }
+    console.log(dt);
     createEvMachine(dt).then((res) => {
       toast.success("Chargepoint created successfully ")
       formsubmitted()
@@ -74,8 +78,8 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   const updateChargePoint = (data) => {
     let dt = {
       name: data.chargePointDisplayName,
-      location_name: data.locationName.value ? data.locationName.value : getListId(stationList, chargepointData["Station"]),
-      authorization_key: data.authorisationkey,
+      location_name: isFromStation ? stationId : (data.locationName.value ? data.locationName.value : getListId(stationList, chargepointData["Station"])),
+      authorization_ke1y: data.authorisationkey,
       serial_number: data.serialNumber,
       commissioned_date: data.commissionedDate,
       evModel: data.model.value ? data.model.value : getListId(modelList, chargepointData["Model"]),
@@ -111,9 +115,24 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
 
     getEvModel().then((res) => {
       if (res.status) {
-        setModelList(res.result.map((e) => ({ label: e.model_name, value: e._id })))
+        setModelList(res.result)
+        if (editStatus) {
+          console.log(modelList);
+          let list = []
+          res.result.map((dt) => {
+            if (dt.oem === chargepointData["OEM"]) {
+              list.push({
+                label: dt.model_name,
+                value: dt._id
+              })
+            }
+          })
+          setModelOptions(list)
+        }
       }
     })
+
+
   }
   useEffect(() => {
     init()
@@ -201,7 +220,20 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField options={OEMList} {...field} placeholder="select OEM" />
+                  <StyledSelectField options={OEMList} {...field} placeholder="select OEM"
+                    onChange={(e) => {
+                      setValue("chargePointOEM", e)
+                      let list = []
+                      modelList.map((dt) => {
+                        if (dt.oem === e.label) {
+                          list.push({
+                            label: dt.model_name,
+                            value: dt._id
+                          })
+                        }
+                      })
+                      setModelOptions(list)
+                    }} />
                   {errors.chargePointOEM && (
                     <span style={errorMessageStyle}>
                       {errors.chargePointOEM.message}
@@ -230,7 +262,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField options={modelList} {...field} placeholder="select model" />
+                  <StyledSelectField options={modelOptions} {...field} placeholder="select model" />
                   {errors.model && (
                     <span style={errorMessageStyle}>
                       {errors.model.message}
@@ -261,7 +293,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
                 control={control}
                 render={({ field }) => (
                   <>
-                    <StyledInput {...field} placeholder={"GO1"} />
+                    <StyledInput {...field} placeholder={"GO1"} onChange={(e) => { setValue("chargePointDisplayName", e.target.value); setValue("CPID", e.target.value) }} />
                     {errors.chargePointDisplayName && (
                       <span style={errorMessageStyle}>
                         {errors.chargePointDisplayName.message}
@@ -289,12 +321,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
                 control={control}
                 render={({ field }) => (
                   <>
-                    <StyledInput {...field} placeholder="gO1" style={{ backgroundColor: '#4A4458' }} />
-                    {errors.CPID && (
-                      <span style={errorMessageStyle}>
-                        {errors.CPID.message}
-                      </span>
-                    )}
+                    <StyledInput {...field} placeholder="gO1" style={{ backgroundColor: '#4A4458' }} disabled />
                   </>
                 )}
                 rules={{ required: "CPID is required" }}
