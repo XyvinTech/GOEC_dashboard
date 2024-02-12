@@ -1,34 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import MapContainer from "../components/dashboard/liveStatus/MapContainer";
-// import { getChargingStationList } from "../services/stationAPI";
-import { ChargeStationData } from "../assets/json/chargestations";
 import { Box, IconButton, Stack } from "@mui/material";
 import { Map, TableRowsRounded } from "@mui/icons-material";
 import TableContainer from "../components/dashboard/liveStatus/tableContainer";
 import LastSynced from "../layout/LastSynced";
+import { getChargingStationList } from "../services/stationAPI";
 
 
 
 export default function LiveStatus() {
   const [mapViewActive, setMapView] = useState(true)
-  //   const [chargingStations, setChargingStations] = useState([]);
+    const [chargingStations, setChargingStations] = useState([]);
 
 
-  //   useEffect(() => {
-  //     const fetchEvMachines = async () => {
-  //       try {
-  //         const data = await getChargingStationList();
-  //         setChargingStations(data);
-  //         setLoading(false);
-  //       } catch (error) {
-  //         setError(error);
-  //         setLoading(false);
-  //       }
-  //     };
-
-  //     fetchEvMachines();
-  //   }, []);
+    useEffect(() => {
+      getChargingStationList().then((res)=>{
+        if (res.status) {
+          setChargingStations(res.result)
+        }
+      })
+    }, []);
   const iconClickHandle = () => {
     setMapView(!mapViewActive)
   }
@@ -43,8 +35,8 @@ export default function LiveStatus() {
           <TableRowsRounded sx={{ color: !mapViewActive && '#fff' }} />
         </IconButton>
       </Stack>
-      {mapViewActive ? <MapContainer chargingStations={ChargeStationData} /> :
-        <TableContainer data={ChargeStationData} />}
+      {mapViewActive ? <MapContainer chargingStations={chargingStations} /> :
+        <TableContainer data={chargingStations} />}
     </Box></>
   );
 }

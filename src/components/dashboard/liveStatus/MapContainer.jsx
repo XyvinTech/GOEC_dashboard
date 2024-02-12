@@ -9,6 +9,7 @@ import { Box } from '@mui/material';
 
 
 export default function MapContainer({ chargingStations }) {
+  console.log(chargingStations);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -38,8 +39,8 @@ export default function MapContainer({ chargingStations }) {
             chargingStations.map((item) => {
 
               const position = {
-                lat: parseFloat(item.Latitude),
-                lng: parseFloat(item.Longitude)
+                lat: parseFloat(item.latitude),
+                lng: parseFloat(item.longitude)
               };
 
 
@@ -47,7 +48,7 @@ export default function MapContainer({ chargingStations }) {
                 <Marker key={item.id}
                   position={position}
                   icon={{
-                    url: item.status === 'active' ? operationalIconUrl : item.status === 'busy' ? busyOperationalIconUrl : item.status === 'faulted' ? faultOperationalIconUrl : nonOperationalIconUrl,
+                    url: item.status === 'online' ? operationalIconUrl : item.status === 'busy' ? busyOperationalIconUrl : item.status === 'offline' ? faultOperationalIconUrl : nonOperationalIconUrl,
                     scaledSize: new window.google.maps.Size(35, 35), // Scale the icon size
                     anchor: new window.google.maps.Point(10, 10), // Anchor the icon
                   }} />
