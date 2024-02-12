@@ -5,7 +5,7 @@ import { Box, IconButton, Stack } from "@mui/material";
 import { Map, TableRowsRounded } from "@mui/icons-material";
 import TableContainer from "../components/dashboard/liveStatus/tableContainer";
 import LastSynced from "../layout/LastSynced";
-import { getChargingStationList } from "../services/stationAPI";
+import { updateChargingStationByList } from "../services/stationAPI";
 
 
 
@@ -15,8 +15,9 @@ export default function LiveStatus() {
 
 
     useEffect(() => {
-      getChargingStationList().then((res)=>{
+      updateChargingStationByList({}).then((res)=>{
         if (res.status) {
+          console.log(res.result);
           setChargingStations(res.result)
         }
       })

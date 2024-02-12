@@ -20,7 +20,7 @@ const tableHeader = [
 
 export default function ChargePoints({ data, stationId,dataUpdate, ...props }) {
   const navigate = useNavigate()
-  console.log(stationId);
+  console.log(data);
   const [open, setOpen] = useState(false)
   const [editStatus, setEditStatus] = useState(false)
   const [selectedData, setSelectedData] =useState()
@@ -35,13 +35,14 @@ export default function ChargePoints({ data, stationId,dataUpdate, ...props }) {
         'Model': item.evModelDetails[0].model_name,
         'Tariff': item.chargingTariffDetails[0] ? item.chargingTariffDetails[0].tax_name : '',
         'Status': item.cpidStatus,
-        'Published': item.published
+        'Published': item.published,
+        ...item
       }))
     setAllChargePointsData(dt)
   }, [data])
   const actionButtonHandle = (e) => {
     if (e.action === 'View') {
-      navigate(`/charge-point-detail/${data._id}`)
+      navigate(`/charge-point-detail/${e.data._id}`)
     }
     else if (e.action === 'Edit') {
       setSelectedData(e.data)
