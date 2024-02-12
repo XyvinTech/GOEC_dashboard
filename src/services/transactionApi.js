@@ -10,7 +10,7 @@ export async function getTransactionList() {
 
 export async function getWalletTransaction(data) {
   try {
-    const response = await TRANSACTION_URL.post(`walletTransaction/filteredList`, data);
+    const response = await TRANSACTION_URL.post(`walletTransaction/dashboardUser/List`, data);
     return response.data;
   } catch (error) {
     throw error;

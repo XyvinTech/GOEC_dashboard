@@ -20,7 +20,6 @@ export default function UserDetails() {
 
   const getData = () => {
     getUserByIdforAdmin(state).then((res) => {
-      console.log(res.result);
       if (res.status) {
         setUserData(res.result[0]);
       }

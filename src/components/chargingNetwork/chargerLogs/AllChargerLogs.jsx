@@ -13,6 +13,7 @@ const tableHeader = [
 ];
 
 export default function AllChargerLogs({data}) {
+  
   const AllLogsData = tableHeaderReplace(data, ['CPID', 'timestamp', 'messageType', 'payload', '_id'], tableHeader)
 
 
