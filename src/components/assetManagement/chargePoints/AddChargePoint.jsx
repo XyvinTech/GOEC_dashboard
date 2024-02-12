@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { ContentCopy } from "@mui/icons-material";
 // StyledTable component
 const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false, isFromStation = false, stationId }) => {
+  console.log(editStatus ? (isFromStation ? stationId : chargepointData["Station"]) : (isFromStation ? stationId : ''));
   const [stationList, setStationList] = useState([])
   const [OEMList, setOEMList] = useState([])
   const [modelList, setModelList] = useState([])
@@ -30,7 +31,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   } = useForm({
     defaultValues: {
       chargePointDisplayName: editStatus ? chargepointData["name"] : '',
-      locationName: editStatus ? isFromStation ? stationId : chargepointData["Station"] : isFromStation ? stationId : '',
+      locationName: editStatus ? chargepointData["Station"] : '',
       chargePointOEM: editStatus ? chargepointData["OEM"] : '',
       authorisationkey: editStatus ? chargepointData["authorization_key"] : '',
       serialNumber: editStatus ? chargepointData["serial_number"] : '',
@@ -54,7 +55,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   const createChargePoint = (data) => {
     let dt = {
       name: data.chargePointDisplayName,
-      location_name: data.locationName.value,
+      location_name: isFromStation ? stationId : data.locationName.value,
       authorization_key: data.authorisationkey,
       serial_number: data.serialNumber,
       commissioned_date: data.commissionedDate,
@@ -64,6 +65,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       cpidStatus: "Available",
       published: data.published ? 'Yes' : "No"
     }
+    console.log(dt);
     createEvMachine(dt).then((res) => {
       toast.success("Chargepoint created successfully ")
       formsubmitted()
@@ -76,8 +78,8 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   const updateChargePoint = (data) => {
     let dt = {
       name: data.chargePointDisplayName,
-      location_name: data.locationName.value ? data.locationName.value : getListId(stationList, chargepointData["Station"]),
-      authorization_key: data.authorisationkey,
+      location_name: isFromStation ? stationId : (data.locationName.value ? data.locationName.value : getListId(stationList, chargepointData["Station"])),
+      authorization_ke1y: data.authorisationkey,
       serial_number: data.serialNumber,
       commissioned_date: data.commissionedDate,
       evModel: data.model.value ? data.model.value : getListId(modelList, chargepointData["Model"]),
@@ -130,7 +132,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       }
     })
 
-    
+
   }
   useEffect(() => {
     init()
@@ -220,7 +222,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
                 <>
                   <StyledSelectField options={OEMList} {...field} placeholder="select OEM"
                     onChange={(e) => {
-                      setValue("chargePointOEM",e)
+                      setValue("chargePointOEM", e)
                       let list = []
                       modelList.map((dt) => {
                         if (dt.oem === e.label) {

@@ -35,6 +35,7 @@ export default function ChargeStationDetail() {
 
     const stationDetailGet = () => {
         getChargingStationById(id).then((res) => {
+            console.log(res.result);
             if (res.status) {
                 setStationDetails(res.result)
             }
@@ -103,7 +104,7 @@ export default function ChargeStationDetail() {
             }
             <StyledTab buttons={['Charge-points', 'Reviews']} onChanged={onChangeToggleOption} />
             {stationDetails && (toggleOption === 0 ?
-                <ChargePoints data={chargepointList} stationId={stationDetails && stationDetails._id} dataUpdate={init} /> :
+                <ChargePoints /*data={chargepointList}*/ data={stationDetails && stationDetails.chargers} stationId={stationDetails && stationDetails._id}  dataUpdate={init} /> :
                 <Reviews data={stationDetails && stationDetails.reviews} deleteClickHandle={(data) => { setConfirmDialogOpen(true); setSelectedReview(data) }} />)}
         </>
     )

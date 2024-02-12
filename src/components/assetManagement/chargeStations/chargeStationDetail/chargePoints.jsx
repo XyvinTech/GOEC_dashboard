@@ -20,7 +20,7 @@ const tableHeader = [
 
 export default function ChargePoints({ data, stationId,dataUpdate, ...props }) {
   const navigate = useNavigate()
-  console.log(data);
+  console.log(stationId);
   const [open, setOpen] = useState(false)
   const [editStatus, setEditStatus] = useState(false)
   const [selectedData, setSelectedData] =useState()
