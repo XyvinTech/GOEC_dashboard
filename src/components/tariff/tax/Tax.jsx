@@ -66,7 +66,6 @@ function Tax({ data, headers, onIsChange, isChange }) {
         </Box>
         <StyledTable headers={headers} data={taxData} onActionClick={handleClick} />
       </Box>
-      <ToastContainer />
       {/* Modal */}
       <Modal
         open={open}
