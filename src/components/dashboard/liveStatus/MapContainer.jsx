@@ -48,7 +48,7 @@ export default function MapContainer({ chargingStations }) {
                 <Marker key={item.id}
                   position={position}
                   icon={{
-                    url: item.status === 'online' ? operationalIconUrl : item.status === 'busy' ? busyOperationalIconUrl : item.status === 'offline' ? faultOperationalIconUrl : nonOperationalIconUrl,
+                    url: item.charger_status === 'Online' ? operationalIconUrl : item.charger_status === 'Busy' ? busyOperationalIconUrl : item.charger_status === 'Offline' ? faultOperationalIconUrl : nonOperationalIconUrl,
                     scaledSize: new window.google.maps.Size(35, 35), // Scale the icon size
                     anchor: new window.google.maps.Point(10, 10), // Anchor the icon
                   }} />

@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { ContentCopy } from "@mui/icons-material";
 // StyledTable component
 const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false, isFromStation = false, stationId }) => {
-  console.log(editStatus ? (isFromStation ? stationId : chargepointData["Station"]) : (isFromStation ? stationId : ''));
+  console.log(chargepointData);
   const [stationList, setStationList] = useState([])
   const [OEMList, setOEMList] = useState([])
   const [modelList, setModelList] = useState([])
@@ -37,6 +37,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       serialNumber: editStatus ? chargepointData["serial_number"] : '',
       commissionedDate: editStatus ? chargepointData["commissioned_date"] : '',
       model: editStatus ? chargepointData["Model"] : '',
+      chargePointDisplayName:editStatus ? chargepointData["CPID"] : '',
       CPID: editStatus ? chargepointData["CPID"] : '',
       published: editStatus ? chargepointData["Published"] : false, // Set the default value for "activate"
     },

@@ -65,3 +65,4 @@ export async function updateChargingStationByList(data) {
     throw error;
   }
 }
+

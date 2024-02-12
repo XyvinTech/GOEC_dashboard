@@ -10,7 +10,7 @@ const tableHeader = [
 ]
 
 export default function TableContainer({data}) {
-    const chargeStationData = tableHeaderReplace(data, ['name', 'address', 'owner', 'status'], tableHeader)
+    const chargeStationData = tableHeaderReplace(data, ['name', 'address', 'owner', 'charger_status'], tableHeader)
     return (
         <StyledTable headers={tableHeader} data={chargeStationData} showActionCell={false}/>
     )

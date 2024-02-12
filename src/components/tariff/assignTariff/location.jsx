@@ -51,8 +51,9 @@ export default function Location({ location }) {
   const stationChange = (e) => {
     setValue("location", e)
     getChargingPointsListOfStation(e.value).then((res) => {
+      console.log(res.result);
       if (res.status) {
-        setChargerList(res.result.map((dt) => ({ label: dt.cpid, value: dt._id })))
+        setChargerList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines._id })))
       }
     })
   }
