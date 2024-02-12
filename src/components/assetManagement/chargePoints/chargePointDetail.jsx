@@ -131,7 +131,7 @@ export default function ChargePointDetail() {
                     toggleOption === 2 ? <Transactions CPID={chargepointData && chargepointData.CPID} /> :
                         toggleOption === 3 ? <ChargerLog CPID={chargepointData && chargepointData.CPID} /> :
                             toggleOption === 4 ? <Alarm CPID={chargepointData && chargepointData.CPID} /> :
-                                <Tariff CPID={chargepointData && chargepointData._id} />}
+                                <Tariff CPID={chargepointData && chargepointData.CPID} id={chargepointData && chargepointData._id} />}
         </>
     )
 }

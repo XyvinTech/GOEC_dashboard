@@ -9,7 +9,7 @@ import StyledTab from '../../../ui/styledTab'
 import ChargePoints from './chargeStationDetail/chargePoints'
 import Reviews from './chargeStationDetail/reviews'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { getChargingStationById } from '../../../services/stationAPI'
+import { getChargingPointsListOfStation, getChargingStationById } from '../../../services/stationAPI'
 import StyledBackdropLoader from '../../../ui/styledBackdropLoader'
 import { deleteReview, getReviewBySation } from '../../../services/reviewApi'
 import ConfirmDialog from '../../../ui/confirmDialog'
@@ -19,6 +19,7 @@ export default function ChargeStationDetail() {
     const [toggleOption, setToggleoption] = useState(0)
     const [loaderOpen, setLoaderOpen] = useState(true)
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
+    const [chargepointList,setChargePointList] = useState([])
     const [selectedReview, setSelectedReview] = useState(false)
     const [errorMsg, setErrorMsg] = useState();
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -29,13 +30,24 @@ export default function ChargeStationDetail() {
     }
     const init = () => {
         stationDetailGet()
+        stationpointsofStationGet()
     }
 
     const stationDetailGet = () => {
         getChargingStationById(id).then((res) => {
-            console.log(res.result);
             if (res.status) {
                 setStationDetails(res.result)
+            }
+            setLoaderOpen(false)
+        }
+        )
+    }
+
+    const stationpointsofStationGet = () => {
+        getChargingPointsListOfStation(id).then((res) => {
+            console.log(res.result);
+            if (res.status) {
+                setChargePointList(res.result)
             }
             setLoaderOpen(false)
         }
@@ -90,7 +102,8 @@ export default function ChargeStationDetail() {
                 </Box>
             }
             <StyledTab buttons={['Charge-points', 'Reviews']} onChanged={onChangeToggleOption} />
-            {stationDetails && (toggleOption === 0 ? <ChargePoints data={stationDetails && stationDetails.chargers} stationId={stationDetails && stationDetails._id} dataUpdate={init} /> :
+            {stationDetails && (toggleOption === 0 ?
+                <ChargePoints data={chargepointList} stationId={stationDetails && stationDetails._id} dataUpdate={init} /> :
                 <Reviews data={stationDetails && stationDetails.reviews} deleteClickHandle={(data) => { setConfirmDialogOpen(true); setSelectedReview(data) }} />)}
         </>
     )

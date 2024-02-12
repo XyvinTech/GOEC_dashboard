@@ -32,8 +32,12 @@ export default function AssignedTarrif({data,unassignedHandle}) {
                         <Typography variant='subtitle2' color={'#fff9'}>Service Fee</Typography>
                         <Typography variant='subtitle2' >{data.chargingTariffDetail && data.chargingTariffDetail.serviceAmount}</Typography>
                     </Stack>
-                    <Box sx={{ justifyContent: 'center', px: 8,py:2 }} onClick={unassignedHandle}>
-                        <StyledButton varient={'secondary'} style={{ backgroundColor: '#4A4458', color: '#fff8', width: '100%',height:'48px' }}>unassign</StyledButton>
+                     <Box sx={{ justifyContent: 'center', px: 8,py:2}}  >
+                     {/* {data.chargingTariffDetail.name !== 'Default' && <StyledButton varient={'secondary'} 
+                        style={{ backgroundColor: '#4A4458', 
+                        color: '#fff8', width: '100%',height:'48px' }}
+                        onClick={ unassignedHandle}
+                        >unassign</StyledButton> } */}
                     </Box>
                 </Stack>
             </Box>

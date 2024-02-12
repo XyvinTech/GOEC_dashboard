@@ -27,7 +27,7 @@ export default function ChargerLog({ CPID }) {
     useEffect(() => {
         getMachineLog(CPID).then((res) => {
             if (res.status) {
-                setLogList(tableHeaderReplace(res.result, ['CPID', 'date', 'command', 'payload', 'uniqueId'], tableHeader))
+                setLogList(tableHeaderReplace(res.result, ['connectorId', 'date', 'command', 'payload', 'uniqueId'], tableHeader))
             }
         })
     }, [])
