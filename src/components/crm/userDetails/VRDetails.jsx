@@ -70,7 +70,13 @@ export default function VRDetails() {
       <Box sx={{ p: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6} xl={4}>
-            <VRCard data={VR} />
+            {VR?.map((vr, i) => {
+              return (
+                <Grid py={2}>
+                  <VRCard data={vr} />
+                </Grid>
+              );
+            })}
           </Grid>
         </Grid>
       </Box>
