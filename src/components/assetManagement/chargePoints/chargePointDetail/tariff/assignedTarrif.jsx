@@ -3,7 +3,7 @@ import React from 'react'
 import StyledDivider from '../../../../../ui/styledDivider'
 import StyledButton from '../../../../../ui/styledButton'
 
-export default function AssignedTarrif() {
+export default function AssignedTarrif({data,unassignedHandle}) {
     return (
         <Box sx={{ p: 2 }}>
             <Typography variant='h6' py={1} color={'#fff9'}>Assigned Tariff</Typography>
@@ -12,27 +12,27 @@ export default function AssignedTarrif() {
                 <Stack direction={'column'} spacing={2}>
                     <Stack direction={'row'} sx={{ justifyContent: 'space-between', px: 3}}>
                         <Typography variant='subtitle2' color={'#fff9'}>Tariff name</Typography>
-                        <Typography variant='subtitle2' >Default</Typography>
+                        <Typography variant='subtitle2' >{data.chargingTariffDetail && data.chargingTariffDetail.name}</Typography>
                     </Stack>
                     <StyledDivider />
 
                     <Stack direction={'row'} sx={{ justifyContent: 'space-between', px: 3 }}>
                         <Typography variant='subtitle2' color={'#fff9'}>Value</Typography>
-                        <Typography variant='subtitle2' >15</Typography>
+                        <Typography variant='subtitle2' >{data.chargingTariffDetail && data.chargingTariffDetail.value}</Typography>
                     </Stack>
                     <StyledDivider />
 
                     <Stack direction={'row'} sx={{ justifyContent: 'space-between', px: 3}}>
                         <Typography variant='subtitle2' color={'#fff9'}>Tax</Typography>
-                        <Typography variant='subtitle2' >GST</Typography>
+                        <Typography variant='subtitle2' >{data.chargingTariffDetail && data.chargingTariffDetail.tax_name}</Typography>
                     </Stack>
                     <StyledDivider />
 
                     <Stack direction={'row'} sx={{ justifyContent: 'space-between', px: 3 }}>
                         <Typography variant='subtitle2' color={'#fff9'}>Service Fee</Typography>
-                        <Typography variant='subtitle2' >-</Typography>
+                        <Typography variant='subtitle2' >{data.chargingTariffDetail && data.chargingTariffDetail.serviceAmount}</Typography>
                     </Stack>
-                    <Box sx={{ justifyContent: 'center', px: 8,py:2 }}>
+                    <Box sx={{ justifyContent: 'center', px: 8,py:2 }} onClick={unassignedHandle}>
                         <StyledButton varient={'secondary'} style={{ backgroundColor: '#4A4458', color: '#fff8', width: '100%',height:'48px' }}>unassign</StyledButton>
                     </Box>
                 </Stack>

@@ -112,7 +112,8 @@ export const TRANSACTION_URL = axios.create({
   baseURL: `${baseURL}:5687/api/v1`,
   headers: {
     Authorization: "Bearer " + token,
-    "Content-Type": "multipart/form-data",
+    // "Content-Type": "multipart/form-data",
+    "Content-Type": "application/json",
   },
 });
 

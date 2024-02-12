@@ -1,4 +1,4 @@
-import { USER_INSTANCE} from "./axiosInstances";
+import { USER_INSTANCE } from "./axiosInstances";
 
 export async function createUser(data) {
   try {
@@ -20,10 +20,7 @@ export async function editUser(userId, data) {
 
 export async function editUserByMob(mob, data) {
   try {
-    const response = await USER_INSTANCE.put(
-      `users/update/byMobileNo/${mob}`,
-      data
-    );
+    const response = await USER_INSTANCE.put(`users/update/byMobileNo/${mob}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -84,13 +81,18 @@ export async function getUserByIdforAdmin(id) {
   }
 }
 
+export async function getUserByEmailMobile(data) {
+  try {
+    const response = await USER_INSTANCE.get(`admin/userDatabyPhoneOrEmail?${data}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function addFavSatation(stationId, data) {
   try {
-    const response = await USER_INSTANCE.put(
-      `users/addFavoriteStation/${stationId}`,
-      data
-    );
+    const response = await USER_INSTANCE.put(`users/addFavoriteStation/${stationId}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -99,10 +101,7 @@ export async function addFavSatation(stationId, data) {
 
 export async function removeFavSatation(stationId, data) {
   try {
-    const response = await USER_INSTANCE.put(
-      `users/removeFavoriteStation/${stationId}`,
-      data
-    );
+    const response = await USER_INSTANCE.put(`users/removeFavoriteStation/${stationId}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -120,10 +119,7 @@ export async function addVehicle(vehId, data) {
 
 export async function removeVehicle(vehId, data) {
   try {
-    const response = await USER_INSTANCE.put(
-      `users/removeVehicle${vehId}`,
-      data
-    );
+    const response = await USER_INSTANCE.put(`users/removeVehicle${vehId}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -150,10 +146,7 @@ export async function removeRfidTag(Id, data) {
 
 export async function removeRfidTagById(Id, data) {
   try {
-    const response = await USER_INSTANCE.put(
-      `users/removeRfidTagById/${Id}`,
-      data
-    );
+    const response = await USER_INSTANCE.put(`users/removeRfidTagById/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -162,10 +155,7 @@ export async function removeRfidTagById(Id, data) {
 
 export async function fromWallet(Id, data) {
   try {
-    const response = await USER_INSTANCE.put(
-      `users/deductFromWallet/${Id}`,
-      data
-    );
+    const response = await USER_INSTANCE.put(`users/deductFromWallet/${Id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -184,9 +174,7 @@ export async function toWallet(Id, data) {
 export async function userRfidAuth() {
   // ? Confusion to 111222333444 is id or  not?
   try {
-    const response = await USER_INSTANCE.get(
-      `users/transaction/rfid-authenticate/111222333444`
-    );
+    const response = await USER_INSTANCE.get(`users/transaction/rfid-authenticate/111222333444`);
     return response.data;
   } catch (error) {
     throw error;
@@ -195,9 +183,34 @@ export async function userRfidAuth() {
 
 export async function userTransaction(Id) {
   try {
-    const response = await USER_INSTANCE.put(
-      `users/transaction/authenticate/${Id}`
-    );
+    const response = await USER_INSTANCE.put(`users/transaction/authenticate/${Id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function userFavourites(Id) {
+  try {
+    const response = await USER_INSTANCE.get(`admin/favoriteStations/${Id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function userchargingTariff(Id) {
+  try {
+    const response = await USER_INSTANCE.get(`admin/chargingTariff/${Id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function uservehicleDetails(Id) {
+  try {
+    const response = await USER_INSTANCE.get(`admin/vehicleDetails/${Id}`);
     return response.data;
   } catch (error) {
     throw error;
