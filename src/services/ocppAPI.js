@@ -162,3 +162,22 @@ export async function getChargingHistory(userId, data) {
     throw error;
   }
 }
+
+
+export async function getActiveSession() {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/activeSession`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function remoteStopTransaction(id) {
+  try {
+    const response = await OCPP_INSTANCE.post(`ocpp/remoteStopTransaction/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -7,17 +7,20 @@ import StyledStatusChip from "./styledStatusChip";
 import StyledPayloadTableCell from "./styledPayloadTableCell";
 import TableSkeleton from "./tableSkeleton";
 import { Typography } from "@mui/material";
+import { remoteStopTransaction } from "../services/ocppAPI";
+import { toast } from "react-toastify";
 // StyledTable component
 
 const StyledTable = ({ headers, data, onActionClick, showActionCell = true, actions = ['Edit', 'View', 'Delete'] }) => {
   const [page, setPage] = useState(0);
   const [firstopen, setFirstOpen] = useState(true)
+  const [isChange, setIsChange] = useState(false)
 
   useEffect(() => {
     if (data.length > 0) {
       setFirstOpen(false)
     }
-  }, [data])
+  }, [data, isChange])
 
   setTimeout(()=>{
     setFirstOpen(false)
@@ -36,8 +39,13 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
     setPage(newPage); // Assuming newPage is 1-indexed
   };
 
-  const handleStopClick = (id) => {
-    alert(`Terminate session for id: `);
+  const handleStopClick = async(id) => {
+    alert(`Terminate session for id: ${id}`);
+    const res = await remoteStopTransaction(id);
+    if(res){
+      toast.success("Session terminated successfully ")
+      setIsChange(!isChange);
+    }
   };
   let prevHeader = null;
 
@@ -78,7 +86,7 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
                         {
                           isStatusColumn ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
                             : isTerminateSession ? (
-                              <StyledStopButton onClick={() => handleStopClick(row.id)}>
+                              <StyledStopButton onClick={() => handleStopClick(row._id)}>
                                 Stop
                               </StyledStopButton>
                             ) : isPayload ? <StyledPayloadTableCell value={row[header]} command={row[command]} />
