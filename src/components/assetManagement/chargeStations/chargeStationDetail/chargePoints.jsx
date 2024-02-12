@@ -41,7 +41,7 @@ export default function ChargePoints({ data, stationId,dataUpdate, ...props }) {
   }, [data])
   const actionButtonHandle = (e) => {
     if (e.action === 'View') {
-      navigate(`/charge-point-detail`, { state: e.data })
+      navigate(`/charge-point-detail/${data._id}`)
     }
     else if (e.action === 'Edit') {
       setSelectedData(e.data)

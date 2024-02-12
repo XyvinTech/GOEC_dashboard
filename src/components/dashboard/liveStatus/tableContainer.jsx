@@ -1,5 +1,6 @@
 import React from 'react'
 import StyledTable from '../../../ui/styledTable'
+import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
 
 const tableHeader = [
     'Charge Station',
@@ -9,7 +10,8 @@ const tableHeader = [
 ]
 
 export default function TableContainer({data}) {
+    const chargeStationData = tableHeaderReplace(data, ['name', 'address', 'owner', 'status'], tableHeader)
     return (
-        <StyledTable headers={tableHeader} data={data} showActionCell={false}/>
+        <StyledTable headers={tableHeader} data={chargeStationData} showActionCell={false}/>
     )
 }

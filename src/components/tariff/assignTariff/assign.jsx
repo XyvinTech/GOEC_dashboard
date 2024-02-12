@@ -1,13 +1,74 @@
-import { Grid, Typography, Container, Stack } from "@mui/material";
-import React from "react";
+import { Grid, Typography, Container, Stack, Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StyledButton from "../../../ui/styledButton";
 import StyledSelectField from "../../../ui/styledSelectField";
 import TableCell from "@mui/material/TableCell";
+import { changeEVTarrif } from "../../../services/evMachineAPI";
+import { toast } from "react-toastify";
+import { getChargingTariffList } from "../../../services/chargingTariffAPI";
+import { userAssignAndunAssignTarrif } from "../../../services/userApi";
 
-export default function Assign({ tab }) {
+export default function Assign({ tab, data, onClose, user }) {
+
+  const [tarrifList, setTarrifList] = useState([])
+  const [selectedtarrif, setSelectedTarrif] = useState()
+
+
+  useEffect(() => {
+    getChargingTariffList().then((res) => {
+      if (res) {
+        setTarrifList(res.result.map((dt) => ({ label: dt.name, value: dt._id })));
+      }
+    })
+  }, [])
+
+
+  const assignTarrif = () => {
+    if (tab === "location") {
+      let dt = {
+        chargingTariff: selectedtarrif.value
+      }
+      console.log(dt);
+      changeEVTarrif(data._id, dt).then((res) => {
+        console.log(res);
+        toast.success("successfully assigned")
+        onClose && onClose()
+      }).catch((err) => {
+        toast.error(err.response.data.error)
+      })
+    } else if (tab === "personal") {
+      let dt = {
+        chargingTariff: selectedtarrif.value
+      }
+      console.log(dt);
+      userAssignAndunAssignTarrif(user._id, dt).then((res) => {
+        console.log(res);
+        toast.success("successfully assigned")
+        onClose && onClose()
+      }).catch((err) => {
+        toast.error(err.response.data.error)
+      })
+    }
+  }
+
+  const unAssinHandle = () => {
+    if (tab === "location") {
+      changeEVTarrif(data._id, {}).then((res) => {
+        onClose && onClose()
+      }).catch((err) => {
+        toast.error(err.response.data.error)
+      })
+    } else if (tab === "personal") {
+      userAssignAndunAssignTarrif(user._id, {}).then((res) => {
+        onClose && onClose()
+      }).catch((err) => {
+        toast.error(err.response.data.error)
+      })
+    }
+  }
   return (
-    <TableContainer>
+    <Box>
       <Container fixed>
         <Typography
           sx={{
@@ -44,7 +105,9 @@ export default function Assign({ tab }) {
                   Tariff name
                 </Typography>
               </StyledTableCell>
-              <StyledTableCell align="right">Default</StyledTableCell>
+              <StyledTableCell align="right">
+                {tab === "personal" ? (data ? data.name : '-') : (data && data.chargingTariffDetail ? data.chargingTariffDetail.name : '-')}
+              </StyledTableCell>
             </tr>
             {tab === "location" && (
               <>
@@ -60,7 +123,9 @@ export default function Assign({ tab }) {
                       Location
                     </Typography>
                   </StyledTableCell>
-                  <StyledTableCell align="right">Oberon Mall</StyledTableCell>
+                  <StyledTableCell align="right">
+                    {data && data.chargingTariffDetail ? data.chargingTariffDetail.location : '-'}
+                    </StyledTableCell>
                 </tr>
                 <tr>
                   <StyledTableCell component="th" scope="row">
@@ -74,7 +139,7 @@ export default function Assign({ tab }) {
                       CPID
                     </Typography>
                   </StyledTableCell>
-                  <StyledTableCell align="right">GOEC123</StyledTableCell>
+                  <StyledTableCell align="right">{data ? data.CPID : '-'}</StyledTableCell>
                 </tr>
               </>
             )}
@@ -92,7 +157,7 @@ export default function Assign({ tab }) {
                   </Typography>
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  Raghevendra gowda reddy
+                  {user ? user.name : '-'}
                 </StyledTableCell>
               </tr>
             )}
@@ -108,7 +173,9 @@ export default function Assign({ tab }) {
                   Value
                 </Typography>
               </StyledTableCell>
-              <StyledTableCell align="right">15</StyledTableCell>
+              <StyledTableCell align="right">
+                {tab === "personal" ? (data ? data.value : '-') : (data && data.chargingTariffDetail ? data.chargingTariffDetail.value : '-')}
+                </StyledTableCell>
             </tr>
             <tr>
               <StyledTableCell component="th" scope="row">
@@ -122,7 +189,9 @@ export default function Assign({ tab }) {
                   Tax %
                 </Typography>
               </StyledTableCell>
-              <StyledTableCell align="right">18</StyledTableCell>
+              <StyledTableCell align="right">
+                {tab === "personal" ? (data && data.taxDetails ? data.taxDetails.percentage : '-') : (data && data.chargingTariffDetail ? data.chargingTariffDetail.tax_percentage : '-')}
+                </StyledTableCell>
             </tr>
             <tr>
               <StyledTableCell component="th" scope="row">
@@ -136,13 +205,15 @@ export default function Assign({ tab }) {
                   Service Fee
                 </Typography>
               </StyledTableCell>
-              <StyledTableCell align="right">-</StyledTableCell>
+              <StyledTableCell align="right">
+                {tab === "personal" ? (data ? data.serviceAmount : '-') : (data && data.chargingTariffDetail ? data.chargingTariffDetail.serviceAmount : '-')}
+                </StyledTableCell>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td colSpan={2} align="center" style={{ paddingTop: "20px" }}>
-                <StyledButton variant={"secondary"} width="141">
+                <StyledButton variant={"secondary"} width="141" onClick={unAssinHandle}>
                   Unassign
                 </StyledButton>
               </td>
@@ -151,10 +222,10 @@ export default function Assign({ tab }) {
         </Table>
         <Grid container spacing={4}>
           <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1, marginTop: 2 }}>
+            <Typography sx={{ marginBottom: 1, marginTop: 2, color: 'secondary.contrastText' }}>
               Assign Tariff
             </Typography>
-            <StyledSelectField placeholder={"Select Tariff"} />
+            <StyledSelectField placeholder={"Select Tariff"} options={tarrifList} maxMenuHeight={100} onChange={setSelectedTarrif} />
           </Grid>
           <Grid
             item
@@ -170,25 +241,21 @@ export default function Assign({ tab }) {
               <StyledButton variant={"secondary"} width="103">
                 Cancel
               </StyledButton>
-              <StyledButton variant={"primary"} width="160">
+              <StyledButton variant={"primary"} width="160" onClick={assignTarrif}>
                 Update
               </StyledButton>
             </Stack>
           </Grid>
         </Grid>
       </Container>
-    </TableContainer>
+    </Box>
   );
 }
 
 //! STYLINGS
 
 // Styled table container
-export const TableContainer = styled.div`
-  background: #27292f; // Dark background for the table
-  overflow-x: auto; // Allows table to be scrollable horizontally
-  border-radius: 8px; // Rounded corners
-`;
+
 
 export const StyledTableCell = styled(TableCell)`
   && {

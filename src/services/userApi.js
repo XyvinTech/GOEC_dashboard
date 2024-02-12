@@ -216,3 +216,12 @@ export async function uservehicleDetails(Id) {
     throw error;
   }
 }
+
+export async function userAssignAndunAssignTarrif(Id, data) {
+  try {
+    const response = await USER_INSTANCE.put(`admin/assignUnassignChargingTariff/${Id}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
