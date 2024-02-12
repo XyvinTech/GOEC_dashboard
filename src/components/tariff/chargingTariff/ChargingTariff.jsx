@@ -80,7 +80,6 @@ function ChargingTariff({ data, headers, onIsChange, isChange }) {
           onActionClick={handleClick}
         />
       </Box>
-      <ToastContainer />
       {/* Modal */}
       <Modal
         open={open}

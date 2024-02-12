@@ -35,7 +35,7 @@ export default function AllChargeStation({ data, deleteData,editData, ...props }
   return (
     <>
 
-      <LastSynced heading="Charge Stations">
+      <LastSynced heading="Charge Stations" >
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
           setFilterValue(e.target.value)
         }} />

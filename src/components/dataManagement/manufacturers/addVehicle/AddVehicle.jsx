@@ -133,7 +133,6 @@ export default function AddVehicle({ open, onClose, editStatus = false, editData
           </Stack>
         </form>
       </Box>
-      <ToastContainer />
     </Dialog>
   );
 }

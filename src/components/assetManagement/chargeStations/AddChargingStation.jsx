@@ -395,6 +395,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                   <>
                     <StyledInput
                       {...field}
+                      type="time"
                       icon={<ClockOutline />}
                       placeholder={"Start time"}
 
@@ -419,6 +420,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                 <>
                   <StyledInput
                     {...field}
+                    type="time"
                     icon={<ClockOutline />}
                     placeholder={"End time"}
                   />
