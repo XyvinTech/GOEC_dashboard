@@ -7,7 +7,7 @@ export default function ChargerLogs() {
 
   const init = () => {
     getAllOcppLogs().then((res) => {
-      console.log(res.result);
+      console.log('test',res.result);
       if (res) {
         setLogs(res.result);
       }
