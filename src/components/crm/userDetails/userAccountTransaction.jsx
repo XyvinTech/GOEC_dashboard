@@ -35,6 +35,7 @@ export default function UserAccountTransactiomn() {
   const getData = async () => {
     const postData = {
       user: state,
+     
     };
     const res = await getWalletTransaction(postData);
     setTransactionData(res.result);
