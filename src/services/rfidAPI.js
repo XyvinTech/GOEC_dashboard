@@ -63,3 +63,12 @@ export async function getRfidList() {
     throw error;
   }
 }
+
+export async function getRfidUnassignedList() {
+  try {
+    const response = await RFID_URL.get(`rfid/unassignedList`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
