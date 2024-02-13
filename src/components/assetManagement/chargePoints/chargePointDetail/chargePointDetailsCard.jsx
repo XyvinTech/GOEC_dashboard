@@ -21,120 +21,231 @@ export default function ChargePointDetailsCard({ data }) {
       </Stack>
       <StyledDivider />
       <Stack px={2}>
-        <Typography sx={{ color: "primary.contrastText", fontWeight: "500", fontSize: '14px' }}>
+        <Typography
+          sx={{
+            color: "primary.contrastText",
+            fontWeight: "500",
+            fontSize: "14px",
+          }}
+        >
           Configuration URL
         </Typography>
         <Stack spacing={2}>
           <StyledInput
             placeholder={`${data && data.configuration_url}`}
-            disabled iconright={<ContentCopy style={{ cursor: 'pointer' }}
-              onClick={() => { navigator.clipboard.writeText(`${data && data.configuration_url}`); toast.success("copied") }} />}
-            style={{ height: '40px' }} />
+            disabled
+            iconright={
+              <ContentCopy
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${data && data.configuration_url}`
+                  );
+                  toast.success("copied");
+                }}
+              />
+            }
+            style={{ height: "40px" }}
+          />
         </Stack>
       </Stack>
 
-      <Stack my={2} px={2} sx={{ borderRadius: "10px", fontSize: '14px' }}>
-
-        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+      <Stack my={2} px={2} sx={{ borderRadius: "10px", fontSize: "14px" }}>
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}
+        >
           <Typography
-            sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
           >
             Charge Location
           </Typography>
           <Typography
-            sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
           >
             {data && data.chargingStationDetails[0].name}
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}
+        >
           <Typography
-            sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
           >
             OEM
           </Typography>
           <Typography
-            sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
           >
             {data && data.evModelDetails[0].oem}
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}
+        >
           <Typography
-            sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
           >
             Model
           </Typography>
           <Typography
-            sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
           >
             {data && data.evModelDetails[0].model_name}
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}
+        >
           <Typography
-            sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
           >
             Type
           </Typography>
           <Typography
-            sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
           >
             {data && data.evModelDetails[0].charger_type}
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}
+        >
           <Typography
-            sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
           >
             Serial Number
           </Typography>
           <Typography
-            sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
           >
             {data && data.serial_number}
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}
+        >
           <Typography
-            sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
           >
             Communication Protocol (Version)
           </Typography>
           <Typography
-            sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
           >
-            {data && data.location_name}
+            {data && data.evModelDetails[0].ocpp_version}
           </Typography>
         </Stack>
 
-
-        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}>
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}
+        >
           <Typography
-            sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
           >
             Commissioned On
           </Typography>
           <Typography
-            sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
           >
             {data && data.commissioned_date}
           </Typography>
         </Stack>
 
-        <Stack direction={"row"} p={1.3} sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}>
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#2B2930" }}
+        >
           <Typography
-            sx={{ color: "primary.DimText", fontWeight: "500", fontSize: '14px' }}
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
           >
             Published
           </Typography>
           <Typography
-            sx={{ color: "primary.contrastText", fontWeight: "400", fontSize: '14px' }}
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
           >
             {data && data.published}
           </Typography>
