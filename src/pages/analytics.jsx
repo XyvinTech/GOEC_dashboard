@@ -8,10 +8,13 @@ import { getDashboardAnalytics } from '../services/ocppAPI'
 
 export default function Analytics() {
   const [tabIndex, setTabIndex] = useState(0)
+  const [overviewData,setOverviewData] = useState()
 
   useEffect(() => {
     getDashboardAnalytics().then((res)=>{
-      console.log(res);
+      if (res.status) {
+        setOverviewData(res.result)
+      }
     })
   }, [])
   
@@ -22,7 +25,7 @@ export default function Analytics() {
     <Box>
       <StyledTab buttons={['Overview', 'Trends', 'Utilization']} onChanged={tabOnChange} />
       <Box>
-        {tabIndex === 0 ? <Overview /> : tabIndex === 1 ? <Trends /> : <Utilization/>}
+        {tabIndex === 0 ? <Overview data={overviewData} /> : tabIndex === 1 ? <Trends /> : <Utilization/>}
       </Box>
     </Box>
   )
