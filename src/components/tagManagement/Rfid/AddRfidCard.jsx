@@ -33,13 +33,14 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
       expiry: data.expiryDate,
       rfidTag: data.rfidTag,
       serialNumber: data.serialNumber,
-      status: data.activate ? 'active' : 'inactive'
+      status: data.activate ? 'active' : 'unassigned'
     }
     createRfid(dt).then((res) => {
-      console.log(res);
+      console.log('---->',res);
       toast.success("RFID added successfully")
       Close();
     }).catch((error) => {
+      console.log(error.response.data);
       toast.error(error.response.data.error)
     })
   }

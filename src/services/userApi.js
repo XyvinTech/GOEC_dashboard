@@ -126,27 +126,27 @@ export async function removeVehicle(vehId, data) {
   }
 }
 
-export async function addRfidTag(Id, data) {
+export async function addRfidTag(id, data) {
   try {
-    const response = await USER_INSTANCE.put(`users/addRfidTag/${Id}`, data);
+    const response = await USER_INSTANCE.put(`users/addRfidTag/${id}`, data);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function removeRfidTag(Id, data) {
+export async function removeRfidTag(id, data) {
   try {
-    const response = await USER_INSTANCE.put(`users/removeRfidTag/${Id}`, data);
+    const response = await USER_INSTANCE.put(`users/removeRfidTag/${id}`, data);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function removeRfidTagById(Id, data) {
+export async function removeRfidTagById(id, data) {
   try {
-    const response = await USER_INSTANCE.put(`users/removeRfidTagById/${Id}`, data);
+    const response = await USER_INSTANCE.put(`users/removeRfiTagById/${id}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -225,3 +225,13 @@ export async function userAssignAndunAssignTarrif(Id, data) {
     throw error;
   }
 }
+
+export async function userRfidList(Id) {
+  try {
+    const response = await USER_INSTANCE.get(`admin/rfidDetails/${Id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+

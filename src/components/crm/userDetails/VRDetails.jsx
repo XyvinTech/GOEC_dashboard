@@ -10,7 +10,7 @@ const VRCard = ({ data }) => {
       <Grid container padding={2} spacing={2}>
         <Grid item xs={12} md={6}>
           <img
-            src="https://imgd.aeplcdn.com/227x128/n/cw/ec/47051/compass-exterior-right-front-three-quarter-74.jpeg"
+            src={data.icon !== "no image" ? data.icon : "https://imgd.aeplcdn.com/227x128/n/cw/ec/47051/compass-exterior-right-front-three-quarter-74.jpeg"}
             style={{
               height: "100%",
               width: "100%",

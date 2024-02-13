@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LastSynced from "../../../layout/LastSynced";
 import TariffCard from "./userTariff/tariffCard";
@@ -45,6 +45,7 @@ export default function UserTariff() {
   const [open, setOpen] = useState(false);
   const { id } = useParams();
   const [tariff, setTariff] = useState();
+  const [isChange, setIsChange] = useState(false);
 
   const getData = async () => {
     const res = await userchargingTariff(id);
@@ -53,7 +54,7 @@ export default function UserTariff() {
 
   useEffect(() => {
     getData();
-  }, [id]);
+  }, [id, isChange]);
   return (
     <Box>
       <AssignTariff
@@ -69,8 +70,14 @@ export default function UserTariff() {
           setOpen(true);
         }}
       />
-      <Grid container sx={{ p: { xs: 2, md: 4 }, justifyContent:"center" }} spacing={2}>
-        <TariffCard data={tariff} />
+      <Grid container sx={{ p: { xs: 2, md: 4 }, justifyContent: "center" }} spacing={2}>
+        {!tariff ? (
+          <Typography color={"#deb500"} sx={{ textAlign: "center" }}>
+            No Data
+          </Typography>
+        ) : (
+          <TariffCard data={tariff} onIsChange={setIsChange} isChange={isChange} userId={id}/>
+        )}
       </Grid>
     </Box>
   );
