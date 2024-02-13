@@ -1,5 +1,5 @@
 import { Container, Grid, Typography, Box } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import InputField from "../../../ui/styledInput";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledButton from "../../../ui/styledButton";
@@ -8,7 +8,13 @@ import LastSynced from "../../../layout/LastSynced";
 import StyledDivider from "../../../ui/styledDivider";
 import { ReactComponent as SearchButtonIcon } from "../../../assets/icons/searchGlass.svg";
 import { useForm, Controller } from "react-hook-form";
+import { getUserByEmailMobile } from "../../../services/userApi";
+import { toast } from "react-toastify";
+
 export default function RemoteSession() {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [user, setUser] = useState("User Name");
+
   const {
     control,
     handleSubmit,
@@ -22,8 +28,18 @@ export default function RemoteSession() {
     reset();
   };
 
-  const handlePhoneNumberChange = (value) => {
-    console.log(value);
+  const handleUserFetch = async () => {
+    try {
+      const res = await getUserByEmailMobile(`phoneNumber=${phoneNumber}`);
+      setUser(res.result[0].username);
+    } catch (error) {
+      toast.error("user not found");
+    }
+  };
+
+  const handlePhoneNumberChange = (event) => {
+    const value = event;
+    setPhoneNumber(value.phoneNumber);
   };
   const cpid = [{ value: "GOEC117", label: "GOEC117" }];
   const connectorId = [{ value: "1", label: "1" }];
@@ -63,7 +79,7 @@ export default function RemoteSession() {
                 </Grid>
                 <Grid item xs={12} md={3}>
                   <StyledButton variant="primary" width="70" height="56">
-                    <SearchButtonIcon />
+                    <SearchButtonIcon onClick={handleUserFetch} />
                   </StyledButton>
                 </Grid>
               </Grid>
@@ -81,7 +97,7 @@ export default function RemoteSession() {
                   control={control}
                   render={({ field }) => (
                     <>
-                      <InputField placeholder={"Anish Vikende"} {...field} />
+                      <InputField placeholder={user} {...field} />
                       {errors.username && (
                         <span style={errorMessageStyle}>
                           {errors.username.message}

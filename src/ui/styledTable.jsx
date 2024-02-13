@@ -34,6 +34,8 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
   const pageCount = Math.ceil(data.length / rowsPerPage);
 
   const handleChangePage = (newPage) => {
+    console.log("Current page:", page);
+    console.log("New page:", newPage);
     setPage(newPage); // Assuming newPage is 1-indexed
   };
 
@@ -84,7 +86,7 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
                         {
                           isStatusColumn ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
                             : isTerminateSession ? (
-                              <StyledStopButton onClick={() => handleStopClick(row.cpid)}>
+                              <StyledStopButton onClick={() => handleStopClick(row._id)}>
                                 Stop
                               </StyledStopButton>
                             ) : isPayload ? <StyledPayloadTableCell value={row[header]} command={row[command]} />
