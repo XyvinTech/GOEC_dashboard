@@ -40,7 +40,7 @@ export default function CustomerLists() {
   const navigate = useNavigate();
 
   const actionClick = (e) => {
-    navigate("/user-details", { state: e.data._id });
+    navigate(`/user-details/${e.data._id}`);
   };
 
 

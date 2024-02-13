@@ -3,7 +3,7 @@ import { Box, Grid, Pagination, PaginationItem, Stack, Typography } from "@mui/m
 import { ReactComponent as ReloadIcon } from "../../../assets/icons/reload.svg";
 import { Star, DeleteOutline, ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import LastSynced from "../../../layout/LastSynced";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { userReviews } from "../../../services/reviewApi";
 
 const ReviewComponent = ({ data }) => {
@@ -45,17 +45,17 @@ const ReviewComponent = ({ data }) => {
 };
 
 export default function UserReview() {
-  const { state } = useLocation();
+  const { id } = useParams();
   const [reviews, setReviews] = useState([]);
 
   const getData = async () => {
-    const res = await userReviews(state);
+    const res = await userReviews(id);
     setReviews(res.result);
   };
 
   useEffect(() => {
     getData();
-  }, [state]);
+  }, [id]);
   return (
     <>
       <LastSynced heading={"Reviews"} />

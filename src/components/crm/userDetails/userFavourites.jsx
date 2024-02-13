@@ -3,24 +3,24 @@ import React, { useEffect, useState } from "react";
 import LastSynced from "../../../layout/LastSynced";
 import StyledTable from "../../../ui/styledTable";
 // import { favouritesData } from "../../../assets/json/crm";
-import { useLocation } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { userFavourites } from "../../../services/userApi";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 
 const tableHeader = ["ChargeStation", "Address", "Longitude", "Latitude", "Owner"];
 
 export default function UserFavourites() {
-  const { state } = useLocation();
+  const { id } = useParams();
   const [favourites, setFavourites] = useState([]);
 
   const getData = async () => {
-    const res = await userFavourites(state);
+    const res = await userFavourites(id);
     setFavourites(res.result);
   };
 
   useEffect(() => {
     getData();
-  }, [state]);
+  }, [id]);
 
   const favouritesData = tableHeaderReplace(
     favourites,

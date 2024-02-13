@@ -36,7 +36,7 @@ export default function SearchCustomers() {
   const getCustomer = (data) => {
     getUserByEmailMobile(data).then((res) => {
       if (res) {
-        setSearchCustomers(res.result)
+        setSearchCustomers(res.result[0])
       }
       console.log(res);
     }).catch(error => {

@@ -8,18 +8,18 @@ import UserINFO from "./userDetails/userINFO";
 import UserTariff from "./userDetails/userTariff";
 import VRDetails from "./userDetails/VRDetails";
 import UserReview from "./userDetails/useReview";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getUserByIdforAdmin } from "../../services/userApi";
 import { getWalletTransactionForAdmin } from "../../services/transactionApi";
 
 export default function UserDetails() {
   const [optionIndex, setOptionIndex] = useState(0);
   const [userData, setUserData] = useState([]);
-  const { state } = useLocation();
+  const { id } = useParams();
   const [isChange, setIsChange] = useState(false);
 
   const getData = () => {
-    getUserByIdforAdmin(state).then((res) => {
+    getUserByIdforAdmin(id).then((res) => {
       if (res.status) {
         setUserData(res.result[0]);
       }
@@ -28,7 +28,7 @@ export default function UserDetails() {
 
   useEffect(() => {
     getData();
-  }, [state, isChange]);
+  }, [id, isChange]);
 
   const onOptionChanged = (e) => {
     setOptionIndex(e.index);

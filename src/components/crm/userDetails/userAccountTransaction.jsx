@@ -4,7 +4,7 @@ import LastSynced from "../../../layout/LastSynced";
 import StyledTable from "../../../ui/styledTable";
 import { accountTransactionData } from "../../../assets/json/crm";
 import { getWalletTransaction } from "../../../services/transactionApi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 
 function restructureData(dataArray) {
@@ -29,12 +29,12 @@ const tableHeader = [
 ];
 
 export default function UserAccountTransactiomn() {
-  const { state } = useLocation();
+  const { id } = useParams();
   const [transactionData, setTransactionData] = useState([])
 
   const getData = async () => {
     const postData = {
-      user: state,
+      user: id,
      
     };
     const res = await getWalletTransaction(postData);
@@ -43,7 +43,7 @@ export default function UserAccountTransactiomn() {
 
   useEffect(() => {
     getData();
-  }, [state]);
+  }, [id]);
 
   const restructuredData = restructureData(transactionData);
 

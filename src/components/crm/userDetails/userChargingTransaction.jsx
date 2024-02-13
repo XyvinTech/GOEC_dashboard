@@ -4,7 +4,7 @@ import LastSynced from "../../../layout/LastSynced";
 import StyledTable from "../../../ui/styledTable";
 import { chargingTransactionData } from "../../../assets/json/crm";
 import { getChargingHistory } from "../../../services/ocppAPI";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 
 const tableHeader = [
@@ -19,19 +19,19 @@ const tableHeader = [
 ];
 
 export default function UserChargingTransaction() {
-  const { state } = useLocation();
+  const { id } = useParams();
 
   const [chargingTransaction, setChargingTransaction] = useState([])
 
   const getData = async () => {
     const postData = {};
-    const res = await getChargingHistory(state, postData);
+    const res = await getChargingHistory(id, postData);
     setChargingTransaction(res.result);
   };
 
   useEffect(() => {
     getData();
-  }, [state]);
+  }, [id]);
 
   const transData = tableHeaderReplace(chargingTransaction, ["transactionId","unitConsumed", "stationAddress", "duration", "chargingPoint", "connectorId", "amount", "closeBy"], tableHeader);
 

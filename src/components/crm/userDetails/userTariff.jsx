@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import LastSynced from "../../../layout/LastSynced";
 import TariffCard from "./userTariff/tariffCard";
 import AssignTariff from "./userTariff/assignTariff";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { userchargingTariff } from "../../../services/userApi";
 
 const tariffData = [
@@ -43,17 +43,17 @@ const tariffData = [
 
 export default function UserTariff() {
   const [open, setOpen] = useState(false);
-  const { state } = useLocation();
+  const { id } = useParams();
   const [tariff, setTariff] = useState();
 
   const getData = async () => {
-    const res = await userchargingTariff(state);
+    const res = await userchargingTariff(id);
     setTariff(res.result);
   };
 
   useEffect(() => {
     getData();
-  }, [state]);
+  }, [id]);
   return (
     <Box>
       <AssignTariff

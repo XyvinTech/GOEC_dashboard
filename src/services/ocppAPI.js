@@ -181,3 +181,12 @@ export async function remoteStopTransaction(id) {
     throw error;
   }
 }
+
+export async function getDashboardAnalytics(id) {
+  try {
+    const response = await OCPP_INSTANCE.post(`ocpp/dashboard/analitics`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

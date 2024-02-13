@@ -48,7 +48,7 @@ const RoutesConfig = () => {
         },
         // Test purpose
         {
-            path: '/user-details',
+            path: '/user-details/:id',
             element: <UserDetails />,
         },
         {
