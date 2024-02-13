@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 export default function CustomerCard({ data, ...props }) {
+  console.log(data);
   const navigate = useNavigate();
   return (
     <Stack direction={'column'} spacing={4} sx={{ alignItems: 'center', backgroundColor: 'secondary.main', borderRadius: '6px', p: 2 }}>
@@ -16,7 +17,7 @@ export default function CustomerCard({ data, ...props }) {
       </Stack>
       <Box 
       sx={{ backgroundColor: 'secondary.button', borderRadius: '30px', py:1.5 ,px:4,mt:3, display: 'flex', justifyContent: 'center',cursor:'pointer' }}
-      onClick={()=>{navigate("/user-details", {state:data._id});}}>
+      onClick={()=>{navigate(`/user-details/${data._id}`, {state:data._id});}}>
         <Typography variant='h6'>View Profile</Typography>
       </Box>
     </Stack>
