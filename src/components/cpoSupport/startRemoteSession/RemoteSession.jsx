@@ -167,7 +167,7 @@ export default function RemoteSession() {
                   )}
                   rules={{ required: "Connector ID is required" }}
                 />
-                <Typography sx={typoLabel}>Session Mode</Typography>
+                {/* <Typography sx={typoLabel}>Session Mode</Typography>
 
                 <Controller
                   name="sessionMode"
@@ -187,11 +187,11 @@ export default function RemoteSession() {
                     </>
                   )}
                   rules={{ required: "Session Mode is required" }}
-                />
-                <Typography sx={typoLabel}>Value</Typography>
+                /> */}
+                {/* <Typography sx={typoLabel}>Value</Typography> */}
 
-                <Grid container spacing={2} item xs={12} md={12}>
-                  <Grid item xs={12} md={9}>
+                <Grid container spacing={2} item xs={12} md={12}  sx={{ py:3 }}>
+                  {/* <Grid item xs={12} md={9}>
                     <Controller
                       name="value"
                       control={control}
@@ -207,7 +207,7 @@ export default function RemoteSession() {
                       )}
                       rules={{ required: "Value is required" }}
                     />
-                  </Grid>
+                  </Grid> */}
                   <Grid item xs={12} md={3} sx={{ px: 1 }}>
                     <StyledButton
                       variant="primary"
