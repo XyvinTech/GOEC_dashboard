@@ -4,7 +4,7 @@ import { Box, Grid, Stack, Typography } from '@mui/material'
 
 
 
-export default function AlarmSummary({data}) {
+export default function AlarmSummary({ data, dataReload }) {
 
     const chargePointerErrors = [
         {
@@ -71,11 +71,11 @@ export default function AlarmSummary({data}) {
             label: 'WeakSignal',
             value: data.WeakSignal ? data.WeakSignal : 0
         },
-    
+
     ]
     return (
         <>
-            <LastSynced heading={'Alarms Summary'} /><Box>
+            <LastSynced heading={'Alarms Summary'} reloadHandle={dataReload}/><Box>
                 <Grid container p={2}>
                     <Grid item xs={12} md={4} sx={{ backgroundColor: '#1D1B20' }}>
                         <Stack direction={'row'} justifyContent={'space-between'} p={2}>
@@ -84,8 +84,8 @@ export default function AlarmSummary({data}) {
                         </Stack>
 
                         {
-                            chargePointerErrors.map((item,index) => (
-                                <Stack direction={'row'} sx={{backgroundColor:index % 2 == 0 ? '#211F26':'#2B2930'}} justifyContent={'space-between'} py={1} px={2}>
+                            chargePointerErrors.map((item, index) => (
+                                <Stack direction={'row'} sx={{ backgroundColor: index % 2 == 0 ? '#211F26' : '#2B2930' }} justifyContent={'space-between'} py={1} px={2}>
                                     <Typography variant='body2' color={'secondary.contrastText'}>{item.label}</Typography>
                                     <Typography variant='body2' color={'secondary.contrastText'}>{item.value}</Typography>
                                 </Stack>

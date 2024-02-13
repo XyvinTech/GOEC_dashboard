@@ -15,19 +15,23 @@ export default function LiveStatus() {
 
 
     useEffect(() => {
+      init();
+    }, []);
+
+    const init = ()=>[
       updateChargingStationByList({}).then((res)=>{
         if (res.status) {
           console.log(res.result);
           setChargingStations(res.result)
         }
       })
-    }, []);
+    ]
   const iconClickHandle = () => {
     setMapView(!mapViewActive)
   }
 
   return (
-    <><LastSynced heading={'Live Status'} /><Box sx={{ p: 2 }}>
+    <><LastSynced heading={'Live Status'} reloadHandle={init} /><Box sx={{ p: 2 }}>
       <Stack justifyContent={"end"} direction={"row"} spacing={2} mb={2}>
         <IconButton onClick={iconClickHandle} sx={{ border: '1px solid #fff6', borderRadius: '4px', backgroundColor: mapViewActive && 'secondary.button' }}>
           <Map sx={{ color: mapViewActive && '#fff' }} />

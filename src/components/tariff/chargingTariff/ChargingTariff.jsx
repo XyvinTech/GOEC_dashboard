@@ -9,6 +9,8 @@ import StyledButton from "../../../ui/styledButton";
 import { deleteChargingTariff } from "../../../services/chargingTariffAPI";
 import { ToastContainer, toast } from "react-toastify";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
+import StyledSearchField from "../../../ui/styledSearchField";
+import { searchAndFilter } from "../../../utils/search";
 
 function restructureData(dataArray) {
   return dataArray.map(item => ({
@@ -22,10 +24,11 @@ function restructureData(dataArray) {
   }));
 }
 
-function ChargingTariff({ data, headers, onIsChange, isChange }) {
+function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
+  const [filterValue, setFilterValue] = useState('')
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);
@@ -62,7 +65,11 @@ function ChargingTariff({ data, headers, onIsChange, isChange }) {
 
   return (
     <>
-      <LastSynced heading="Charge Tariff" showSearchField={true} />
+      <LastSynced heading="Charge Tariff" reloadHandle={updateData}>
+      <StyledSearchField placeholder={'Search'} onChange={(e) => {
+          setFilterValue(e.target.value)
+        }} />
+      </LastSynced>
       <Box sx={{ p: 3 }}>
         <Box display="flex" justifyContent="flex-end">
           <StyledButton
@@ -76,7 +83,7 @@ function ChargingTariff({ data, headers, onIsChange, isChange }) {
         </Box>
         <StyledTable
           headers={headers}
-          data={chargingTariffData}
+          data={searchAndFilter(chargingTariffData,filterValue)}
           onActionClick={handleClick}
         />
       </Box>

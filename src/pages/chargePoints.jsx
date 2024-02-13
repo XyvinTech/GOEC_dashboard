@@ -59,7 +59,8 @@ export default function ChargingPoints() {
       {togglePage === 0 ? <AllChargePoint
         data={chargePointListData}
         deleteData={(data) => { setSelectedData(data); setDialogOpen(true) }}
-        editData={(data) => { setSelectedData(data); setEditDialogOpen(true) }} /> : 
+        editData={(data) => { setSelectedData(data); setEditDialogOpen(true) }} 
+        reloadData={init}/> : 
         <AddChargePoint formsubmitted={() => { init(); setTogglePage(0); }} />}
     </Box>
   )

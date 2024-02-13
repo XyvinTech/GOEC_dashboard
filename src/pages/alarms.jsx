@@ -15,25 +15,35 @@ export default function Alarms() {
 
 
   useEffect(() => {
+    init()
+  }, [])
+  const init= ()=>{
+    getAlarmsList()
+    getAlarmSummaryData()
+  }
+
+  const getAlarmsList = ()=>{
     getAlarms().then((res)=>{
       if (res.status) {
         setAlarmList(res.result)
       }
     })
+  }
 
+  const getAlarmSummaryData = () =>{
     getAlarmSummary().then(res=>{
       console.log(res);
       if (res.status) {
         setSummaryData(res.result)
       }
     })
-  }, [])
+  }
   
   return (
     <Box>
       <StyledTab buttons={['Alarms', 'Alarm Summary']} onChanged={tabOnChange} />
       <Box>
-        {tabIndex === 0 ? <AlarmsList data={alarmList} /> : (summaryData && <AlarmSummary data={summaryData} />)}
+        {tabIndex === 0 ? <AlarmsList data={alarmList} dataReload={getAlarmsList} /> : (summaryData && <AlarmSummary data={summaryData} dataReload={getAlarmSummaryData} />)}
       </Box>
     </Box>
   )

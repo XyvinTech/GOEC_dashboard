@@ -78,7 +78,7 @@ export default function Personal({ location }) {
   return (
     <>
       <Box>
-        <LastSynced heading="Location" />
+        {/* <LastSynced heading="Location" /> */}
         <Container >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid

@@ -60,7 +60,7 @@ export default function OEM({ data, updateData }) {
     <>
       <AddOEM open={open} onClose={() => { setOpen(false); setEditStatus(false); updateData() }} editStatus={editStatus} editData={selectData} />
       <ConfirmDialog title='OEM Delete' subtitle='Do you want to Delete OEM?' open={confirmOpen} onClose={() => { setConfirmOpen(false) }} confirmButtonHandle={deleteOEM} />
-      <LastSynced heading="OEM"  >
+      <LastSynced heading="OEM" reloadHandle={updateData}  >
         <StyledSearchField placeholder={"Search"} onChange={(e) => {
           setFilterValue(e.target.value)
         }} />

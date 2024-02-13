@@ -16,7 +16,7 @@ const tableHeader = [
   'Owner'
 ]
 
-export default function AllChargeStation({ data, deleteData,editData, ...props }) {
+export default function AllChargeStation({ data, deleteData, editData, reloadData, ...props }) {
   const navigate = useNavigate()
 
 
@@ -28,14 +28,14 @@ export default function AllChargeStation({ data, deleteData,editData, ...props }
       navigate(`/charge-station-detail/${e.data._id}`)
     } else if (e.action === 'Delete') {
       deleteData(e.data)
-    }else if (e.action === 'Edit') {
+    } else if (e.action === 'Edit') {
       editData(e.data)
     }
   }
   return (
     <>
 
-      <LastSynced heading="Charge Stations" >
+      <LastSynced heading="Charge Stations" reloadHandle={reloadData} >
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
           setFilterValue(e.target.value)
         }} />

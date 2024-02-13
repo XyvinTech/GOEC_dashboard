@@ -69,7 +69,7 @@ export default function ChargePoints({ data, stationId,dataUpdate, ...props }) {
         </Stack>
         <AddChargePoint onClose={() => setOpen(false)} editStatus={editStatus} isFromStation={true} stationId={stationId} chargepointData={selectedData} formsubmitted={formSubmitHandle} />
       </Dialog>
-      <LastSynced heading={'Charge-points'}>
+      <LastSynced heading={'Charge-points'} reloadHandle={dataUpdate}>
         <StyledButton variant='primary' style={{ width: '100%', height: '45px', fontSize: '14px', fontWeight: '400' }} onClick={() => { setEditStatus(false); setOpen(true) }}> Add Chargepoint</StyledButton>
       </LastSynced>
       <Box sx={{ p: 3 }}>

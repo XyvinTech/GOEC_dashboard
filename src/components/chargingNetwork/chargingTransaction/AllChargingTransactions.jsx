@@ -24,7 +24,7 @@ const tableHeader = [
 
 const newActions = ["View", "Download Invoice", "Resend Email"];
 
-export default function AllChargingTransactions({ data }) {
+export default function AllChargingTransactions({ data,updateData }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
 
@@ -44,7 +44,7 @@ export default function AllChargingTransactions({ data }) {
 
   return (
     <>
-      <LastSynced heading="Charging Transactions" showSearchField showFilterButton  />
+      <LastSynced heading="Charging Transactions" showSearchField showFilterButton reloadHandle={updateData}  />
       <Box sx={{ p: 3 }}>
         <StyledTable
           headers={tableHeader}
