@@ -1,7 +1,7 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LastSynced from "../../../layout/LastSynced";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { uservehicleDetails } from "../../../services/userApi";
 
 const VRCard = ({ data }) => {
@@ -53,31 +53,30 @@ const VRCard = ({ data }) => {
 };
 
 export default function VRDetails() {
-  const { state } = useLocation();
+  const { id } = useParams();
   const [VR, setVR] = useState();
 
   const getData = async () => {
-    const res = await uservehicleDetails(state);
+    const res = await uservehicleDetails(id);
     setVR(res.result);
   };
 
   useEffect(() => {
     getData();
-  }, [state]);
+  }, [id]);
   return (
     <Box>
       <LastSynced heading={"VR Details"} />
       <Box sx={{ p: 2 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6} xl={4}>
-            {VR?.map((vr, i) => {
-              return (
-                <Grid py={2}>
-                  <VRCard data={vr} />
-                </Grid>
-              );
-            })}
-          </Grid>
+
+          {VR?.map((vr, i) => {
+            return (
+              <Grid item xs={12} md={6} xl={4}>
+                <VRCard data={vr} />
+              </Grid>
+            );
+          })}
         </Grid>
       </Box>
     </Box>

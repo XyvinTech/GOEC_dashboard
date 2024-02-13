@@ -14,7 +14,7 @@ export default function UserDetailsLayout({children,onOptionChanged, ...props}) 
     const [open,setOpen] = useState(false)
     return (
         <>
-            <Stack direction={'row'} sx={{ backgroundColor: 'secondary.main', p: 3, alignItems: 'center' }} spacing={2}>
+            <Stack direction={'row'} sx={{position:"sticky",top:0,left:0,width:'100vw',height:'70px', backgroundColor: 'secondary.main', p: 3, alignItems: 'center' }} spacing={2}>
                 <IconButton
                     onClick={()=>{setOpen(true)}}
                     sx={{

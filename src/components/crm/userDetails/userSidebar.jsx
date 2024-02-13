@@ -74,7 +74,7 @@ export default function UserSidebar({ open, onClose, ...props }) {
                         backgroundColor: 'secondary.main',
                         color: 'secondary.contrastText',
                         width: 260,
-                        mt:11,
+                        mt:8.5,
                         border: 'none'
                     }
                 }}
