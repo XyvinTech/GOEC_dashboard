@@ -12,26 +12,25 @@ const tableHeader = [
   "Unique ID"
 ];
 
-export default function AllChargerLogs({data}) {
-  
+export default function AllChargerLogs({ data, updateData }) {
+
   const AllLogsData = tableHeaderReplace(data, ['CPID', 'timestamp', 'messageType', 'payload', '_id'], tableHeader)
 
 
 
   return (
     <>
-    
-    <LastSynced heading="Charging Transactions" showSearchField showFilterButton/>
+
+      <LastSynced heading="Charger Logs" showSearchField showFilterButton reloadHandle={updateData} />
       <Box sx={{ p: 3 }}>
         <StyledTable
-        showActionCell={false}
+          showActionCell={false}
           headers={tableHeader}
           data={AllLogsData}
-        
         />
       </Box>
-    
-    
+
+
     </>
   )
 }

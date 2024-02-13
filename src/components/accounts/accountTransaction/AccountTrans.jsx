@@ -22,7 +22,7 @@ const tableHeader = [
 ]
 
 
-export default function AccountTrans({ data }) {
+export default function AccountTrans({ data,updateData }) {
   const [filterValue, setFilterValue] = useState("");
   const accData = tableHeaderReplace(data, ["user", "createdAt", "type", "invoice_id", "amount", "status", "initiated_by", "transactionId", "reference"], tableHeader);
   const tableActionClick = (e) => {
@@ -32,7 +32,7 @@ export default function AccountTrans({ data }) {
 
   return (
     <>
-      <LastSynced heading="Charge Points">
+      <LastSynced heading="Account Transactions"reloadHandle={updateData} >
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {

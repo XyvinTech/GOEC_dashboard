@@ -13,12 +13,12 @@ const ReviewComponent = ({ review, deleteClickHandle }) => {
           <Stack direction={'row'} alignItems={'center'} spacing={1}>
             <Typography color={'primary.contrastText'}>{review.userDetails[0].username}</Typography>
             <Stack direction={'row'}>
-              {[ ...Array(review.rating) ].map((item) => (
+              {[...Array(review.rating)].map((item) => (
                 <Star fontSize='14px' sx={{ color: '#F2C94C' }} />
               ))}
             </Stack>
           </Stack>
-          <DeleteOutline sx={{ cursor: 'pointer', color: 'rgba(255,255,255,0.5)', fontSize: '22px' }} onClick={deleteClickHandle}/>
+          <DeleteOutline sx={{ cursor: 'pointer', color: 'rgba(255,255,255,0.5)', fontSize: '22px' }} onClick={deleteClickHandle} />
         </Stack>
         <Typography variant='subtitle2' sx={{ fontWeight: 300, color: 'secondary.contrastText' }}>
           {review.comment}
@@ -29,16 +29,16 @@ const ReviewComponent = ({ review, deleteClickHandle }) => {
   )
 }
 
-export default function Reviews({ data,deleteClickHandle, ...props }) {
+export default function Reviews({ data, deleteClickHandle,dataUpdate, ...props }) {
   return (
     <>
-    <LastSynced heading={'Reviews'} />
+      <LastSynced heading={'Reviews'} reloadHandle={dataUpdate} />
       <Box sx={{ backgroundColor: 'secondary.main', /*maxHeight: {xs:'1000px',md:'500px'},*/ borderRadius: '4px', m: { xs: 1, md: 4 }, p: 2 }}>
         <Grid container spacing={{ xs: 1, md: 4 }}>
           {
             data.map((item) => (
               <Grid item xs={12} md={4}>
-                <ReviewComponent review={item} deleteClickHandle={()=>{deleteClickHandle(item)}}/>
+                <ReviewComponent review={item} deleteClickHandle={() => { deleteClickHandle(item) }} />
               </Grid>
             ))
           }

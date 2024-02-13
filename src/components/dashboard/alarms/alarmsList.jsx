@@ -17,7 +17,7 @@ const tableHeader = [
   'Error code'
 ]
 
-export default function AlarmsList({data}) {
+export default function AlarmsList({data, dataReload}) {
 
   const [filterValue, setFilterValue] = useState('')
 
@@ -25,7 +25,7 @@ export default function AlarmsList({data}) {
 
   return (
     <>
-      <LastSynced heading="Charge Points">
+      <LastSynced heading="Charge Points" reloadHandle={dataReload}>
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
           setFilterValue(e.target.value)
         }} />

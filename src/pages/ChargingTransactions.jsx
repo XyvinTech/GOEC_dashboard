@@ -24,6 +24,7 @@ export default function ChargingTransactions() {
     <div>
       <AllChargingTransactions
         data={logs}
+        updateData={init}
       />
     </div>
   );

@@ -19,7 +19,6 @@ export default function ChargeStationDetail() {
     const [toggleOption, setToggleoption] = useState(0)
     const [loaderOpen, setLoaderOpen] = useState(true)
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
-    const [chargepointList,setChargePointList] = useState([])
     const [selectedReview, setSelectedReview] = useState(false)
     const [errorMsg, setErrorMsg] = useState();
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -30,7 +29,6 @@ export default function ChargeStationDetail() {
     }
     const init = () => {
         stationDetailGet()
-        stationpointsofStationGet()
     }
 
     const stationDetailGet = () => {
@@ -44,16 +42,6 @@ export default function ChargeStationDetail() {
         )
     }
 
-    const stationpointsofStationGet = () => {
-        getChargingPointsListOfStation(id).then((res) => {
-            console.log(res.result);
-            if (res.status) {
-                setChargePointList(res.result)
-            }
-            setLoaderOpen(false)
-        }
-        )
-    }
     useEffect(() => {
         init()
     }, [])
@@ -104,8 +92,8 @@ export default function ChargeStationDetail() {
             }
             <StyledTab buttons={['Charge-points', 'Reviews']} onChanged={onChangeToggleOption} />
             {stationDetails && (toggleOption === 0 ?
-                <ChargePoints /*data={chargepointList}*/ data={stationDetails && stationDetails.chargers} stationId={stationDetails && stationDetails._id}  dataUpdate={init} /> :
-                <Reviews data={stationDetails && stationDetails.reviews} deleteClickHandle={(data) => { setConfirmDialogOpen(true); setSelectedReview(data) }} />)}
+                <ChargePoints data={stationDetails && stationDetails.chargers} stationId={stationDetails && stationDetails._id}  dataUpdate={init} /> :
+                <Reviews data={stationDetails && stationDetails.reviews} deleteClickHandle={(data) => { setConfirmDialogOpen(true); setSelectedReview(data) }} dataUpdate={init} />)}
         </>
     )
 }

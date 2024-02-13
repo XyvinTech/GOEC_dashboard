@@ -20,7 +20,7 @@ export default function ChargerLogs() {
 
   return (
     <div>
-      <AllChargerLogs data={logs} />
+      <AllChargerLogs data={logs} updateData={init} />
     </div>
   );
 }

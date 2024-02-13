@@ -25,14 +25,17 @@ export default function ChargerLog({ CPID }) {
     const [filterValue, setFilterValue] = useState('')
     const [logList, setLogList] = useState([])
     useEffect(() => {
+        init()
+    }, [])
+    const init = () => {
         getMachineLog(CPID).then((res) => {
             if (res.status) {
                 setLogList(tableHeaderReplace(res.result, ['connectorId', 'date', 'command', 'payload', 'uniqueId'], tableHeader))
             }
         })
-    }, [])
+    }
     return (
-        <><LastSynced heading={'Charger logs'}>
+        <><LastSynced heading={'Charger logs'} reloadHandle={init}>
             <StyledSearchField placeholder={'Search'} onChange={(e) => {
                 setFilterValue(e.target.value)
             }} />

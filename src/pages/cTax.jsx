@@ -28,7 +28,7 @@ export default function CTax() {
 
   return (
     <Box>
-      <Tax data={taxListData} headers={headers} onIsChange={setIsChange} isChange={isChange}/>
+      <Tax data={taxListData} headers={headers} onIsChange={setIsChange} isChange={isChange} updateData={getTaxData}/>
     </Box>
   );
 }

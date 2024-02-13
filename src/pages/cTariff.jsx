@@ -31,7 +31,7 @@ export default function CTariff() {
 
   return (
     <Box>
-      <ChargingTariff data={tariffListData} headers={headers} onIsChange={setIsChange} isChange={isChange}/>
+      <ChargingTariff data={tariffListData} headers={headers} onIsChange={setIsChange} isChange={isChange} updateData={getTariffData}/>
     </Box>
   );
 }

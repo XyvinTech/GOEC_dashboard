@@ -60,7 +60,7 @@ export default function Location({ location }) {
   return (
     <>
       <Box>
-        <LastSynced heading="Location" />
+        {/* <LastSynced heading="Location" /> */}
         <Container >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid

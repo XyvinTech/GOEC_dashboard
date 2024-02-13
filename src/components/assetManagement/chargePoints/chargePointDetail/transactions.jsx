@@ -37,8 +37,11 @@ const tableHeader = [
 export default function Transactions({ CPID }) {
     const [filterValue, setFilterValue] = useState('')
     const [transactionList, setTransactionList] = useState([])
-    const [detailOpen,setDetailOpen] = useState(false)
+    const [detailOpen, setDetailOpen] = useState(false)
     useEffect(() => {
+        init()
+    }, [])
+    const init = () => {
         getTransactionById(CPID).then((res) => {
             console.log(res);
             if (res.success) {
@@ -46,8 +49,7 @@ export default function Transactions({ CPID }) {
                 setTransactionList(tableHeaderReplace(res.result, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed', 'location', 'duration', 'chargePointId', 'totalAmount', 'closureReason'], tableHeader))
             }
         })
-    }, [])
-
+    }
 
     const actionclickHandle = (e) => {
         if (e.action === 'View') {
@@ -56,8 +58,8 @@ export default function Transactions({ CPID }) {
     }
     return (
         <>
-        <TransactionDetails open={detailOpen} onClose={()=>{setDetailOpen(false)}}/>
-            <LastSynced heading={'Transactions'}>
+            <TransactionDetails open={detailOpen} onClose={() => { setDetailOpen(false) }} />
+            <LastSynced heading={'Transactions'} reloadHandle={init}>
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
                     setFilterValue(e.target.value)
                 }} />
@@ -65,7 +67,7 @@ export default function Transactions({ CPID }) {
                 <StyledIconButton icon={<FileDownloadOutlined sx={{ color: 'secondary.contrastText' }} />} />
             </LastSynced>
             <Box sx={{ p: 3 }}>
-                <StyledTable headers={tableHeader} data={searchAndFilter(transactionList, filterValue)} actions={['Resend email', 'Download Invoice ', 'View']} onActionClick={actionclickHandle } />
+                <StyledTable headers={tableHeader} data={searchAndFilter(transactionList, filterValue)} actions={['Resend email', 'Download Invoice ', 'View']} onActionClick={actionclickHandle} />
             </Box>
         </>
     )

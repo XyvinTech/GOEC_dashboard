@@ -21,7 +21,7 @@ const tableHeader = [
   'Published'
 ]
 
-export default function AllChargePoint({ data,deleteData,editData, ...props }) {
+export default function AllChargePoint({ data, deleteData, editData, reloadData, ...props }) {
   const navigate = useNavigate()
 
   const [filterValue, setFilterValue] = useState('')
@@ -36,11 +36,11 @@ export default function AllChargePoint({ data,deleteData,editData, ...props }) {
       deleteData(e.data)
     }
   }
-  const AllChargePointsData = tableHeaderReplace(data, ['CPID', 'oem', 'evModel', 'chargingTariff', 'chargingStation', 'cpidStatus','published'], tableHeader)
-  
+  const AllChargePointsData = tableHeaderReplace(data, ['CPID', 'oem', 'evModel', 'chargingTariff', 'chargingStation', 'cpidStatus', 'published'], tableHeader)
+
   return (
     <>
-      <LastSynced heading="Charge Points" >
+      <LastSynced heading="Charge Points" reloadHandle={reloadData} >
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
           setFilterValue(e.target.value)
         }} />

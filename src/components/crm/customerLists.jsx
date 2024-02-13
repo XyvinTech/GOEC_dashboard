@@ -6,6 +6,8 @@ import { customerListData } from "../../assets/json/crm";
 import { useNavigate } from "react-router-dom";
 import { getUsersListforAdmin } from "../../services/userApi";
 import { tableHeaderReplace } from "../../utils/tableHeaderReplace";
+import StyledSearchField from "../../ui/styledSearchField";
+import { searchAndFilter } from "../../utils/search";
 
 const tableHeader = ["Name", "Phone Number", "Email", "RFID", "Tariff"];
 
@@ -15,14 +17,14 @@ function restructureData(dataArray) {
     name: item.username,
     email: item.email,
     mobile: item.mobile,
-    rfid: item.rfidValues.map((res, i)=> (i===item.rfidValues.length -1 ? res.serialNumber : res.serialNumber+",")),
-    tariff: item.length > 0 ? item.tariffValues.map((res)=>res._id) : "Basic",
+    rfid: item.rfidValues.map((res, i) => (i === item.rfidValues.length - 1 ? res.serialNumber : res.serialNumber + ",")),
+    tariff: item.length > 0 ? item.tariffValues.map((res) => res._id) : "Basic",
   }));
 }
 
 export default function CustomerLists() {
   const [userListData, setUserListData] = useState([]);
-
+  const [filterValue, setFilterValue] = useState('')
   const getTariffData = () => {
     getUsersListforAdmin().then((res) => {
       if (res.status) {
@@ -38,7 +40,7 @@ export default function CustomerLists() {
   const navigate = useNavigate();
 
   const actionClick = (e) => {
-    navigate("/user-details", {state:e.data._id});
+    navigate("/user-details", { state: e.data._id });
   };
 
 
@@ -48,11 +50,15 @@ export default function CustomerLists() {
 
   return (
     <Box>
-      <LastSynced heading="Customers List" showSearchField={true} />
+      <LastSynced heading="Customers List" reloadHandle={getTariffData} >
+        <StyledSearchField placeholder={'Search'} onChange={(e) => {
+          setFilterValue(e.target.value)
+        }} />
+      </LastSynced>
       <Box sx={{ p: { xs: 2, md: 4 } }}>
         <StyledTable
           headers={tableHeader}
-          data={customersList}
+          data={searchAndFilter(customersList,filterValue)}
           showActionCell={true}
           actions={["view"]}
           onActionClick={actionClick}
