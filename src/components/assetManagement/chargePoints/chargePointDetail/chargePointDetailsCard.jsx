@@ -6,6 +6,7 @@ import StyledDivider from "../../../../ui/styledDivider";
 import StyledInput from "../../../../ui/styledInput";
 import { toast } from "react-toastify";
 export default function ChargePointDetailsCard({ data }) {
+  console.log(data);
   return (
     <Box pb={2} sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>
       <Stack px={3} pt={2} spacing={2}>

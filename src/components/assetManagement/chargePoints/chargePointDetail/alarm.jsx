@@ -34,16 +34,19 @@ export default function Alarm({ CPID }) {
 
     const [alarmList, setAlarmList] = useState([])
     useEffect(() => {
+        init()
+    }, [])
+    const init = ()=>{
         getAlarmsById(CPID).then((res) => {
             if (res.status) {
                 setAlarmList(tableHeaderReplace(res.result,['cpid','date','summary','connectorId','status','errorCode'],tableHeader) )
             }
         })
-    }, [])
+    }
 
     return (
         <>
-            <LastSynced heading="Alarms">
+            <LastSynced heading="Alarms" reloadHandle={init}>
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
                     setFilterValue(e.target.value)
                 }} />

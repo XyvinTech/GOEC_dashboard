@@ -46,7 +46,7 @@ export default function SearchCustomers() {
 
   return (
     <Box>
-      <LastSynced heading={'Search Customer'} />
+      <LastSynced heading={'Search Customer'} lastSyncVisible={false} />
       <Stack direction={'column'} spacing={1} sx={{ backgroundColor: 'secondary.main', m: 4, py: 4, px: 4, borderRadius: 2 }}>
         <Typography>Search by</Typography>
         <Stack spacing={2} direction={{ xs: 'column', md: 'row' }}>

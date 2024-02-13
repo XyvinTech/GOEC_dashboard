@@ -66,7 +66,7 @@ export default function AllEvChargers({ data, updateData }) {
 
   return (
     <>
-      <LastSynced heading="EV Chargers" >
+      <LastSynced heading="EV Chargers" reloadHandle={updateData}>
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
           setFilterValue(e.target.value)
         }} />

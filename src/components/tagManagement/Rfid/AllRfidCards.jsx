@@ -77,7 +77,7 @@ const AllRfidCards = ({ data, updateData }) => {
   return (
     <>
       <ConfirmDialog title='Delete RFID Tag' subtitle='Doyou want to Delete ?' open={confirmOpen} onClose={() => setConfirmOpen(false)} buttonText='Delete' confirmButtonHandle={deleteRFID} />
-      <LastSynced heading="RFID Cards" />
+      <LastSynced heading="RFID Cards" reloadHandle={updateData} />
       <Box sx={{ p: 3 }}>
         <Box display="flex" justifyContent="flex-end">
           <StyledButton variant='secondary' width='150' mr='10' onClick={() => toggleAddMode(0)}>Add</StyledButton>

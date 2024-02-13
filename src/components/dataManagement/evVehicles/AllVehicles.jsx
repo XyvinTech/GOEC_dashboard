@@ -61,7 +61,7 @@ console.log(data);
   return (
     <>
       <EditVehicle open={editOpen} data={selectData} onClose={(() => { setEditOpen(false); updateData && updateData() })} />
-      <LastSynced heading="EV Vehicles" >
+      <LastSynced heading="EV Vehicles" reloadHandle={updateData} >
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {

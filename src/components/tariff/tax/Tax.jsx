@@ -11,7 +11,8 @@ import StyledButton from "../../../ui/styledButton";
 import StyledSearchField from "../../../ui/styledSearchField";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 import { deleteTax } from "../../../services/taxAPI";
-function Tax({ data, headers, onIsChange, isChange }) {
+import { searchAndFilter } from "../../../utils/search";
+function Tax({ data, headers, onIsChange, isChange, updateData }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -50,7 +51,7 @@ function Tax({ data, headers, onIsChange, isChange }) {
 
   return (
     <>
-      <LastSynced heading="Tax">
+      <LastSynced heading="Tax" reloadHandle={updateData}>
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {
@@ -64,7 +65,7 @@ function Tax({ data, headers, onIsChange, isChange }) {
             Add
           </StyledButton>
         </Box>
-        <StyledTable headers={headers} data={taxData} onActionClick={handleClick} />
+        <StyledTable headers={headers} data={searchAndFilter(taxData,filterValue)} onActionClick={handleClick} />
       </Box>
       {/* Modal */}
       <Modal
@@ -93,7 +94,7 @@ function Tax({ data, headers, onIsChange, isChange }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange}/>
+          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} />
         </Box>
       </Modal>
     </>

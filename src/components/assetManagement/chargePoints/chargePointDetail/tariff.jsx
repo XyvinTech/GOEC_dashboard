@@ -44,7 +44,7 @@ const unAssinHandle = ()=>{
     return (
         <>
             <AssignTarrif open={addOpen} onClose={() => setAddOpen(false)} CPID={id} updated={init} />
-            <LastSynced heading='Tariff'>
+            <LastSynced heading='Tariff' reloadHandle={init}>
                 <StyledButton variant={'primary'} style={{ width: '160px' }} onClick={() => setAddOpen(true)}>Assign Tariff</StyledButton>
             </LastSynced>
             <Grid container p={2}>
