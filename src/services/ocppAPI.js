@@ -182,9 +182,9 @@ export async function remoteStopTransaction(id) {
   }
 }
 
-export async function getDashboardAnalytics(id) {
+export async function getDashboardAnalytics() {
   try {
-    const response = await OCPP_INSTANCE.post(`ocpp/dashboard/analitics`);
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/analytics`);
     return response.data;
   } catch (error) {
     throw error;
