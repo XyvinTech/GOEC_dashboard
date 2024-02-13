@@ -50,8 +50,6 @@ export default function RFID() {
         toast.error("Some error");
         console.log(error);
        }
-    
-    
   }
 
   const [open, setopen] = useState(false);
