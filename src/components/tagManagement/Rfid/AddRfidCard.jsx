@@ -16,7 +16,7 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
       activate: editStatus && rfidData["Status"] == "active" ? true : false, // Set the default value for "activate"
       expiry: editStatus ? rfidData["expiryDate"] : '',
       rfidTag: editStatus ? rfidData["RFID Tag"] : '',
-      serialNumber: editStatus ? rfidData["RFID Tag"] : '',
+      serialNumber: editStatus ? rfidData["Serial No"] : '',
     },
   });
   const onSubmit = (data) => {

@@ -16,6 +16,7 @@ import { toast } from 'react-toastify'
 const tableHeader = [
   'RFID Tag',
   'User Name',
+  'Serial No',
   'Created On',
   'Expires On',
   'Balance',
@@ -31,7 +32,7 @@ const AllRfidCards = ({ data, updateData }) => {
   const [editstatus, setEditStatus] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
 
-  const rfData = tableHeaderReplace(data, ['serialNumber', 'username', 'createdAt', 'expiry', 'balance', 'status'], tableHeader)
+  const rfData = tableHeaderReplace(data, ['rfidTag', 'username','serialNumber', 'createdAt', 'expiry', 'balance', 'status'], tableHeader)
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);
