@@ -9,7 +9,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getOem } from "../../../services/evMachineAPI";
-import { createVehicle, editVehicle, getBrand } from "../../../services/vehicleAPI";
+import { createVehicle, editVehicle, getBrand, vehicleImageUpload } from "../../../services/vehicleAPI";
 
 let compactable_ports = [
   { label: "CCS", value: "CCS" },
@@ -53,9 +53,9 @@ export default function AddVehicles({ vehicleData = {},onClose, formSubmited, ed
     getBrandApi();
   }, []);
 
-  // const handleFileUpload = (file) => {
-  //   setSelectedFile(file);
-  // };
+  const handleFileUpload = (file) => {
+    setSelectedFile(file);
+  };
 
   const onSubmit = (data) => {
     if (editStatus) {
@@ -71,12 +71,17 @@ export default function AddVehicles({ vehicleData = {},onClose, formSubmited, ed
 
   const createVEHICLE = (data) => {
     
-    // if (!selectedFile) {
-    //   toast.error("Select image");
-    //   return
-    // }
+    if (!selectedFile) {
+      toast.error("Select image");
+      return
+    }
+    const formData = new FormData()
+    formData.append("image",selectedFile)
+    vehicleImageUpload(formData).then((res)=>{
+      console.log(res);
+    })
     let dt = {
-      // "image": selectedFile,
+      "image": selectedFile,
       "brand": data.brand.value,
       "modelName": data.modelName,
       "compactable_port": data.compactable_port.map((item) => item.value)
@@ -95,11 +100,11 @@ export default function AddVehicles({ vehicleData = {},onClose, formSubmited, ed
 
   const updateVEHICLE = (data) => {
     let dt = {}
-    // if (selectedFile) {
-    //   dt = {
-    //     "image": selectedFile
-    //   }
-    // }
+    if (selectedFile) {
+      dt = {
+        "image": selectedFile
+      }
+    }
     dt = {
       ...dt,
       "brand": data.brand.value ? data.brand.value : getBrandId(),
@@ -141,11 +146,11 @@ export default function AddVehicles({ vehicleData = {},onClose, formSubmited, ed
         }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <Grid container>
+          <Grid container>
             <Grid item xs={12} sx={{ height: "250px" }}>
               <FileUpload getBase64Data={handleFileUpload} image={vehicleData["icon"] && vehicleData["icon"]} />
             </Grid>
-          </Grid> */}
+          </Grid>
 
           <Typography sx={{ marginBottom: 2, marginTop: 2, color: 'primary.contrastText' }}>
             Vehicle Manufacturer Name
