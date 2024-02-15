@@ -9,7 +9,7 @@ import { userSuggetionlist } from "../../../services/userApi";
 import FileUpload from "../../../utils/FileUpload";
 import StyledTextArea from "../../../ui/styledTextArea";
 import { toast } from "react-toastify";
-import { sendBulkMail } from "../../../services/notificationAPI";
+import { sendAppNotification, sendBulkMail } from "../../../services/notificationAPI";
 
 // const LocalStyledStatusChip = styled.span`
 //   padding: 4px 8px;
@@ -54,6 +54,12 @@ export default function AppNotification() {
     for (const value of formData.values()) {
       console.log(value);
     }
+    sendAppNotification(formData).then((res)=>{
+      console.log(res);
+      toast.success("Send successfully")
+    }).catch((error)=>{
+      console.error(error);
+    })
   };
 
   const handleFileSelect = (file) => {

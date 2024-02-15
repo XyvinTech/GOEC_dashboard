@@ -11,16 +11,17 @@ import { useForm, Controller } from "react-hook-form";
 import { getUserByEmailMobile } from "../../../services/userApi";
 import { toast } from "react-toastify";
 import StyledInput from "../../../ui/styledInput";
-import { getChargingStationList, updateChargingStationByList } from "../../../services/stationAPI";
+import { getChargingPointsListOfStation, getChargingStationList, updateChargingStationByList } from "../../../services/stationAPI";
+import { remoteStart } from "../../../services/ocppAPI";
 
 export default function RemoteSession() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [user, setUser] = useState();
-  const [locationList,setLocationList] = useState([])
-  const [machineList,setMachineList] = useState([])
-  const [connectorList,setConnectorList] = useState([])
+  const [locationList, setLocationList] = useState([])
+  const [machineList, setMachineList] = useState([])
+  const [connectorList, setConnectorList] = useState([])
 
-  
+
 
   const {
     control,
@@ -28,29 +29,44 @@ export default function RemoteSession() {
     formState: { errors },
     clearErrors,
     reset,
+    setValue
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    clearErrors();
-    reset();
+    let CPID = data.cpid.value.CPID
+    let dt = {
+      idTag : user._id,
+      connectorId:data.connectorId.value
+  }
+  console.log(dt);
+
+  remoteStart(dt,CPID).then((res)=>{
+    console.log(res);
+    toast.success("remote session Started")
+  }).catch((error)=>{
+    console.error(error);
+  })
   };
 
   const handleUserFetch = () => {
-    getUserByEmailMobile(`phoneNumber=${phoneNumber}`).then((res)=>{
+    getUserByEmailMobile(`phoneNumber=${phoneNumber}`).then((res) => {
       console.log(res);
       setUser(res.result[0]);
-    }).catch((error)=>{
+    }).catch((error) => {
       toast.error("user not found");
       setUser()
     })
   };
 
   useEffect(() => {
-    updateChargingStationByList({}).then((res)=>{
-    console.log(res);
-  })
+    updateChargingStationByList({}).then((res) => {
+      console.log(res);
+      if (res.status) {
+        setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
+      }
+    })
   }, [])
-  
+
   const handlePhoneNumberChange = (e) => {
     setPhoneNumber(e.target.value);
   };
@@ -60,7 +76,7 @@ export default function RemoteSession() {
   const location = [{ value: "location", label: "location" }];
   return (
     <>
-      <LastSynced heading="Start Remote Sessions" />
+      <LastSynced heading="Start Remote Sessions" lastSyncVisible={false} />
       <Container maxWidth="lg">
         <Grid item sm container spacing={6} sx={{ my: 2 }}>
           {/*First Section */}
@@ -106,21 +122,7 @@ export default function RemoteSession() {
                 {" "}
                 <Box sx={{ backgroundColor: "#1C1D22", padding: 2, margin: 2 }}>
                   <Typography sx={typoLabel}>User Name</Typography>
-                  <Controller
-                    name="username"
-                    control={control}
-                    render={({ field }) => (
-                      <>
-                        <InputField placeholder={user.username} style={{backgroundColor:'#4A4458'}} {...field} />
-                        {errors.username && (
-                          <span style={errorMessageStyle}>
-                            {errors.username.message}
-                          </span>
-                        )}
-                      </>
-                    )}
-                    rules={{ required: "User is required" }}
-                  />
+                  <InputField placeholder={user.username} style={{ backgroundColor: '#4A4458' }} disabled />
                   <Typography sx={typoLabel}>Location</Typography>
                   <Controller
                     name="location"
@@ -128,9 +130,19 @@ export default function RemoteSession() {
                     render={({ field }) => (
                       <>
                         <StyledSelectField
-                          options={location}
+                          options={locationList}
                           placeholder={"Select Location"}
                           {...field}
+                          onChange={(e) => {
+                            setMachineList([])
+                            setValue("location",e)
+                            getChargingPointsListOfStation(e.value).then((res) => {
+                              console.log(res);
+                              if (res.result) {
+                                setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
+                              }
+                            })
+                          }}
                         />
                         {errors.location && (
                           <span style={errorMessageStyle}>
@@ -148,9 +160,15 @@ export default function RemoteSession() {
                     render={({ field }) => (
                       <>
                         <StyledSelectField
-                          options={cpid}
+                          options={machineList}
                           placeholder={"Select Chargepoint"}
                           {...field}
+                          onChange={(e) => {
+                            setConnectorList([])
+                            setValue("cpid",e)
+                            console.log(e);
+                            setConnectorList(e.value.connectors.map((dt) => ({ label: dt.connectorId, value: dt.connectorId })))
+                          }}
                         />
                         {errors.cpid && (
                           <span style={errorMessageStyle}>
@@ -168,7 +186,7 @@ export default function RemoteSession() {
                     render={({ field }) => (
                       <>
                         <StyledSelectField
-                          options={connectorId}
+                          options={connectorList}
                           placeholder={"Select Connector"}
                           {...field}
                         />

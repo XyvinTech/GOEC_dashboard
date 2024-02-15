@@ -8,3 +8,12 @@ export async function sendBulkMail(data) {
     throw error;
   }
 }
+
+export async function sendAppNotification(data) {
+  try {
+    const response = await NOTIFICATION_URL.post(`notification/dashboard/firebase`,data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
