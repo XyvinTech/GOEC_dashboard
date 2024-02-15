@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StyledSelectField from "../../../ui/styledSelectField";
 import InputField from "../../../ui/styledInput";
 import StyledButton from "../../../ui/styledButton";
@@ -7,6 +7,7 @@ import ProgressBar from "../../../ui/ProgressBar";
 import NotificationUpload from "../../../utils/NotificationUpload";
 import styled from "styled-components";
 import { Controller, useForm } from "react-hook-form";
+import { userSuggetionlist } from "../../../services/userApi";
 const LocalStyledStatusChip = styled.span`
   padding: 4px 8px;
   border-radius: 10px;
@@ -19,6 +20,7 @@ const LocalStyledStatusChip = styled.span`
   background: var(--Secondary, #322f3b);
 `;
 export default function AppNotification() {
+  const [userOptions,setUserOption] = useState([])
   const {
     control,
     handleSubmit,
@@ -44,20 +46,24 @@ export default function AppNotification() {
   };
   const user_name = "username";
 
-  const user = [
-    { value: "Anish Vikende", label: "Anish Vikende" },
-
-    // Add more options as needed
-  ];
+  
+  useEffect(() => {
+    userSuggetionlist('').then((res)=>{
+      console.log(res);
+      if(res.status){
+        setUserOption(res.result.map((dt)=>({label:dt.username,value:dt.email})))
+      }
+    })
+  }, [])
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
         sx={{
-          overflowX: "auto",
           borderRadius: "8px",
-          margin: "20px 16px",
-          display: "flex",
+          px:{md:30,xs:2},
+          py:2,
           alignItems: "center",
+          justifyContent: "center"
         }}
       >
         <Stack direction={"column"} spacing={2}>
@@ -72,10 +78,30 @@ export default function AppNotification() {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField
-                    options={user}
-                    placeholder={"Select User"}
+                  <StyledSelectField options={[{ value: "*", label: "All" }, ...userOptions]}
                     {...field}
+                    placeholder={"Select User"}
+                    isMulti={true} isSearchable={true}
+                    onChange={(v, e) => {
+                      if (e.action === 'select-option') {
+                        if (e.option.value === '*') {
+                          setValue("sendTo", userOptions)
+                        } else {
+                          setValue("sendTo", v)
+                        }
+                      } else if (e.action === 'remove-value') {
+                        if (e.removedValue.value === '*') {
+                          setValue("sendTo", [])
+                        } else {
+                          setValue("sendTo", v)
+                        }
+                      }
+                      else if (e.action === 'clear') {
+                        setValue("sendTo", [])
+                      }
+                    }
+                    }
+                    height={'55px'}
                   />
                   {errors.sendTo && (
                     <span style={errorMessageStyle}>
