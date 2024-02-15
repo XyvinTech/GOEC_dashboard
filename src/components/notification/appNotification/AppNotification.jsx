@@ -1,26 +1,36 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import StyledSelectField from "../../../ui/styledSelectField";
 import InputField from "../../../ui/styledInput";
 import StyledButton from "../../../ui/styledButton";
 import ProgressBar from "../../../ui/ProgressBar";
-import NotificationUpload from "../../../utils/NotificationUpload";
-import styled from "styled-components";
 import { Controller, useForm } from "react-hook-form";
 import { userSuggetionlist } from "../../../services/userApi";
-const LocalStyledStatusChip = styled.span`
-  padding: 4px 8px;
-  border-radius: 10px;
-  color: white;
-  font-weight: 500;
-  text-align: center;
-  display: inline-block;
-  min-width: 60px;
-  border-radius: 45px;
-  background: var(--Secondary, #322f3b);
-`;
+import FileUpload from "../../../utils/FileUpload";
+import StyledTextArea from "../../../ui/styledTextArea";
+import { toast } from "react-toastify";
+import { sendBulkMail } from "../../../services/notificationAPI";
+
+// const LocalStyledStatusChip = styled.span`
+//   padding: 4px 8px;
+//   border-radius: 10px;
+//   color: white;
+//   font-weight: 500;
+//   text-align: center;
+//   display: inline-block;
+//   min-width: 60px;
+//   border-radius: 45px;
+//   background: var(--Secondary, #322f3b);
+// `;
+
+
+// const user_name = "username";
+
 export default function AppNotification() {
-  const [userOptions,setUserOption] = useState([])
+  const [userOptions, setUserOption] = useState([])
+  const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [selectedFile, setSelectedFile] = useState();
+  const reference = useRef();
   const {
     control,
     handleSubmit,
@@ -32,46 +42,57 @@ export default function AppNotification() {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    clearErrors();
-
-    setUploadPercentage(0);
-    reset();
+    if (!selectedFile) {
+      toast.error("selectFile")
+    }
+    const mails = data.sendTo.map((dt)=>(dt.value)).toString()
+    const formData = new FormData()
+    formData.append("to",mails)
+    formData.append("subject",data.subject)
+    formData.append("text",data.content)
+    formData.append("file",selectedFile)
+    for (const value of formData.values()) {
+      console.log(value);
+    }
   };
-  const selectedFileName = watch("file");
-  const [uploadPercentage, setUploadPercentage] = useState(0);
 
-  const handleFileSelect = (fileName, percentage) => {
-    setValue("file", fileName);
-    setUploadPercentage(percentage);
+  const handleFileSelect = (file) => {
+    console.log(file.files[0]);
+    setSelectedFile(file.files[0])
+    let i = 0;
+    let st = setInterval(() => {
+      if (i === 90) {
+        clearInterval(st)
+      }
+      i = i + 10
+      setUploadPercentage(i);
+    }, 40);
   };
-  const user_name = "username";
 
-  
   useEffect(() => {
-    userSuggetionlist('').then((res)=>{
+    userSuggetionlist('').then((res) => {
       console.log(res);
-      if(res.status){
-        setUserOption(res.result.map((dt)=>({label:dt.username,value:dt.email})))
+      if (res.status) {
+        setUserOption(res.result.map((dt) => ({ label: dt.username, value: dt.email })))
       }
     })
   }, [])
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
         sx={{
           borderRadius: "8px",
-          px:{md:30,xs:2},
-          py:2,
+          px: { md: 30, xs: 2 },
+          py: 2,
           alignItems: "center",
-          justifyContent: "center"
+
         }}
       >
         <Stack direction={"column"} spacing={2}>
           <Box sx={BoxStyle}>
-            <Typography sx={HeadingStyle}>
-              Create In App Notification
-            </Typography>
-
+            <Typography sx={HeadingStyle}>Create In-App Notification</Typography>
             <Typography sx={TextStyle}>Send To</Typography>
             <Controller
               name="sendTo"
@@ -100,8 +121,10 @@ export default function AppNotification() {
                         setValue("sendTo", [])
                       }
                     }
+
                     }
                     height={'55px'}
+
                   />
                   {errors.sendTo && (
                     <span style={errorMessageStyle}>
@@ -134,12 +157,12 @@ export default function AppNotification() {
               control={control}
               render={({ field }) => (
                 <>
-                  <InputField
+                  <StyledTextArea
                     placeholder={"Add message"}
-                    lineHeight="173px"
+                    height={'153px'}
                     specialAlign={true}
                     {...field}
-                  />
+                  />{" "}
                   {errors.content && (
                     <span style={errorMessageStyle}>
                       {errors.content.message}
@@ -149,12 +172,12 @@ export default function AppNotification() {
               )}
               rules={{ required: "Content is required" }}
             />
-            <LocalStyledStatusChip
+            {/* <LocalStyledStatusChip
               style={{ alignSelf: "flex-start", fontSize: "14px" }}
             >
               {"{" + user_name + "}"}
-            </LocalStyledStatusChip>
-            <Typography sx={TextStyle}>Target Url</Typography>
+            </LocalStyledStatusChip> */}
+            {/* <Typography sx={TextStyle}>Target Url</Typography>
             <Controller
               name="targetUrl"
               control={control}
@@ -169,29 +192,18 @@ export default function AppNotification() {
                 </>
               )}
               rules={{ required: "Target Url is required" }}
+            /> */}
+            <FileUpload
+              ref={reference}
+              accept={'*'}
+              removedFile={selectedFile ? false : true}
+              onFileSelect={handleFileSelect}
             />
-            <Controller
-              name="file"
-              control={control}
-              render={({ field }) => (
-                <>
-                  <NotificationUpload
-                    onFileSelect={handleFileSelect}
-                    {...field}
-                  />
-
-                  {errors.file && (
-                    <span style={errorMessageStyle}>{errors.file.message}</span>
-                  )}
-                </>
-              )}
-              rules={{ required: "file is required" }}
-            />
-
-            {selectedFileName && (
+            {selectedFile && (
               <ProgressBar
                 UploadProgress={uploadPercentage}
-                filename={selectedFileName}
+                filename={selectedFile.name}
+                onClose={() => { setSelectedFile(); console.log(reference); }}
               />
             )}
             <StyledButton
@@ -200,7 +212,7 @@ export default function AppNotification() {
               width="316"
               height="46"
               style={{ borderRadius: "8px" }}
-            ></StyledButton>
+            >Send</StyledButton>
           </Box>
         </Stack>
       </Box>
@@ -227,7 +239,7 @@ const BoxStyle = {
   gap: "17px",
   borderRadius: "var(--borderRadius, 4px)",
   background: "#1c1d22",
-  width: "356",
+  width: "356x",
 };
 
 const HeadingStyle = {

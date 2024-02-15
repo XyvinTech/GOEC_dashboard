@@ -13,10 +13,10 @@ const InputContainer = styled.div`
   border-radius: 4px;
 `;
 
-const InputField = styled.input`
-  
+const InputField = styled.textarea`
 color: #FFFFFF;
 background: none;
+resize: none;
 font-feature-settings: 'clig' off, 'liga' off;
 /* Small Caption/ Medium */
 font-family: Inter;
@@ -48,32 +48,20 @@ border:none;
   
 `;
 
-const IconContainer = styled.div`
-display: flex;
-width: 24px;
-height: 24px;
-justify-content: center;
-align-items: center;
-flex-shrink: 0;
-color:#87898E;
-`;
-
-const StyledInput = forwardRef(({ icon, placeholder,iconright,value, lineHeight,specialAlign,onChange, ...props },ref) => {
+const StyledTextArea = forwardRef(({onTextChange, icon, placeholder,iconright,value, lineHeight,specialAlign, ...props },ref) => {
   return (
     <InputContainer {...props}>
-      {icon && <IconContainer>{icon}</IconContainer>}
       <InputField 
         autoComplete="off"
         placeholder={placeholder} 
         value={value} 
-        onChange={onChange} 
+        onChange={onTextChange} 
         lineHeight={lineHeight}
         specialAlign={specialAlign}
         ref={ref}
         {...props} />
-      {iconright && <IconContainer>{iconright}</IconContainer>}
     </InputContainer>
   );
 });
 
-export default StyledInput;
+export default StyledTextArea;

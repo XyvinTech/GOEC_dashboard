@@ -126,6 +126,16 @@ export const RFID_URL = axios.create({
   },
 });
 
+///! rfid 
+
+export const NOTIFICATION_URL = axios.create({
+  baseURL: `${baseURL}:5682/api/v1`,
+  headers: {
+    "Content-Type": "multipart/form-data",
+    Authorization: "Bearer " + token,
+  },
+});
+
 
 
 
