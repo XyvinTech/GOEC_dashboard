@@ -69,7 +69,6 @@ const StyledSelectField = ({ options, value, placeholder,
   var selectedIndex = -1;
   var multiSelected = [];
   useEffect(() => {
-    console.log(value);
     selectedIndex = -1;
     multiSelected = [];
     if (options) {
