@@ -23,18 +23,6 @@ const LocalStyledStatusChip = styled.span`
 
 
 const user_name = "username";
-const user = [
-  { value: "Anish Vikend", label: "Anish Vikend" },
-  { value: "Anish Viken", label: "Anish Viken" },
-  { value: "Anish Vike", label: "Anish Vike" },
-  { value: "Anish Vik", label: "Anish Vik" },
-  { value: "Anish Vi", label: "Anish Vi" },
-  { value: "Anish V", label: "Anish V" },
-  { value: "Anis", label: "Anis" },
-  { value: "Ani", label: "Ani" },
-  { value: "An", label: "An" },
-  { value: "A", label: "A" },
-];
 
 export default function EmailNotification() {
   const [userOptions,setUserOption] = useState([])
