@@ -14,7 +14,7 @@ export const VEHICLE_INSTANCES = axios.create({
   baseURL: `${baseURL}:5689/api/v1`,
   headers: {
     Authorization: "Bearer " + token,
-    "Content-Type": "multipart/form-data",
+    "Content-Type": "application/json",
   },
 });
 
