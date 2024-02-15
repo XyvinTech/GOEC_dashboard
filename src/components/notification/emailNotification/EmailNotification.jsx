@@ -23,11 +23,10 @@ import { sendBulkMail } from "../../../services/notificationAPI";
 //   background: var(--Secondary, #322f3b);
 // `;
 
-
 // const user_name = "username";
 
 export default function EmailNotification() {
-  const [userOptions, setUserOption] = useState([])
+  const [userOptions, setUserOption] = useState([]);
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [selectedFile, setSelectedFile] = useState();
   const reference = useRef();
@@ -41,46 +40,52 @@ export default function EmailNotification() {
     watch,
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
-    if (!selectedFile) {
-      toast.error("selectFile")
+    const mails = data.sendTo.map((dt) => dt.value)
+
+
+    const formData = new FormData();
+    formData.append("to", mails);
+    formData.append("subject", data.subject);
+    formData.append("text", data.content);
+    formData.append("file", selectedFile);
+
+    let formDataObject = {};
+    for (let pair of formData.entries()) {
+      formDataObject[pair[0]] = pair[1];
     }
-    const mails = data.sendTo.map((dt)=>(dt.value)).toString()
-    const formData = new FormData()
-    formData.append("to",mails)
-    formData.append("subject",data.subject)
-    formData.append("text",data.content)
-    formData.append("file",selectedFile)
-    sendBulkMail(formData).then((res)=>{
-      console.log(res);
-      toast.success("Send successfully")
-    }).catch((error)=>{
-      console.error(error);
-    })
+    sendBulkMail(formDataObject)
+      .then((res) => {
+        console.log(res);
+        toast.success("Send successfully");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleFileSelect = (file) => {
     console.log(file.files[0]);
-    setSelectedFile(file.files[0])
+    setSelectedFile(file.files[0]);
     let i = 0;
     let st = setInterval(() => {
       if (i === 90) {
-        clearInterval(st)
+        clearInterval(st);
       }
-      i = i + 10
+      i = i + 10;
       setUploadPercentage(i);
     }, 40);
   };
 
   useEffect(() => {
-    userSuggetionlist('').then((res) => {
+    userSuggetionlist("").then((res) => {
       console.log(res);
       if (res.status) {
-        setUserOption(res.result.map((dt) => ({ label: dt.username, value: dt.email })))
+        setUserOption(
+          res.result.map((dt) => ({ label: dt.username, value: dt.email }))
+        );
       }
-    })
-  }, [])
-
+    });
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +95,6 @@ export default function EmailNotification() {
           px: { md: 30, xs: 2 },
           py: 2,
           alignItems: "center",
-
         }}
       >
         <Stack direction={"column"} spacing={2}>
@@ -102,32 +106,30 @@ export default function EmailNotification() {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField options={[{ value: "*", label: "All" }, ...userOptions]}
+                  <StyledSelectField
+                    options={[{ value: "*", label: "All" }, ...userOptions]}
                     {...field}
                     placeholder={"Select User"}
-                    isMulti={true} isSearchable={true}
+                    isMulti={true}
+                    isSearchable={true}
                     onChange={(v, e) => {
-                      if (e.action === 'select-option') {
-                        if (e.option.value === '*') {
-                          setValue("sendTo", userOptions)
+                      if (e.action === "select-option") {
+                        if (e.option.value === "*") {
+                          setValue("sendTo", userOptions);
                         } else {
-                          setValue("sendTo", v)
+                          setValue("sendTo", v);
                         }
-                      } else if (e.action === 'remove-value') {
-                        if (e.removedValue.value === '*') {
-                          setValue("sendTo", [])
+                      } else if (e.action === "remove-value") {
+                        if (e.removedValue.value === "*") {
+                          setValue("sendTo", []);
                         } else {
-                          setValue("sendTo", v)
+                          setValue("sendTo", v);
                         }
+                      } else if (e.action === "clear") {
+                        setValue("sendTo", []);
                       }
-                      else if (e.action === 'clear') {
-                        setValue("sendTo", [])
-                      }
-                    }
-
-                    }
-                    height={'55px'}
-
+                    }}
+                    height={"55px"}
                   />
                   {errors.sendTo && (
                     <span style={errorMessageStyle}>
@@ -162,7 +164,7 @@ export default function EmailNotification() {
                 <>
                   <StyledTextArea
                     placeholder={"Add message"}
-                    height={'153px'}
+                    height={"153px"}
                     specialAlign={true}
                     {...field}
                   />{" "}
@@ -198,7 +200,7 @@ export default function EmailNotification() {
             /> */}
             <FileUpload
               ref={reference}
-              accept={'*'}
+              accept={"*"}
               removedFile={selectedFile ? false : true}
               onFileSelect={handleFileSelect}
             />
@@ -206,7 +208,10 @@ export default function EmailNotification() {
               <ProgressBar
                 UploadProgress={uploadPercentage}
                 filename={selectedFile.name}
-                onClose={() => { setSelectedFile(); console.log(reference); }}
+                onClose={() => {
+                  setSelectedFile();
+                  console.log(reference);
+                }}
               />
             )}
             <StyledButton
@@ -215,7 +220,9 @@ export default function EmailNotification() {
               width="316"
               height="46"
               style={{ borderRadius: "8px" }}
-            >Send</StyledButton>
+            >
+              Send
+            </StyledButton>
           </Box>
         </Stack>
       </Box>
