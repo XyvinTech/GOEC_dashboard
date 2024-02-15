@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { CheckCircle, UploadFile } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 
 
-export default function FileUpload({ onFileSelect, image, accept,getBase64Data }) {
+export default function FileUpload({ onFileSelect, image, accept,getBase64Data,removedFile }) {
   const [fileStatus, setFileStatus] = useState(false)
   const { getRootProps, getInputProps } = useDropzone({
     accept: accept ? accept : {'image/*' : ['.png','.jpeg','.jpg']},
@@ -18,6 +18,13 @@ export default function FileUpload({ onFileSelect, image, accept,getBase64Data }
       })
     }
   });
+
+  useEffect(() => {
+    if (removedFile) {
+      setFileStatus(false)
+    }
+  }, [removedFile])
+  
 
   const getBase64= (file, cb) => {
     let reader = new FileReader();

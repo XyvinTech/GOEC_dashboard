@@ -1,5 +1,5 @@
 import { Container, Grid, Typography, Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../../../ui/styledInput";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledButton from "../../../ui/styledButton";
@@ -10,10 +10,17 @@ import { ReactComponent as SearchButtonIcon } from "../../../assets/icons/search
 import { useForm, Controller } from "react-hook-form";
 import { getUserByEmailMobile } from "../../../services/userApi";
 import { toast } from "react-toastify";
+import StyledInput from "../../../ui/styledInput";
+import { getChargingStationList, updateChargingStationByList } from "../../../services/stationAPI";
 
 export default function RemoteSession() {
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [user, setUser] = useState("User Name");
+  const [user, setUser] = useState();
+  const [locationList,setLocationList] = useState([])
+  const [machineList,setMachineList] = useState([])
+  const [connectorList,setConnectorList] = useState([])
+
+  
 
   const {
     control,
@@ -28,18 +35,24 @@ export default function RemoteSession() {
     reset();
   };
 
-  const handleUserFetch = async () => {
-    try {
-      const res = await getUserByEmailMobile(`phoneNumber=${phoneNumber}`);
-      setUser(res.result[0].username);
-    } catch (error) {
+  const handleUserFetch = () => {
+    getUserByEmailMobile(`phoneNumber=${phoneNumber}`).then((res)=>{
+      console.log(res);
+      setUser(res.result[0]);
+    }).catch((error)=>{
       toast.error("user not found");
-    }
+      setUser()
+    })
   };
 
-  const handlePhoneNumberChange = (event) => {
-    const value = event;
-    setPhoneNumber(value.phoneNumber);
+  useEffect(() => {
+    updateChargingStationByList({}).then((res)=>{
+    console.log(res);
+  })
+  }, [])
+  
+  const handlePhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value);
   };
   const cpid = [{ value: "GOEC117", label: "GOEC117" }];
   const connectorId = [{ value: "1", label: "1" }];
@@ -71,15 +84,15 @@ export default function RemoteSession() {
               <StyledDivider />
               <Typography sx={typoLabel}>Phone number</Typography>
               <Grid container spacing={2} item xs={12} md={12}>
-                <Grid item xs={12} md={9}>
-                  <StyledPhoneNumber
+                <Grid item xs={9}>
+                  <StyledInput
                     onChange={handlePhoneNumberChange}
                     placeholder="Enter Phone number"
                   />
                 </Grid>
-                <Grid item xs={12} md={3}>
-                  <StyledButton variant="primary" width="70" height="56">
-                    <SearchButtonIcon onClick={handleUserFetch} />
+                <Grid item xs={3}>
+                  <StyledButton variant="primary" width="70" height="50" onClick={handleUserFetch}>
+                    <SearchButtonIcon />
                   </StyledButton>
                 </Grid>
               </Grid>
@@ -87,87 +100,88 @@ export default function RemoteSession() {
           </Grid>
 
           {/* Other Sections */}
-          <Grid item xs={12} md={6} sx={{ marginTop: { xs: 2, sm: 0 } }}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {" "}
-              <Box sx={{ backgroundColor: "#1C1D22", padding: 2, margin: 2 }}>
-                <Typography sx={typoLabel}>User Name</Typography>
-                <Controller
-                  name="username"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <InputField placeholder={user} {...field} />
-                      {errors.username && (
-                        <span style={errorMessageStyle}>
-                          {errors.username.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                  rules={{ required: "User is required" }}
-                />
-                <Typography sx={typoLabel}>Location</Typography>
-                <Controller
-                  name="location"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <StyledSelectField
-                        options={location}
-                        placeholder={"Select Location"}
-                        {...field}
-                      />
-                      {errors.location && (
-                        <span style={errorMessageStyle}>
-                          {errors.location.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                  rules={{ required: "Location is required" }}
-                />
-                <Typography sx={typoLabel}>CPID</Typography>
-                <Controller
-                  name="cpid"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <StyledSelectField
-                        options={cpid}
-                        placeholder={"Select Chargepoint"}
-                        {...field}
-                      />
-                      {errors.cpid && (
-                        <span style={errorMessageStyle}>
-                          {errors.cpid.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                  rules={{ required: "CPID is required" }}
-                />
-                <Typography sx={typoLabel}>Connector ID</Typography>
-                <Controller
-                  name="connectorId"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <StyledSelectField
-                        options={connectorId}
-                        placeholder={"Select Connector"}
-                        {...field}
-                      />
-                      {errors.connectorId && (
-                        <span style={errorMessageStyle}>
-                          {errors.connectorId.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                  rules={{ required: "Connector ID is required" }}
-                />
-                {/* <Typography sx={typoLabel}>Session Mode</Typography>
+          {user &&
+            <Grid item xs={12} md={6} sx={{ marginTop: { xs: 2, sm: 0 } }}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                {" "}
+                <Box sx={{ backgroundColor: "#1C1D22", padding: 2, margin: 2 }}>
+                  <Typography sx={typoLabel}>User Name</Typography>
+                  <Controller
+                    name="username"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <InputField placeholder={user.username} style={{backgroundColor:'#4A4458'}} {...field} />
+                        {errors.username && (
+                          <span style={errorMessageStyle}>
+                            {errors.username.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                    rules={{ required: "User is required" }}
+                  />
+                  <Typography sx={typoLabel}>Location</Typography>
+                  <Controller
+                    name="location"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <StyledSelectField
+                          options={location}
+                          placeholder={"Select Location"}
+                          {...field}
+                        />
+                        {errors.location && (
+                          <span style={errorMessageStyle}>
+                            {errors.location.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                    rules={{ required: "Location is required" }}
+                  />
+                  <Typography sx={typoLabel}>CPID</Typography>
+                  <Controller
+                    name="cpid"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <StyledSelectField
+                          options={cpid}
+                          placeholder={"Select Chargepoint"}
+                          {...field}
+                        />
+                        {errors.cpid && (
+                          <span style={errorMessageStyle}>
+                            {errors.cpid.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                    rules={{ required: "CPID is required" }}
+                  />
+                  <Typography sx={typoLabel}>Connector ID</Typography>
+                  <Controller
+                    name="connectorId"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <StyledSelectField
+                          options={connectorId}
+                          placeholder={"Select Connector"}
+                          {...field}
+                        />
+                        {errors.connectorId && (
+                          <span style={errorMessageStyle}>
+                            {errors.connectorId.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                    rules={{ required: "Connector ID is required" }}
+                  />
+                  {/* <Typography sx={typoLabel}>Session Mode</Typography>
 
                 <Controller
                   name="sessionMode"
@@ -188,10 +202,10 @@ export default function RemoteSession() {
                   )}
                   rules={{ required: "Session Mode is required" }}
                 /> */}
-                {/* <Typography sx={typoLabel}>Value</Typography> */}
+                  {/* <Typography sx={typoLabel}>Value</Typography> */}
 
-                <Grid container spacing={2} item xs={12} md={12}  sx={{ py:3 }}>
-                  {/* <Grid item xs={12} md={9}>
+                  <Grid container spacing={2} item xs={12} md={12} sx={{ py: 3 }}>
+                    {/* <Grid item xs={12} md={9}>
                     <Controller
                       name="value"
                       control={control}
@@ -208,21 +222,23 @@ export default function RemoteSession() {
                       rules={{ required: "Value is required" }}
                     />
                   </Grid> */}
-                  <Grid item xs={12} md={3} sx={{ px: 1 }}>
-                    <StyledButton
-                      variant="primary"
-                      type="submit"
-                      width="100"
-                      height="50"
-                    >
-                      Start
-                    </StyledButton>
+                    <Grid item xs={12} md={3} sx={{ px: 1 }}>
+                      <StyledButton
+                        variant="primary"
+                        type="submit"
+                        width="100"
+                        height="50"
+                      >
+                        Start
+                      </StyledButton>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </form>
-          </Grid>
+                </Box>
+              </form>
+            </Grid>
+          }
         </Grid>
+
       </Container>
     </>
   );
