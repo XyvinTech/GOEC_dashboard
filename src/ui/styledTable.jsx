@@ -11,20 +11,26 @@ import { remoteStopTransaction } from "../services/ocppAPI";
 import { toast } from "react-toastify";
 // StyledTable component
 
-const StyledTable = ({ headers, data, onActionClick, showActionCell = true, actions = ['Edit', 'View', 'Delete'] }) => {
+const StyledTable = ({
+  headers,
+  data,
+  onActionClick,
+  showActionCell = true,
+  actions = ["Edit", "View", "Delete"],
+}) => {
   const [page, setPage] = useState(0);
-  const [firstopen, setFirstOpen] = useState(true)
-  const [isChange, setIsChange] = useState(false)
+  const [firstopen, setFirstOpen] = useState(true);
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     if (data.length > 0) {
-      setFirstOpen(false)
+      setFirstOpen(false);
     }
-  }, [data, isChange])
+  }, [data, isChange]);
 
-  setTimeout(()=>{
-    setFirstOpen(false)
-  },5000)
+  setTimeout(() => {
+    setFirstOpen(false);
+  }, 5000);
 
   const rowsPerPage = 10;
   const paginatedData = data.slice(
@@ -39,18 +45,29 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
     setPage(newPage); // Assuming newPage is 1-indexed
   };
 
-  const handleStopClick = async(id) => {
-    alert(`Terminate session for id: ${id}`);
-    const res = await remoteStopTransaction(id);
-    if(res){
-      toast.success("Session terminated successfully ")
+  const handleStopClick = async (session) => {
+    const transactionId = session["OCPP Txn ID"]
+      ?session["OCPP Txn ID"]
+      : null;
+    console.log(transactionId);
+    alert(`Terminate session for id: ${transactionId}`);
+    let payload = {
+      transactionId: transactionId,
+    };
+    try {
+       await remoteStopTransaction(session.CPID, payload);
+      toast.success("Session terminated successfully ");
+      setIsChange(!isChange);
+    } catch (error) {
+      toast.error(error.response.data.error);
       setIsChange(!isChange);
     }
+      
   };
   let prevHeader = null;
 
   return (
-    <TableContainer >
+    <TableContainer>
       <Table>
         <TableHeader>
           <tr>
@@ -62,52 +79,71 @@ const StyledTable = ({ headers, data, onActionClick, showActionCell = true, acti
         </TableHeader>
 
         <TableBody>
-          {firstopen ?
-            <TableSkeleton tableHeader={headers} /> : data.length === 0 ? (
-              <TableCell colSpan={headers.length}>
-                <Typography color={'#deb500'} sx={{textAlign:'center'}}>No Data</Typography>
-              </TableCell>
-            ) :
-              paginatedData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  {headers.map((header, cellIndex) => {
-                    const isStatusColumn = header.toLowerCase() === "status";
-                    const isPayload = header.toLowerCase() === "payload data";
-                    const isTerminateSession = header.toLowerCase() === "terminate session";
-                    const isPublished = header.toLowerCase() === "published";
+          {firstopen ? (
+            <TableSkeleton tableHeader={headers} />
+          ) : data.length === 0 ? (
+            <TableCell colSpan={headers.length}>
+              <Typography color={"#deb500"} sx={{ textAlign: "center" }}>
+                No Data
+              </Typography>
+            </TableCell>
+          ) : (
+            paginatedData.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {headers.map((header, cellIndex) => {
+                  const isStatusColumn = header.toLowerCase() === "status";
+                  const isPayload = header.toLowerCase() === "payload data";
+                  const isTerminateSession =
+                    header.toLowerCase() === "terminate session";
+                  const isPublished = header.toLowerCase() === "published";
 
-                    const command = prevHeader;
-                    prevHeader = header;
-                    return (
-                      <TableCell
-                        key={`${rowIndex}-${header}`}
-                        $isfirstcolumn={cellIndex === 0}
-                      >
-                        {
-                          isStatusColumn ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
-                            : isTerminateSession ? (
-                              <StyledStopButton onClick={() => handleStopClick(row._id)}>
-                                Stop
-                              </StyledStopButton>
-                            ) : isPayload ? <StyledPayloadTableCell value={row[header]} command={row[command]} />
-                              : isPublished ? <StyledStatusChip $status={row[header]} >{row[header]}</StyledStatusChip>
-                                : (row[header] || row[header] === "" ? row[header] : '_')
-                        }
-                      </TableCell>
-                    );
-                  })}
+                  const command = prevHeader;
+                  prevHeader = header;
+                  return (
+                    <TableCell
+                      key={`${rowIndex}-${header}`}
+                      $isfirstcolumn={cellIndex === 0}
+                    >
+                      {isStatusColumn ? (
+                        <StyledStatusChip $status={row[header]}>
+                          {row[header]}
+                        </StyledStatusChip>
+                      ) : isTerminateSession ? (
+                        <StyledStopButton onClick={() => handleStopClick(row)}>
+                          Stop
+                        </StyledStopButton>
+                      ) : isPayload ? (
+                        <StyledPayloadTableCell
+                          value={row[header]}
+                          command={row[command]}
+                        />
+                      ) : isPublished ? (
+                        <StyledStatusChip $status={row[header]}>
+                          {row[header]}
+                        </StyledStatusChip>
+                      ) : row[header] || row[header] === "" ? (
+                        row[header]
+                      ) : (
+                        "_"
+                      )}
+                    </TableCell>
+                  );
+                })}
 
-                  {showActionCell && (
-                    <td>
-                      <StyledActionCell
-                        actions={actions}
-                        id={row.id} // Assuming your row data has an 'id' property
-                        onCliked={(e) => { onActionClick && onActionClick({ data: row, ...e }) }}
-                      />
-                    </td>
-                  )}
-                </tr>
-              ))}
+                {showActionCell && (
+                  <td>
+                    <StyledActionCell
+                      actions={actions}
+                      id={row.id} // Assuming your row data has an 'id' property
+                      onCliked={(e) => {
+                        onActionClick && onActionClick({ data: row, ...e });
+                      }}
+                    />
+                  </td>
+                )}
+              </tr>
+            ))
+          )}
         </TableBody>
       </Table>
       <StyledPagination
