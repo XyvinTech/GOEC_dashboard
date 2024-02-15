@@ -69,37 +69,35 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
 
 
 
-  const createVEHICLE = (data) => {
-    console.log(selectedFile);
+  const createVEHICLE = async (data) => {
     if (!selectedFile) {
       toast.error("Select image");
       return
     }
-    imageUploadAPI(selectedFile).then((res) => {
-      console.log(res);
-      if (res.status) {
-        
-        let dt = {
-          "image": res.url,
-          "brand": data.brand.value,
-          "modelName": data.modelName,
-          "compactable_port": data.compactable_port.map((item) => item.value)
-        }
-    
-        createVehicle(dt).then((res) => {
-          if (res.status) {
-            toast.success("vehicle created successfully");
-            reset();
-            formSubmited()
-          }
-        }).catch((error) => {
-          toast.error("Failed to create Vehicle");
-        })
-        
+
+    try {
+      let uploadImage = await imageUploadAPI(selectedFile)
+      let dt =  {
+        "icon": uploadImage.url,
+        "brand": data.brand.value,
+        "modelName": data.modelName,
+        "compactable_port": data.compactable_port.map((item) => item.value)
       }
-    }).catch(error => {
-      console.error(error);
-    })
+
+      console.log(dt)
+
+
+      let createNew = await createVehicle(dt)
+      if (createNew.status) {
+        toast.success("vehicle created successfully");
+        reset();
+        formSubmited()
+      }
+    } catch (error) {
+      toast.error("Failed to create Vehicle");
+      console.log(error)
+    }
+  
     
   }
 
@@ -107,7 +105,7 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
     let dt = {}
     if (selectedFile) {
       dt = {
-        "image": selectedFile
+        "icon": selectedFile
       }
     }
     dt = {

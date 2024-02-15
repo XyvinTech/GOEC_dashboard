@@ -2,6 +2,7 @@ import { VEHICLE_INSTANCES } from "./axiosInstances";
 
 export async function createVehicle(data) {
   try {
+    console.log(data);
     const response = await VEHICLE_INSTANCES.post(`vehicle/create`, data);
     return response.data;
   } catch (error) {
