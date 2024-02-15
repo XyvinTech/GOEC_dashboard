@@ -30,6 +30,7 @@ const ReviewComponent = ({ review, deleteClickHandle }) => {
 }
 
 export default function Reviews({ data, deleteClickHandle,dataUpdate, ...props }) {
+  console.log('test',data);
   return (
     <>
       <LastSynced heading={'Reviews'} reloadHandle={dataUpdate} />
@@ -37,7 +38,7 @@ export default function Reviews({ data, deleteClickHandle,dataUpdate, ...props }
         <Grid container spacing={{ xs: 1, md: 4 }}>
           {
             data.map((item) => (
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={4} key={item._id}>
                 <ReviewComponent review={item} deleteClickHandle={() => { deleteClickHandle(item) }} />
               </Grid>
             ))
