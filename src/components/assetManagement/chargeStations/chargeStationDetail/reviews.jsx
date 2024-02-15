@@ -11,7 +11,7 @@ const ReviewComponent = ({ review, deleteClickHandle }) => {
       <Stack direction={'column'} spacing={1}>
         <Stack direction={'row'} justifyContent={'space-between'}>
           <Stack direction={'row'} alignItems={'center'} spacing={1}>
-            <Typography color={'primary.contrastText'}>{review.userDetails[0].username}</Typography>
+            <Typography color={'primary.contrastText'}>{review.user}</Typography>
             <Stack direction={'row'}>
               {[...Array(review.rating)].map((item) => (
                 <Star fontSize='14px' sx={{ color: '#F2C94C' }} />
@@ -34,7 +34,7 @@ export default function Reviews({ data, deleteClickHandle,dataUpdate, ...props }
   return (
     <>
       <LastSynced heading={'Reviews'} reloadHandle={dataUpdate} />
-      <Box sx={{ backgroundColor: 'secondary.main', /*maxHeight: {xs:'1000px',md:'500px'},*/height: (data.length == 0 ? '300px' : ''), borderRadius: '4px', m: { xs: 1, md: 4 }, p: 2 }}>
+      <Box sx={{display:'flex', backgroundColor: 'secondary.main', /*maxHeight: {xs:'1000px',md:'500px'},*/ justifyContent:'center',height: (data.length == 0 ? '300px' : ''),alignItems: (data.length == 0 ? 'center' : ''), borderRadius: '4px', m: { xs: 1, md: 4 }, p: 2 }}>
         {data.length > 0 ?
           <Grid container spacing={{ xs: 1, md: 4 }}>
             {data.map((item) => (

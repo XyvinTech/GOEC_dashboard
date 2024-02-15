@@ -31,6 +31,7 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
   const { control, handleSubmit, reset, formState: { errors }, clearErrors } = useForm(
     {
       defaultValues: {
+        
         brand: editStatus ? vehicleData["Company Name"] : '',
         modelName: editStatus ? vehicleData["Model name"] : '',
         compactable_port: editStatus ? vehicleData["compactable_port"] : ''
