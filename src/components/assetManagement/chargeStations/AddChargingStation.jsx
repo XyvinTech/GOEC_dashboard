@@ -284,7 +284,9 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                       setCities([])
                       setCountryCode(e.value.isoCode)
                       setStates(State.getStatesOfCountry(e.value.isoCode).map((e) => ({ label: e.name, value: e })))
-                    }} />
+                    }} 
+                    isSearchable={true}
+                    />
                   {errors.country && (
                     <span style={errorMessageStyle}>
                       {errors.country.message}
@@ -308,6 +310,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                       setStateCode(e.value.isoCode)
                       setCities(City.getCitiesOfState(e.value.countryCode, e.value.isoCode).map((e) => ({ label: e.name, value: e })))
                     }}
+                    isSearchable={true}
                   />
                   {errors.state && (
                     <span style={errorMessageStyle}>
@@ -326,7 +329,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField {...field} placeholder="City" options={cities} />
+                  <StyledSelectField {...field} placeholder="City" options={cities} isSearchable />
                   {errors.city && (
                     <span style={errorMessageStyle}>{errors.city.message}</span>
                   )}
