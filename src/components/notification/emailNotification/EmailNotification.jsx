@@ -46,7 +46,6 @@ export default function EmailNotification() {
     clearErrors();
 
     setUploadPercentage(0);
-    reset();
   };
   const selectedFileName = watch("file");
   
