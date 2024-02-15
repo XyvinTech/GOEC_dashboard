@@ -8,8 +8,8 @@ import FileUpload from "../../../utils/FileUpload";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getOem } from "../../../services/evMachineAPI";
 import { createVehicle, editVehicle, getBrand } from "../../../services/vehicleAPI";
+import { imageUploadAPI } from "../../../services/imageAPI";
 
 let compactable_ports = [
   { label: "CCS", value: "CCS" },
@@ -25,7 +25,7 @@ let compactable_ports = [
 
 // image has bug it is clear in phase 2 commented sessions are for image 
 
-export default function AddVehicles({ vehicleData = {},onClose, formSubmited, editStatus = false, ...props }) {
+export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, editStatus = false, ...props }) {
   const [brands, setBrands] = useState();
   const [selectedFile, setSelectedFile] = useState();
   const { control, handleSubmit, reset, formState: { errors }, clearErrors } = useForm(
@@ -33,7 +33,7 @@ export default function AddVehicles({ vehicleData = {},onClose, formSubmited, ed
       defaultValues: {
         brand: editStatus ? vehicleData["Company Name"] : '',
         modelName: editStatus ? vehicleData["Model name"] : '',
-        compactable_port: editStatus ? vehicleData["compactable_port"][0].split(",") : ''
+        compactable_port: editStatus ? vehicleData["compactable_port"] : ''
       }
     }
   );
@@ -53,9 +53,9 @@ export default function AddVehicles({ vehicleData = {},onClose, formSubmited, ed
     getBrandApi();
   }, []);
 
-  // const handleFileUpload = (file) => {
-  //   setSelectedFile(file);
-  // };
+  const handleFileUpload = (file) => {
+    setSelectedFile(file.files[0]);
+  };
 
   const onSubmit = (data) => {
     if (editStatus) {
@@ -70,41 +70,51 @@ export default function AddVehicles({ vehicleData = {},onClose, formSubmited, ed
 
 
   const createVEHICLE = (data) => {
-    
-    // if (!selectedFile) {
-    //   toast.error("Select image");
-    //   return
-    // }
-    let dt = {
-      // "image": selectedFile,
-      "brand": data.brand.value,
-      "modelName": data.modelName,
-      "compactable_port": data.compactable_port.map((item) => item.value)
+    console.log(selectedFile);
+    if (!selectedFile) {
+      toast.error("Select image");
+      return
     }
-
-    createVehicle(dt).then((res) => {
+    imageUploadAPI(selectedFile).then((res) => {
+      console.log(res);
       if (res.status) {
-        toast.success("vehicle created successfully");
-        reset();
-        formSubmited()
+        
+        let dt = {
+          "image": res.url,
+          "brand": data.brand.value,
+          "modelName": data.modelName,
+          "compactable_port": data.compactable_port.map((item) => item.value)
+        }
+    
+        createVehicle(dt).then((res) => {
+          if (res.status) {
+            toast.success("vehicle created successfully");
+            reset();
+            formSubmited()
+          }
+        }).catch((error) => {
+          toast.error("Failed to create Vehicle");
+        })
+        
       }
-    }).catch((error) => {
-      toast.error("Failed to create Vehicle");
+    }).catch(error => {
+      console.error(error);
     })
+    
   }
 
   const updateVEHICLE = (data) => {
     let dt = {}
-    // if (selectedFile) {
-    //   dt = {
-    //     "image": selectedFile
-    //   }
-    // }
+    if (selectedFile) {
+      dt = {
+        "image": selectedFile
+      }
+    }
     dt = {
       ...dt,
       "brand": data.brand.value ? data.brand.value : getBrandId(),
       "modelName": data.modelName,
-      "compactable_port": typeof(data.compactable_port[0]) === "object" ? data.compactable_port.map((item) => item.value) : vehicleData["compactable_port"]
+      "compactable_port": typeof (data.compactable_port[0]) === "object" ? data.compactable_port.map((item) => item.value) : vehicleData["compactable_port"]
     }
     editVehicle(vehicleData["_id"], dt).then((res) => {
       console.log(res);
@@ -141,11 +151,11 @@ export default function AddVehicles({ vehicleData = {},onClose, formSubmited, ed
         }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <Grid container>
+          <Grid container>
             <Grid item xs={12} sx={{ height: "250px" }}>
-              <FileUpload getBase64Data={handleFileUpload} image={vehicleData["icon"] && vehicleData["icon"]} />
+              <FileUpload onFileSelect={handleFileUpload} image={vehicleData["icon"] && vehicleData["icon"]} />
             </Grid>
-          </Grid> */}
+          </Grid>
 
           <Typography sx={{ marginBottom: 2, marginTop: 2, color: 'primary.contrastText' }}>
             Vehicle Manufacturer Name

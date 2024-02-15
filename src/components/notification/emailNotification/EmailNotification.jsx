@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StyledSelectField from "../../../ui/styledSelectField";
 import InputField from "../../../ui/styledInput";
 import StyledButton from "../../../ui/styledButton";
@@ -7,6 +7,7 @@ import NotificationUpload from "../../../utils/NotificationUpload";
 import ProgressBar from "../../../ui/ProgressBar";
 import styled from "styled-components";
 import { Controller, useForm } from "react-hook-form";
+import { userSuggetionlist } from "../../../services/userApi";
 
 const LocalStyledStatusChip = styled.span`
   padding: 4px 8px;
@@ -19,7 +20,26 @@ const LocalStyledStatusChip = styled.span`
   border-radius: 45px;
   background: var(--Secondary, #322f3b);
 `;
+
+
+const user_name = "username";
+const user = [
+  { value: "Anish Vikend", label: "Anish Vikend" },
+  { value: "Anish Viken", label: "Anish Viken" },
+  { value: "Anish Vike", label: "Anish Vike" },
+  { value: "Anish Vik", label: "Anish Vik" },
+  { value: "Anish Vi", label: "Anish Vi" },
+  { value: "Anish V", label: "Anish V" },
+  { value: "Anis", label: "Anis" },
+  { value: "Ani", label: "Ani" },
+  { value: "An", label: "An" },
+  { value: "A", label: "A" },
+];
+
 export default function EmailNotification() {
+  const [userOptions,setUserOption] = useState([])
+  const [uploadPercentage, setUploadPercentage] = useState(0);
+
   const {
     control,
     handleSubmit,
@@ -28,7 +48,11 @@ export default function EmailNotification() {
     reset,
     setValue,
     watch,
-  } = useForm();
+  } = useForm({
+    // defaultValues:{
+    //   sendTo: user
+    // }
+  });
   const onSubmit = (data) => {
     console.log(data);
     clearErrors();
@@ -37,27 +61,31 @@ export default function EmailNotification() {
     reset();
   };
   const selectedFileName = watch("file");
-  const [uploadPercentage, setUploadPercentage] = useState(0);
-
+  
   const handleFileSelect = (fileName, percentage) => {
     setValue("file", fileName);
     setUploadPercentage(percentage);
   };
-  const user_name = "username";
-  const user = [
-    { value: "Anish Vikende", label: "Anish Vikende" },
 
-    // Add more options as needed
-  ];
+  useEffect(() => {
+    userSuggetionlist('').then((res)=>{
+      console.log(res);
+      if(res.status){
+        setUserOption(res.result.map((dt)=>({label:dt.username,value:dt.email})))
+      }
+    })
+  }, [])
+  
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box
         sx={{
-          overflowX: "auto",
           borderRadius: "8px",
-          margin: "20px 16px",
-          display: "flex",
+          px: { md: 30, xs: 2 },
+          py: 2,
           alignItems: "center",
+
         }}
       >
         <Stack direction={"column"} spacing={2}>
@@ -69,7 +97,33 @@ export default function EmailNotification() {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField options={user}placeholder={"Select User"} {...field} />
+                  <StyledSelectField options={[{ value: "*", label: "All" }, ...userOptions]}
+                    {...field}
+                    placeholder={"Select User"}
+                    isMulti={true} isSearchable={true}
+                    onChange={(v, e) => {
+                      if (e.action === 'select-option') {
+                        if (e.option.value === '*') {
+                          setValue("sendTo", userOptions)
+                        } else {
+                          setValue("sendTo", v)
+                        }
+                      } else if (e.action === 'remove-value') {
+                        if (e.removedValue.value === '*') {
+                          setValue("sendTo", [])
+                        } else {
+                          setValue("sendTo", v)
+                        }
+                      }
+                      else if (e.action === 'clear') {
+                        setValue("sendTo", [])
+                      }
+                    }
+
+                    }
+                    height={'55px'}
+
+                  />
                   {errors.sendTo && (
                     <span style={errorMessageStyle}>
                       {errors.sendTo.message}
@@ -160,7 +214,7 @@ export default function EmailNotification() {
               />
             )}
             <StyledButton
-            type="submit"
+              type="submit"
               variant={"primary"}
               width="316"
               height="46"

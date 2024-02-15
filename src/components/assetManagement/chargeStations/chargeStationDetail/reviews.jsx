@@ -34,17 +34,17 @@ export default function Reviews({ data, deleteClickHandle,dataUpdate, ...props }
   return (
     <>
       <LastSynced heading={'Reviews'} reloadHandle={dataUpdate} />
-      <Box sx={{ backgroundColor: 'secondary.main', /*maxHeight: {xs:'1000px',md:'500px'},*/ borderRadius: '4px', m: { xs: 1, md: 4 }, p: 2 }}>
-        <Grid container spacing={{ xs: 1, md: 4 }}>
-          {
-            data.map((item) => (
+      <Box sx={{ backgroundColor: 'secondary.main', /*maxHeight: {xs:'1000px',md:'500px'},*/height: (data.length == 0 ? '300px' : ''), borderRadius: '4px', m: { xs: 1, md: 4 }, p: 2 }}>
+        {data.length > 0 ?
+          <Grid container spacing={{ xs: 1, md: 4 }}>
+            {data.map((item) => (
               <Grid item xs={12} md={4} key={item._id}>
                 <ReviewComponent review={item} deleteClickHandle={() => { deleteClickHandle(item) }} />
               </Grid>
-            ))
-          }
-        </Grid>
-
+            ))}
+          </Grid>
+          : <Typography sx={{textAlign:'center',color:'yellow'}}>No data yet</Typography>
+        }
       </Box>
     </>
   )

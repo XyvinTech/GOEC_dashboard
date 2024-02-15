@@ -100,3 +100,12 @@ export async function getBrandById(Id) {
     throw error;
   }
 }
+
+export async function vehicleImageUpload(data) {
+  try {
+    const response = await VEHICLE_INSTANCES.post(`image/upload`,data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
