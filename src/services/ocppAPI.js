@@ -9,14 +9,16 @@ export async function remoteStart(data, cpid) {
   }
 }
 
-export async function remoteStop(data, cpid) {
+export async function remoteStopTransaction(cpid,data) {
   try {
-    const response = await OCPP_INSTANCE.post(`ocpp/remoteStopTransaction/${cpid}`, data);
+    console.log(cpid,data);
+    const response = await OCPP_INSTANCE.post(`ocpp/remoteStopTransaction/${cpid}`,data);
     return response.data;
   } catch (error) {
     throw error;
   }
 }
+
 
 export async function clearCache(cpid) {
   try {
@@ -29,6 +31,7 @@ export async function clearCache(cpid) {
 
 export async function unlock(cpid, data) {
   try {
+
     const response = await OCPP_INSTANCE.post(`ocpp/unlock-connector/${cpid}`, data);
     return response.data;
   } catch (error) {
@@ -36,9 +39,10 @@ export async function unlock(cpid, data) {
   }
 }
 
-export async function reset(cpid) {
+export async function reset(cpid,formData) {
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/reset/${cpid}`);
+
+    const response = await OCPP_INSTANCE.post(`ocpp/reset/${cpid}`,formData);
     return response.data;
   } catch (error) {
     throw error;
@@ -102,6 +106,7 @@ export async function getAlarmsById(evMachine) {
 
 export async function ChangeAvailability(cpid, data) {
   try {
+
     const response = await OCPP_INSTANCE.post(`ocpp/changeAvailability/${cpid}`, data);
     return response.data;
   } catch (error) {
@@ -111,6 +116,7 @@ export async function ChangeAvailability(cpid, data) {
 
 export async function Trigger(cpid, data) {
   try {
+
     const response = await OCPP_INSTANCE.post(`/ocpp/triggerMessage/${cpid}`, data);
     return response.data;
   } catch (error) {
@@ -173,14 +179,6 @@ export async function getActiveSession() {
   }
 }
 
-export async function remoteStopTransaction(id) {
-  try {
-    const response = await OCPP_INSTANCE.post(`ocpp/remoteStopTransaction/${id}`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
 
 export async function getDashboardAnalytics() {
   try {

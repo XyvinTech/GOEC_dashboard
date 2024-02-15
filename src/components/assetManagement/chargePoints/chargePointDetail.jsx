@@ -53,9 +53,8 @@ export default function ChargePointDetail() {
 
     const actionButtonHandle = (button) => {
         if (button === "hard") {
-            let formData = new FormData()
-            formData.append("type", "Hard")
-            reset(chargepointData.CPID, formData).then((res) => {
+           let data = {type: "Hard"}
+            reset(chargepointData.CPID, data).then((res) => {
                 if (res.status) {
                     toast.success(res.message)
                 } else {
@@ -65,9 +64,8 @@ export default function ChargePointDetail() {
                 toast.error(error.message)
             })
         } else if (button === "soft") {
-            let formData = new FormData()
-            formData.append("type", "Soft")
-            reset(chargepointData.CPID, formData).then((res) => {
+            let data = {type: "Soft"}
+            reset(chargepointData.CPID, data).then((res) => {
                 if (res.status) {
                     toast.success(res.message)
                 } else {
