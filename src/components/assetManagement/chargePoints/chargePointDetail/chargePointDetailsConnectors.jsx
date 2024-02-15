@@ -14,7 +14,7 @@ const QRPopUp = ({ open, onClose, url }) => {
     <Dialog open={open} onClose={onClose} TransitionComponent={Transition}>
       <Stack direction={"column"} sx={{ backgroundColor: 'primary.main' }}>
         <Box p={2}>
-          <img src={ url ? url : `https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png`} height={200}
+          <img src={ url} height={200}
             style={{ aspectRatio: 1 / 1, filter: 'invert(100%)' }} />
         </Box>
         <Button m={1} p={1} mt={3}
@@ -33,7 +33,7 @@ const QRPopUp = ({ open, onClose, url }) => {
           }}
           onClick={() => {
             // using Java Script method to get PDF file
-            fetch(url ? url : `https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/1200px-QR_Code_Example.svg.png`).then((response) => {
+            fetch(url).then((response) => {
                 response.blob().then((blob) => {
                  
                     // Creating new object of PDF file
@@ -98,11 +98,12 @@ export default function ChargePointDetailsConnectors({ data, unlockButtonHandle 
         {
           connectors && connectors.map((item) => (
             <Grid item xs={6} sm={4} md={6}>
+              {console.log(item)}
               <Stack direction={"column"}
                 sx={{ backgroundColor: "#2B2930", borderRadius: "4px", justifyContent: 'flex-end' }}
               >
                 <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
-                  <Qr_evplug style={{ cursor: 'pointer' }} onClick={() => { setQropen(true); setQrURL(''); }} />
+                  <Qr_evplug style={{ cursor: 'pointer' }} onClick={() => { setQropen(true); setQrURL(item.qrCode); }} />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   {getConnectorIcon(item.type, item.status)}
