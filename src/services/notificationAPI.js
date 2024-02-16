@@ -10,10 +10,8 @@ export async function sendBulkMail(data) {
   }
 }
 
-
-export async function sendBulkPushNotification(data) {
+export async function sendAppNotification(data) {
   try {
-    console.log(data);
     const response = await NOTIFICATION_URL.post(`notification/dashboard/firebase`,data);
     return response.data;
   } catch (error) {
