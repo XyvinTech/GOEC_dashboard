@@ -9,7 +9,7 @@ import { userSuggetionlist } from "../../../services/userApi";
 import FileUpload from "../../../utils/FileUpload";
 import StyledTextArea from "../../../ui/styledTextArea";
 import { toast } from "react-toastify";
-import { sendBulkMail } from "../../../services/notificationAPI";
+import { sendBulkMail, sendBulkPushNotification } from "../../../services/notificationAPI";
 
 // const LocalStyledStatusChip = styled.span`
 //   padding: 4px 8px;
@@ -42,18 +42,29 @@ export default function AppNotification() {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    if (!selectedFile) {
-      toast.error("selectFile")
-    }
-    const mails = data.sendTo.map((dt)=>(dt.value)).toString()
+   
+    const mails = data.sendTo.map((dt)=>(dt.value))
+
     const formData = new FormData()
     formData.append("to",mails)
     formData.append("subject",data.subject)
     formData.append("text",data.content)
-    formData.append("file",selectedFile)
-    for (const value of formData.values()) {
-      console.log(value);
+    if (!selectedFile) {
+      formData.append("file",selectedFile)
     }
+    let formDataObject = {};
+    for (let pair of formData.entries()) {
+      formDataObject[pair[0]] = pair[1];
+    }
+
+    sendBulkPushNotification(formDataObject)
+      .then((res) => {
+        console.log(res);
+        toast.success("Send successfully");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleFileSelect = (file) => {

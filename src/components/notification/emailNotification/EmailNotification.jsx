@@ -47,8 +47,9 @@ export default function EmailNotification() {
     formData.append("to", mails);
     formData.append("subject", data.subject);
     formData.append("text", data.content);
-    formData.append("file", selectedFile);
-
+    if (!selectedFile) {
+      formData.append("file",selectedFile)
+    }
     let formDataObject = {};
     for (let pair of formData.entries()) {
       formDataObject[pair[0]] = pair[1];
