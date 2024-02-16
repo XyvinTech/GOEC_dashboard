@@ -24,7 +24,7 @@ export const CONFIG_INSTANCES = axios.create({
   baseURL: `${baseURL}:5101/api/v1`,
   headers: {
     Authorization: "Bearer " + token,
-    "Content-Type": "multipart/form-data",
+    // "Content-Type": "multipart/form-data",
   },
 });
 
