@@ -66,3 +66,11 @@ export async function updateChargingStationByList(data) {
   }
 }
 
+export async function getListOfChargingStation() {
+  try {
+    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/list`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

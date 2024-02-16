@@ -11,7 +11,7 @@ import { useForm, Controller } from "react-hook-form";
 import { getUserByEmailMobile } from "../../../services/userApi";
 import { toast } from "react-toastify";
 import StyledInput from "../../../ui/styledInput";
-import { getChargingPointsListOfStation, getChargingStationList, updateChargingStationByList } from "../../../services/stationAPI";
+import { getChargingPointsListOfStation, getChargingStationList, getListOfChargingStation, updateChargingStationByList } from "../../../services/stationAPI";
 import { remoteStart } from "../../../services/ocppAPI";
 
 export default function RemoteSession() {
@@ -50,7 +50,7 @@ export default function RemoteSession() {
 
   const handleUserFetch = () => {
     getUserByEmailMobile(`phoneNumber=${phoneNumber}`).then((res) => {
-      console.log(res);
+      console.log('test',res);
       setUser(res.result[0]);
     }).catch((error) => {
       toast.error("user not found");
@@ -59,7 +59,7 @@ export default function RemoteSession() {
   };
 
   useEffect(() => {
-    updateChargingStationByList({}).then((res) => {
+    getListOfChargingStation().then((res) => {
       console.log(res);
       if (res.status) {
         setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
