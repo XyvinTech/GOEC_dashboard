@@ -95,7 +95,7 @@ const StyledSelectField = ({ options, value, placeholder,
       setValueOption({ value: options && (!isMulti && options[selectedIndex]) })
       // valueOptions.value = options && (!isMulti && options[selectedIndex])
     }
-  }, [value])
+  }, [value,options])
 
   // if (options) {
   //   for (var i = 0; i < options.length && value; i++) {

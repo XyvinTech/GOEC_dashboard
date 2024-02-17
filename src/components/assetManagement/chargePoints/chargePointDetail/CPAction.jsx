@@ -25,7 +25,7 @@ export default function CPAction() {
                 <CPSidebar onChanged={onOptionChanged} />
                 <Box sx={{ px: { xs: 1, md: 6 }, py: { xs: 1, md: 3 }, flexGrow: 1 }}>
                     {
-                        optionIndex === 0 ? <ChargerAvailable /> : optionIndex === 1 ? <TriggerMessage /> : optionIndex === 2 ? <GetDiagnostics /> : optionIndex === 3 ? <SendLocalList /> : <GetDiagnostics />
+                        /*optionIndex === 0 ? <ChargerAvailable /> :*/ optionIndex === 1 ? <TriggerMessage /> : optionIndex === 2 ? <GetDiagnostics /> : optionIndex === 3 ? <SendLocalList /> : <GetDiagnostics />
                     }
                 </Box>
             </Stack>

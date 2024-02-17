@@ -9,7 +9,7 @@ import { createChargingTariff, editChargingTariff } from "../../../services/char
 import { toast } from "react-toastify";
 import { getTaxList } from "../../../services/taxAPI";
 
-export default function AddTariff({ action, data, onIsChange, isChange }) {
+export default function AddTariff({ action, data, onIsChange, isChange,updateData }) {
   const [taxListData, setTaxListData] = useState([]);
   const getTariffData = () => {
     getTaxList().then((res) => {
@@ -62,9 +62,9 @@ export default function AddTariff({ action, data, onIsChange, isChange }) {
           onIsChange(!isChange);
           toast.update(successToastId);
           reset();
+          updateData && updateData()
         }
       } else if (action === "edit") {
-        console.log(data);
         const res = await editChargingTariff(data._id, addData);
         if (res) {
           const successToastId = toast.success("Charging Tariff updated successfully", {
@@ -73,6 +73,7 @@ export default function AddTariff({ action, data, onIsChange, isChange }) {
           onIsChange(!isChange);
           toast.update(successToastId);
           reset();
+          updateData && updateData()
         }
       }
     } catch (error) {

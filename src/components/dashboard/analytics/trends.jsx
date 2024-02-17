@@ -6,6 +6,8 @@ import DashboardDataCard from '../../../ui/dashboardDataCard'
 import Revenue from './trends/revenue'
 import ChargingTransaction from './trends/chargingTransaction'
 import Energy from './trends/energy'
+import RightDrawer from '../../../ui/RightDrawer'
+import Filter from './trends/filter'
 
 
 const buttons = [
@@ -18,8 +20,11 @@ export default function Trends() {
     const [buttonIndex, setbuttonIndex] = useState(0)
     return (
         <>
+
             <LastSynced heading={'Analytics - Trends'}>
-                <IconButton sx={{ backgroundColor: 'secondary.button', borderRadius: '4px', px: 2 }}><Tune /></IconButton>
+                <RightDrawer >
+                    <Filter />
+                </RightDrawer>
             </LastSynced>
             <Box sx={{ p: 2 }}>
                 <Grid container spacing={2}>
@@ -40,10 +45,10 @@ export default function Trends() {
                         buttons.map((item, ind) => (
                             <Button
                                 sx={{
-                                    backgroundColor: buttonIndex == ind ? 'secondary.button':'secondary.main',
+                                    backgroundColor: buttonIndex == ind ? 'secondary.button' : 'secondary.main',
                                     width: '200px', height: '40px', border: '1px solid #fff6', borderRadius: '4px',
                                     color: buttonIndex == ind ? '#fff' : 'secondary.contrastText',
-                                    fontWeight:400
+                                    fontWeight: 400
                                 }}
                                 onClick={() => { setbuttonIndex(ind) }}
                             >
@@ -52,28 +57,28 @@ export default function Trends() {
                         ))
                     }
                 </Stack>
-                {buttonIndex == 0 ? <Revenue/> : buttonIndex == 1 ? <ChargingTransaction/> : <Energy/>}
+                {buttonIndex == 0 ? <Revenue /> : buttonIndex == 1 ? <ChargingTransaction /> : <Energy />}
                 <Typography variant='subtitle2' color={'secondary.contrastText'} my={2}>Authorized by</Typography>
                 <Grid container spacing={2}>
 
                     <Grid item xs={12} md={4}>
-                        <DashboardDataCard title={'Mobile'} value={59}/>
+                        <DashboardDataCard title={'Mobile'} value={59} />
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <DashboardDataCard title={'RFID'} value={128}/>
+                        <DashboardDataCard title={'RFID'} value={128} />
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <DashboardDataCard title={'Offline Transaction'} value={59}/>
+                        <DashboardDataCard title={'Offline Transaction'} value={59} />
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <DashboardDataCard title={'CPO assistances'} value={59}/>
+                        <DashboardDataCard title={'CPO assistances'} value={59} />
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <DashboardDataCard title={'VID'} value={59}/>
+                        <DashboardDataCard title={'VID'} value={59} />
                     </Grid>
                 </Grid>
             </Box>

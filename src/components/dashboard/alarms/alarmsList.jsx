@@ -6,6 +6,8 @@ import { Tune } from '@mui/icons-material'
 import StyledTable from '../../../ui/styledTable'
 import { searchAndFilter } from '../../../utils/search'
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
+import RightDrawer from '../../../ui/RightDrawer'
+import Filter from './filter'
 
 
 const tableHeader = [
@@ -29,7 +31,9 @@ export default function AlarmsList({data, dataReload}) {
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
           setFilterValue(e.target.value)
         }} />
-        <IconButton sx={{ backgroundColor: 'secondary.button', borderRadius: '4px', px: 2 }}><Tune /></IconButton>
+        <RightDrawer>
+          <Filter />
+        </RightDrawer>
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader} data={searchAndFilter(tabledata, filterValue)} showActionCell={false} />

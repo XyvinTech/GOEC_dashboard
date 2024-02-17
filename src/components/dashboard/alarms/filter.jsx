@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Stack, Box, Grid, Typography } from "@mui/material";
-import InputField from "../../ui/styledInput";
-import StyledSelectField from "../../ui/styledSelectField";
-import StyledButton from "../../ui/styledButton";
-import { ReactComponent as CalendarMonth } from "../../assets/icons/calendar_month.svg";
+import StyledSelectField from "../../../ui/styledSelectField";
+import StyledButton from "../../../ui/styledButton";
 import { useForm, Controller } from "react-hook-form";
-import StyledInput from "../../ui/styledInput";
-import CalendarInput from "../../ui/CalendarInput";
+import StyledInput from "../../../ui/styledInput";
+import CalendarInput from "../../../ui/CalendarInput";
+import { getChargingPointsListOfStation, getListOfChargingStation } from "../../../services/stationAPI";
 
-const locations = [
-  { value: "option1", label: "Account Transaction" },
-  { value: "option2", label: "Feedback" },
-  { value: "option3", label: "Charging Summary" },
-  { value: "option4", label: "User Registration" },
-  { value: "option5", label: "Alarm" },
-  { value: "option6", label: "Charge points" },
-];
 
-export default function FilterNetwork() {
+const statusList = [
+  { value: "Available", label: "Available" },
+  { value: "Unavailable", label: "Unavailable" },
+  { value: "Faulted", label: "Faulted" },
+  { value: "Charging", label: "Charging" },
+  { value: "Preparing", label: "Preparing" },
+  { value: "Finishing", label: "Finishing" },
+]
 
+export default function Filter() {
+  const [locationList, setLocationList] = useState([])
+  const [machineList, setMachineList] = useState([])
   const {
     control,
     handleSubmit,
@@ -27,11 +28,7 @@ export default function FilterNetwork() {
     watch,
     formState: { errors },
     clearErrors,
-  } = useForm({
-    defaultValues: {
-      published: false, // Set the default value for "activate"
-    },
-  });
+  } = useForm();
   const onSubmit = (data) => {
     // Handle form submission with data
     console.log("Form data submitted:", data);
@@ -53,12 +50,20 @@ export default function FilterNetwork() {
   };
   const endDate = watch("endDate", ""); // Watching the value for 'expiryDate'
 
+
+  useEffect(() => {
+    getListOfChargingStation().then((res) => {
+      console.log(res);
+      if (res.status) {
+        setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
+      }
+    })
+  }, [])
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={modalStyle}>
-          <Stack direction={"column"} spacing={2}>
-            <FormContainer>
+          <Stack direction={"column"} spacing={2} sx={{background:''}}>
               <Label>Start date</Label>
 
               <Controller
@@ -66,8 +71,6 @@ export default function FilterNetwork() {
                 control={control}
                 render={({ field }) => (
                   <>
-
-
                     <StyledInput
                       {...field}
 
@@ -87,18 +90,14 @@ export default function FilterNetwork() {
                     )}
                   </>
                 )}
-
+                rules={{ required: "StartDate is required" }}
               />
-
-
               <Label>End date</Label>
               <Controller
                 name="endDate"
                 control={control}
                 render={({ field }) => (
                   <>
-
-
                     <StyledInput
                       {...field}
 
@@ -118,7 +117,7 @@ export default function FilterNetwork() {
                     )}
                   </>
                 )}
-
+                rules={{ required: "endDate is required" }}
               />
               <Label>Location</Label>
 
@@ -128,8 +127,19 @@ export default function FilterNetwork() {
                 render={({ field }) => (
                   <>
                     <StyledSelectField
-                      placeholder={"Select Report"}
-                      options={locations}
+                      {...field}
+                      placeholder={"Select Location"}
+                      options={locationList}
+                      onChange={(e) => {
+                        setMachineList([])
+                        setValue("location", e)
+                        getChargingPointsListOfStation(e.value).then((res) => {
+                          console.log(res);
+                          if (res.result) {
+                            setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
+                          }
+                        })
+                      }}
                     />
                     {errors.location && (
                       <span style={errorMessageStyle}>
@@ -138,11 +148,8 @@ export default function FilterNetwork() {
                     )}
                   </>
                 )}
-
+                rules={{ required: "Location is required" }}
               />
-
-
-
               <Label>CPID</Label>
 
               <Controller
@@ -151,8 +158,9 @@ export default function FilterNetwork() {
                 render={({ field }) => (
                   <>
                     <StyledSelectField
-                      placeholder={"Select Report"}
-                      options={locations}
+                      {...field}
+                      placeholder={"Select CPID"}
+                      options={machineList}
                     />
                     {errors.cpid && (
                       <span style={errorMessageStyle}>
@@ -161,24 +169,44 @@ export default function FilterNetwork() {
                     )}
                   </>
                 )}
+                rules={{ required: "CPID is required" }}
+              />
 
+              <Label>Connector Status</Label>
+
+              <Controller
+                name="connectorStatus"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <StyledSelectField
+                      {...field}
+                      placeholder={"Select Connector Status"}
+                      options={statusList}
+                    />
+                    {errors.connectorStatus && (
+                      <span style={errorMessageStyle}>
+                        {errors.connectorStatus.message}
+                      </span>
+                    )}
+                  </>
+                )}
+                rules={{ required: "status is required" }}
               />
 
 
-              <Grid container spacing={6}>
-                <Grid item xs={12} md={6} >
-
-                  <StyledButton width={120} variant="primary" fontSize="14" type="submit">
+              <Grid container>
+                <Grid item xs={12} md={12} >
+                  <StyledButton width={'100%'} variant="primary" fontSize="14" type="submit">
                     Apply
                   </StyledButton>
                 </Grid>
-                <Grid item xs={12} md={6} >
+                {/* <Grid item xs={12} md={6} >
                   <StyledButton width={120} variant="secondary" fontSize="14">
                     Reset
                   </StyledButton>
-                </Grid>
+                </Grid> */}
               </Grid>
-            </FormContainer>
           </Stack>
         </Box>
       </form>
@@ -229,7 +257,6 @@ const modalStyle = {
   // left: "50%",
   // transform: "translate(-50%, -50%)",
   maxwidth: "auto", // Adjust width to fit your content or screen
-  bgcolor: "#27292F", // Dark background color
   boxShadow: 2,
   p: 4,
   color: "#fff", // White text for better visibility on dark background
@@ -240,20 +267,6 @@ const modalStyle = {
   justifyContent: 'center',
   minHeight: '50vh',
 };
-
-
-const CustomLabel = styled('div')(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.divider}`,
-  paddingBottom: theme.spacing(1),
-  marginBottom: theme.spacing(1),
-}));
-
-const CustomTypography = styled(Typography)(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightMedium,
-  textTransform: 'uppercase',
-  display: 'inline-block',
-  marginRight: theme.spacing(1),
-}));
 
 // Styled table container
 export const TableContainer = styled.div`
