@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Button, Drawer, Stack, Typography, useMediaQuery } from '@mui/material';
 
 const items = [
-    'Charger Availability',
+    // 'Charger Availability',
     'Trigger Message',
     'Get Diagnostics',
     'send Localist',

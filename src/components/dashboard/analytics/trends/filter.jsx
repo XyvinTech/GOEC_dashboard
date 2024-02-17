@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Stack, Box, Grid, Typography } from "@mui/material";
-import InputField from "../../ui/styledInput";
-import StyledSelectField from "../../ui/styledSelectField";
-import StyledButton from "../../ui/styledButton";
-import { ReactComponent as CalendarMonth } from "../../assets/icons/calendar_month.svg";
+import StyledSelectField from "../../../../ui/styledSelectField";
+import StyledButton from "../../../../ui/styledButton";
 import { useForm, Controller } from "react-hook-form";
-import StyledInput from "../../ui/styledInput";
-import CalendarInput from "../../ui/CalendarInput";
+import StyledInput from "../../../../ui/styledInput";
+import CalendarInput from "../../../../ui/CalendarInput";
 
 const locations = [
   { value: "option1", label: "Account Transaction" },
@@ -18,8 +16,7 @@ const locations = [
   { value: "option6", label: "Charge points" },
 ];
 
-export default function FilterNetwork() {
-
+export default function Filter() {
   const {
     control,
     handleSubmit,
@@ -66,8 +63,6 @@ export default function FilterNetwork() {
                 control={control}
                 render={({ field }) => (
                   <>
-
-
                     <StyledInput
                       {...field}
 
@@ -87,10 +82,7 @@ export default function FilterNetwork() {
                     )}
                   </>
                 )}
-
               />
-
-
               <Label>End date</Label>
               <Controller
                 name="endDate"
@@ -229,7 +221,6 @@ const modalStyle = {
   // left: "50%",
   // transform: "translate(-50%, -50%)",
   maxwidth: "auto", // Adjust width to fit your content or screen
-  bgcolor: "#27292F", // Dark background color
   boxShadow: 2,
   p: 4,
   color: "#fff", // White text for better visibility on dark background
@@ -240,20 +231,6 @@ const modalStyle = {
   justifyContent: 'center',
   minHeight: '50vh',
 };
-
-
-const CustomLabel = styled('div')(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.divider}`,
-  paddingBottom: theme.spacing(1),
-  marginBottom: theme.spacing(1),
-}));
-
-const CustomTypography = styled(Typography)(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightMedium,
-  textTransform: 'uppercase',
-  display: 'inline-block',
-  marginRight: theme.spacing(1),
-}));
 
 // Styled table container
 export const TableContainer = styled.div`

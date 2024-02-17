@@ -114,7 +114,7 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTariff action={action} data={tableData} onIsChange={onIsChange} isChange={isChange}/>
+          <AddTariff action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} updateData={()=>{setOpen(false); updateData()}}/>
         </Box>
       </Modal>
     </>

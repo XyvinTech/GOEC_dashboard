@@ -10,38 +10,39 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import FilterNetwork from '../components/chargingNetwork/FilterNetwork';
-import { Button } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { ReactComponent as OutlineIcon } from '../assets/icons/AdjustmentsOutline.svg'
 import StyledButton from './styledButton';
+import { Close } from '@mui/icons-material';
 
-export default function RightDrawer() {
-    const [state, setState] = React.useState({
-        right: false,
-      });
-    
-      const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-          return;
-        }
-    
-        setState({ ...state, [anchor]: open });
-      };
-      const anchor = 'right';
+export default function RightDrawer({ children }) {
+  const [state, setState] = React.useState(false);
+  const anchor = 'right';
 
   return (
-    <div style={{display:'inline-flex'}}>
-      
-        <React.Fragment key={anchor}>
-          <StyledButton variant="secondary" width='65' onClick={toggleDrawer(anchor, true)} style={{color:'#fff'}}><OutlineIcon/></StyledButton>
-          <Drawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-          >
-            <FilterNetwork/>
-          </Drawer>
-        </React.Fragment>
-      
+    <div style={{ display: 'inline-flex' }}>
+
+      <React.Fragment key={anchor}>
+        <StyledButton variant="secondary" width='65' onClick={()=>setState(true)} style={{ color: '#fff',border:'none',backgroundColor:'secondary.button' }}><OutlineIcon /></StyledButton>
+        <Drawer
+          anchor={anchor}
+          open={state}
+          onClose={()=>setState(false)}
+          PaperProps={{
+            sx: {
+              backgroundColor: 'primary.main'
+            }
+          }}
+        >
+          <Stack direction={'row'} sx={{p:2,backgroundColor:'secondary.main',justifyContent:'space-between'}}>
+            <Typography variant='h6' color={'secondary.contrastText'}>Filter</Typography>
+            <Close sx={{cursor:'pointer',color:'secondary.contrastText'}} onClick={()=>{setState(false)}}/>
+          </Stack>
+          {children}
+          {/* <FilterNetwork /> */}
+        </Drawer>
+      </React.Fragment>
+
     </div>
   );
 }

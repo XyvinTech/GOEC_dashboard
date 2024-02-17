@@ -15,16 +15,18 @@ import { toast } from "react-toastify";
 import { ContentCopy } from "@mui/icons-material";
 // StyledTable component
 const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false, isFromStation = false, stationId }) => {
-  console.log(chargepointData);
+  
   const [stationList, setStationList] = useState([])
   const [OEMList, setOEMList] = useState([])
   const [modelList, setModelList] = useState([])
 
   const [modelOptions, setModelOptions] = useState([])
+
   const {
     control,
     handleSubmit,
     setValue,
+    reset,
     watch,
     formState: { errors },
     clearErrors,
@@ -105,12 +107,18 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
     getChargingStationList().then((res) => {
       if (res.status) {
         setStationList(res.result.map((e) => ({ label: e.name, value: e._id })))
+        reset({
+          locationName: editStatus ? chargepointData["Station"] : '',
+        })
       }
     })
 
     getOem().then((res) => {
       if (res.status) {
         setOEMList(res.result.map((e) => ({ label: e.name, value: e._id })))
+        reset({
+          chargePointOEM: editStatus ? chargepointData["OEM"] : ''
+        })
       }
     })
 
@@ -118,7 +126,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       if (res.status) {
         setModelList(res.result)
         if (editStatus) {
-          console.log(modelList);
           let list = []
           res.result.map((dt) => {
             if (dt.oem === chargepointData["OEM"]) {
@@ -130,6 +137,9 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
           })
           setModelOptions(list)
         }
+        reset({
+          model: editStatus ? chargepointData["Model"] : '',
+        })
       }
     })
 

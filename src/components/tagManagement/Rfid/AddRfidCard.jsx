@@ -13,8 +13,7 @@ import { toast } from "react-toastify";
 const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
   const { control, handleSubmit, setValue, watch, formState: { errors }, clearErrors } = useForm({
     defaultValues: {
-      activate: editStatus && rfidData["Status"] == "active" ? true : false, // Set the default value for "activate"
-      expiry: editStatus ? rfidData["expiryDate"] : '',
+      expiryDate: editStatus ? rfidData["Expires On"] : '',
       rfidTag: editStatus ? rfidData["RFID Tag"] : '',
       serialNumber: editStatus ? rfidData["Serial No"] : '',
     },
@@ -65,7 +64,6 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
     setValue('expiryDate', date); // Assuming you have 'expiryDate' in your form state
     clearErrors('expiryDate');
   };
-  const expiryDate = watch('expiryDate', ''); // Watching the value for 'expiryDate'
 
   const handleChange = (event) => {
     setValue('activate', event.target.checked);
@@ -111,7 +109,6 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
                   {...field}
                   placeholder="Enter RFID Expiry date"
                   iconright={<CalendarInput onDateChange={handleDateChangeInParent} />}
-                  value={expiryDate}
                   readOnly
 
                 />
@@ -134,11 +131,11 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
 
                   <StyledSwitch
                     {...field}
+                    defaultChecked={editStatus && rfidData["Status"].toUpperCase() == "ASSIGNED" ? true : false}
                     onChange={(e) => {
                       handleChange(e);
                       // Additional logic if needed
                     }}
-                    defaultChecked={field.value}
                   // Adding 'required' attribute
                   />
                 )}
