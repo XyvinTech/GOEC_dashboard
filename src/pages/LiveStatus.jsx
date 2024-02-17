@@ -19,7 +19,10 @@ export default function LiveStatus() {
     }, []);
 
     const init = ()=>[
-      updateChargingStationByList({}).then((res)=>{
+      updateChargingStationByList({
+        "latitude":" 10.0136039",
+         "longitude":"76.3117538"
+     }).then((res)=>{
         if (res.status) {
           console.log(res.result);
           setChargingStations(res.result)

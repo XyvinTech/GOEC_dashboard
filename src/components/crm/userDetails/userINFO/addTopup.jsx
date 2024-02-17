@@ -92,17 +92,11 @@ export default function AddTopup({ userData, onIsChange, isChange, open, onClose
                     <StyledInput
                       placeholder={"Previous Balance"}
                       value={userData?.wallet && userData?.wallet.toFixed(2)}
-                      {...register("previousBalance")}
+                      disabled
                     />
-                    {errors.previousBalance && (
-                      <StyledWarning
-                        icon={<ErrorOutlineOutlined sx={{ color: "error.main" }} />}
-                        value={errors.previousBalance.message}
-                      />
-                    )}
+                    
                   </>
                 )}
-                rules={{ required: "Please enter the Amount" }}
               />
             </Stack>
 

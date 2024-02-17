@@ -16,6 +16,7 @@ export default function WalletInfo({data, onIsChange, isChange}) {
         <Box sx={{ backgroundColor: 'secondary.main', borderRadius: '4px', p: {xs:2,md:4} }}>
             <AddTopup open={topupOpen} onClose={()=>{setTopupOpen(false)}} userData={data} onIsChange={onIsChange} isChange={isChange}/>
             <DeductWallet open={deductOpen} onClose={()=>{setDeductOpen(false)}} userData={data} onIsChange={onIsChange} isChange={isChange}/>
+          
             <Grid container spacing={2}>
                 <Grid item xs={12} md={7.5} >
                     <Typography variant='subtitle1' sx={{ py: 0.5, fontWeight: 700 }} >Wallet</Typography>
