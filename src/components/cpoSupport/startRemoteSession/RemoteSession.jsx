@@ -17,6 +17,7 @@ import { remoteStart } from "../../../services/ocppAPI";
 export default function RemoteSession() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [user, setUser] = useState();
+
   const [locationList, setLocationList] = useState([])
   const [machineList, setMachineList] = useState([])
   const [connectorList, setConnectorList] = useState([])
@@ -35,7 +36,7 @@ export default function RemoteSession() {
     console.log(data);
     let CPID = data.cpid.value.CPID
     let dt = {
-      idTag : user._id,
+      idTag : user.userId,
       connectorId:data.connectorId.value
   }
   console.log(dt);
@@ -50,7 +51,7 @@ export default function RemoteSession() {
 
   const handleUserFetch = () => {
     getUserByEmailMobile(`phoneNumber=${phoneNumber}`).then((res) => {
-      console.log('test',res);
+      console.log('test',res.result[0]);
       setUser(res.result[0]);
     }).catch((error) => {
       toast.error("user not found");

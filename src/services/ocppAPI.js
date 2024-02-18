@@ -9,10 +9,10 @@ export async function remoteStart(data, cpid) {
   }
 }
 
-export async function remoteStopTransaction(cpid,data) {
+export async function remoteStopTransaction(cpid, data) {
   try {
-    console.log(cpid,data);
-    const response = await OCPP_INSTANCE.post(`ocpp/remoteStopTransaction/${cpid}`,data);
+    console.log(cpid, data);
+    const response = await OCPP_INSTANCE.post(`ocpp/remoteStopTransaction/${cpid}`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -39,10 +39,10 @@ export async function unlock(cpid, data) {
   }
 }
 
-export async function reset(cpid,formData) {
+export async function reset(cpid, formData) {
   try {
 
-    const response = await OCPP_INSTANCE.post(`ocpp/reset/${cpid}`,formData);
+    const response = await OCPP_INSTANCE.post(`ocpp/reset/${cpid}`, formData);
     return response.data;
   } catch (error) {
     throw error;
