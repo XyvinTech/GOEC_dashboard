@@ -10,7 +10,7 @@ export default function UserInfo({data}) {
         <Box sx={{ backgroundColor: 'secondary.main', borderRadius: '4px', p: 4 }}>
             <Stack spacing={2}>
                 <Stack direction={'row'} spacing={2}>
-                    <img style={{ aspectRatio: '1:1', borderRadius: '4px', objectFit: 'cover' }} width='111px' src='https://www.himalmag.com/wp-content/uploads/2019/07/sample-profile-picture.png' />
+                    <img style={{ aspectRatio: '1:1', borderRadius: '4px', objectFit: 'cover' }} width='111px' src={data?.img? data?.img : 'https://e7.pngegg.com/pngimages/492/286/png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome-thumbnail.png'} alt='cover'/>
                     <Stack spacing={1} sx={{ p: 2 }}>
                         <Typography variant='h6'>{data?.username}</Typography>
                         <Typography variant='subtitle2'>{data?.mobile}</Typography>
