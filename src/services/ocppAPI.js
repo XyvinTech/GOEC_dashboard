@@ -87,6 +87,7 @@ export async function getAllOcppTransactionLogs() {
 }
 
 export async function getAlarms() {
+  //POST
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineAlarms`);
     return response.data;
