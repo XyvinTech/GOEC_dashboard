@@ -38,6 +38,7 @@ export default function UserAccountTransactiomn() {
      
     };
     const res = await getWalletTransaction(postData);
+    console.log(res);
     setTransactionData(res.result);
   };
 
@@ -45,9 +46,7 @@ export default function UserAccountTransactiomn() {
     getData();
   }, [id]);
 
-  const restructuredData = restructureData(transactionData);
-
-  const transData = tableHeaderReplace(restructuredData, ["date","type", "transactionId", "amount", "status", "paymentMode"], tableHeader);
+  const transData = tableHeaderReplace(transactionData, ["date","type", "transactionId", "amount", "status", "paymentMode"], tableHeader);
 
   return (
     <Box>
