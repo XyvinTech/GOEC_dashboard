@@ -10,6 +10,8 @@ import { getAlarmsById } from '../../../../services/ocppAPI'
 import LastSynced from '../../../../layout/LastSynced'
 import { tableHeaderReplace } from '../../../../utils/tableHeaderReplace'
 import { searchAndFilter } from '../../../../utils/search'
+import RightDrawer from '../../../../ui/RightDrawer'
+import Filter from './alarm/filter'
 
 const StyledIconButton = ({ icon, ...props }) => {
     return (
@@ -36,10 +38,10 @@ export default function Alarm({ CPID }) {
     useEffect(() => {
         init()
     }, [])
-    const init = ()=>{
+    const init = () => {
         getAlarmsById(CPID).then((res) => {
             if (res.status) {
-                setAlarmList(tableHeaderReplace(res.result,['cpid','date','summary','connectorId','status','errorCode'],tableHeader) )
+                setAlarmList(tableHeaderReplace(res.result, ['cpid', 'date', 'summary', 'connectorId', 'status', 'errorCode'], tableHeader))
             }
         })
     }
@@ -50,7 +52,9 @@ export default function Alarm({ CPID }) {
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
                     setFilterValue(e.target.value)
                 }} />
-                <IconButton sx={{ backgroundColor: 'secondary.button', borderRadius: '4px', px: 2 }}><Tune /></IconButton>
+                <RightDrawer>
+                    <Filter />
+                </RightDrawer>
             </LastSynced>
             <Box sx={{ p: 3, overflow: 'scroll' }}>
                 <StyledTable headers={tableHeader} data={searchAndFilter(alarmList, filterValue)} showActionCell={false} />

@@ -1,14 +1,31 @@
-import React from 'react';
-import { GoogleMap, Marker,useJsApiLoader } from '@react-google-maps/api';
+import React, { useEffect } from 'react';
+import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from '@react-google-maps/api';
 import operationalIconUrl from '../../../assets/icons/MapIcons/blueGoec.svg';
 import nonOperationalIconUrl from '../../../assets/icons/MapIcons/greyGoec.svg';
 import busyOperationalIconUrl from '../../../assets/icons/MapIcons/orangeGoec.svg';
 import faultOperationalIconUrl from '../../../assets/icons/MapIcons/redGoec.svg';
-import { Box } from '@mui/material';
+import { Box, Grid, Stack, Typography } from '@mui/material';
+import { useState } from 'react';
 
 
 
 export default function MapContainer({ chargingStations }) {
+
+  const [selectedCenter, setSelectedCenter] = useState(null);
+
+
+  useEffect(() => {
+    const listener = e => {
+      if (e.key === "Escape") {
+        setSelectedCenter(null);
+      }
+    };
+    window.addEventListener("keydown", listener);
+    return () => {
+      window.removeEventListener("keydown", listener);
+    };
+  },
+    []);
   console.log(chargingStations);
 
   const { isLoaded } = useJsApiLoader({
@@ -28,13 +45,14 @@ export default function MapContainer({ chargingStations }) {
 
   return (
     <Box sx={{ borderRadius: '8px', overflow: 'hidden' }}>
-      { isLoaded &&
+      {isLoaded &&
         <GoogleMap
           mapContainerStyle={mapStyles}
           zoom={13}
           center={defaultCenter}
           streetViewControl={false}
-          >
+          onClick={() => setSelectedCenter(null)}
+        >
           {
             chargingStations.map((item) => {
 
@@ -48,15 +66,37 @@ export default function MapContainer({ chargingStations }) {
                 <Marker key={item.id}
                   position={position}
                   icon={{
-                    url: item.charger_status === 'Online' ? operationalIconUrl : item.charger_status === 'Busy' ? busyOperationalIconUrl : item.charger_status === 'Offline' ? faultOperationalIconUrl : nonOperationalIconUrl,
+                    url: item.charger_status.toLowerCase() === 'available' ? operationalIconUrl : item.charger_status.toLowerCase() === 'busy' ? faultOperationalIconUrl : item.charger_status.toLowerCase() === 'unavailable' ? nonOperationalIconUrl : nonOperationalIconUrl,
                     scaledSize: new window.google.maps.Size(35, 35), // Scale the icon size
                     anchor: new window.google.maps.Point(10, 10), // Anchor the icon
-                  }} />
+                  }}
+                  onClick={() => setSelectedCenter({position,...item})}
+                />
               )
             })
-         }
+          }
+
+
+          {selectedCenter && <InfoWindow
+            onCloseClick={() => {
+              setSelectedCenter(null);
+            }}
+            position={selectedCenter.position}
+          >
+            <Grid container spacing={1}>
+              <Grid item xs={3}>
+                <img src={`${selectedCenter.image}`} height={'100px'} width={'100%'} style={{ objectFit: 'cover' }} />
+              </Grid>
+              <Grid item xs={9} >
+                <Stack sx={{ justifyContent: "center", height: '100%' }}>
+                  <Typography variant='body2' color={'#000'} sx={{ fontWeight: '500' }}>{selectedCenter.name}</Typography>
+                  <Typography variant='body2' color={'#000'} sx={{ fontWeight: '300' }}>{selectedCenter.address}</Typography>
+                </Stack>
+              </Grid>
+            </Grid>
+          </InfoWindow>}
         </GoogleMap>
-}
+      }
 
     </Box>
   )
