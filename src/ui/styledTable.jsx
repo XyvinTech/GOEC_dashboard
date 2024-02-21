@@ -50,7 +50,7 @@ const StyledTable = ({
       ?session["OCPP Txn ID"]
       : null;
     console.log(transactionId);
-    alert(`Terminate session for id: ${transactionId}`);
+    // alert(`Terminate session for id: ${transactionId}`);
     let payload = {
       transactionId: transactionId,
     };
