@@ -10,6 +10,9 @@ import StyledIconButton from '../../../../ui/stylediconButton'
 import { getMachineLog } from '../../../../services/ocppAPI'
 import { tableHeaderReplace } from '../../../../utils/tableHeaderReplace'
 import { searchAndFilter } from '../../../../utils/search'
+import RightDrawer from '../../../../ui/RightDrawer'
+import Filter from './chargerLog/filter'
+import { exportExcelData } from '../../../../utils/excelExport'
 
 
 const tableHeader = [
@@ -39,8 +42,12 @@ export default function ChargerLog({ CPID }) {
             <StyledSearchField placeholder={'Search'} onChange={(e) => {
                 setFilterValue(e.target.value)
             }} />
-            <StyledIconButton icon={<Tune sx={{ color: 'secondary.contrastText' }} />} />
-            <StyledIconButton icon={<FileDownloadOutlined sx={{ color: 'secondary.contrastText' }} />} />
+            <RightDrawer>
+                <Filter />
+            </RightDrawer>
+            <StyledIconButton icon={<FileDownloadOutlined sx={{ color: 'secondary.contrastText',cursor:'pointer' }} />}
+            onClick = {()=>{exportExcelData(logList,"Charger Log")}}
+            />
         </LastSynced>
             <Box sx={{ p: 3, overflow: 'scroll' }}>
                 <StyledTable headers={tableHeader} data={searchAndFilter(logList, filterValue)} showActionCell={false} />

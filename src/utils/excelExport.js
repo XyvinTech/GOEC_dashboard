@@ -1,4 +1,5 @@
 import  * as FileSaver from 'file-saver';
+import { toast } from 'react-toastify';
 import XLSX from 'sheetjs-style';
 
 
@@ -18,5 +19,15 @@ export const exportRFIDSampleFile = async ()=>{
    const excelBuffer = XLSX.write(wb,{bookType:'xlsx',type:'array'})
    const data = new Blob([excelBuffer],{type:fileType})
    FileSaver.saveAs(data, `sampleRFIDList${fileExtention}`)
+   toast.success("Downloaded")
 }
 
+
+export const exportExcelData = async (datas,fileName="ExcelData")=>{
+   const ws =XLSX.utils.json_to_sheet(datas)
+   const wb = {Sheets: {'data':ws},SheetNames: ['data']}
+   const excelBuffer = XLSX.write(wb,{bookType:'xlsx',type:'array'})
+   const data = new Blob([excelBuffer],{type:fileType})
+   FileSaver.saveAs(data, `${fileName}${fileExtention}`)
+   toast.success("Downloaded")
+}
