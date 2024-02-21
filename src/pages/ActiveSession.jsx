@@ -45,9 +45,6 @@ export default function ActiveSessionPage() {
     "Start Soc",
     "Current Soc",
     "Units Consumed(kWh)",
-    "Duration",
-    "Charge Speed",
-    "Last Meter Received",
     "Transaction Mode",
     "Terminate Session",
 
@@ -57,10 +54,10 @@ export default function ActiveSessionPage() {
     getData();
   }, []);
 
-  const restructuredData = restructureData(activeSession);
+  // const restructuredData = restructureData(activeSession);
 
   const activeSessionData = tableHeaderReplace(
-    restructuredData,
+    activeSession,
     [
       "transactionId",
       "username",
@@ -69,11 +66,7 @@ export default function ActiveSessionPage() {
       "cpid",
       "connectorId",
       "startSoc",
-      "currentSoc",
       "unitConsumed",
-      "duration",
-      "chargeSpeed",
-      "lastMeterReceived",
       "transactionMode",
       "terminateSession",
     ],
