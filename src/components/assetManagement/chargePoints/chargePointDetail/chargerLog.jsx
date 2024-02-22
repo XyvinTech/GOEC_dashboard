@@ -30,8 +30,8 @@ export default function ChargerLog({ CPID }) {
     useEffect(() => {
         init()
     }, [])
-    const init = () => {
-        getMachineLog(CPID).then((res) => {
+    const init = (filter) => {
+        getMachineLog(CPID,filter).then((res) => {
             if (res.status) {
                 setLogList(tableHeaderReplace(res.result, ['connectorId', 'date', 'command', 'payload', 'uniqueId'], tableHeader))
             }
@@ -43,7 +43,7 @@ export default function ChargerLog({ CPID }) {
                 setFilterValue(e.target.value)
             }} />
             <RightDrawer>
-                <Filter />
+                <Filter onSubmited={init}/>
             </RightDrawer>
             <StyledIconButton icon={<FileDownloadOutlined sx={{ color: 'secondary.contrastText',cursor:'pointer' }} />}
             onClick = {()=>{exportExcelData(logList,"Charger Log")}}

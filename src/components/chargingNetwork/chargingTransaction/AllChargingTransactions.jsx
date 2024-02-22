@@ -5,8 +5,11 @@ import { Box, Modal, Stack, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import StyledDivider from "../../../ui/styledDivider";
 import ChargingSummary from "./ChargingSummary";
-import FilterNetwork from "../FilterNetwork";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
+import StyledSearchField from "../../../ui/styledSearchField";
+import Filter from "../filter";
+import RightDrawer from "../../../ui/RightDrawer";
+import { searchAndFilter } from "../../../utils/search";
 const tableHeader = [
   "Transaction ID",
   "Date",
@@ -27,6 +30,7 @@ const newActions = ["View", "Download Invoice", "Resend Email"];
 export default function AllChargingTransactions({ data,updateData }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
+  const [filterValue, setFilterValue] = useState('')
 
   const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed','location','duration','chargePointId','connectorId','totalAmount','closureReason','closeBy'], tableHeader)
 
@@ -44,11 +48,18 @@ export default function AllChargingTransactions({ data,updateData }) {
 
   return (
     <>
-      <LastSynced heading="Charging Transactions" showSearchField showFilterButton reloadHandle={updateData}  />
+      <LastSynced heading="Charging Transactions" reloadHandle={updateData}  >
+      <StyledSearchField placeholder={'Search'} onChange={(e) => {
+                    setFilterValue(e.target.value)
+                }} />
+                <RightDrawer>
+                    <Filter onSubmited={updateData} />
+                </RightDrawer>
+      </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable
           headers={tableHeader}
-          data={AllOcppTransactionData}
+          data={searchAndFilter(AllOcppTransactionData,filterValue)}
           actions={newActions}
           onActionClick={tableActionClick}
         />

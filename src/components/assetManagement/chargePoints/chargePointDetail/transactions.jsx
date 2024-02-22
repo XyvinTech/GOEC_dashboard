@@ -9,14 +9,10 @@ import { useEffect } from 'react'
 import { getTransactionById } from '../../../../services/ocppAPI'
 import { tableHeaderReplace } from '../../../../utils/tableHeaderReplace'
 import TransactionDetails from './transaction/transactionDetails'
-
-const StyledIconButton = ({ icon, ...props }) => {
-    return (
-        <Stack sx={{ backgroundColor: '#322F3B', px: 2, justifyContent: 'center', alignItems: 'center', borderRadius: '4px' }} props>
-            {icon && icon}
-        </Stack>
-    )
-}
+import RightDrawer from '../../../../ui/RightDrawer'
+import Filter from './chargerLog/filter'
+import { exportExcelData } from '../../../../utils/excelExport'
+import StyledIconButton from '../../../../ui/stylediconButton'
 
 const tableHeader = [
     'Transaction ID',
@@ -41,8 +37,8 @@ export default function Transactions({ CPID }) {
     useEffect(() => {
         init()
     }, [])
-    const init = () => {
-        getTransactionById(CPID).then((res) => {
+    const init = (filter={}) => {
+        getTransactionById(CPID,filter).then((res) => {
             console.log(res);
             if (res.success) {
                 console.log(res.result);
@@ -63,8 +59,12 @@ export default function Transactions({ CPID }) {
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
                     setFilterValue(e.target.value)
                 }} />
-                <StyledIconButton icon={<Tune sx={{ color: 'secondary.contrastText' }} />} />
-                <StyledIconButton icon={<FileDownloadOutlined sx={{ color: 'secondary.contrastText' }} />} />
+                <RightDrawer>
+                    <Filter onSubmited={init} />
+                </RightDrawer>
+                <StyledIconButton icon={<FileDownloadOutlined sx={{ color: 'secondary.contrastText', cursor: 'pointer' }} />}
+                    onClick={() => { exportExcelData(transactionList, "Transaction") }}
+                />
             </LastSynced>
             <Box sx={{ p: 3 }}>
                 <StyledTable headers={tableHeader} data={searchAndFilter(transactionList, filterValue)} actions={['Resend email', 'Download Invoice ', 'View']} onActionClick={actionclickHandle} />

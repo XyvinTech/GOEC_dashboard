@@ -38,8 +38,8 @@ export default function Alarm({ CPID }) {
     useEffect(() => {
         init()
     }, [])
-    const init = () => {
-        getAlarmsById(CPID).then((res) => {
+    const init = (dt={}) => {
+        getAlarmsById(CPID,dt).then((res) => {
             if (res.status) {
                 setAlarmList(tableHeaderReplace(res.result, ['cpid', 'date', 'summary', 'connectorId', 'status', 'errorCode'], tableHeader))
             }
@@ -53,7 +53,7 @@ export default function Alarm({ CPID }) {
                     setFilterValue(e.target.value)
                 }} />
                 <RightDrawer>
-                    <Filter />
+                    <Filter onSubmited={init} />
                 </RightDrawer>
             </LastSynced>
             <Box sx={{ p: 3, overflow: 'scroll' }}>

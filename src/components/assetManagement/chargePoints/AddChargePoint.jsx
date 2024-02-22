@@ -15,13 +15,13 @@ import { toast } from "react-toastify";
 import { ContentCopy } from "@mui/icons-material";
 // StyledTable component
 const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted, editStatus = false, isFromStation = false, stationId }) => {
-  
+
   const [stationList, setStationList] = useState([])
   const [OEMList, setOEMList] = useState([])
   const [modelList, setModelList] = useState([])
 
   const [modelOptions, setModelOptions] = useState([])
-
+  console.log(chargepointData);
   const {
     control,
     handleSubmit,
@@ -39,7 +39,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       serialNumber: editStatus ? chargepointData["serial_number"] : '',
       commissionedDate: editStatus ? chargepointData["commissioned_date"] : '',
       model: editStatus ? chargepointData["Model"] : '',
-      chargePointDisplayName:editStatus ? chargepointData["CPID"] : '',
+      chargePointDisplayName: editStatus ? chargepointData["CPID"] : '',
       CPID: editStatus ? chargepointData["CPID"] : '',
       published: editStatus ? chargepointData["Published"] : false, // Set the default value for "activate"
     },
@@ -424,7 +424,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
                         onDateChange={handleDateChangeInParent}
                       />
                     }
-                    value={commissionedDate}
+                    // value={commissionedDate}
                     readOnly
                   />
                   {errors.commissionedDate && (
@@ -484,7 +484,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
                 Save{" "}
               </StyledButton>
 
-              <StyledButton variant={"secondary"} width="160">
+              <StyledButton variant={"secondary"} width="160" type="button" onClick={()=>reset()}>
                 {" "}
                 Cancel{" "}
               </StyledButton>

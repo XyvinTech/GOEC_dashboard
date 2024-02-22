@@ -32,7 +32,7 @@ export default function AlarmsList({data, dataReload}) {
           setFilterValue(e.target.value)
         }} />
         <RightDrawer>
-          <Filter />
+          <Filter onSubmited={dataReload}/>
         </RightDrawer>
       </LastSynced>
       <Box sx={{ p: 3 }}>

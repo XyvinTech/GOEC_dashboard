@@ -6,8 +6,8 @@ export default function ChargingTransactions() {
 
   const [logs, setLogs] = useState([]);
 
-  const init = () => {
-    getAllOcppTransactionLogs().then((res) => {
+  const init = (filter) => {
+    getAllOcppTransactionLogs(filter).then((res) => {
       console.log(res.result);
       if (res) {
         setLogs(res.result);

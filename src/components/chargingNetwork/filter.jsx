@@ -1,32 +1,52 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Stack, Box, Grid, Typography } from "@mui/material";
-import StyledSelectField from "../../../../../ui/styledSelectField";
-import StyledButton from "../../../../../ui/styledButton";
+import { Stack, Box } from "@mui/material";
+import StyledSelectField from "../../ui/styledSelectField";
+import StyledButton from "../../ui/styledButton";
 import { useForm, Controller } from "react-hook-form";
-import StyledInput from "../../../../../ui/styledInput";
-import CalendarInput from "../../../../../ui/CalendarInput";
-import { getChargingPointsListOfStation, getListOfChargingStation } from "../../../../../services/stationAPI";
+import StyledInput from "../../ui/styledInput";
+import CalendarInput from "../../ui/CalendarInput";
+import { getChargingPointsListOfStation, getListOfChargingStation } from "../../services/stationAPI";
 
 
 export default function Filter({ onSubmited }) {
+  const [locationList, setLocationList] = useState([])
+  const [machineList, setMachineList] = useState([])
   const {
     control,
     handleSubmit,
     setValue,
+    reset,
     watch,
     setError,
-    reset,
     formState: { errors },
     clearErrors,
   } = useForm();
   const onSubmit = (data) => {
     // Handle form submission with data
-    let dt = {
-      startDate:data.startDate,
-      endDate:data.endDate
+    if (data.startDate && !data.endDate ) {
+      setError("endDate", { type: "custom", message: "select End Date" })
+      return
+    }
+    if (data.location && !data.cpid) {
+      setError("cpid", { type: "custom", message: "select cpid" })
+      return
+    }
+
+    let dt = {}
+    for (const [key, value] of Object.entries(data)) {
+      if (value && key != 'location') {
+        console.log(key);
+        if(value.label){
+          dt[key] = value.label
+        }else{
+          dt[key] = value
+        }
+        
+      }
     }
     onSubmited && onSubmited(dt)
+
     // Close your form or perform other actions
   };
 
@@ -44,6 +64,16 @@ export default function Filter({ onSubmited }) {
 
   };
   const endDate = watch("endDate", ""); // Watching the value for 'expiryDate'
+
+
+  useEffect(() => {
+    getListOfChargingStation().then((res) => {
+      console.log(res);
+      if (res.status) {
+        setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
+      }
+    })
+  }, [])
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -75,7 +105,7 @@ export default function Filter({ onSubmited }) {
                   )}
                 </>
               )}
-            rules={{ required: "StartDate is required" }}
+            // rules={{ required: "StartDate is required" }}
             />
             <Label>End date</Label>
             <Controller
@@ -102,8 +132,61 @@ export default function Filter({ onSubmited }) {
                   )}
                 </>
               )}
-            rules={{ required: "endDate is required" }}
+            // rules={{ required: "endDate is required" }}
             />
+            <Label>Location</Label>
+
+            <Controller
+              name="location"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledSelectField
+                    style={{ maxwidth: 200 }}
+                    {...field}
+                    placeholder={"Select Location"}
+                    options={locationList}
+                    onChange={(e) => {
+                      setMachineList([])
+                      setValue("location", e)
+                      getChargingPointsListOfStation(e.value).then((res) => {
+                        if (res.result) {
+                          setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
+                        }
+                      })
+                    }}
+                  />
+                  {errors.location && (
+                    <span style={errorMessageStyle}>
+                      {errors.location.message}
+                    </span>
+                  )}
+                </>
+              )}
+            // rules={{ required: "Location is required" }}
+            />
+            <Label>CPID</Label>
+
+            <Controller
+              name="cpid"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledSelectField
+                    {...field}
+                    placeholder={"Select CPID"}
+                    options={machineList}
+                  />
+                  {errors.cpid && (
+                    <span style={errorMessageStyle}>
+                      {errors.cpid.message}
+                    </span>
+                  )}
+                </>
+              )}
+            // rules={{ required: "CPID is required" }}
+            />
+
 
             <Stack direction={"row"} spacing={1} sx={{ justifyContent: 'center' }}>
               <StyledButton variant="secondary" width={120} type="button"
@@ -160,6 +243,7 @@ export const Label = styled.label`
 // Modal style
 const modalStyle = {
   //position: "absolute",
+  top: "50%",
   // left: "50%",
   // transform: "translate(-50%, -50%)",
   maxwidth: "auto", // Adjust width to fit your content or screen
@@ -169,10 +253,18 @@ const modalStyle = {
   outline: "none", // Remove the focus ring
   height: '100%',
   display: "flex",
+  alignItems: 'center',
   justifyContent: 'center',
   minHeight: '50vh',
 };
 
+// Styled table container
+export const TableContainer = styled.div`
+background: #27292f; // Dark background for the table
+overflow-x: auto; // Allows table to be scrollable horizontally
+border-radius: 8px; // Rounded corners
+margin: 20px 0; // Margin for spacing, adjust as needed
+`;
 
 const errorMessageStyle = {
   color: "red",
