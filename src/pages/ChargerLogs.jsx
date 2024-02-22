@@ -5,8 +5,8 @@ import { getAllOcppLogs } from "../services/ocppAPI";
 export default function ChargerLogs() {
   const [logs, setLogs] = useState([]);
 
-  const init = () => {
-    getAllOcppLogs().then((res) => {
+  const init = (filter={}) => {
+    getAllOcppLogs(filter).then((res) => {
       console.log('test',res.result);
       if (res) {
         setLogs(res.result);

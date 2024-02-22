@@ -9,18 +9,23 @@ import CalendarInput from "../../../../../ui/CalendarInput";
 import { getChargingPointsListOfStation, getListOfChargingStation } from "../../../../../services/stationAPI";
 
 
-export default function Filter() {
+export default function Filter({ onSubmited }) {
   const {
     control,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
     clearErrors,
   } = useForm();
   const onSubmit = (data) => {
     // Handle form submission with data
-    console.log("Form data submitted:", data);
+    let dt = {
+      startDate: data.startDate,
+      endDate: data.endDate
+    }
+    onSubmited && onSubmited(dt)
     // Close your form or perform other actions
   };
 
@@ -42,75 +47,72 @@ export default function Filter() {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={modalStyle}>
-          <Stack direction={"column"} spacing={2} sx={{background:''}}>
-              <Label>Start date</Label>
+          <Stack direction={"column"} spacing={2} sx={{ background: '' }}>
+            <Label>Start date</Label>
 
-              <Controller
-                name="startDate"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <StyledInput
-                      {...field}
+            <Controller
+              name="startDate"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledInput
+                    {...field}
 
-                      iconright={
-                        <CalendarInput
-                          onDateChange={handleDateChangeInParent}
-                        />}
-                      placeholder={"mm/dd/yyyy"}
-                      value={startDate}
-                      readOnly
+                    iconright={
+                      <CalendarInput
+                        onDateChange={handleDateChangeInParent}
+                      />}
+                    placeholder={"mm/dd/yyyy"}
+                    value={startDate}
+                    readOnly
 
-                    />
-                    {errors.startDate && (
-                      <span style={errorMessageStyle}>
-                        {errors.startDate.message}
-                      </span>
-                    )}
-                  </>
-                )}
-                rules={{ required: "StartDate is required" }}
-              />
-              <Label>End date</Label>
-              <Controller
-                name="endDate"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <StyledInput
-                      {...field}
+                  />
+                  {errors.startDate && (
+                    <span style={errorMessageStyle}>
+                      {errors.startDate.message}
+                    </span>
+                  )}
+                </>
+              )}
+              rules={{ required: "StartDate is required" }}
+            />
+            <Label>End date</Label>
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledInput
+                    {...field}
 
-                      iconright={
-                        <CalendarInput
-                          onDateChange={handleEndDateChangeInParent}
-                        />}
-                      placeholder={"mm/dd/yyyy"}
-                      value={endDate}
-                      readOnly
+                    iconright={
+                      <CalendarInput
+                        onDateChange={handleEndDateChangeInParent}
+                      />}
+                    placeholder={"mm/dd/yyyy"}
+                    value={endDate}
+                    readOnly
 
-                    />
-                    {errors.endDate && (
-                      <span style={errorMessageStyle}>
-                        {errors.endDate.message}
-                      </span>
-                    )}
-                  </>
-                )}
-                rules={{ required: "endDate is required" }}
-              />
+                  />
+                  {errors.endDate && (
+                    <span style={errorMessageStyle}>
+                      {errors.endDate.message}
+                    </span>
+                  )}
+                </>
+              )}
+              rules={{ required: "endDate is required" }}
+            />
 
-              <Grid container>
-                <Grid item xs={12} md={12} >
-                  <StyledButton width={'100%'} variant="primary" fontSize="14" type="submit">
-                    Apply
-                  </StyledButton>
-                </Grid>
-                {/* <Grid item xs={12} md={6} >
-                  <StyledButton width={120} variant="secondary" fontSize="14">
-                    Reset
-                  </StyledButton>
-                </Grid> */}
-              </Grid>
+            <Stack direction={"row"} spacing={1} sx={{ justifyContent: 'center' }}>
+              <StyledButton variant="secondary" width={120} type="button"
+                onClick={() => { reset(); onSubmited() }}>
+                Reset
+              </StyledButton>
+              <StyledButton width={150} variant="primary" type="submit">
+                Apply
+              </StyledButton>
+            </Stack>
           </Stack>
         </Box>
       </form>

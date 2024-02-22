@@ -59,9 +59,9 @@ export async function changeConfig(data, cpid) {
   }
 }
 
-export async function getAllOcppLogs() {
+export async function getAllOcppLogs(filter={}) {
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/logs`);
+    const response = await OCPP_INSTANCE.get(`ocpp/logs`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -77,28 +77,28 @@ export async function getOcppLogsByCpid(cpid) {
   }
 }
 
-export async function getAllOcppTransactionLogs() {
+export async function getAllOcppTransactionLogs(filter={}) {
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transactionList`);
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transactionList`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getAlarms() {
+export async function getAlarms(filter={}) {
   //POST
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineAlarms`);
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineAlarms`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getAlarmsById(evMachine) {
+export async function getAlarmsById(evMachine,filter={}) {
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineAlarms/${evMachine}`);
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineAlarms/${evMachine}`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -143,18 +143,18 @@ export async function getAlarmSummary() {
   }
 }
 
-export async function getTransactionById(evMachine) {
+export async function getTransactionById(evMachine,filter) {
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transactionLog/${evMachine}`);
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transactionLog/${evMachine}`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getMachineLog(evMachine) {
+export async function getMachineLog(evMachine,filter) {
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineLog/${evMachine}`);
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/machineLog/${evMachine}`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;

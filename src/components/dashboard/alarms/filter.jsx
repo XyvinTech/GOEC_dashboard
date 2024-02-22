@@ -18,20 +18,44 @@ const statusList = [
   { value: "Finishing", label: "Finishing" },
 ]
 
-export default function Filter() {
+export default function Filter({ onSubmited }) {
   const [locationList, setLocationList] = useState([])
   const [machineList, setMachineList] = useState([])
   const {
     control,
     handleSubmit,
     setValue,
+    reset,
     watch,
+    setError,
     formState: { errors },
     clearErrors,
   } = useForm();
   const onSubmit = (data) => {
     // Handle form submission with data
-    console.log("Form data submitted:", data);
+    if (data.startDate && !data.endDate ) {
+      setError("endDate", { type: "custom", message: "select End Date" })
+      return
+    }
+    if (data.location && !data.cpid) {
+      setError("cpid", { type: "custom", message: "select cpid" })
+      return
+    }
+
+    let dt = {}
+    for (const [key, value] of Object.entries(data)) {
+      if (value && key != 'location') {
+        console.log(key);
+        if(value.label){
+          dt[key] = value.label
+        }else{
+          dt[key] = value
+        }
+        
+      }
+    }
+    onSubmited && onSubmited(dt)
+
     // Close your form or perform other actions
   };
 
@@ -63,150 +87,147 @@ export default function Filter() {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={modalStyle}>
-          <Stack direction={"column"} spacing={2} sx={{background:''}}>
-              <Label>Start date</Label>
+          <Stack direction={"column"} spacing={2} sx={{ background: '' }}>
+            <Label>Start date</Label>
 
-              <Controller
-                name="startDate"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <StyledInput
-                      {...field}
+            <Controller
+              name="startDate"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledInput
+                    {...field}
 
-                      iconright={
-                        <CalendarInput
-                          onDateChange={handleDateChangeInParent}
-                        />}
-                      placeholder={"mm/dd/yyyy"}
-                      value={startDate}
-                      readOnly
+                    iconright={
+                      <CalendarInput
+                        onDateChange={handleDateChangeInParent}
+                      />}
+                    placeholder={"mm/dd/yyyy"}
+                    value={startDate}
+                    readOnly
 
-                    />
-                    {errors.startDate && (
-                      <span style={errorMessageStyle}>
-                        {errors.startDate.message}
-                      </span>
-                    )}
-                  </>
-                )}
-                rules={{ required: "StartDate is required" }}
-              />
-              <Label>End date</Label>
-              <Controller
-                name="endDate"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <StyledInput
-                      {...field}
+                  />
+                  {errors.startDate && (
+                    <span style={errorMessageStyle}>
+                      {errors.startDate.message}
+                    </span>
+                  )}
+                </>
+              )}
+            // rules={{ required: "StartDate is required" }}
+            />
+            <Label>End date</Label>
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledInput
+                    {...field}
 
-                      iconright={
-                        <CalendarInput
-                          onDateChange={handleEndDateChangeInParent}
-                        />}
-                      placeholder={"mm/dd/yyyy"}
-                      value={endDate}
-                      readOnly
+                    iconright={
+                      <CalendarInput
+                        onDateChange={handleEndDateChangeInParent}
+                      />}
+                    placeholder={"mm/dd/yyyy"}
+                    value={endDate}
+                    readOnly
 
-                    />
-                    {errors.endDate && (
-                      <span style={errorMessageStyle}>
-                        {errors.endDate.message}
-                      </span>
-                    )}
-                  </>
-                )}
-                rules={{ required: "endDate is required" }}
-              />
-              <Label>Location</Label>
+                  />
+                  {errors.endDate && (
+                    <span style={errorMessageStyle}>
+                      {errors.endDate.message}
+                    </span>
+                  )}
+                </>
+              )}
+            // rules={{ required: "endDate is required" }}
+            />
+            <Label>Location</Label>
 
-              <Controller
-                name="location"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <StyledSelectField
-                      {...field}
-                      placeholder={"Select Location"}
-                      options={locationList}
-                      onChange={(e) => {
-                        setMachineList([])
-                        setValue("location", e)
-                        getChargingPointsListOfStation(e.value).then((res) => {
-                          console.log(res);
-                          if (res.result) {
-                            setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
-                          }
-                        })
-                      }}
-                    />
-                    {errors.location && (
-                      <span style={errorMessageStyle}>
-                        {errors.location.message}
-                      </span>
-                    )}
-                  </>
-                )}
-                rules={{ required: "Location is required" }}
-              />
-              <Label>CPID</Label>
+            <Controller
+              name="location"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledSelectField
+                    style={{ maxwidth: 200 }}
+                    {...field}
+                    placeholder={"Select Location"}
+                    options={locationList}
+                    onChange={(e) => {
+                      setMachineList([])
+                      setValue("location", e)
+                      getChargingPointsListOfStation(e.value).then((res) => {
+                        if (res.result) {
+                          setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
+                        }
+                      })
+                    }}
+                  />
+                  {errors.location && (
+                    <span style={errorMessageStyle}>
+                      {errors.location.message}
+                    </span>
+                  )}
+                </>
+              )}
+            // rules={{ required: "Location is required" }}
+            />
+            <Label>CPID</Label>
 
-              <Controller
-                name="cpid"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <StyledSelectField
-                      {...field}
-                      placeholder={"Select CPID"}
-                      options={machineList}
-                    />
-                    {errors.cpid && (
-                      <span style={errorMessageStyle}>
-                        {errors.cpid.message}
-                      </span>
-                    )}
-                  </>
-                )}
-                rules={{ required: "CPID is required" }}
-              />
+            <Controller
+              name="cpid"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledSelectField
+                    {...field}
+                    placeholder={"Select CPID"}
+                    options={machineList}
+                  />
+                  {errors.cpid && (
+                    <span style={errorMessageStyle}>
+                      {errors.cpid.message}
+                    </span>
+                  )}
+                </>
+              )}
+            // rules={{ required: "CPID is required" }}
+            />
 
-              <Label>Connector Status</Label>
+            <Label>Connector Status</Label>
 
-              <Controller
-                name="connectorStatus"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <StyledSelectField
-                      {...field}
-                      placeholder={"Select Connector Status"}
-                      options={statusList}
-                    />
-                    {errors.connectorStatus && (
-                      <span style={errorMessageStyle}>
-                        {errors.connectorStatus.message}
-                      </span>
-                    )}
-                  </>
-                )}
-                rules={{ required: "status is required" }}
-              />
+            <Controller
+              name="connectorStatus"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <StyledSelectField
+                    {...field}
+                    placeholder={"Select Connector Status"}
+                    options={statusList}
+                  />
+                  {errors.connectorStatus && (
+                    <span style={errorMessageStyle}>
+                      {errors.connectorStatus.message}
+                    </span>
+                  )}
+                </>
+              )}
+            // rules={{ required: "status is required" }}
+            />
 
 
-              <Grid container>
-                <Grid item xs={12} md={12} >
-                  <StyledButton width={'100%'} variant="primary" fontSize="14" type="submit">
-                    Apply
-                  </StyledButton>
-                </Grid>
-                {/* <Grid item xs={12} md={6} >
-                  <StyledButton width={120} variant="secondary" fontSize="14">
-                    Reset
-                  </StyledButton>
-                </Grid> */}
-              </Grid>
+            <Stack direction={"row"} spacing={1} sx={{ justifyContent: 'center' }}>
+              <StyledButton variant="secondary" width={120} type="button"
+                onClick={() => { reset(); onSubmited() }}>
+                Reset
+              </StyledButton>
+              <StyledButton width={150} variant="primary" type="submit">
+                Apply
+              </StyledButton>
+            </Stack>
           </Stack>
         </Box>
       </form>

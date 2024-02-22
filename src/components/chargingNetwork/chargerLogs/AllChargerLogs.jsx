@@ -3,30 +3,40 @@ import LastSynced from "../../../layout/LastSynced";
 import StyledTable from "../../../ui/styledTable";
 import { Box } from "@mui/material";
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace';
+import StyledSearchField from '../../../ui/styledSearchField';
+import RightDrawer from '../../../ui/RightDrawer';
+import Filter from '../filter';
+import { searchAndFilter } from '../../../utils/search';
+import { useState } from 'react';
 
 const tableHeader = [
   "CPID",
-  "Time",
+  "Date",
   "Command",
   "Payload Data",
   "Unique ID"
 ];
 
 export default function AllChargerLogs({ data, updateData }) {
-
-  const AllLogsData = tableHeaderReplace(data, ['CPID', 'timestamp', 'messageType', 'payload', '_id'], tableHeader)
-
-
+  const [filterValue, setFilterValue] = useState('')
+  const AllLogsData = tableHeaderReplace(data, ['CPID', 'createdAt', 'messageType', 'payload', '_id'], tableHeader)
 
   return (
     <>
 
-      <LastSynced heading="Charger Logs" showSearchField showFilterButton reloadHandle={updateData} />
+      <LastSynced heading="Charger Logs" reloadHandle={updateData} >
+      <StyledSearchField placeholder={'Search'} onChange={(e) => {
+                    setFilterValue(e.target.value)
+                }} />
+                <RightDrawer>
+                    <Filter onSubmited={updateData} />
+                </RightDrawer>
+      </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable
           showActionCell={false}
           headers={tableHeader}
-          data={AllLogsData}
+          data={searchAndFilter(AllLogsData,filterValue)}
         />
       </Box>
 

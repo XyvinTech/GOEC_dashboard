@@ -22,8 +22,8 @@ export default function Alarms() {
     getAlarmSummaryData()
   }
 
-  const getAlarmsList = ()=>{
-    getAlarms().then((res)=>{
+  const getAlarmsList = (dt={})=>{
+    getAlarms(dt).then((res)=>{
       if (res.status) {
         setAlarmList(res.result)
       }
