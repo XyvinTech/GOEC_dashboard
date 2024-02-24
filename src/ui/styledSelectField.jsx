@@ -59,7 +59,7 @@ const StyledSelectField = ({ options, value, placeholder,
     })
   };
 
-  const customTheme = (theme) => ({
+   const customTheme = (theme) => ({
     ...theme,
     colors: {
       ...theme.colors,

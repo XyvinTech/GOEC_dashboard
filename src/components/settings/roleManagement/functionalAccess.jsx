@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { pink } from "@mui/material/colors";
-import { Box, Radio, Typography } from "@mui/material";
+import { pink,grey } from "@mui/material/colors";
+import { alpha, styled } from '@mui/material/styles';
+import { Box,  Switch, Typography } from "@mui/material";
+import { allPermissions } from "./role";
 
 import {
   Table,
@@ -12,78 +14,97 @@ import {
   TableCell,
 } from "../../../ui/styledTable";
 
+
+
 const headers = ["Permissions", "View", "Modify"];
 
-function FunctionalAccess() {
-  const [permissions, setPermissions] = useState([
-    { name: "Dashboard1", view: false, modify: false },
-    { name: "Permissions1", view: false, modify: false },
-    { name: "Dashboard2", view: false, modify: false },
+//Permission
 
-  ]);
+const initialPermissions = allPermissions.map(permission => ({
+  name: permission.name,
+  id: permission.id,
+  view: false,
+  modify: false
+}));
+
+function FunctionalAccess({ onChange }) {
+  const [permissions, setPermissions] = useState(initialPermissions);
+
+
+  useEffect(() => {
+    onChange(permissions);
+  }, [permissions, onChange]);
 
   const handleChange = (permissionName, type) => (event) => {
-    setPermissions(
-      permissions.map((permission) => {
+    const { checked } = event.target;
+    setPermissions((prevPermissions) =>
+      prevPermissions.map((permission) => {
         if (permission.name === permissionName) {
-          return { ...permission, [type]: event.target.checked };
+          return { ...permission, [type]: checked };
         }
         return permission;
       })
     );
   };
 
-
   return (
     <>
-
-
-      <TableContainer>
-        <Table>
-          <TableHeader>
-            <tr>
-              {headers.map((header) => (
-                <HeaderCell key={header}>{header}</HeaderCell>
-              ))}
-            </tr>
-          </TableHeader>
-
-          <TableBody>
-            {permissions.map((permission) => (
-              <tr key={permission.name}>
-                <TableCell>{permission.name}</TableCell>
-                <TableCell>
-                  <Radio
-                    checked={permission.view}
-                    onChange={handleChange(permission.name, "view")}
-                    sx={{
-                      color: pink[100],
-                      "&.Mui-checked": {
-                        color: pink[100],
-                      },
-                    }}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Radio
-                    checked={permission.modify}
-                    onChange={handleChange(permission.name, "modify")}
-                    sx={{
-                      color: pink[100],
-                      "&.Mui-checked": {
-                        color: pink[100],
-                      },
-                    }}
-                  />
-                </TableCell>
+      <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+        <TableContainer>
+          <Table>
+            <TableHeader>
+              <tr>
+                {headers.map((header) => (
+                  <HeaderCell key={header}>{header}</HeaderCell>
+                ))}
               </tr>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHeader>
 
+            <TableBody>
+              {permissions.map((permission) => (
+                <tr key={permission.name}>
+                  <TableCell>{permission.name}</TableCell>
+                  <TableCell>
+                    <PinkSwitch 
+                      color="secondary"
+                      checked={permission.view}
+                      onChange={handleChange(permission.name, "view")}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <PinkSwitch 
+                      color="secondary"
+                      checked={permission.modify}
+                      onChange={handleChange(permission.name, "modify")}
+                    />
+                  </TableCell>
+                </tr>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </>
   );
 }
 
 export default FunctionalAccess;
+
+
+const PinkSwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: pink[300],
+    '&:hover': {
+      backgroundColor: alpha(pink[300], theme.palette.action.hoverOpacity),
+    },
+  },
+  '& .MuiSwitch-switchBase:not(.Mui-checked)': { // Styles for unchecked state
+    color: grey[700],
+    '&:hover': {
+      backgroundColor: alpha(grey[700], theme.palette.action.hoverOpacity),
+    },
+  },
+  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+    backgroundColor: pink[300],
+  },
+}));

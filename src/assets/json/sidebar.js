@@ -19,14 +19,17 @@ export const siderbarListItems = [
         icon: (<DashboardIcon />),
         title: 'Dashboard',
         extendable: true,
+       
         sub: [
             {
                 href: 'dashboard/live-status',
                 title: 'Live Status',
+                requiredRoles: ['admin']
             },
             {
                 href: 'dashboard/analytics',
-                title: 'Analytics'
+                title: 'Analytics',
+                
             },
             {
                 href: 'dashboard/alarms',

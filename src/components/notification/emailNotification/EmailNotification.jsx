@@ -1,29 +1,16 @@
 import { Box, Stack, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import StyledSelectField from "../../../ui/styledSelectField";
+import AsyncSelect from "react-select/async";
 import InputField from "../../../ui/styledInput";
 import StyledButton from "../../../ui/styledButton";
 import ProgressBar from "../../../ui/ProgressBar";
 import { Controller, useForm } from "react-hook-form";
-import { userSuggetionlist } from "../../../services/userApi";
+import { userSuggestionList } from "../../../services/userApi";
 import FileUpload from "../../../utils/FileUpload";
 import StyledTextArea from "../../../ui/styledTextArea";
 import { toast } from "react-toastify";
 import { sendBulkMail } from "../../../services/notificationAPI";
-
-// const LocalStyledStatusChip = styled.span`
-//   padding: 4px 8px;
-//   border-radius: 10px;
-//   color: white;
-//   font-weight: 500;
-//   text-align: center;
-//   display: inline-block;
-//   min-width: 60px;
-//   border-radius: 45px;
-//   background: var(--Secondary, #322f3b);
-// `;
-
-// const user_name = "username";
 
 export default function EmailNotification() {
   const [userOptions, setUserOption] = useState([]);
@@ -33,31 +20,44 @@ export default function EmailNotification() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    clearErrors,
-    reset,
     setValue,
     watch,
-  } = useForm();
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      sendTo: [],
+      subject: "",
+      content: "",
+    },
+  });
   const onSubmit = (data) => {
-    const mails = data.sendTo.map((dt) => dt.value)
-
+    const mails = data.sendTo.map((dt) => dt.value);
 
     const formData = new FormData();
     formData.append("to", mails);
     formData.append("subject", data.subject);
     formData.append("text", data.content);
-    if (!selectedFile) {
-      formData.append("file",selectedFile)
+    if (selectedFile) {
+      formData.append("file", selectedFile);
     }
     let formDataObject = {};
     for (let pair of formData.entries()) {
-      formDataObject[pair[0]] = pair[1];
+      if (pair[0] === "to[]") {
+        if (!formDataObject["to"]) {
+          formDataObject["to"] = [];
+        }
+        formDataObject["to"].push(pair[1]);
+      } else {
+        formDataObject[pair[0]] = pair[1];
+      }
     }
+    console.log(formDataObject);
     sendBulkMail(formDataObject)
       .then((res) => {
         console.log(res);
         toast.success("Send successfully");
+        reset();
       })
       .catch((error) => {
         console.error(error);
@@ -77,16 +77,21 @@ export default function EmailNotification() {
     }, 40);
   };
 
-  useEffect(() => {
-    userSuggetionlist("").then((res) => {
-      console.log(res);
-      if (res.status) {
-        setUserOption(
-          res.result.map((dt) => ({ label: dt.username, value: dt.email }))
-        );
+  const loadUserOptions = async (inputValue) => {
+    try {
+      const response = await userSuggestionList(inputValue);
+      if (response.status) {
+        return response.result.map((user) => ({
+          label: user.mobile,
+          value: user.email,
+        }));
       }
-    });
-  }, []);
+      return [];
+    } catch (error) {
+      console.error("Error fetching users", error);
+      return [];
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,30 +112,26 @@ export default function EmailNotification() {
               control={control}
               render={({ field }) => (
                 <>
-                  <StyledSelectField
-                    options={[{ value: "*", label: "All" }, ...userOptions]}
+                  <AsyncSelect
+                    cacheOptions
+                    defaultOptions
+                    loadOptions={loadUserOptions}
+                    placeholder="Select User"
+                    isMulti
                     {...field}
-                    placeholder={"Select User"}
-                    isMulti={true}
-                    isSearchable={true}
-                    onChange={(v, e) => {
-                      if (e.action === "select-option") {
-                        if (e.option.value === "*") {
-                          setValue("sendTo", userOptions);
-                        } else {
-                          setValue("sendTo", v);
-                        }
-                      } else if (e.action === "remove-value") {
-                        if (e.removedValue.value === "*") {
-                          setValue("sendTo", []);
-                        } else {
-                          setValue("sendTo", v);
-                        }
-                      } else if (e.action === "clear") {
-                        setValue("sendTo", []);
+                    styles={customStyles}
+                    theme={customTheme}
+                    onChange={(selectedOptions) => {
+                      if (
+                        selectedOptions.some((option) => option.value === "*")
+                      ) {
+                        loadUserOptions("").then((fullList) => {
+                          setValue("sendTo", fullList);
+                        });
+                      } else {
+                        setValue("sendTo", selectedOptions);
                       }
                     }}
-                    height={"55px"}
                   />
                   {errors.sendTo && (
                     <span style={errorMessageStyle}>
@@ -178,27 +179,7 @@ export default function EmailNotification() {
               )}
               rules={{ required: "Content is required" }}
             />
-            {/* <LocalStyledStatusChip
-              style={{ alignSelf: "flex-start", fontSize: "14px" }}
-            >
-              {"{" + user_name + "}"}
-            </LocalStyledStatusChip> */}
-            {/* <Typography sx={TextStyle}>Target Url</Typography>
-            <Controller
-              name="targetUrl"
-              control={control}
-              render={({ field }) => (
-                <>
-                  <InputField placeholder={"Enter Target URL"} {...field} />
-                  {errors.targetUrl && (
-                    <span style={errorMessageStyle}>
-                      {errors.targetUrl.message}
-                    </span>
-                  )}
-                </>
-              )}
-              rules={{ required: "Target Url is required" }}
-            /> */}
+
             <FileUpload
               ref={reference}
               accept={"*"}
@@ -266,3 +247,55 @@ const HeadingStyle = {
 const errorMessageStyle = {
   color: "red",
 };
+
+// customStyles for react-select/AsyncSelect
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    padding: "8px",
+    border: "1px solid rgba(255, 255, 255, 0.20)",
+    borderRadius: "4px",
+    backgroundColor: state.isFocused ? "#39383D" : "#39383D",
+    color: state.isFocused ? "#fff" : "#B5B8C5",
+    boxShadow: state.isFocused ? "0 0 0 2px #fff" : "none",
+    cursor: "pointer",
+    height: "55px", // Set this to the height of your input
+    overflow: "hidden", // Hide the overflow
+  }),
+  input: (base) => ({
+    ...base,
+    color: "#fff",
+  }),
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    display: "none",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused ? "#242424" : "#39383D",
+    color: state.isFocused ? "#fff" : "#B5B8C5",
+    cursor: "pointer",
+    ":active": {
+      backgroundColor: "#242424",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#39383D",
+    color: "#B5B8C5",
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#F7F8FC",
+  }),
+};
+
+// customTheme for react-select/AsyncSelect
+const customTheme = (theme) => ({
+  ...theme,
+  colors: {
+    ...theme.colors,
+    primary: "#39383D", // primary color for the select, used for the focused state
+    // Add other color overrides if necessary
+  },
+});

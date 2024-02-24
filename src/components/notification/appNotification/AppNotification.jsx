@@ -5,7 +5,7 @@ import InputField from "../../../ui/styledInput";
 import StyledButton from "../../../ui/styledButton";
 import ProgressBar from "../../../ui/ProgressBar";
 import { Controller, useForm } from "react-hook-form";
-import { userSuggetionlist } from "../../../services/userApi";
+import { userSuggestionList } from "../../../services/userApi";
 import FileUpload from "../../../utils/FileUpload";
 import StyledTextArea from "../../../ui/styledTextArea";
 import { toast } from "react-toastify";
@@ -69,7 +69,7 @@ export default function AppNotification() {
   };
 
   useEffect(() => {
-    userSuggetionlist('').then((res) => {
+    userSuggestionList('').then((res) => {
       console.log(res);
       if (res.status) {
         setUserOption(res.result.map((dt) => ({ label: dt.username, value: dt.email })))

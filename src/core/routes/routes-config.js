@@ -36,10 +36,12 @@ import AccountTransactions from "../../pages/AccountTransactions";
 import Help from "../../pages/Help";
 import Analytics from "../../pages/analytics";
 import Alarms from "../../pages/alarms";
+import PrivateRoute from "./private-route";
+
 
 const RoutesConfig = () => {
 
-    const routes = [
+    return [
 
         {
             path: '/',
@@ -77,7 +79,9 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'live-status',
-                    element: <LiveStatus />,
+                    // element:  <PrivateRoute element={<LiveStatus  />} requiredPermission="admin" />,
+                    element:  <PrivateRoute element={<LiveStatus  />}  />,
+
                 },
                 {
                     path: 'analytics',
@@ -296,6 +300,6 @@ const RoutesConfig = () => {
     ]
 
 
-    return routes;
+   
 }
 export default RoutesConfig;

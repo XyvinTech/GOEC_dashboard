@@ -237,7 +237,7 @@ export async function userRfidList(Id) {
 }
 
 
-export async function userSuggetionlist(data) {
+export async function userSuggestionList(data) {
   try {
     const response = await USER_INSTANCE.get(`admin/suggestions?query=${data}`);
     return response.data;
