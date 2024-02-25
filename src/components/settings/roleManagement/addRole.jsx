@@ -1,99 +1,111 @@
 import { Grid, Typography, Container, Stack, Box } from "@mui/material";
-import React, { useState } from "react";
 import styled from "styled-components";
 import StyledButton from "../../../ui/styledButton";
 import InputField from "../../../ui/styledInput";
 import StyledTab from "../../../ui/styledTab";
 import LocationalAccess from "./locationalAccess";
 import FunctionalAccess from "./functionalAccess";
+import { useForm, Controller, FormProvider } from "react-hook-form";
 
 export default function AddRole({ action, data }) {
-  const [roleName, setRoleName] = useState(action === "edit" ? data.Name : "");
-  const [roleDescription, setRoleDescription] = useState(
-    action === "edit" ? data.Description : ""
-  );
-  const [functionalPermissions, setFunctionalPermissions] = useState([]);
-  const [locationalPermissions, setLocationalPermissions] = useState([]);
-  const [togglePage, setTogglePage] = useState(0);
 
-  const handleRoleNameChange = (e) => {
-    setRoleName(e.target.value);
+  const methods = useForm({
+    defaultValues: {
+      roleName: action === "edit" ? data.Name : "",
+      roleDescription: action === "edit" ? data.Description : "",
+      functionalPermissions: [],
+      locationalPermissions: [],
+      
+    },
+  });
+
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = methods;
+
+  const onSubmit = (data) => {
+    console.log(data); // Here, 'data' will include all the form fields
   };
-
-  const handleRoleDescriptionChange = (e) => {
-    setRoleDescription(e.target.value);
-  };
-
-  const handleFunctionalPermissionsChange = (permissions) => {
-    setFunctionalPermissions(permissions);
-  };
-
-  const handleLocationalPermissionsChange = (permissions) => {
-    setLocationalPermissions(permissions);
-  };
-
-  const handleSaveButtonClick = () => {
-    console.log("Role Name:", roleName);
-    console.log("Role Description:", roleDescription);
-    console.log("Functional Permissions:", functionalPermissions);
-    console.log("Locational Permissions:", locationalPermissions);
-  };
-
   const buttonChanged = (e) => {
-    setTogglePage(e.index);
+    setValue("togglePage", e.index);
   };
+
   return (
     <TableContainer>
-      <Container fixed>
-        <Grid container spacing={4}>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Role name</Typography>
-            <InputField
-              placeholder={"Enter Role name"}
-              value={roleName}
-              onChange={handleRoleNameChange}
-            />
-          </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Role Description</Typography>
-            <InputField
-              placeholder={"Enter Description"}
-              value={roleDescription}
-              onChange={handleRoleDescriptionChange}
-            />
-          </Grid>
-          <Box pl={4} pt={3} sx={{ width: "100%", borderRadius: "5" }}>
-            <StyledTab
-              buttons={["Functional Access", "Locational Access"]}
-              onChanged={buttonChanged}
-            />
-            {togglePage === 0 ? (
-              <FunctionalAccess onChange={handleFunctionalPermissionsChange} />
-            ) : (
-              <LocationalAccess onChange={handleLocationalPermissionsChange} />
-            )}
-          </Box>
-          <Grid
-            item
-            xs={12}
-            md={12}
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              alignItems: "center",
-            }}
-          >
-            <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-              <StyledButton variant={"secondary"} width="103">
-                Cancel
-              </StyledButton>
-              <StyledButton variant={"primary"} width="160" onClick={handleSaveButtonClick}>
-                Save
-              </StyledButton>
-            </Stack>
-          </Grid>
-        </Grid>
-      </Container>
+      <FormProvider {...methods}>
+        <Container fixed>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <Grid container spacing={4}>
+              <Grid item md={12}>
+                <Typography sx={{ marginBottom: 1 }}>Role name</Typography>
+                <Controller
+                  name="roleName"
+                  
+                  render={({ field }) => (
+                    <InputField
+                      placeholder="Enter Role name"
+                      {...field}
+                      error={!!errors.roleName}
+                      helperText={errors.roleName?.message}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item md={12}>
+                <Typography sx={{ marginBottom: 1 }}>
+                  Role Description
+                </Typography>
+                <Controller
+                  name="roleDescription"
+                 
+                  render={({ field }) => (
+                    <InputField
+                      placeholder="Enter Description"
+                      {...field}
+                      error={!!errors.roleDescription}
+                      helperText={errors.roleDescription?.message}
+                    />
+                  )}
+                />
+              </Grid>
+
+              {/* Tabs for Functional and Locational Access */}
+              <Box pl={4} pt={3} sx={{ width: "100%" }}>
+                <StyledTab
+                  buttons={["Functional Access", "Locational Access"]}
+                  onChanged={buttonChanged}
+                />
+                {watch("togglePage") === 0 && <FunctionalAccess />}
+                {watch("togglePage") === 1 && <LocationalAccess />}
+              </Box>
+
+              {/* Save and Cancel Buttons */}
+              <Grid
+                item
+                xs={12}
+                md={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  alignItems: "center",
+                }}
+              >
+                <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
+                  <StyledButton variant={"secondary"} width="103">
+                    Cancel
+                  </StyledButton>
+                  <StyledButton variant={"primary"} width="160">
+                    Save
+                  </StyledButton>
+                </Stack>
+              </Grid>
+            </Grid>
+          </form>
+        </Container>
+      </FormProvider>
     </TableContainer>
   );
 }

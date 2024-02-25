@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { pink,grey } from "@mui/material/colors";
-import { alpha, styled } from '@mui/material/styles';
-import { Box,  Switch, Typography } from "@mui/material";
+import { Controller } from "react-hook-form";
+import { pink, grey } from "@mui/material/colors";
+import { alpha, styled } from "@mui/material/styles";
+import { Switch } from "@mui/material";
 import { allPermissions } from "./role";
 
 import {
@@ -14,39 +13,9 @@ import {
   TableCell,
 } from "../../../ui/styledTable";
 
-
-
 const headers = ["Permissions", "View", "Modify"];
 
-//Permission
-
-const initialPermissions = allPermissions.map(permission => ({
-  name: permission.name,
-  id: permission.id,
-  view: false,
-  modify: false
-}));
-
-function FunctionalAccess({ onChange }) {
-  const [permissions, setPermissions] = useState(initialPermissions);
-
-
-  useEffect(() => {
-    onChange(permissions);
-  }, [permissions, onChange]);
-
-  const handleChange = (permissionName, type) => (event) => {
-    const { checked } = event.target;
-    setPermissions((prevPermissions) =>
-      prevPermissions.map((permission) => {
-        if (permission.name === permissionName) {
-          return { ...permission, [type]: checked };
-        }
-        return permission;
-      })
-    );
-  };
-
+function FunctionalAccess({ control }) {
   return (
     <>
       <div style={{ maxHeight: "400px", overflowY: "auto" }}>
@@ -61,23 +30,43 @@ function FunctionalAccess({ onChange }) {
             </TableHeader>
 
             <TableBody>
-              {permissions.map((permission) => (
-                <tr key={permission.name}>
+              {allPermissions.map((permission, index) => (
+                <tr key={permission.id}>
                   <TableCell>{permission.name}</TableCell>
                   <TableCell>
-                    <PinkSwitch 
-                      color="secondary"
-                      checked={permission.view}
-                      onChange={handleChange(permission.name, "view")}
+                    <Controller
+                      name={`functionalPermissions.${index}.view`}
+                      control={control}
+                      defaultValue={false} // Initial state
+                      render={({ field }) => (
+                        <PinkSwitch
+                          color="secondary"
+                          checked={field.value}
+                          onChange={(e) => field.onChange(e.target.checked)}
+                        />
+                      )}
                     />
                   </TableCell>
                   <TableCell>
-                    <PinkSwitch 
-                      color="secondary"
-                      checked={permission.modify}
-                      onChange={handleChange(permission.name, "modify")}
+                    <Controller
+                      name={`functionalPermissions.${index}.modify`}
+                      control={control}
+                      defaultValue={false} // Initial state
+                      render={({ field }) => (
+                        <PinkSwitch
+                          color="secondary"
+                          checked={field.value}
+                          onChange={(e) => field.onChange(e.target.checked)}
+                        />
+                      )}
                     />
                   </TableCell>
+                  <Controller
+                    name={`functionalPermissions.${index}.functionName`}
+                    control={control}
+                    defaultValue={permission.id}
+                    render={({ field }) => <input type="hidden" {...field} />}
+                  />
                 </tr>
               ))}
             </TableBody>
@@ -90,21 +79,21 @@ function FunctionalAccess({ onChange }) {
 
 export default FunctionalAccess;
 
-
 const PinkSwitch = styled(Switch)(({ theme }) => ({
-  '& .MuiSwitch-switchBase.Mui-checked': {
+  "& .MuiSwitch-switchBase.Mui-checked": {
     color: pink[300],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: alpha(pink[300], theme.palette.action.hoverOpacity),
     },
   },
-  '& .MuiSwitch-switchBase:not(.Mui-checked)': { // Styles for unchecked state
+  "& .MuiSwitch-switchBase:not(.Mui-checked)": {
+    // Styles for unchecked state
     color: grey[700],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: alpha(grey[700], theme.palette.action.hoverOpacity),
     },
   },
-  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
     backgroundColor: pink[300],
   },
 }));
