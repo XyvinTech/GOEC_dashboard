@@ -1,4 +1,4 @@
-import { Grid, Typography, Container, Stack, Box } from "@mui/material";
+import { Grid, Typography, Container, Stack, Box, Switch, FormControlLabel } from "@mui/material";
 import styled from "styled-components";
 import StyledButton from "../../../ui/styledButton";
 import InputField from "../../../ui/styledInput";
@@ -6,16 +6,18 @@ import StyledTab from "../../../ui/styledTab";
 import LocationalAccess from "./locationalAccess";
 import FunctionalAccess from "./functionalAccess";
 import { useForm, Controller, FormProvider } from "react-hook-form";
+import { createRole } from "../../../services/userApi";
+import { toast } from "react-toastify";
+import { PinkSwitch } from "../../../ui/PinkSwitch";
 
-export default function AddRole({ action, data }) {
-
+export default function AddRole({ action, data ,...props}) {
   const methods = useForm({
     defaultValues: {
       roleName: action === "edit" ? data.Name : "",
       roleDescription: action === "edit" ? data.Description : "",
       functionalPermissions: [],
       locationalPermissions: [],
-      
+      isActive: action === "edit" ? data.isActive : true,
     },
   });
 
@@ -26,8 +28,14 @@ export default function AddRole({ action, data }) {
     formState: { errors },
   } = methods;
 
-  const onSubmit = (data) => {
-    console.log(data); // Here, 'data' will include all the form fields
+  const onSubmit = async (data) => {
+    try {
+      await createRole(data);
+      props.onSuccess();
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to add role')
+    }
   };
   const buttonChanged = (e) => {
     setValue("togglePage", e.index);
@@ -43,7 +51,6 @@ export default function AddRole({ action, data }) {
                 <Typography sx={{ marginBottom: 1 }}>Role name</Typography>
                 <Controller
                   name="roleName"
-                  
                   render={({ field }) => (
                     <InputField
                       placeholder="Enter Role name"
@@ -60,7 +67,6 @@ export default function AddRole({ action, data }) {
                 </Typography>
                 <Controller
                   name="roleDescription"
-                 
                   render={({ field }) => (
                     <InputField
                       placeholder="Enter Description"
@@ -71,7 +77,29 @@ export default function AddRole({ action, data }) {
                   )}
                 />
               </Grid>
-
+              
+              {/* Active status  */}
+              <Grid item md={12}>
+                <Typography sx={{ marginBottom: 1 }}>
+                  Active Status
+                </Typography>
+                <Controller
+                  name="isActive"
+                  control={methods.control}
+                  render={({ field }) => (
+                    <FormControlLabel
+                    control={
+                      <PinkSwitch
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                        name="isActive"
+                      />
+                    }
+                    label={field.value ? "Active" : "Inactive"}
+                  />
+                  )}
+                />
+              </Grid>
               {/* Tabs for Functional and Locational Access */}
               <Box pl={4} pt={3} sx={{ width: "100%" }}>
                 <StyledTab

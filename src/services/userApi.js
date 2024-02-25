@@ -246,3 +246,55 @@ export async function userSuggestionList(data) {
   }
 }
 
+//create role
+
+export async function createRole(data) {
+  try {
+    const response = await USER_INSTANCE.post(`admin/role/create`,data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function getRoles() {
+  try {
+    const response = await USER_INSTANCE.get(`admin/role/list`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+//create admin
+
+export async function createAdmin(data) {
+  try {
+    const response = await USER_INSTANCE.post(`admin/admin/create`,data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function getAdmins() {
+  try {
+    const response = await USER_INSTANCE.get(`admin/admin/list`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function adminLogin(data) {
+  try {
+    const response = await USER_INSTANCE.post(`admin/admin-signin`,data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

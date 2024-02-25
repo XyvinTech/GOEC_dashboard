@@ -6,6 +6,7 @@ import StyledTable from "../../../ui/styledTable";
 import StyledDivider from "../../../ui/styledDivider";
 import AddAdmin from "./addAdmin";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
+import { toast } from "react-toastify";
 
 export default function AdminManangement({ data, headers }) {
   const [open, setOpen] = useState(false);
@@ -19,6 +20,11 @@ export default function AdminManangement({ data, headers }) {
   // Function to close the modal
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAdminSuccess = () => {
+    toast.success("Admin successfully updated!");
+    handleClose(); // Close the modal after success
   };
 
   const handleClick = (e) => {
@@ -75,7 +81,7 @@ export default function AdminManangement({ data, headers }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddAdmin action={action} data={tableData} />
+          <AddAdmin action={action} data={tableData} onSuccess={handleAdminSuccess} />
         </Box>
       </Modal>
     </>

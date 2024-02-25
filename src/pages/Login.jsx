@@ -7,26 +7,38 @@ import { MailOutline, Lock, Visibility } from "@mui/icons-material";
 import StyledButton from "../ui/styledButton";
 import { Controller, useForm } from "react-hook-form";
 import { ReactComponent as Close } from "../assets/icons/close-circle.svg";
+import { adminLogin } from "../services/userApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [forgotShow, setForgotShow] = useState(false);
+  const navigate = useNavigate();
+
 
   const {
     control,
     handleSubmit,
-    setValue,
-    reset,
+   reset,
+    
     formState: { errors },
-    clearErrors,
   } = useForm();
 
-  const onSubmit = (formData) => {
-    console.log(formData);
+  const onSubmit = async (formData) => {
+   try {
+   let data = await adminLogin(formData)
+    console.log(data);
+    toast.success("Login Success");
+    navigate("/");
+   } catch (error) {
+    toast.error("Login Failed");
+reset();
+   }
   };
 
   const handleForgot = (formData) => {
-    console.log(formData);
+    navigate('/forgot-password')
   };
 
   return (

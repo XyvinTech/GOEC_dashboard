@@ -1,63 +1,156 @@
 import { Grid, Typography, Container, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StyledSelectField from "../../../ui/styledSelectField";
 import StyledButton from "../../../ui/styledButton";
 import InputField from "../../../ui/styledInput";
 import StyledPhoneNumber from "../../../ui/StyledPhoneNumber";
 import StyledSwitch from "../../../ui/styledSwitch";
+import { Controller, useForm } from "react-hook-form";
+import StyledInput from "../../../ui/styledInput";
+import { Phone, Try } from "@mui/icons-material";
+import { createAdmin, getRoles } from "../../../services/userApi";
+import { toast } from "react-toastify";
 
-export default function AddAdmin({action, data}) {
+export default function AddAdmin({ action, data,...props }) {
+  const formOptions =
+    action === "edit"
+      ? {
+          defaultValues: {
+            name: data.name,
+            designation: data.designation,
+            email: data.email,
+            mobile: data.mobile,
+            role: data.role,
+            status: data.status,
+          },
+        }
+      : {};
+
+  const [roles, setRoles] = useState([]);
+  const { register, handleSubmit, control } = useForm(formOptions);
+  const onSubmit = async (formData) => {
+    let fData = {...formData, role:formData.role.value}
+    
+    try {
+      await createAdmin(fData)
+      props.onSuccess();
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to add role')
+    }
+
+  };
+
+const init = async() => {
+
+  let roles1 = await getRoles();
+  setRoles(roles1.result);
+}
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <TableContainer>
       <Container fixed>
-        <Grid container spacing={1}>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Name</Typography>
-            <InputField placeholder={"Enter Admin Name"} value={action==="edit"? data.Name: ""}/>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={1}>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>Name</Typography>
+              <InputField
+                placeholder={"Enter Admin Name"}
+                {...register("name")}
+              />
+            </Grid>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>Designation</Typography>
+              <InputField
+                placeholder={"Enter Designation"}
+                {...register("designation")}
+              />
+            </Grid>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>Email</Typography>
+              <InputField placeholder={"Enter Email"} {...register("email")} />
+            </Grid>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>Mobile number</Typography>
+              <Controller
+                name="mobile"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <StyledInput
+                      {...field}
+                      icon={<Phone />}
+                      placeholder={"Enter Phone number"}
+                      type="number"
+                    />
+                  </>
+                )}
+                rules={{ required: "Phone number is required" }}
+              />{" "}
+            </Grid>
+            <Grid item md={12}>
+              <Typography sx={{ marginBottom: 1 }}>Role name</Typography>
+              <Controller
+                name="role"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <StyledSelectField
+                      {...field}
+                      placeholder="Role"
+                      options={roles.map((e) => ({
+                        label: e.roleName,
+                        value: e._id,
+                      }))}
+                    />
+                  </>
+                )}
+                rules={{ required: "Role is required" }}
+              />
+            </Grid>
+            <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
+              <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
+                <Typography>Activate Admin status</Typography>
+                <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <StyledSwitch
+                    {...field}
+                  
+                    defaultChecked={field.value}
+                  // Adding 'required' attribute
+                  />
+                )}
+              />
+              </Stack>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={12}
+              sx={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
+                <StyledButton variant={"secondary"} width="103">
+                  Cancel
+                </StyledButton>
+                <StyledButton variant={"primary"} width="160">
+                  Save
+                </StyledButton>
+              </Stack>
+            </Grid>
           </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Designation</Typography>
-            <InputField placeholder={"Enter Designation"} value={action==="edit"? data.Designation: ""}/>
-          </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Email</Typography>
-            <InputField placeholder={"Enter Email"} value={action==="edit"? data.Email: ""}/>
-          </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Mobile number</Typography>
-            <StyledPhoneNumber placeholder={"Enter Mobile number"} value={action==="edit"? data.Phone: ""}/>
-          </Grid>
-          <Grid item md={12}>
-            <Typography sx={{ marginBottom: 1 }}>Role name</Typography>
-            <StyledSelectField placeholder={"Select Role"} value={action==="edit"? data.Role: ""}/>
-          </Grid>
-          <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
-            <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-              <Typography>Activate Admin status</Typography>
-              <StyledSwitch />
-            </Stack>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={12}
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              alignItems: "center",
-            }}
-          >
-            <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-              <StyledButton variant={"secondary"} width="103">
-                Cancel
-              </StyledButton>
-              <StyledButton variant={"primary"} width="160">
-                Save
-              </StyledButton>
-            </Stack>
-          </Grid>
-        </Grid>
+        </form>
       </Container>
     </TableContainer>
   );
@@ -70,5 +163,5 @@ export const TableContainer = styled.div`
   background: #27292f; // Dark background for the table
   overflow-x: auto; // Allows table to be scrollable horizontally
   border-radius: 8px; // Rounded corners
-  max-width:500px;
+  max-width: 500px;
 `;

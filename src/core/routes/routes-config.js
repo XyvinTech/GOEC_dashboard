@@ -68,10 +68,7 @@ const RoutesConfig = () => {
          
         },
 
-        {
-            path: '/forgot-password',
-            element: <UnderConstruction />,
-        },
+      
         //!---------Dashboard
         {
             path: '/dashboard',

@@ -1,7 +1,5 @@
 import { Controller } from "react-hook-form";
-import { pink, grey } from "@mui/material/colors";
-import { alpha, styled } from "@mui/material/styles";
-import { Switch } from "@mui/material";
+
 import { allPermissions } from "./role";
 
 import {
@@ -12,6 +10,7 @@ import {
   TableBody,
   TableCell,
 } from "../../../ui/styledTable";
+import { PinkSwitch } from "../../../ui/PinkSwitch";
 
 const headers = ["Permissions", "View", "Modify"];
 
@@ -79,21 +78,3 @@ function FunctionalAccess({ control }) {
 
 export default FunctionalAccess;
 
-const PinkSwitch = styled(Switch)(({ theme }) => ({
-  "& .MuiSwitch-switchBase.Mui-checked": {
-    color: pink[300],
-    "&:hover": {
-      backgroundColor: alpha(pink[300], theme.palette.action.hoverOpacity),
-    },
-  },
-  "& .MuiSwitch-switchBase:not(.Mui-checked)": {
-    // Styles for unchecked state
-    color: grey[700],
-    "&:hover": {
-      backgroundColor: alpha(grey[700], theme.palette.action.hoverOpacity),
-    },
-  },
-  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-    backgroundColor: pink[300],
-  },
-}));

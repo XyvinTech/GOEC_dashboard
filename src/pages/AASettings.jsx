@@ -1,10 +1,9 @@
-import React from "react";
 import { Box } from "@mui/material";
 import { DummyData } from "../assets/json/AdminActivityData";
 import AdminActivity from "../components/settings/adminActivity/adminActivity";
 
 function AASettings() {
-  const headers = [
+  const tableHeader = [
     "Admin Name",
     "Role",
     "Session start time",
@@ -12,9 +11,13 @@ function AASettings() {
     "Session Device",
     "Session IP",
   ];
+
+
+
+
   return (
     <Box>
-      <AdminActivity headers={headers} data={DummyData} />
+      <AdminActivity headers={tableHeader} data={DummyData} />
     </Box>
   );
 }

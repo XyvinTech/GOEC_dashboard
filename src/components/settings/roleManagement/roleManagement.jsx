@@ -7,6 +7,7 @@ import { useState } from "react";
 import StyledDivider from "../../../ui/styledDivider";
 import AddRole from "./addRole";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
+import { toast } from "react-toastify";
 
 export default function RoleManagement({ headers, data }) {
   const [open, setOpen] = useState(false);
@@ -21,7 +22,10 @@ export default function RoleManagement({ headers, data }) {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleRoleSuccess = () => {
+    toast.success("Role successfully updated!");
+    handleClose(); // Close the modal after success
+  };
   const handleClick = (e) => {
     if (e.action === "Edit") {
       setAction("edit");
@@ -76,7 +80,7 @@ export default function RoleManagement({ headers, data }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddRole action={action} data={tableData} />
+          <AddRole action={action} data={tableData} onSuccess={handleRoleSuccess} />
         </Box>
       </Modal>
     </>

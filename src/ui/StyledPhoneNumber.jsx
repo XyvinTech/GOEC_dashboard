@@ -37,15 +37,6 @@ border:none;
 
 
 const StyledPhoneNumber = ({ onChange,placeholder }) => {
-  // const [selectedCountryCode, setSelectedCountryCode] = useState('');
-
-  // const handleCountryCodeChange = (selectedOption) => {
-  //   if (selectedOption) {
-  //     setSelectedCountryCode(selectedOption.value);
-  //     // You can also propagate the selected country code to the parent component if needed
-  //     onChange(selectedOption.value);
-  //   }
-  // };
 
 
 
