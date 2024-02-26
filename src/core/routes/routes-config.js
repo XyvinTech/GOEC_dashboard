@@ -37,6 +37,8 @@ import Help from "../../pages/Help";
 import Analytics from "../../pages/analytics";
 import Alarms from "../../pages/alarms";
 import PrivateRoute from "./private-route";
+import EmailNotification from "../../components/notification/emailNotification/EmailNotification";
+import AppNotification from "../../components/notification/appNotification/AppNotification";
 
 
 const RoutesConfig = () => {
@@ -233,11 +235,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'email-notification',
-                    element: <Notification />,
+                    element: <EmailNotification />,
                 },
                 {
                     path: 'app-notifications',
-                    element: <Notification />,
+                    element: <AppNotification />,
                 }
 
             ]

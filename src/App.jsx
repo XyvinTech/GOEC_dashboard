@@ -7,11 +7,11 @@ import { AuthProvider } from "./core/auth/AuthContext";
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <AuthProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
         <RouteRenderer />
         <ToastContainer autoClose={2000} position="bottom-right" />
-      </AuthProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }

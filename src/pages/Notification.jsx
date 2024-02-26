@@ -12,12 +12,12 @@ export default function Notification() {
       };
   return (
     <Box>
-         <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
+         {/* <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
         <StyledTab
           buttons={["Email Notifications", "In-App Notifications"]}
           onChanged={buttonChanged}
         />
-      </Stack>
+      </Stack> */}
       {togglePage === 0 ? <EmailNotification /> : <AppNotification />}
     </Box>
   )

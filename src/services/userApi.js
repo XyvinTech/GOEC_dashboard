@@ -266,7 +266,23 @@ export async function getRoles() {
     throw error;
   }
 }
+export async function deleteRole(id) {
+  try {
+    const response = await USER_INSTANCE.delete(`admin/role/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
+export async function updateRole(id,data) {
+  try {
+    const response = await USER_INSTANCE.put(`admin/role/${id}`,data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
 
 //create admin
@@ -290,6 +306,24 @@ export async function getAdmins() {
   }
 }
 
+
+export async function deleteAdmin(id) {
+  try {
+    const response = await USER_INSTANCE.delete(`admin/admin/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateAdmin(id,data) {
+  try {
+    const response = await USER_INSTANCE.put(`admin/admin/${id}`,data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 export async function adminLogin(data) {
   try {
     const response = await USER_INSTANCE.post(`admin/admin-signin`,data);

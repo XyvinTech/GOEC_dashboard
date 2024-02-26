@@ -99,7 +99,7 @@ export default function EmailNotification() {
         sx={{
           borderRadius: "8px",
           px: { md: 30, xs: 2 },
-          py: 2,
+          py: 5,
           alignItems: "center",
         }}
       >

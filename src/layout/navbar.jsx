@@ -19,11 +19,7 @@ export const DashboardNavbar = (props) => {
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
 
-  const logout = () => {
-    localStorage.removeItem('token'); 
-   
-    navigate('/login'); 
-  };
+  const { logout } = useAuth();
 
 
   return (

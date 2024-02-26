@@ -29,6 +29,7 @@ export default function Login() {
    try {
    let data = await adminLogin(formData)
     console.log(data);
+    localStorage.setItem('token', data.token)
     toast.success("Login Success");
     navigate("/");
    } catch (error) {
