@@ -189,3 +189,12 @@ export async function getDashboardAnalytics() {
     throw error;
   }
 }
+
+export async function getChargingSummaryReport(params) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transaction/report`,{params:params});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

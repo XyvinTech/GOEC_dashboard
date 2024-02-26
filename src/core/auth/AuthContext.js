@@ -9,8 +9,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNTE2MjM5MDIyfQ.ItUt9bHJO9XPiwClcP8RvWY3JqsnXOkIg2Mxnyk4aX4';
+    // const token = localStorage.getItem('token');
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNTE2MjM5MDIyfQ.ItUt9bHJO9XPiwClcP8RvWY3JqsnXOkIg2Mxnyk4aX4';
     if (token) {
       try {
         const decoded = jwtDecode(token); 

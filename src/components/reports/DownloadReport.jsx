@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Stack } from "@mui/material";
-import InputField from "../../ui/styledInput";
 import StyledSelectField from "../../ui/styledSelectField";
 import StyledButton from "../../ui/styledButton";
 import LastSynced from "../../layout/LastSynced";
-import { ReactComponent as CalendarMonth } from "../../assets/icons/calendar_month.svg";
 import { useForm, Controller } from "react-hook-form";
 import CalendarInput from "../../ui/CalendarInput";
 import StyledInput from "../../ui/styledInput";
@@ -13,6 +11,14 @@ import {
   getChargingPointsListOfStation,
   getListOfChargingStation,
 } from "../../services/stationAPI";
+import { getReportForChargePoint } from "../../services/evMachineAPI";
+import { generateExcel } from "../../utils/excelReport";
+import { getWalletReport } from "../../services/walletAPI";
+import { getChargingSummaryReport } from "../../services/ocppAPI";
+
+
+
+
 export default function DownloadReport() {
   const {
     control,
@@ -24,38 +30,61 @@ export default function DownloadReport() {
     formState: { errors },
     clearErrors,
   } = useForm();
-  const onSubmit = (data) => {
 
+  const reportApiFunctions = {
+    "Charge points":(params) => getReportForChargePoint(params),
+    "Account Transaction":(params) => getWalletReport(params),
+    "Alarms":(params) => getReportForChargePoint(params),
+    "Charging Summary":(params) => getChargingSummaryReport(params),
+    "User Registration":(params) => getWalletReport(params),
+    "Feedback":(params) => getWalletReport(params),
+  };
+
+  const onSubmit = async (data) => {
     data = { ...data, report: selectedOption };
 
-    if (data.startDate && !data.endDate ) {
-      setError("endDate", { type: "custom", message: "select End Date" })
-      return
+    if (data.startDate && !data.endDate) {
+      setError("endDate", { type: "custom", message: "select End Date" });
+      return;
     }
-    if ((data.report !=='Account Transaction' || data.report !== 'User Registration') && !data.location ) {
-      setError("location", { type: "custom", message: "select location" })
-      return
-    }else{
-      data.location = data.location.value
-    }
-
-    if (data.report ==='Alarms'  && !data.cpid ) {
-      setError("cpid", { type: "custom", message: "select location" })
-      return
-    }else{
-      data.cpid = data.cpid.label
+    if (
+      (data.report !== "Account Transaction" ||
+        data.report !== "User Registration") &&
+      !data.location
+    ) {
+      setError("location", { type: "custom", message: "select location" });
+      return;
+    } else {
+      data.location = data.location.value;
     }
 
-    
+    if (data.report === "Alarms" && !data.cpid) {
+      setError("cpid", { type: "custom", message: "select location" });
+      return;
+    } else {
+      data.cpid = data.cpid?.label;
+    }
 
-    console.log("Form data submitted:", data);
 
-// if(data.report==="Charge points"){
 
-// }
+    const selectedReportFunction = reportApiFunctions[data.report];
+    console.log(selectedReportFunction);
 
-   
-    // Close your form or perform other actions
+
+ if (selectedReportFunction) {
+      try {
+        const reportData = await selectedReportFunction(data); 
+        const excelData = reportData.result;
+        if (excelData) {
+          generateExcel(excelData.headers, excelData.body);
+        }
+      } catch (error) {
+        console.error("Error fetching report data:", error);
+      }
+    } else {
+      console.error("Selected report function is not defined:", data.report);
+    }
+
   };
 
   const handleDateChangeInParent = (date) => {
@@ -187,10 +216,11 @@ export default function DownloadReport() {
                               getChargingPointsListOfStation(e.value).then(
                                 (res) => {
                                   if (res.result) {
+                                    console.log(res.result);
                                     setMachineList(
                                       res.result.map((dt) => ({
                                         label: dt.evMachines.CPID,
-                                        value: dt.evMachines,
+                                        value: dt.evMachines.CPID,
                                       }))
                                     );
                                   }

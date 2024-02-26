@@ -55,3 +55,15 @@ export async function getWalletTransactionFilteredList(start, end) {
     throw error;
   }
 }
+
+
+export async function getWalletReport(params) {
+  try {
+    const response = await TRANSACTION_URL.get(
+      `walletTransaction/dashboard/report`,{params:params}
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

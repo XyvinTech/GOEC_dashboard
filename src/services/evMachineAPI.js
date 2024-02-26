@@ -198,3 +198,12 @@ export async function changeEVTarrif(evMachine,data) {
     throw error;
   }
 }
+
+export async function getReportForChargePoint(params) {
+  try {
+    const response = await EV_MACHINE_INSTANCE.get(`evMachine/dashboard/report/2`,{params:params});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
