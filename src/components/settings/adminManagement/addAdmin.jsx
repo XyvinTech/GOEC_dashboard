@@ -9,44 +9,49 @@ import StyledSwitch from "../../../ui/styledSwitch";
 import { Controller, useForm } from "react-hook-form";
 import StyledInput from "../../../ui/styledInput";
 import { Phone, Try } from "@mui/icons-material";
-import { createAdmin, getRoles } from "../../../services/userApi";
+import { createAdmin, getRoles, updateAdmin } from "../../../services/userApi";
 import { toast } from "react-toastify";
 
-export default function AddAdmin({ action, data,...props }) {
+export default function AddAdmin({ setIsChange, isChange, setAction, action, data, ...props }) {
   const formOptions =
     action === "edit"
       ? {
           defaultValues: {
-            name: data.name,
-            designation: data.designation,
-            email: data.email,
-            mobile: data.mobile,
-            role: data.role,
-            status: data.status,
+            name: data.Name,
+            designation: data.Designation,
+            email: data.Email,
+            mobile: data.Phone,
+            role: data.Role,
+            status: data.Status === "Active" ? true : false,
           },
         }
       : {};
 
   const [roles, setRoles] = useState([]);
-  const { register, handleSubmit, control } = useForm(formOptions);
+  const { register, handleSubmit, control, reset } = useForm(formOptions);
   const onSubmit = async (formData) => {
-    let fData = {...formData, role:formData.role.value}
-    
+    let fData = { ...formData, role: formData.role.value };
+
     try {
-      await createAdmin(fData)
+      if (action === "add") {
+        await createAdmin(fData);
+      } else if (action === "edit") {
+        await updateAdmin(data._id, fData);
+        setAction("add");
+        reset();
+      }
       props.onSuccess();
+      setIsChange(!isChange);
     } catch (error) {
       console.log(error);
-      toast.error('Failed to add role')
+      toast.error("Failed to add role");
     }
-
   };
 
-const init = async() => {
-
-  let roles1 = await getRoles();
-  setRoles(roles1.result);
-}
+  const init = async () => {
+    let roles1 = await getRoles();
+    setRoles(roles1.result);
+  };
 
   useEffect(() => {
     init();
@@ -59,17 +64,11 @@ const init = async() => {
           <Grid container spacing={1}>
             <Grid item md={12}>
               <Typography sx={{ marginBottom: 1 }}>Name</Typography>
-              <InputField
-                placeholder={"Enter Admin Name"}
-                {...register("name")}
-              />
+              <InputField placeholder={"Enter Admin Name"} {...register("name")} />
             </Grid>
             <Grid item md={12}>
               <Typography sx={{ marginBottom: 1 }}>Designation</Typography>
-              <InputField
-                placeholder={"Enter Designation"}
-                {...register("designation")}
-              />
+              <InputField placeholder={"Enter Designation"} {...register("designation")} />
             </Grid>
             <Grid item md={12}>
               <Typography sx={{ marginBottom: 1 }}>Email</Typography>
@@ -117,17 +116,16 @@ const init = async() => {
               <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
                 <Typography>Activate Admin status</Typography>
                 <Controller
-                name="status"
-                control={control}
-                render={({ field }) => (
-                  <StyledSwitch
-                    {...field}
-                  
-                    defaultChecked={field.value}
-                  // Adding 'required' attribute
-                  />
-                )}
-              />
+                  name="status"
+                  control={control}
+                  render={({ field }) => (
+                    <StyledSwitch
+                      {...field}
+                      defaultChecked={field.value}
+                      // Adding 'required' attribute
+                    />
+                  )}
+                />
               </Stack>
             </Grid>
             <Grid

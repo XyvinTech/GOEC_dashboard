@@ -7,8 +7,9 @@ import StyledDivider from "../../../ui/styledDivider";
 import AddAdmin from "./addAdmin";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
 import { toast } from "react-toastify";
+import { deleteAdmin } from "../../../services/userApi";
 
-export default function AdminManangement({ data, headers }) {
+export default function AdminManangement({ data, headers, setIsChange, isChange }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -27,32 +28,27 @@ export default function AdminManangement({ data, headers }) {
     handleClose(); // Close the modal after success
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     if (e.action === "Edit") {
       setAction("edit");
       setOpen(true);
       setTableData(e.data);
+    } else if (e.action === "Delete") {
+      await deleteAdmin(e.data._id);
+      setIsChange(!isChange);
+      toast.success("Admin account deleted!");
     }
   };
   return (
     <>
       <LastSynced heading="Admin Management" />
-      <Box sx={{p:3}}>
+      <Box sx={{ p: 3 }}>
         <Box display="flex" justifyContent="flex-end">
-          <StyledButton
-            variant="secondary"
-            width="150"
-            mr="10"
-            onClick={handleOpen}
-          >
+          <StyledButton variant="secondary" width="150" mr="10" onClick={handleOpen}>
             Add
           </StyledButton>
         </Box>
-        <StyledTable
-          headers={headers}
-          data={data}
-          onActionClick={handleClick}
-        />
+        <StyledTable headers={headers} data={data} onActionClick={handleClick} />
       </Box>
       {/* Modal */}
       <Modal
@@ -76,12 +72,19 @@ export default function AdminManangement({ data, headers }) {
                 fontWeight: 700,
               }}
             >
-              Add New Admin
+              {action === "edit" ? "Edit" : "Add New"} Admin
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddAdmin action={action} data={tableData} onSuccess={handleAdminSuccess} />
+          <AddAdmin
+            action={action}
+            setAction={setAction}
+            data={tableData}
+            onSuccess={handleAdminSuccess}
+            setIsChange={setIsChange}
+            isChange={isChange}
+          />
         </Box>
       </Modal>
     </>
