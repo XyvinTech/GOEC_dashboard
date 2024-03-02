@@ -7,6 +7,7 @@ import { tableHeaderReplace } from "../utils/tableHeaderReplace";
 
 function RMSettings() {
   let [roles, setRoles] = useState([]);
+  const [isChange, setIsChange] = useState(false)
 
   const init = async () => {
     let data = await getRoles();
@@ -17,7 +18,7 @@ function RMSettings() {
 
   useEffect(() => {
     init();
-  }, []);
+  }, [isChange]);
 
   const tableHeader = [
     "Role name",
@@ -35,7 +36,7 @@ function RMSettings() {
 
   return (
     <Box>
-      <RoleManagement headers={tableHeader} data={AllRoleData} />
+      <RoleManagement headers={tableHeader} data={AllRoleData} setIsChange={setIsChange} isChange={isChange}/>
     </Box>
   );
 }

@@ -8,8 +8,9 @@ import StyledDivider from "../../../ui/styledDivider";
 import AddRole from "./addRole";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
 import { toast } from "react-toastify";
+import { deleteRole } from "../../../services/userApi";
 
-export default function RoleManagement({ headers, data }) {
+export default function RoleManagement({ headers, data, setIsChange, isChange }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -26,32 +27,27 @@ export default function RoleManagement({ headers, data }) {
     toast.success("Role successfully updated!");
     handleClose(); // Close the modal after success
   };
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     if (e.action === "Edit") {
       setAction("edit");
       setOpen(true);
       setTableData(e.data);
+    } else if (e.action === "Delete") {
+      await deleteRole(e.data._id);
+      setIsChange(!isChange);
+      toast.success("Role deleted!");
     }
   };
   return (
     <>
       <LastSynced heading="Role Management" showSearchField={true} />
-      <Box sx={{p:3}}>
+      <Box sx={{ p: 3 }}>
         <Box display="flex" justifyContent="flex-end">
-          <StyledButton
-            variant="secondary"
-            width="150"
-            mr="10"
-            onClick={handleOpen}
-          >
+          <StyledButton variant="secondary" width="150" mr="10" onClick={handleOpen}>
             Add
           </StyledButton>
         </Box>
-        <StyledTable
-          headers={headers}
-          data={data}
-          onActionClick={handleClick}
-        />
+        <StyledTable headers={headers} data={data} onActionClick={handleClick} />
       </Box>
       {/* Modal */}
       <Modal
@@ -80,7 +76,13 @@ export default function RoleManagement({ headers, data }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddRole action={action} data={tableData} onSuccess={handleRoleSuccess} />
+          <AddRole
+            action={action}
+            data={tableData}
+            onSuccess={handleRoleSuccess}
+            setIsChange={setIsChange}
+            isChange={isChange}
+          />
         </Box>
       </Modal>
     </>

@@ -6,18 +6,18 @@ import StyledTab from "../../../ui/styledTab";
 import LocationalAccess from "./locationalAccess";
 import FunctionalAccess from "./functionalAccess";
 import { useForm, Controller, FormProvider } from "react-hook-form";
-import { createRole } from "../../../services/userApi";
+import { createRole, updateRole } from "../../../services/userApi";
 import { toast } from "react-toastify";
 import { PinkSwitch } from "../../../ui/PinkSwitch";
 
-export default function AddRole({ action, data ,...props}) {
+export default function AddRole({ setIsChange, isChange, action, data, ...props }) {
   const methods = useForm({
     defaultValues: {
-      roleName: action === "edit" ? data.Name : "",
-      roleDescription: action === "edit" ? data.Description : "",
+      roleName: action === "edit" ? data["Role name"] : "",
+      roleDescription: action === "edit" ? data["Role Description"] : "",
       functionalPermissions: [],
       locationalPermissions: [],
-      isActive: action === "edit" ? data.isActive : true,
+      isActive: action === "edit" ? data.Status === "Active" : true,
     },
   });
 
@@ -28,13 +28,18 @@ export default function AddRole({ action, data ,...props}) {
     formState: { errors },
   } = methods;
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (Formdata) => {
     try {
-      await createRole(data);
+      if (action === "add") {
+        await createRole(Formdata);
+      } else if (action === "edit") {
+        await updateRole(data._id, Formdata);
+      }
+      setIsChange(!isChange);
       props.onSuccess();
     } catch (error) {
       console.log(error);
-      toast.error('Failed to add role')
+      toast.error("Failed to add role");
     }
   };
   const buttonChanged = (e) => {
@@ -62,9 +67,7 @@ export default function AddRole({ action, data ,...props}) {
                 />
               </Grid>
               <Grid item md={12}>
-                <Typography sx={{ marginBottom: 1 }}>
-                  Role Description
-                </Typography>
+                <Typography sx={{ marginBottom: 1 }}>Role Description</Typography>
                 <Controller
                   name="roleDescription"
                   render={({ field }) => (
@@ -77,26 +80,24 @@ export default function AddRole({ action, data ,...props}) {
                   )}
                 />
               </Grid>
-              
+
               {/* Active status  */}
               <Grid item md={12}>
-                <Typography sx={{ marginBottom: 1 }}>
-                  Active Status
-                </Typography>
+                <Typography sx={{ marginBottom: 1 }}>Active Status</Typography>
                 <Controller
                   name="isActive"
                   control={methods.control}
                   render={({ field }) => (
                     <FormControlLabel
-                    control={
-                      <PinkSwitch
-                        checked={field.value}
-                        onChange={(e) => field.onChange(e.target.checked)}
-                        name="isActive"
-                      />
-                    }
-                    label={field.value ? "Active" : "Inactive"}
-                  />
+                      control={
+                        <PinkSwitch
+                          checked={field.value}
+                          onChange={(e) => field.onChange(e.target.checked)}
+                          name="isActive"
+                        />
+                      }
+                      label={field.value ? "Active" : "Inactive"}
+                    />
                   )}
                 />
               </Grid>
