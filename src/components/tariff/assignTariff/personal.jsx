@@ -145,7 +145,7 @@ export default function Personal({ location }) {
                 }}
               >
                 <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                  <StyledButton variant={"secondary"} width="103">
+                  <StyledButton variant={"secondary"} width="103" type="button">
                     Cancel
                   </StyledButton>
                   <StyledButton
