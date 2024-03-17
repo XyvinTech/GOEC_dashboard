@@ -1,6 +1,6 @@
 import React from "react";
 import LastSynced from "../../../layout/LastSynced";
-import { Box, Modal, Stack, Typography } from "@mui/material";
+import { Box, Dialog, Modal, Stack, Typography } from "@mui/material";
 import StyledTable from "../../../ui/styledTable";
 import StyledButton from "../../../ui/styledButton";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import AddRole from "./addRole";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
 import { toast } from "react-toastify";
 import { deleteRole } from "../../../services/userApi";
+import { Transition } from "../../../utils/DialogAnimation";
 
 export default function RoleManagement({ headers, data, setIsChange, isChange }) {
   const [open, setOpen] = useState(false);
@@ -16,6 +17,8 @@ export default function RoleManagement({ headers, data, setIsChange, isChange })
   const [tableData, setTableData] = useState();
   // Function to open the modal
   const handleOpen = () => {
+    setTableData();
+    setAction("add");
     setOpen(true);
   };
 
@@ -47,14 +50,13 @@ export default function RoleManagement({ headers, data, setIsChange, isChange })
             Add
           </StyledButton>
         </Box>
-        <StyledTable headers={headers} data={data} onActionClick={handleClick} />
+        <StyledTable headers={headers} data={data} onActionClick={handleClick} actions={["Edit","Delete"]} />
       </Box>
       {/* Modal */}
-      <Modal
+      <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        TransitionComponent={Transition}
       >
         <Box sx={modalStyle}>
           <Stack
@@ -80,25 +82,22 @@ export default function RoleManagement({ headers, data, setIsChange, isChange })
             action={action}
             data={tableData}
             onSuccess={handleRoleSuccess}
+            onClose = {handleClose}
             setIsChange={setIsChange}
             isChange={isChange}
           />
         </Box>
-      </Modal>
+      </Dialog>
     </>
   );
 }
 
 // Modal style
 const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
   width: "auto", // Adjust width to fit your content or screen
   bgcolor: "#27292F", // Dark background color
   boxShadow: 10,
-  p: 4,
+  p: 2,
   color: "#fff", // White text for better visibility on dark background
   outline: "none", // Remove the focus ring
 };

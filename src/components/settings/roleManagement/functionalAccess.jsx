@@ -14,10 +14,10 @@ import { PinkSwitch } from "../../../ui/PinkSwitch";
 
 const headers = ["Permissions", "View", "Modify"];
 
-function FunctionalAccess({ control }) {
+function FunctionalAccess({ control,datas, isUpdate }) {
   return (
     <>
-      <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+      <div style={{ maxHeight: "300px", overflowY: "auto" }}>
         <TableContainer>
           <Table>
             <TableHeader>
@@ -31,8 +31,27 @@ function FunctionalAccess({ control }) {
             <TableBody>
               {allPermissions.map((permission, index) => (
                 <tr key={permission.id}>
+                  {/* {console.log(permission)} */}
                   <TableCell>{permission.name}</TableCell>
-                  <TableCell>
+                  {
+                    permission.permissionArray.map((item) => (
+                      <TableCell>
+                        <Controller
+                          name={`functionalPermissions.${index}.${item.label}`}
+                          control={control}
+                          defaultValue={isUpdate ? datas.includes(item.value) : false} // Initial state
+                          render={({ field }) => (
+                            <PinkSwitch
+                              color="secondary"
+                              {...field}
+                              defaultChecked={isUpdate ? datas.includes(item.value) : false}
+                            />
+                          )}
+                        />
+                      </TableCell>
+                    ))
+                  }
+                  {/* <TableCell>
                     <Controller
                       name={`functionalPermissions.${index}.view`}
                       control={control}
@@ -40,8 +59,6 @@ function FunctionalAccess({ control }) {
                       render={({ field }) => (
                         <PinkSwitch
                           color="secondary"
-                          checked={field.value}
-                          onChange={(e) => field.onChange(e.target.checked)}
                         />
                       )}
                     />
@@ -54,12 +71,10 @@ function FunctionalAccess({ control }) {
                       render={({ field }) => (
                         <PinkSwitch
                           color="secondary"
-                          checked={field.value}
-                          onChange={(e) => field.onChange(e.target.checked)}
                         />
                       )}
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <Controller
                     name={`functionalPermissions.${index}.functionName`}
                     control={control}

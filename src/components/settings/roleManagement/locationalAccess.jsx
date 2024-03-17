@@ -1,10 +1,11 @@
 import { Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getListOfChargingStation } from "../../../services/stationAPI";
 import AsyncSelect from "react-select/async";
 import { Controller, useFormContext } from "react-hook-form";
+import StyledSelectField from "../../../ui/styledSelectField";
 
-function LocationalAccess() {
+function LocationalAccess({ isUpdate, datas }) {
   const {
     control,
     setValue,
@@ -12,21 +13,25 @@ function LocationalAccess() {
     formState: { errors },
   } = useFormContext(); // Use useFormContext to access form methods
 
+  const [optionList, setOptionList] = useState([])
+
   const loadLocationOptions = async (inputValue) => {
     try {
       const response = await getListOfChargingStation(inputValue);
       if (response.status) {
-        return response.result.map((station) => ({
+        setOptionList(response.result.map((station) => ({
           label: station.name,
           value: station._id,
-        }));
+        })))
       }
-      return [];
     } catch (error) {
       console.error("Error fetching stations", error);
-      return [];
     }
   };
+  useEffect(() => {
+    loadLocationOptions();
+  }, [])
+
 
   return (
     <>
@@ -39,25 +44,18 @@ function LocationalAccess() {
           control={control}
           render={({ field }) => (
             <>
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                loadOptions={loadLocationOptions}
+              <StyledSelectField
+                {...field}
+                options={optionList}
                 placeholder="Select Location"
                 isMulti
-                styles={customStyles}
-                theme={customTheme}
-                value={field.value}
-                onChange={(selectedOptions) => {
-                  field.onChange(selectedOptions);
-                }}
               />
               {errors.locations && (
                 <span style={errorMessageStyle}>{errors.locations.message}</span>
               )}
             </>
           )}
-        
+
         />
       </Grid>
     </>
