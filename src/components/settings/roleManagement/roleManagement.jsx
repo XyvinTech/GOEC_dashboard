@@ -52,7 +52,7 @@ export default function RoleManagement({ headers, data, setIsChange, isChange })
         </Box>
         <StyledTable headers={headers} data={data} onActionClick={handleClick} actions={["Edit","Delete"]} />
       </Box>
-      {/* Modal */}
+      {/* Modal */} 
       <Dialog
         open={open}
         onClose={handleClose}

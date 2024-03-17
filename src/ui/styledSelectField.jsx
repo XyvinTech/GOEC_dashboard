@@ -95,33 +95,11 @@ const StyledSelectField = ({ options, value, placeholder,
       setValueOption({ value: options && (!isMulti && options[selectedIndex]) })
       // valueOptions.value = options && (!isMulti && options[selectedIndex])
     }
+    if(!value){
+      setValueOption({ value: "" })
+    }
   }, [value,options])
 
-  // if (options) {
-  //   for (var i = 0; i < options.length && value; i++) {
-  //     if (isMulti) {
-  //       for (let index = 0; index < value.length; index++) {
-  //         // console.log("from option", options[i]);
-  //         // console.log("from value", value[index]);
-  //         console.log(options[i].value === value[index].value);
-  //         if (options[i].value === value[index] || options[i].label === value[index] || options[i].value === value[index].value) {
-  //           multiSelected.push(options[i])
-  //         }
-  //       }
-  //     } else {
-  //       if (options[i].value === value || options[i].label === value) {
-  //         selectedIndex = i;
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
-  // if (isMulti) {
-  //   valueOptions.defaultValue = options && (isMulti && multiSelected)
-  // }
-  // else {
-  //   valueOptions.value = options && (!isMulti && options[selectedIndex])
-  // }
   return (
     <SelectContainer>
       <Select
