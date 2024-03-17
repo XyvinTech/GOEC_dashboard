@@ -27,12 +27,12 @@ const tableHeader = [
 
 const newActions = ["View", "Download Invoice", "Resend Email"];
 
-export default function AllChargingTransactions({ data,updateData }) {
+export default function AllChargingTransactions({ data, updateData }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
   const [filterValue, setFilterValue] = useState('')
 
-  const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed','location','duration','chargePointId','connectorId','totalAmount','closureReason','closeBy'], tableHeader)
+  const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed', 'location', 'duration', 'chargePointId', 'connectorId', 'totalAmount', 'closureReason', 'closeBy'], tableHeader)
 
 
   // Function to close the modal
@@ -49,17 +49,17 @@ export default function AllChargingTransactions({ data,updateData }) {
   return (
     <>
       <LastSynced heading="Charging Transactions" reloadHandle={updateData}  >
-      <StyledSearchField placeholder={'Search'} onChange={(e) => {
-                    setFilterValue(e.target.value)
-                }} />
-                <RightDrawer>
-                    <Filter onSubmited={updateData} />
-                </RightDrawer>
+        <StyledSearchField placeholder={'Search'} onChange={(e) => {
+          setFilterValue(e.target.value)
+        }} />
+        <RightDrawer>
+          <Filter onSubmited={updateData} />
+        </RightDrawer>
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable
           headers={tableHeader}
-          data={searchAndFilter(AllOcppTransactionData,filterValue)}
+          data={searchAndFilter(AllOcppTransactionData, filterValue)}
           actions={newActions}
           onActionClick={tableActionClick}
         />
