@@ -250,6 +250,7 @@ export async function userSuggestionList(data) {
 
 export async function createRole(data) {
   try {
+    console.log(data);
     const response = await USER_INSTANCE.post(`admin/role/create`,data);
     return response.data;
   } catch (error) {

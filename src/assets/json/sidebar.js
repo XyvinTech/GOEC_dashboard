@@ -24,7 +24,7 @@ export const siderbarListItems = [
             {
                 href: 'dashboard/live-status',
                 title: 'Live Status',
-                requiredRoles: ['admin']
+                // requiredRoles: ['liveStatus_view']
             },
             {
                 href: 'dashboard/analytics',

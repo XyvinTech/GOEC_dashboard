@@ -6,7 +6,7 @@ import { getActiveSession } from "../services/ocppAPI";
 import { tableHeaderReplace } from "../utils/tableHeaderReplace";
 
 function restructureData(dataArray) {
-  console.log(dataArray);
+  
   return dataArray.map((item) => ({
     _id: item._id,
     transactionId: item.transactionId,

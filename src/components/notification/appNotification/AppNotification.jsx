@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { sendBulkPushNotification } from "../../../services/notificationAPI";
 
 export default function EmailNotification() {
-  const [userOptions, setUserOption] = useState([]);
+  const [userList, setUserList] = useState([]);
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [selectedFile, setSelectedFile] = useState();
   const reference = useRef();
@@ -33,12 +33,20 @@ export default function EmailNotification() {
   });
   const onSubmit = (data) => {
     const mails = data.sendTo.map((dt) => dt.value);
-
+    const userIds = data.sendTo.map(dataItem => {
+      const user = userList.find(user => user.mobile === dataItem.label);
+      return user ? user._id : null;
+    }).filter(id => id !== null); 
+    
+   
+   
+   
     const formData = new FormData();
     formData.append("to", mails);
     formData.append("subject", data.subject);
     formData.append("text", data.content);
     formData.append("url", data.url);
+    formData.append("userArray", userIds);
 
     // if (selectedFile) {
     //   formData.append("file", selectedFile);
@@ -81,7 +89,10 @@ export default function EmailNotification() {
   const loadUserOptions = async (inputValue) => {
     try {
       const response = await userSuggestionList(inputValue);
+      setUserList(response.result);
+   
       if (response.status) {
+       
         return response.result.map((user) => ({
           label: user.mobile,
           value: user.firebaseToken,
