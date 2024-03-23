@@ -6,35 +6,54 @@ import StyledTab from "../../../ui/styledTab";
 import LocationalAccess from "./locationalAccess";
 import FunctionalAccess from "./functionalAccess";
 import { useForm, Controller, FormProvider } from "react-hook-form";
-import { createRole } from "../../../services/userApi";
+import { createRole, updateRole } from "../../../services/userApi";
 import { toast } from "react-toastify";
 import { PinkSwitch } from "../../../ui/PinkSwitch";
+import { useEffect } from "react";
 
-export default function AddRole({ action, data ,...props}) {
+export default function AddRole({ setIsChange, isChange, action, data,onClose, ...props }) {
   const methods = useForm({
     defaultValues: {
-      roleName: action === "edit" ? data.Name : "",
-      roleDescription: action === "edit" ? data.Description : "",
+      togglePage: 0,
+      roleName: action === "edit" ? data["Role name"] : "",
+      roleDescription: action === "edit" ? data["Role Description"] : "",
       functionalPermissions: [],
-      locationalPermissions: [],
-      isActive: action === "edit" ? data.isActive : true,
+      locationalPermissions: action === "edit" ? data["locationAccess"] : [],
+      isActive: action === "edit" ? data.Status === "Active" : true,
     },
   });
+  
 
   const {
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
+    reset
   } = methods;
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (Formdata) => {
+    console.log(Formdata);
+    let dt = {
+      functionalPermissions: Formdata.functionalPermissions,
+      isActive: Formdata.isActive,
+      roleName: Formdata.roleName,
+      roleDescription: Formdata.roleDescription,
+      togglePage: Formdata.togglePage,
+      locationalPermissions: Formdata.locationalPermissions.map((d)=>{return d.value ? d : {value:d}})
+      }
+      console.log(dt);
     try {
-      await createRole(data);
+      if (action === "add") {
+        await createRole(dt);
+      } else if (action === "edit") {
+        await updateRole(data._id, dt);
+      }
+      setIsChange(!isChange);
       props.onSuccess();
     } catch (error) {
       console.log(error);
-      toast.error('Failed to add role')
+      toast.error("Failed to add role");
     }
   };
   const buttonChanged = (e) => {
@@ -45,7 +64,7 @@ export default function AddRole({ action, data ,...props}) {
     <TableContainer>
       <FormProvider {...methods}>
         <Container fixed>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={4}>
               <Grid item md={12}>
                 <Typography sx={{ marginBottom: 1 }}>Role name</Typography>
@@ -62,9 +81,7 @@ export default function AddRole({ action, data ,...props}) {
                 />
               </Grid>
               <Grid item md={12}>
-                <Typography sx={{ marginBottom: 1 }}>
-                  Role Description
-                </Typography>
+                <Typography sx={{ marginBottom: 1 }}>Role Description</Typography>
                 <Controller
                   name="roleDescription"
                   render={({ field }) => (
@@ -77,26 +94,24 @@ export default function AddRole({ action, data ,...props}) {
                   )}
                 />
               </Grid>
-              
+
               {/* Active status  */}
               <Grid item md={12}>
-                <Typography sx={{ marginBottom: 1 }}>
-                  Active Status
-                </Typography>
+                <Typography sx={{ marginBottom: 1 }}>Active Status</Typography>
                 <Controller
                   name="isActive"
                   control={methods.control}
                   render={({ field }) => (
                     <FormControlLabel
-                    control={
-                      <PinkSwitch
-                        checked={field.value}
-                        onChange={(e) => field.onChange(e.target.checked)}
-                        name="isActive"
-                      />
-                    }
-                    label={field.value ? "Active" : "Inactive"}
-                  />
+                      control={
+                        <PinkSwitch
+                          checked={field.value}
+                          onChange={(e) => field.onChange(e.target.checked)}
+                          name="isActive"
+                        />
+                      }
+                      label={field.value ? "Active" : "Inactive"}
+                    />
                   )}
                 />
               </Grid>
@@ -106,8 +121,8 @@ export default function AddRole({ action, data ,...props}) {
                   buttons={["Functional Access", "Locational Access"]}
                   onChanged={buttonChanged}
                 />
-                {watch("togglePage") === 0 && <FunctionalAccess />}
-                {watch("togglePage") === 1 && <LocationalAccess />}
+                {watch("togglePage") === 0 && <FunctionalAccess datas={data && data.permissions} isUpdate={action === "edit"} />}
+                {watch("togglePage") === 1 && <LocationalAccess datas={data && data.locationAccess} isUpdate={action === "edit"} />}
               </Box>
 
               {/* Save and Cancel Buttons */}
@@ -121,8 +136,8 @@ export default function AddRole({ action, data ,...props}) {
                   alignItems: "center",
                 }}
               >
-                <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                  <StyledButton variant={"secondary"} width="103">
+                <Stack direction={"row"} spacing={2} sx={{ mt: 1 }}>
+                  <StyledButton variant={"secondary"} width="103" type="button" onClick={onClose}>
                     Cancel
                   </StyledButton>
                   <StyledButton variant={"primary"} width="160">

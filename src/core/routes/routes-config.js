@@ -39,6 +39,7 @@ import Alarms from "../../pages/alarms";
 import PrivateRoute from "./private-route";
 import EmailNotification from "../../components/notification/emailNotification/EmailNotification";
 import AppNotification from "../../components/notification/appNotification/AppNotification";
+import { permissions } from "./permissions";
 
 
 const RoutesConfig = () => {
@@ -79,16 +80,16 @@ const RoutesConfig = () => {
                 {
                     path: 'live-status',
                     // element:  <PrivateRoute element={<LiveStatus  />} requiredPermission="admin" />,
-                    element:  <PrivateRoute element={<LiveStatus  />}  />,
+                    element:  <PrivateRoute element={<LiveStatus  />} requiredPermission={permissions.liveStatus.view} />,
 
                 },
                 {
                     path: 'analytics',
-                    element: <Analytics />,
+                    element:  <PrivateRoute element={<Analytics />} requiredPermission={permissions.analytics.view} />,
                 },
                 {
                     path: 'alarms',
-                    element: <Alarms />,
+                    element:  <PrivateRoute element={<Alarms />} requiredPermission={permissions.alarms.view} />,
                 }
             ]
         },
@@ -99,11 +100,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'charge-stations',
-                    element: <ChargingStation />,
+                    element:  <PrivateRoute element={<ChargingStation />} requiredPermission={permissions.chargingStations.view} />,
                 },
                 {
                     path: 'charge-points',
-                    element: <ChargingPoints />,
+                    element:  <PrivateRoute element={<ChargingPoints />} requiredPermission={permissions.chargePoint.view} />,
                 }
             ]
         },
@@ -114,12 +115,12 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'rfid-cards',
-                    element: <RfidCards />,
+                    element:  <PrivateRoute element={<RfidCards />} requiredPermission={permissions.rfid.view} />,
                 },
-                {
-                    path: 'vid-cards',
-                    element: <VidCards />,
-                }
+                // {
+                //     path: 'vid-cards',
+                //     element:  <PrivateRoute element={<VidCards />} requiredPermission={permissions.rfid.view} />,
+                // }
             ]
         },
 
@@ -130,15 +131,15 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'ev-chargers',
-                    element: < EvChargers />,
+                    element:  <PrivateRoute element={ < EvChargers />} requiredPermission={permissions.evChargersModel.view} />,
                 },
                 {
                     path: 'ev-vehicles',
-                    element: <Vehicles />,
+                    element:  <PrivateRoute element={<Vehicles />} requiredPermission={permissions.evVehicle.view} />,
                 },
                 {
                     path: 'manufacturers',
-                    element: <Manufactures />,
+                    element:  <PrivateRoute element={<Manufactures />} requiredPermission={permissions.manufacture.view} />,
                 }
             ]
         },
@@ -150,16 +151,16 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'charging-transaction',
-                    element: <ChargingTransactions />,
+                    element:  <PrivateRoute element={<ChargingTransactions />} requiredPermission={permissions.chargingTransaction.view} />,
                 },
                 {
                     path: 'charger-logs',
-                    element: <ChargerLogs />,
+                    element:  <PrivateRoute element={<ChargerLogs />} requiredPermission={permissions.chargeLogs.view} />,
                 },
-                {
-                    path: 'booking-transaction',
-                    element: <BookingTransactions />,
-                }
+                // {
+                //     path: 'booking-transaction',
+                //     element:  <PrivateRoute element={<BookingTransactions />} requiredPermission={permissions.analytics.view} />,
+                // }
             ]
         },
         //!---------Accounts
@@ -169,12 +170,12 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'account-transaction',
-                    element: <AccountTransactions />,
+                    element:  <PrivateRoute element={<AccountTransactions />} requiredPermission={permissions.accountTransactions.view} />,
                 },
-                {
-                    path: 'financials',
-                    element: <UnderConstruction />,
-                }
+                // {
+                //     path: 'financials',
+                //     element:  <PrivateRoute element={<UnderConstruction />} requiredPermission={permissions.analytics.view} />,
+                // }
             ]
         },
         //!---------CRM
@@ -184,11 +185,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'search-customer',
-                    element: <SearchCustomer />,
+                    element:  <PrivateRoute element={<SearchCustomer />} requiredPermission={permissions.searchCustomer.view} />,
                 },
                 {
                     path: 'customer-list',
-                    element: <CustomerList />,
+                    element:  <PrivateRoute element={<CustomerList />} requiredPermission={permissions.customerList.view} />,
                 }
             ]
         },
@@ -199,15 +200,15 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'charging-tariff',
-                    element: <CTariff />,
+                    element:  <PrivateRoute element={<CTariff />} requiredPermission={permissions.chargingTariff.view} />,
                 },
                 {
                     path: 'assign-tariff',
-                    element: <ATariff />,
+                    element:  <PrivateRoute element={<ATariff />} requiredPermission={permissions.assignTariff.view} />,
                 },
                 {
                     path: 'tax',
-                    element: <CTax />,
+                    element:  <PrivateRoute element={<CTax />} requiredPermission={permissions.tax.view} />,
                 },
 
             ]
@@ -219,11 +220,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'active-session',
-                    element: <ActiveSessionPage />,
+                    element:  <PrivateRoute element={<ActiveSessionPage />} requiredPermission={permissions.activeSessions.view} />,
                 },
                 {
                     path: 'remote-session',
-                    element: <StartRemoteSession />,
+                    element:  <PrivateRoute element={<StartRemoteSession />} requiredPermission={permissions.startRemoteSession.view} />,
                 },
 
             ]
@@ -235,11 +236,11 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'email-notification',
-                    element: <EmailNotification />,
+                    element:  <PrivateRoute element={<EmailNotification />} requiredPermission={permissions.emailNotification.view} />,
                 },
                 {
                     path: 'app-notifications',
-                    element: <AppNotification />,
+                    element:  <PrivateRoute element={<AppNotification />} requiredPermission={permissions.inAppNotification.view} />,
                 }
 
             ]
@@ -251,7 +252,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: '',
-                    element: <Reports />,
+                    element:  <PrivateRoute element={<Reports />} requiredPermission={permissions.report.view} />,
                 }
             ]
         },
@@ -262,15 +263,15 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: 'admin-manangement',
-                    element: <AMSettings />,
+                    element:  <PrivateRoute element={<AMSettings />} requiredPermission={permissions.adminManagement.view} />,
                 },
                 {
                     path: 'role-management',
-                    element: <RMSettings />,
+                    element:  <PrivateRoute element={<RMSettings />} requiredPermission={permissions.roleManagement.view} />,
                 },
                 {
                     path: 'admin-activity',
-                    element: <AASettings />,
+                    element:  <PrivateRoute element={<AASettings />} requiredPermission={permissions.adminActivity.view} />,
                 },
 
             ]
@@ -283,7 +284,7 @@ const RoutesConfig = () => {
             children: [
                 {
                     path: '',
-                    element: <Help />,
+                    element:  <Help />,
                 }
             ]
         },
@@ -292,9 +293,6 @@ const RoutesConfig = () => {
             path: '*',
             element: <NotFoundPage />
         },
-
-
-
 
     ]
 

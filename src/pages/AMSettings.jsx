@@ -8,18 +8,18 @@ import { tableHeaderReplace } from "../utils/tableHeaderReplace";
 
 function AMSettings() {
   let [admins, setAdmins] = useState([]);
+  const [isChange, setIsChange] = useState(false)
   const tableHeader = ["Name", "Role", "Email", "Phone", "Designation", "Status"];
 
   const init = async () => {
     let data = await getAdmins();
 
     setAdmins(data.result);
-    console.log(data.result);
   };
 
   useEffect(() => {
     init();
-  }, []);
+  }, [isChange]);
 
   const AllAdminData = tableHeaderReplace(
     admins,
@@ -29,7 +29,7 @@ function AMSettings() {
 
   return (
     <Box>
-      <AdminManangement headers={tableHeader} data={AllAdminData} />
+      <AdminManangement headers={tableHeader} data={AllAdminData}  setIsChange={setIsChange} isChange={isChange}/>
     </Box>
   );
 }

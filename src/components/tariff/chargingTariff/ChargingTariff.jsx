@@ -13,14 +13,14 @@ import StyledSearchField from "../../../ui/styledSearchField";
 import { searchAndFilter } from "../../../utils/search";
 
 function restructureData(dataArray) {
-  return dataArray.map(item => ({
+  return dataArray.map((item) => ({
     _id: item._id,
     name: item.name,
     serviceAmount: item.serviceAmount,
     value: item.value,
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
-    taxDataName: item.taxData?.name
+    taxDataName: item.taxData?.name,
   }));
 }
 
@@ -28,7 +28,7 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
-  const [filterValue, setFilterValue] = useState('')
+  const [filterValue, setFilterValue] = useState("");
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);
@@ -60,30 +60,31 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
 
   const restructuredData = restructureData(data);
 
-  const chargingTariffData = tableHeaderReplace(restructuredData, ["name", "value", "serviceAmount", "createdAt", "updatedAt", "taxDataName"], headers);
-
+  const chargingTariffData = tableHeaderReplace(
+    restructuredData,
+    ["name", "value", "serviceAmount", "createdAt", "updatedAt", "taxDataName"],
+    headers
+  );
 
   return (
     <>
       <LastSynced heading="Charge Tariff" reloadHandle={updateData}>
-      <StyledSearchField placeholder={'Search'} onChange={(e) => {
-          setFilterValue(e.target.value)
-        }} />
+        <StyledSearchField
+          placeholder={"Search"}
+          onChange={(e) => {
+            setFilterValue(e.target.value);
+          }}
+        />
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <Box display="flex" justifyContent="flex-end">
-          <StyledButton
-            variant="primary"
-            width="150"
-            mr="10"
-            onClick={handleOpen}
-          >
+          <StyledButton variant="primary" width="150" mr="10" onClick={handleOpen}>
             Add
           </StyledButton>
         </Box>
         <StyledTable
           headers={headers}
-          data={searchAndFilter(chargingTariffData,filterValue)}
+          data={searchAndFilter(chargingTariffData, filterValue)}
           onActionClick={handleClick}
         />
       </Box>
@@ -109,12 +110,21 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
                 fontWeight: 700,
               }}
             >
-              Add Tariff
+              {action === "add" ? "Add" : "Edit"} Tariff
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTariff action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} updateData={()=>{setOpen(false); updateData()}}/>
+          <AddTariff
+            action={action}
+            data={tableData}
+            onIsChange={onIsChange}
+            isChange={isChange}
+            updateData={() => {
+              setOpen(false);
+              updateData();
+            }}
+          />
         </Box>
       </Modal>
     </>

@@ -122,7 +122,7 @@ export default function Location({ location }) {
                 }}
               >
                 <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                  <StyledButton variant={"secondary"} width="103">
+                  <StyledButton variant={"secondary"} width="103" type="button">
                     Cancel
                   </StyledButton>
                   <StyledButton variant={"primary"} width="160">
@@ -156,7 +156,7 @@ export default function Location({ location }) {
                 fontWeight: 700,
               }}
             >
-              Add Tariff
+              Assign Tariff
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>

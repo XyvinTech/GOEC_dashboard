@@ -1,41 +1,49 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, CircularProgress, Container, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { ReactComponent as Logo } from "../assets/Logo.svg";
 import StyledDivider from "../ui/styledDivider";
 import StyledInput from "../ui/styledInput";
-import { MailOutline, Lock, Visibility } from "@mui/icons-material";
+import { MailOutline, Lock, Visibility, Circle } from "@mui/icons-material";
 import StyledButton from "../ui/styledButton";
 import { Controller, useForm } from "react-hook-form";
 import { ReactComponent as Close } from "../assets/icons/close-circle.svg";
 import { adminLogin } from "../services/userApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import StyledLoader from "../ui/styledLoader";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [forgotShow, setForgotShow] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false)
   const navigate = useNavigate();
 
 
   const {
     control,
     handleSubmit,
-   reset,
-    
+    reset,
+
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (formData) => {
-   try {
-   let data = await adminLogin(formData)
-    console.log(data);
-    localStorage.setItem('token', data.token)
-    toast.success("Login Success");
-    navigate("/");
-   } catch (error) {
-    toast.error("Login Failed");
-reset();
-   }
+    setIsSubmit(true)
+    try {
+      let data = await adminLogin(formData)
+      console.log(data);
+      localStorage.setItem('token', data.token)
+      toast.success("Login Success");
+      setIsSubmit(false)
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      toast.error("Authentication Failed");
+      setIsSubmit(false)
+      // reset({},{keepDefaultValues:false});
+    }
+    setTimeout(()=>{
+      
+    },2000)
   };
 
   const handleForgot = (formData) => {
@@ -91,12 +99,14 @@ reset();
                   <Controller
                     name="email"
                     control={control}
+                    // defaultValue={"riyaskh123@gmail.com"}
                     render={({ field }) => (
                       <>
                         <StyledInput
                           {...field}
                           icon={<MailOutline />}
                           placeholder={"Enter your email"}
+
                         />
                         {errors.email && (
                           <span style={errorMessageStyle}>{errors.email.message}</span>
@@ -108,11 +118,13 @@ reset();
                   <Controller
                     name="password"
                     control={control}
+                    // defaultValue={"5p7gePwg6D"}
                     render={({ field }) => (
                       <>
                         <StyledInput
                           {...field}
                           icon={<Lock />}
+
                           iconright={
                             <Visibility
                               onClick={() => setShowPassword(!showPassword)}
@@ -129,9 +141,10 @@ reset();
                     )}
                     rules={{ required: "Password is required" }}
                   />
-                  <StyledButton variant={"primary"} width="100%" type="submit">
+                  {isSubmit ? <Box sx={{display:'flex',justifyContent:'center'}}><StyledLoader/></Box> :
+                    <StyledButton variant={"primary"} width="100%" type="submit">
                     Sign in
-                  </StyledButton>
+                  </StyledButton>}
                   <Typography
                     sx={{
                       marginBottom: 4,

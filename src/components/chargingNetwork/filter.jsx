@@ -24,8 +24,16 @@ export default function Filter({ onSubmited }) {
   } = useForm();
   const onSubmit = (data) => {
     // Handle form submission with data
-    if (data.startDate && !data.endDate ) {
+    if (data.startDate && !data.endDate) {
       setError("endDate", { type: "custom", message: "select End Date" })
+      return
+    }
+    if (data.startDate == data.endDate) {
+      setError("endDate", { type: "custom", message: "end date not able to same as start date" })
+      return
+    }
+    if (data.startDate > data.endDate) {
+      setError("endDate", { type: "custom", message: "end date should greater than start date" })
       return
     }
     if (data.location && !data.cpid) {
@@ -35,16 +43,21 @@ export default function Filter({ onSubmited }) {
 
     let dt = {}
     for (const [key, value] of Object.entries(data)) {
-      if (value && key != 'location') {
-        console.log(key);
-        if(value.label){
-          dt[key] = value.label
-        }else{
-          dt[key] = value
+      if (key === 'location') {
+        if (value) {
+          dt[key] = value.value;
+          continue;
         }
-        
       }
+      if (key === 'cpid') {
+        if (value) {
+          dt[key] = value.label;
+          continue;
+        }
+      }
+      dt[key] = value
     }
+    localStorage.setItem("filter", JSON.stringify(dt))
     onSubmited && onSubmited(dt)
 
     // Close your form or perform other actions
@@ -73,14 +86,28 @@ export default function Filter({ onSubmited }) {
         setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
       }
     })
+    if (localStorage.getItem("filter") !== null) {
+      console.log(JSON.parse(localStorage.getItem("filter")));
+      reset(JSON.parse(localStorage.getItem("filter")))
+      getMachineList(JSON.parse(localStorage.getItem("filter")).location)
+    }
   }, [])
+
+  const getMachineList = (value) => {
+    getChargingPointsListOfStation(value).then((res) => {
+      if (res.result) {
+        setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+  }
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={modalStyle}>
           <Stack direction={"column"} spacing={2} sx={{ background: '' }}>
             <Label>Start date</Label>
-
             <Controller
               name="startDate"
               control={control}
@@ -149,11 +176,7 @@ export default function Filter({ onSubmited }) {
                     onChange={(e) => {
                       setMachineList([])
                       setValue("location", e)
-                      getChargingPointsListOfStation(e.value).then((res) => {
-                        if (res.result) {
-                          setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
-                        }
-                      })
+                      getMachineList(e.value)
                     }}
                   />
                   {errors.location && (
@@ -190,7 +213,7 @@ export default function Filter({ onSubmited }) {
 
             <Stack direction={"row"} spacing={1} sx={{ justifyContent: 'center' }}>
               <StyledButton variant="secondary" width={120} type="button"
-                onClick={() => { reset(); onSubmited() }}>
+                onClick={() => { reset({}, {keepValues: false}); onSubmited(); localStorage.removeItem("filter") }}>
                 Reset
               </StyledButton>
               <StyledButton width={150} variant="primary" type="submit">

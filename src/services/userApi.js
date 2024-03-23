@@ -325,6 +325,7 @@ export async function updateAdmin(id,data) {
     throw error;
   }
 }
+
 export async function adminLogin(data) {
   try {
     const response = await USER_INSTANCE.post(`admin/admin-signin`,data);
