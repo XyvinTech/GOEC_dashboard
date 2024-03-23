@@ -1,28 +1,38 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Box, Drawer, Typography, useMediaQuery } from "@mui/material";
 
 import { NavItem } from "../ui/Navitem";
 import { ReactComponent as Logo } from "../assets/Logo.svg";
 import { siderbarListItems } from "../assets/json/sidebar";
 import { useAuth } from "../core/auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ open, onClose, ...props }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"))
   const { userCan } = useAuth();
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [filteredItems, setFilterItems] = useState([])
   const indexChange = () => setActiveIndex(-1);
+  const navigate = useNavigate()
 
   // Filter both main items and sub-items based on the userCan function
-  const filteredItems = useMemo(() => siderbarListItems.map(item => ({
-    ...item,
-    sub: item.sub?.filter(subItem => 
-      !subItem.requiredRoles || subItem.requiredRoles.some(role => userCan(role))
-    )
-  })).filter(item => item.sub ? item.sub.length > 0 : true), [siderbarListItems, userCan]);
+  useEffect(() => {
+    let listItem = siderbarListItems().map(item => ({
+      ...item,
+      sub: item.sub?.filter(subItem => {
+        return (!subItem.requiredRoles || subItem.requiredRoles.some(role => userCan(role)))
+      }
+      )
+    })).filter(item => item.sub ? item.sub.length > 0 : true);
+    console.log(listItem);
+    setFilterItems(listItem, [siderbarListItems(), userCan])
+    setActiveIndex(0)
+    navigate(listItem[0].extendable ? `/${listItem[0].sub[0]?.href}` : `/${listItem[0].href}`)
+  }, [])
 
+  const Content = ({ items }) => {
 
-  const content = (
-    <>
+    return (
       <Box
         sx={{
           display: "flex",
@@ -61,7 +71,8 @@ const Sidebar = ({ open, onClose, ...props }) => {
             overflowY: "auto",
           }}
         >
-          {filteredItems.map((item, index) => {
+
+          {items.map((item, index) => {
             return (
               <NavItem
                 key={item.title}
@@ -81,8 +92,8 @@ const Sidebar = ({ open, onClose, ...props }) => {
           })}
         </Box>
       </Box>
-    </>
-  );
+    );
+  }
 
   if (lgUp) {
     return (
@@ -99,7 +110,7 @@ const Sidebar = ({ open, onClose, ...props }) => {
         }}
         variant="permanent"
       >
-        {content}
+        <Content items={filteredItems} />
       </Drawer>
     );
   }
@@ -119,7 +130,7 @@ const Sidebar = ({ open, onClose, ...props }) => {
       sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
       variant="temporary"
     >
-      {content}
+      <Content items={filteredItems} />
     </Drawer>
   );
 };

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { AppBar, Avatar, Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material';
+import { AppBar, Avatar, Box, Button, IconButton, Stack, Toolbar, Tooltip, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import {ReactComponent as Notification} from '../assets/icons/notification.svg'
+import { ReactComponent as Notification } from '../assets/icons/notification.svg'
 import { grey } from '@mui/material/colors';
 import { useAuth } from '../core/auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -10,12 +10,12 @@ import { Icon } from '@mui/material';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
-  border:'none',
-  boxShadow:'none'
+  border: 'none',
+  boxShadow: 'none'
 }));
 
 export const DashboardNavbar = (props) => {
-  const { open,onSideBarOpen, ...other } = props;
+  const { open, onSideBarOpen, ...other } = props;
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
 
@@ -23,46 +23,46 @@ export const DashboardNavbar = (props) => {
 
 
   return (
-      <DashboardNavbarRoot
+    <DashboardNavbarRoot
+      sx={{
+        left: {
+          lg: 260
+        },
+        width: {
+          lg: 'calc(100% - 260px)'
+        },
+        border: 'none'
+      }}
+      {...other}>
+      <Toolbar
+        disableGutters
         sx={{
-          left: {
-            lg: 260
-          },
-          width: {
-            lg: 'calc(100% - 260px)'
-          },
-          border:'none'
+          minHeight: 64,
+          left: 0,
+          px: 2
         }}
-        {...other}>
-        <Toolbar
-          disableGutters
+      >
+        <IconButton
+          onClick={onSideBarOpen}
           sx={{
-            minHeight: 64,
-            left: 0,
-            px: 2
+            display: {
+              xs: 'inline-flex',
+              lg: 'none'
+            }
           }}
         >
-          <IconButton
-            onClick={onSideBarOpen}
-            sx={{
-              display: {
-                xs: 'inline-flex',
-                lg: 'none'
-              }
-            }}
-          >
-            <MenuIcon fontSize="small" />
-          </IconButton>
-         
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{paddingRight:'25px'}}>
-          <Notification />
-          </Box>
+          <MenuIcon fontSize="small" />
+        </IconButton>
 
-          <Stack direction={'row'} spacing={5}   sx={{ 
-    pr: 2,
-    mr: 2, 
-  }}>
+        <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ paddingRight: '25px' }}>
+          <Notification />
+        </Box>
+
+        <Stack direction={'row'} spacing={5} sx={{
+          pr: 2,
+          mr: 2,
+        }}>
 
           <Typography sx={{
             color: 'primary.DimText'
@@ -81,12 +81,12 @@ export const DashboardNavbar = (props) => {
                         
                       </Avatar> */}
 
-                      <LogoutTwoToneIcon sx={{cursor:"pointer"}} onClick={logout}/>
+          <Tooltip title="Logout"><LogoutTwoToneIcon sx={{ cursor: "pointer" }} onClick={logout} /></Tooltip>
 
-                      </Stack>
+        </Stack>
 
-        </Toolbar>
-      </DashboardNavbarRoot>
+      </Toolbar>
+    </DashboardNavbarRoot>
   );
 };
 
