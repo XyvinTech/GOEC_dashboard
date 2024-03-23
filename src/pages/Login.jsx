@@ -99,7 +99,7 @@ export default function Login() {
                   <Controller
                     name="email"
                     control={control}
-                    defaultValue={"riyaskh123@gmail.com"}
+                    // defaultValue={"riyaskh123@gmail.com"}
                     render={({ field }) => (
                       <>
                         <StyledInput
@@ -118,7 +118,7 @@ export default function Login() {
                   <Controller
                     name="password"
                     control={control}
-                    defaultValue={"5p7gePwg6D"}
+                    // defaultValue={"5p7gePwg6D"}
                     render={({ field }) => (
                       <>
                         <StyledInput
