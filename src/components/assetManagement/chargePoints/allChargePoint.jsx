@@ -10,6 +10,8 @@ import LastSynced from '../../../layout/LastSynced'
 import { useNavigate } from 'react-router-dom'
 import { searchAndFilter } from '../../../utils/search'
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
+import { permissions } from '../../../core/routes/permissions'
+import { useAuth } from '../../../core/auth/AuthContext'
 
 const tableHeader = [
   'CPID',
@@ -23,7 +25,7 @@ const tableHeader = [
 
 export default function AllChargePoint({ data, deleteData, editData, reloadData, ...props }) {
   const navigate = useNavigate()
-
+  const { userCan } = useAuth()
   const [filterValue, setFilterValue] = useState('')
   const tableActionClick = (e) => {
     if (e.action === 'View') {
@@ -46,7 +48,11 @@ export default function AllChargePoint({ data, deleteData, editData, reloadData,
         }} />
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(AllChargePointsData, filterValue)} showActionCell={true} onActionClick={tableActionClick} />
+        <StyledTable headers={tableHeader}
+          data={searchAndFilter(AllChargePointsData, filterValue)}
+          showActionCell={true}
+          actions={userCan(permissions.chargePoint.modify) ? ["Edit", "View", "Delete"] : ["View"]}
+          onActionClick={tableActionClick} />
       </Box>
     </>
   )

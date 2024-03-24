@@ -12,11 +12,14 @@ import StyledSearchField from "../../../ui/styledSearchField";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 import { deleteTax } from "../../../services/taxAPI";
 import { searchAndFilter } from "../../../utils/search";
+import { useAuth } from "../../../core/auth/AuthContext";
+import { permissions } from "../../../core/routes/permissions";
 function Tax({ data, headers, onIsChange, isChange, updateData }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
   const [filterValue, setFilterValue] = useState("");
+  const { userCan } = useAuth()
 
   // Function to open the modal
   const handleOpen = () => {
@@ -65,7 +68,12 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
             Add
           </StyledButton>
         </Box>
-        <StyledTable headers={headers} data={searchAndFilter(taxData,filterValue)} onActionClick={handleClick} />
+        <StyledTable headers={headers} 
+        data={searchAndFilter(taxData,filterValue)} 
+        onActionClick={handleClick}
+        showActionCell={userCan(permissions.tax.modify)}
+        actions={["Edit","Delete"]}
+        />
       </Box>
       {/* Modal */}
       <Modal

@@ -11,6 +11,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
 import StyledSearchField from "../../../ui/styledSearchField";
 import { searchAndFilter } from "../../../utils/search";
+import { permissions } from "../../../core/routes/permissions";
+import { useAuth } from "../../../core/auth/AuthContext";
 
 function restructureData(dataArray) {
   return dataArray.map((item) => ({
@@ -29,6 +31,7 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
   const [filterValue, setFilterValue] = useState("");
+  const { userCan } = useAuth()
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);
@@ -86,6 +89,8 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
           headers={headers}
           data={searchAndFilter(chargingTariffData, filterValue)}
           onActionClick={handleClick}
+          showActionCell={userCan(permissions.chargingTariff.modify)}
+          actions= {["Edit","Delete"]}
         />
       </Box>
       {/* Modal */}

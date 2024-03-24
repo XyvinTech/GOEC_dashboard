@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LastSynced from "../../../layout/LastSynced";
 import StyledTable from "../../../ui/styledTable";
-import { Box, Modal, Stack, Typography } from "@mui/material";
+import { Box, Dialog, Modal, Stack, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import StyledDivider from "../../../ui/styledDivider";
 import ChargingSummary from "./ChargingSummary";
@@ -31,6 +31,7 @@ export default function AllChargingTransactions({ data, updateData }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
   const [filterValue, setFilterValue] = useState('')
+  const [selectedData,setSelectData] = useState()
 
   const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed', 'location', 'duration', 'chargePointId', 'connectorId', 'totalAmount', 'closureReason', 'closeBy'], tableHeader)
 
@@ -42,6 +43,7 @@ export default function AllChargingTransactions({ data, updateData }) {
   const tableActionClick = (e) => {
     if (e.action === "View") {
       setAction("view");
+      setSelectData(e.data)
       setOpen(true);
     }
   };
@@ -66,19 +68,18 @@ export default function AllChargingTransactions({ data, updateData }) {
       </Box>
 
       {/* Modal */}
-      <Modal
+      <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="charging-transaction"
-        aria-describedby="summary"
+        maxWidth="xs"
+        fullWidth
       >
         <Box sx={modalStyle}>
           <Stack
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            spacing={2}
-            my={2}
+            p={2}
           >
             <Typography
               sx={{
@@ -91,24 +92,18 @@ export default function AllChargingTransactions({ data, updateData }) {
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
-          <StyledDivider />
-          <ChargingSummary />
+          <ChargingSummary datas={selectedData}/>
         </Box>
-      </Modal>
+      </Dialog>
     </>
   );
 }
 
 // Modal style
 const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
   width: "auto", // Adjust width to fit your content or screen
-  bgcolor: "#27292F", // Dark background color
+  bgcolor: "#1D1B20", // Dark background color
   boxShadow: 10,
-  p: 4,
   color: "#fff", // White text for better visibility on dark background
   outline: "none", // Remove the focus ring
 };

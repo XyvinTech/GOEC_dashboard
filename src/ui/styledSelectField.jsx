@@ -8,7 +8,7 @@ const SelectContainer = styled.div`
 `;
 const StyledSelectField = ({ options, value, placeholder,
   onChange, onInputChange,
-  isMulti = false, isSearchable = false, isLoading = false,
+  isMulti = false, isSearchable = true, isLoading = false,
   height, ...props }) => {
 
   const [valueOptions, setValueOption] = useState({})
