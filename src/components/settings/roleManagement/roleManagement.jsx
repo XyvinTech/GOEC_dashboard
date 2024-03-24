@@ -10,11 +10,14 @@ import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg"
 import { toast } from "react-toastify";
 import { deleteRole } from "../../../services/userApi";
 import { Transition } from "../../../utils/DialogAnimation";
+import { useAuth } from "../../../core/auth/AuthContext";
+import { permissions } from "../../../core/routes/permissions";
 
 export default function RoleManagement({ headers, data, setIsChange, isChange }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
+  const { userCan } = useAuth()
   // Function to open the modal
   const handleOpen = () => {
     setTableData();
@@ -50,7 +53,11 @@ export default function RoleManagement({ headers, data, setIsChange, isChange })
             Add
           </StyledButton>
         </Box>
-        <StyledTable headers={headers} data={data} onActionClick={handleClick} actions={["Edit","Delete"]} />
+        <StyledTable headers={headers} 
+        data={data}
+        onActionClick={handleClick} 
+        showActionCell={userCan(permissions.roleManagement.modify)}
+        actions={["Edit","Delete"]} />
       </Box>
       {/* Modal */} 
       <Dialog

@@ -8,11 +8,14 @@ import AddAdmin from "./addAdmin";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
 import { toast } from "react-toastify";
 import { deleteAdmin } from "../../../services/userApi";
+import { useAuth } from "../../../core/auth/AuthContext";
+import { permissions } from "../../../core/routes/permissions";
 
 export default function AdminManangement({ data, headers, setIsChange, isChange }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
+  const { userCan } = useAuth()
   // Function to open the modal
   const handleOpen = () => {
     setOpen(true);
@@ -48,7 +51,12 @@ export default function AdminManangement({ data, headers, setIsChange, isChange 
             Add
           </StyledButton>
         </Box>
-        <StyledTable headers={headers} data={data} onActionClick={handleClick} />
+        <StyledTable headers={headers} 
+        data={data} 
+        onActionClick={handleClick} 
+        showActionCell={userCan(permissions.adminManagement.modify)}
+        actions={["Edit","Delete"]}
+        />
       </Box>
       {/* Modal */}
       <Modal

@@ -11,6 +11,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace';
 import { deleteBrand } from '../../../services/vehicleAPI';
 import ConfirmDialog from '../../../ui/confirmDialog';
+import { useAuth } from '../../../core/auth/AuthContext';
+import { permissions } from '../../../core/routes/permissions';
 
 
 const tableHeader = [
@@ -24,7 +26,7 @@ export default function Vehicles({ data, updateData }) {
   const [editStatus, setEditStatus] = useState(false)
   const [selectData, setSelectedData] = useState()
   const [confirmOpen, setConfirmOpen] = useState(false)
-
+  const { userCan } = useAuth()
 
   const brandData = tableHeaderReplace(data, ['brandName', 'createdAt'], tableHeader)
 
@@ -68,7 +70,11 @@ export default function Vehicles({ data, updateData }) {
       </LastSynced>
 
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(brandData, filterValue)} actions={["Edit", "Delete"]} onActionClick={tableActionClick} />
+        <StyledTable headers={tableHeader} 
+        data={searchAndFilter(brandData, filterValue)} 
+        actions={["Edit", "Delete"]} 
+        showActionCell={userCan(permissions.manufacture.modify)}
+        onActionClick={tableActionClick} />
       </Box>
     </>)
 }

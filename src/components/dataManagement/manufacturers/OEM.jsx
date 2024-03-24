@@ -11,6 +11,8 @@ import AddOEM from './addOEM/AddOEM';
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace';
 import ConfirmDialog from '../../../ui/confirmDialog';
 import { deleteOem } from '../../../services/evMachineAPI';
+import { useAuth } from '../../../core/auth/AuthContext';
+import { permissions } from '../../../core/routes/permissions';
 
 
 const tableHeader = [
@@ -28,7 +30,7 @@ export default function OEM({ data, updateData }) {
   const [editStatus, setEditStatus] = useState(false)
   const [selectData, setSelectedData] = useState()
   const [confirmOpen, setConfirmOpen] = useState(false)
-
+  const { userCan } = useAuth()
 
   const oemData = tableHeaderReplace(data, ['name', 'createdAt'], tableHeader)
 
@@ -68,7 +70,11 @@ export default function OEM({ data, updateData }) {
       </LastSynced>
 
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(oemData, filterValue)} actions={["Edit", "Delete"]} onActionClick={tableActionClick} />
+        <StyledTable headers={tableHeader} 
+        data={searchAndFilter(oemData, filterValue)} 
+        actions={["Edit", "Delete"]} 
+        showActionCell={userCan(permissions.manufacture.modify)}
+        onActionClick={tableActionClick} />
       </Box>
     </>)
 }

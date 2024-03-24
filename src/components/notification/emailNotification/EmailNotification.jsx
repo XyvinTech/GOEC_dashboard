@@ -82,7 +82,7 @@ export default function EmailNotification() {
       const response = await userSuggestionList(inputValue);
       if (response.status) {
         return response.result.map((user) => ({
-          label: user.mobile,
+          label: user.email,
           value: user.email,
         }));
       }
@@ -116,7 +116,7 @@ export default function EmailNotification() {
                     cacheOptions
                     defaultOptions
                     loadOptions={loadUserOptions}
-                    placeholder="Select User"
+                    placeholder="Select User Emails"
                     isMulti
                     {...field}
                     styles={customStyles}
@@ -261,10 +261,12 @@ const customStyles = {
     cursor: "pointer",
     height: "55px", // Set this to the height of your input
     overflow: "hidden", // Hide the overflow
+    
   }),
   input: (base) => ({
     ...base,
     color: "#fff",
+    
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
