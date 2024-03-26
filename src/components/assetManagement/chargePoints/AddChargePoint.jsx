@@ -41,7 +41,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       model: editStatus ? chargepointData["Model"] : '',
       chargePointDisplayName: editStatus ? chargepointData["CPID"] : '',
       CPID: editStatus ? chargepointData["CPID"] : '',
-      published: editStatus ? chargepointData["Published"] : false, // Set the default value for "activate"
     },
   });
   const onSubmit = (data) => {
@@ -456,7 +455,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
                       handleChange(e);
                       // Additional logic if needed
                     }}
-                    defaultChecked={field.value}
+                    defaultChecked={editStatus && chargepointData["Published"].toUpperCase() == "YES"}
                   // Adding 'required' attribute
                   />
                 )}
