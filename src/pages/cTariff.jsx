@@ -19,6 +19,7 @@ export default function CTariff() {
 
   const getTariffData = ()=>{
     getChargingTariffList().then((res)=>{
+      console.log(res.result);
       if(res){
         setTariffListData(res.result);
       }

@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log(decoded);
         return decoded.userId;
       } catch (error) {
         console.error("Error decoding token:", error);
@@ -30,7 +29,6 @@ export const AuthProvider = ({ children }) => {
     navigate('/login');
   };
   const userCan = (requiredRole) => {
-    console.log(getLoginUser());
     return getLoginUser()?.role?.permissions?.includes(requiredRole);
   };
 
