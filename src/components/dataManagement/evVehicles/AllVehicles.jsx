@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import AddVehicles from "./AddVehicles";
 import { ReactComponent as Close } from "../../../assets/icons/close-icon-large.svg";
 import { Transition } from "../../../utils/DialogAnimation";
+import { useAuth } from "../../../core/auth/AuthContext";
+import { permissions } from "../../../core/routes/permissions";
 
 const tableHeader = [
   "Company Name",
@@ -35,9 +37,9 @@ export default function AllVehicles({ data, updateData, ...props }) {
 console.log(data);
   const [filterValue, setFilterValue] = useState("");
   const [selectData, setSelectedData] = useState();
-  const [editOpen, setEditOpen] = useState(false)
+  const [editOpen, setEditOpen] = useState(false);
   const VehicleData = tableHeaderReplace(data, ['brand', 'modelName', 'charger_types', 'number_of_ports'], tableHeader)
-
+  const { userCan } = useAuth()
   const tableActionClick = (e) => {
     if (e.action === "Edit") {
       setSelectedData(e.data)
@@ -70,7 +72,11 @@ console.log(data);
         />
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(VehicleData,filterValue)} onActionClick={tableActionClick} actions={["Edit", "Delete"]} />
+        <StyledTable headers={tableHeader} 
+        data={searchAndFilter(VehicleData,filterValue)} 
+        onActionClick={tableActionClick} 
+        showActionCell={userCan(permissions.evVehicle.modify)}
+        actions={["Edit", "Delete"]} />
       </Box>
     </>
   );

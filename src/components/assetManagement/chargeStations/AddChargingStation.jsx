@@ -76,6 +76,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
   });
   const onSubmit = (values) => {
     // Handle form submission with data
+    
     if (editStatus) {
       updateChargingStation(values)
     } else {
@@ -361,7 +362,9 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                     )}
                   </>
                 )}
-                rules={{ required: "longitude is required" }}
+                rules={{ required: "longitude is required",
+                max:{value:180,message: "must be less than 180"},
+                min:{value:-180,message: "must be greater than -180"}}}
               />
             </Stack>
           </Grid>
@@ -380,7 +383,9 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
                   )}
                 </>
               )}
-              rules={{ required: "Latitude is required" }}
+              rules={{ required: "Latitude is required",
+                max:{value:90,message: "must be less than 90"},
+                min:{value:-90,message: "must be greater than -90"}}}
             />
           </Grid>
         </Grid>

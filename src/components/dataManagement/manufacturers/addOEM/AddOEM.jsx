@@ -115,6 +115,7 @@ export default function AddOEM({ open, onClose, editStatus = false, editData = {
           >
             <StyledButton
               variant="secondary"
+              type="button"
               style={{ width: "140px", height: "45px" }}
               onClick={() => {
                 onClose && onClose();

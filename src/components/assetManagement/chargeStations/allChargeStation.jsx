@@ -7,6 +7,9 @@ import StyledSearchField from '../../../ui/styledSearchField'
 import { searchAndFilter } from '../../../utils/search'
 import { tableHeaderReplace } from '../../../utils/tableHeaderReplace'
 import { deleteChargingStation } from '../../../services/stationAPI'
+import { permissions } from '../../../core/routes/permissions'
+import { useAuth } from '../../../core/auth/AuthContext'
+
 
 const tableHeader = [
   'Charge Station',
@@ -18,7 +21,7 @@ const tableHeader = [
 
 export default function AllChargeStation({ data, deleteData, editData, reloadData, ...props }) {
   const navigate = useNavigate()
-
+  const { userCan } = useAuth()
 
   const [filterValue, setFilterValue] = useState('')
 
@@ -41,7 +44,10 @@ export default function AllChargeStation({ data, deleteData, editData, reloadDat
         }} />
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(chargeStationData, filterValue)} onActionClick={tableActionClick} />
+        <StyledTable headers={tableHeader} 
+        data={searchAndFilter(chargeStationData, filterValue)}
+        actions={userCan(permissions.chargingStations.modify) ? ["Edit","View","Delete"] : ["View"]} 
+        onActionClick={tableActionClick} />
       </Box>
     </>
   )

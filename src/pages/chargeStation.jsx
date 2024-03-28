@@ -64,7 +64,7 @@ export default function ChargingStation() {
         <AllChargeStation
           data={chargeStationListData}
           deleteData={(data) => { setSelectedData(data); setDialogOpen(true) }}
-          editData={(data) => { setSelectedData(data); setEditDialogOpen(true) }} 
+          editData={(data) => { setSelectedData(data); setEditDialogOpen(true) }}
           reloadData={init}
           /> :
         <AddChargingStation formSubmited={() => { init(); setTogglePage(0) }} />}

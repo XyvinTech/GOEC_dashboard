@@ -15,7 +15,7 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
     defaultValues: {
       expiryDate: editStatus ? rfidData["Expires On"] : '',
       rfidTag: editStatus ? rfidData["RFID Tag"] : '',
-      serialNumber: editStatus ? rfidData["Serial No"] : '',
+      serialNumber: editStatus ? rfidData["Serial No"] : ''
     },
   });
   const onSubmit = (data) => {
@@ -131,7 +131,7 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
 
                   <StyledSwitch
                     {...field}
-                    defaultChecked={editStatus && rfidData["Status"].toUpperCase() == "ASSIGNED" ? true : false}
+                    defaultChecked={editStatus && (rfidData["Status"].toUpperCase() == "ASSIGNED" || rfidData["Status"].toUpperCase() == "ACTIVE")}
                     onChange={(e) => {
                       handleChange(e);
                       // Additional logic if needed

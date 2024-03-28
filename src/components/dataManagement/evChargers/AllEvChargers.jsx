@@ -12,6 +12,8 @@ import { deleteEvModel } from "../../../services/evMachineAPI";
 import { searchAndFilter } from "../../../utils/search";
 import StyledSearchField from "../../../ui/styledSearchField";
 import { Transition } from "../../../utils/DialogAnimation";
+import { permissions } from "../../../core/routes/permissions";
+import { useAuth } from "../../../core/auth/AuthContext";
 
 const tableHeader = [
   "Company Name",
@@ -41,7 +43,7 @@ export default function AllEvChargers({ data, updateData }) {
   const [filterValue, setFilterValue] = useState("");
   const [selectData, setSelectedData] = useState();
   const [dialogOpen, setDialogOpen] = useState(false)
-
+  const { userCan } = useAuth()
 
   const evChargerData = tableHeaderReplace(data, ['oem', 'model_name', 'output_type', 'ocpp_version', 'charger_type', 'capacity', 'no_of_ports'], tableHeader)
 
@@ -80,7 +82,11 @@ export default function AllEvChargers({ data, updateData }) {
         onClose={() => { setDialogOpen(false) }}
         confirmButtonHandle={deleteData} />
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(evChargerData, filterValue)} onActionClick={tableActionClick} actions={["Edit", "Delete"]} />
+        <StyledTable headers={tableHeader}
+          data={searchAndFilter(evChargerData, filterValue)}
+          onActionClick={tableActionClick}
+          showActionCell={userCan(permissions.evChargersModel.modify)}
+          actions={["Edit", "Delete"]} />
       </Box>
     </>
   );
