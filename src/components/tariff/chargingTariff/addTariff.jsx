@@ -137,7 +137,7 @@ export default function AddTariff({ action, data, onIsChange, isChange,updateDat
                 <StyledButton variant={"secondary"} width="103">
                   Cancel
                 </StyledButton>
-                <StyledButton variant={"primary"} width="160">
+                <StyledButton variant={"primary"} type="submit" width="160">
                   Save
                 </StyledButton>
               </Stack>
