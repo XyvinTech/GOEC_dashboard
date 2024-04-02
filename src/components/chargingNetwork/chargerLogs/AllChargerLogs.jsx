@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LastSynced from "../../../layout/LastSynced";
 import StyledTable from "../../../ui/styledTable";
 import { Box } from "@mui/material";
@@ -17,9 +17,21 @@ const tableHeader = [
   "Unique ID"
 ];
 
-export default function AllChargerLogs({ data, updateData }) {
+export default function AllChargerLogs({ data, allLogs, updateData, setPageNo, totalCount }) {
   const [filterValue, setFilterValue] = useState('')
+  const [searchData, setSearchData] = useState('')
   const AllLogsData = tableHeaderReplace(data, ['CPID', 'createdAt', 'messageType', 'payload', '_id'], tableHeader)
+
+  useEffect(() => {
+    if(filterValue !== ''){
+      const search = searchAndFilter(allLogs,filterValue);
+      const allData = tableHeaderReplace(search, ['CPID', 'createdAt', 'messageType', 'payload', '_id'], tableHeader)
+      setSearchData(allData)
+    }else{
+      setSearchData('')
+    }
+  }, [filterValue])
+  
 
   return (
     <>
@@ -36,7 +48,9 @@ export default function AllChargerLogs({ data, updateData }) {
         <StyledTable
           showActionCell={false}
           headers={tableHeader}
-          data={searchAndFilter(AllLogsData,filterValue)}
+          data={searchData ? searchData : AllLogsData}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
         />
       </Box>
 

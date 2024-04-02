@@ -4,7 +4,7 @@ import StyledTable from "../../../ui/styledTable";
 import LastSynced from "../../../layout/LastSynced";
 import StyledDivider from "../../../ui/styledDivider";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import AddTax from "./addTax";
 import StyledButton from "../../../ui/styledButton";
@@ -102,7 +102,7 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} />
+          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} setOpen={setOpen}/>
         </Box>
       </Modal>
     </>

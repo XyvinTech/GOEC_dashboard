@@ -1,8 +1,8 @@
 import axios from "axios";
 
 
-const baseURL = `https://oxium.goecworld.com`;
-// const baseURL = `http://localhost`;
+// const baseURL = `https://oxium.goecworld.com`;
+const baseURL = `http://localhost`;
 // 
 
 const createAxiosInstance = (baseURL, defaultHeaders = {}) => {

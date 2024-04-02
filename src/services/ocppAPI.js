@@ -59,9 +59,10 @@ export async function changeConfig(data, cpid) {
   }
 }
 
-export async function getAllOcppLogs(filter={}) {
+export async function getAllOcppLogs(filter, pageNo) {
   try {
-    const response = await OCPP_INSTANCE.get(`ocpp/logs`,{params:filter});
+    const balanceUrl = pageNo ? `?pageNo=${pageNo}` : '' ;
+    const response = await OCPP_INSTANCE.get(`ocpp/logs${balanceUrl}`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
