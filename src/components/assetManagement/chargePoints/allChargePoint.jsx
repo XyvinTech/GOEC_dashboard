@@ -23,7 +23,7 @@ const tableHeader = [
   'Published'
 ]
 
-export default function AllChargePoint({ data, deleteData, editData, reloadData, ...props }) {
+export default function AllChargePoint({ data, setPageNo, totalCount, deleteData, editData, reloadData, ...props }) {
   const navigate = useNavigate()
   const { userCan } = useAuth()
   const [filterValue, setFilterValue] = useState('')
@@ -49,8 +49,10 @@ export default function AllChargePoint({ data, deleteData, editData, reloadData,
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader}
-          data={searchAndFilter(AllChargePointsData, filterValue)}
+          data={AllChargePointsData}
           showActionCell={true}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
           actions={userCan(permissions.chargePoint.modify) ? ["Edit", "View", "Delete"] : ["View"]}
           onActionClick={tableActionClick} />
       </Box>

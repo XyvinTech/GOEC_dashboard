@@ -15,12 +15,14 @@ export default function ChargingStation() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedData, setSelectedData] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState();
 
-
-  const init = () => {
-    getChargingStationList().then((res) => {
+  const init = (filter = {pageNo}) => {
+    getChargingStationList(filter).then((res) => {
       if (res.status) {
         setChargeStationListData(res.result)
+        setTotalCount(res.totalCount);
       }
     }
     )
@@ -28,7 +30,7 @@ export default function ChargingStation() {
 
   useEffect(() => {
     init();
-  }, [])
+  }, [pageNo])
 
   const deleteData = () => {
     deleteChargingStation(selectedData._id).then((res) => {
@@ -66,6 +68,8 @@ export default function ChargingStation() {
           deleteData={(data) => { setSelectedData(data); setDialogOpen(true) }}
           editData={(data) => { setSelectedData(data); setEditDialogOpen(true) }}
           reloadData={init}
+          setPageNo={setPageNo} 
+          totalCount={totalCount}
           /> :
         <AddChargingStation formSubmited={() => { init(); setTogglePage(0) }} />}
     </Box>
