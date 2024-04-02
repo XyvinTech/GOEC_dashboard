@@ -36,7 +36,7 @@ const StyledTable = ({
 
   const rowsPerPage = 10;
 
-  const pageCount = Math.floor(totalCount / rowsPerPage) > 0 ? Math.floor(totalCount / rowsPerPage) : 1 ;
+  const pageCount = Math.ceil(totalCount / rowsPerPage) > 0 ? Math.ceil(totalCount / rowsPerPage) : 1 ;
 
   const handleChangePage = (newPage) => {
     setPage(newPage); // Assuming newPage is 1-indexed

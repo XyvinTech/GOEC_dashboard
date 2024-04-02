@@ -33,7 +33,7 @@ const EditVehicle = ({data, open, onClose, ...props }) => {
   )
 }
 
-export default function AllVehicles({ data, updateData, ...props }) {
+export default function AllVehicles({ data, setPageNo, totalCount, updateData, ...props }) {
 console.log(data);
   const [filterValue, setFilterValue] = useState("");
   const [selectData, setSelectedData] = useState();
@@ -73,7 +73,9 @@ console.log(data);
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader} 
-        data={searchAndFilter(VehicleData,filterValue)} 
+        data={VehicleData} 
+        setPageNo={setPageNo}
+        totalCount={totalCount}
         onActionClick={tableActionClick} 
         showActionCell={userCan(permissions.evVehicle.modify)}
         actions={["Edit", "Delete"]} />
