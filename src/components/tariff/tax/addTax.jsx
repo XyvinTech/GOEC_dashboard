@@ -8,7 +8,7 @@ import { createTax, editTax } from "../../../services/taxAPI";
 import { toast } from "react-toastify";
 import StyledInput from "../../../ui/styledInput";
 
-export default function AddTax({ action, data, onIsChange, isChange }) {
+export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
   const defaultValues = useMemo(() => {
     return action === "edit"
       ? {
@@ -87,7 +87,7 @@ export default function AddTax({ action, data, onIsChange, isChange }) {
               }}
             >
               <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                <StyledButton variant={"secondary"} width="103">
+                <StyledButton type="button" variant={"secondary"} width="103" onClick={onClose}>
                   Cancel
                 </StyledButton>
                 <StyledButton variant={"primary"} width="160">
