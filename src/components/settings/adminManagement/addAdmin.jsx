@@ -13,6 +13,7 @@ import { createAdmin, getRoles, updateAdmin } from "../../../services/userApi";
 import { toast } from "react-toastify";
 
 export default function AddAdmin({ setIsChange, isChange, setAction, action, data, ...props }) {
+
   const formOptions =
     action === "edit"
       ? {
@@ -29,7 +30,11 @@ export default function AddAdmin({ setIsChange, isChange, setAction, action, dat
 
   const [roles, setRoles] = useState([]);
   const { register, handleSubmit, control, reset } = useForm(formOptions);
+
+
+  const [loading, setLoading] = useState(false);
   const onSubmit = async (formData) => {
+    setLoading(true);
     let fData = { ...formData, role: formData.role.value };
 
     try {
@@ -45,6 +50,8 @@ export default function AddAdmin({ setIsChange, isChange, setAction, action, dat
     } catch (error) {
       console.log(error);
       toast.error("Failed to add role");
+    }finally {
+      setLoading(false); // Stop loading regardless of the outcome
     }
   };
 
@@ -142,8 +149,9 @@ export default function AddAdmin({ setIsChange, isChange, setAction, action, dat
                 <StyledButton variant={"secondary"} width="103">
                   Cancel
                 </StyledButton>
-                <StyledButton variant={"primary"} width="160">
-                  Save
+                <StyledButton variant={"primary"} width="160" type="submit"
+                  disabled={loading}>
+                   {loading ? "Saving..." : "Save"}
                 </StyledButton>
               </Stack>
             </Grid>

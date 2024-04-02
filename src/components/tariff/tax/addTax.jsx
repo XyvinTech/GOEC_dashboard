@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import StyledButton from "../../../ui/styledButton";
 import StyledSwitch from "../../../ui/styledSwitch";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { createTax, editTax } from "../../../services/taxAPI";
 import { toast } from "react-toastify";
 import StyledInput from "../../../ui/styledInput";
@@ -14,11 +14,12 @@ export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
       ? {
           name: data.Name,
           percentage: data.Description,
+          status: data.Status ==='Active'
         }
-      : {};
+      : { status: true };
   }, [action, data]);
 
-  const { register, handleSubmit, reset } = useForm({ defaultValues });
+  const { register, handleSubmit, control,reset } = useForm({ defaultValues });
 
   useEffect(() => {
     if (action === "edit") {
@@ -28,32 +29,14 @@ export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
 
   const onSubmit = async (formData) => {
     try {
-      if (action === "add") {
-        const res = await createTax(formData);
-        if (res) {
-          const successToastId = toast.success("Tax created successfully", {
-            position: "top-right",
-          });
-          onIsChange(!isChange);
-          toast.update(successToastId);
-          reset();
-        }
-      } else if (action === "edit") {
-        const res = await editTax(data._id, formData);
-        if (res) {
-          const successToastId = toast.success("Tax updated successfully", {
-            position: "top-right",
-          });
-          onIsChange(!isChange);
-          toast.update(successToastId);
-          reset();
-        }
+      const res = action === "add" ? await createTax(formData) : await editTax(data._id, formData);
+      if (res) {
+        toast.success(`Tax ${action === "add" ? "created" : "updated"} successfully`, { position: "top-right" });
+        onIsChange(!isChange);
+        reset();
       }
     } catch (error) {
-      const errorToastId = toast.error("Something went wrong", {
-        position: "top-right",
-      });
-      toast.update(errorToastId);
+      toast.error("Something went wrong", { position: "top-right" });
     }
   };
 
@@ -73,7 +56,16 @@ export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
             <Grid sx={{ marginBottom: 1, marginTop: 3 }} item xs={12} md={12}>
               <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
                 <Typography>Activate Tax</Typography>
-                <StyledSwitch />
+                <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <StyledSwitch
+                  onChange={(e) => field.onChange(e.target.checked)}
+                  defaultChecked={field.value}
+                  />
+                )}
+              />
               </Stack>
             </Grid>
             <Grid
@@ -90,7 +82,7 @@ export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
                 <StyledButton type="button" variant={"secondary"} width="103" onClick={onClose}>
                   Cancel
                 </StyledButton>
-                <StyledButton variant={"primary"} width="160">
+                <StyledButton variant={"primary"} type="submit" width="160">
                   Save
                 </StyledButton>
               </Stack>
