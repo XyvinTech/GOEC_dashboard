@@ -102,7 +102,7 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} />
+          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} onClose={handleClose} />
         </Box>
       </Modal>
     </>

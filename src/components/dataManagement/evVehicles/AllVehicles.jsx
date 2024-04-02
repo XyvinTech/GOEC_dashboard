@@ -23,7 +23,7 @@ const tableHeader = [
 
 const EditVehicle = ({data, open, onClose, ...props }) => {
   return (
-    <Dialog open={open} maxWidth='md' fullWidth TransitionComponent={Transition}>
+    <Dialog open={open} maxWidth='sm' fullWidth TransitionComponent={Transition}>
       <Stack direction={'row'} sx={{ p: 2, backgroundColor: 'primary.main', justifyContent: 'space-between', borderBottom: 'solid 1px #fff3' }}>
         <Typography sx={{ color: 'secondary.contrastText' }}>Edit Vehicle</Typography>
         <Close style={{ cursor: 'pointer' }} onClick={onClose} />

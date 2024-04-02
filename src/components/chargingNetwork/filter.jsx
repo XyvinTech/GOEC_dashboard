@@ -24,6 +24,7 @@ export default function Filter({ onSubmited }) {
   } = useForm();
   const onSubmit = (data) => {
     // Handle form submission with data
+    console.log(data);
     if (data.startDate && !data.endDate) {
       setError("endDate", { type: "custom", message: "select End Date" })
       return
@@ -32,7 +33,7 @@ export default function Filter({ onSubmited }) {
       setError("endDate", { type: "custom", message: "end date not able to same as start date" })
       return
     }
-    if (data.startDate > data.endDate) {
+    if (Date.parse(data.startDate) > Date.parse(data.endDate)) {
       setError("endDate", { type: "custom", message: "end date should greater than start date" })
       return
     }
@@ -213,7 +214,7 @@ export default function Filter({ onSubmited }) {
 
             <Stack direction={"row"} spacing={1} sx={{ justifyContent: 'center' }}>
               <StyledButton variant="secondary" width={120} type="button"
-                onClick={() => { reset({}, {keepValues: false}); onSubmited(); localStorage.removeItem("filter") }}>
+                onClick={() => { reset({}); onSubmited(); localStorage.removeItem("filter") }}>
                 Reset
               </StyledButton>
               <StyledButton width={150} variant="primary" type="submit">
