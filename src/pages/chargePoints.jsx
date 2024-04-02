@@ -15,7 +15,7 @@ export default function ChargingPoints() {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedData, setSelectedData] = useState(false);
   const [pageNo, setPageNo] = useState(1);
-  const [totalCount, setTotalCount] = useState();
+  const [totalCount, setTotalCount] = useState(1);
 
   const init = (filter = {pageNo}) => {
     listEvMachine(filter).then((res) => {

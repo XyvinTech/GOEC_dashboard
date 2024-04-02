@@ -6,7 +6,7 @@ export default function ChargingTransactions() {
 
   const [logs, setLogs] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [totalCount, setTotalCount] = useState();
+  const [totalCount, setTotalCount] = useState(1);
 
   const init = (filter = {pageNo}) => {
     getAllOcppTransactionLogs(filter).then((res) => {

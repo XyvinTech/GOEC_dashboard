@@ -10,7 +10,7 @@ export default function Alarms() {
   const [alarmList,setAlarmList] = useState([])
   const [summaryData,setSummaryData] = useState()
   const [pageNo, setPageNo] = useState(1);
-  const [totalCount, setTotalCount] = useState();
+  const [totalCount, setTotalCount] = useState(1);
   const tabOnChange = (e) => {
     setTabIndex(e.index)
   }
