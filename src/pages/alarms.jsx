@@ -9,6 +9,8 @@ export default function Alarms() {
   const [tabIndex, setTabIndex] = useState(0)
   const [alarmList,setAlarmList] = useState([])
   const [summaryData,setSummaryData] = useState()
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState();
   const tabOnChange = (e) => {
     setTabIndex(e.index)
   }
@@ -16,23 +18,23 @@ export default function Alarms() {
 
   useEffect(() => {
     init()
-  }, [])
+  }, [pageNo])
   const init= ()=>{
     getAlarmsList()
     getAlarmSummaryData()
   }
 
-  const getAlarmsList = (dt={})=>{
+  const getAlarmsList = (dt={pageNo})=>{
     getAlarms(dt).then((res)=>{
       if (res.status) {
         setAlarmList(res.result)
+        setTotalCount(res.totalCount);
       }
     })
   }
 
   const getAlarmSummaryData = () =>{
     getAlarmSummary().then(res=>{
-      console.log(res);
       if (res.status) {
         setSummaryData(res.result)
       }
@@ -43,7 +45,7 @@ export default function Alarms() {
     <Box>
       <StyledTab buttons={['Alarms', 'Alarm Summary']} onChanged={tabOnChange} />
       <Box>
-        {tabIndex === 0 ? <AlarmsList data={alarmList} dataReload={getAlarmsList} /> : (summaryData && <AlarmSummary data={summaryData} dataReload={getAlarmSummaryData} />)}
+        {tabIndex === 0 ? <AlarmsList data={alarmList} dataReload={getAlarmsList} setPageNo={setPageNo} totalCount={totalCount}/> : (summaryData && <AlarmSummary data={summaryData} dataReload={getAlarmSummaryData} />)}
       </Box>
     </Box>
   )

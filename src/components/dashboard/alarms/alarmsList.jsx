@@ -19,7 +19,7 @@ const tableHeader = [
   'Error code'
 ]
 
-export default function AlarmsList({data, dataReload}) {
+export default function AlarmsList({data, dataReload, setPageNo, totalCount }) {
 
   const [filterValue, setFilterValue] = useState('')
 
@@ -36,7 +36,7 @@ export default function AlarmsList({data, dataReload}) {
         </RightDrawer>
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(tabledata, filterValue)} showActionCell={false} />
+        <StyledTable headers={tableHeader} data={tabledata} setPageNo={setPageNo} totalCount={totalCount} showActionCell={false} />
       </Box>
     </>
   )
