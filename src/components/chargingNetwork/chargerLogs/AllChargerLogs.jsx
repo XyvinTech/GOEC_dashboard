@@ -17,20 +17,9 @@ const tableHeader = [
   "Unique ID"
 ];
 
-export default function AllChargerLogs({ data, allLogs, updateData, setPageNo, totalCount }) {
+export default function AllChargerLogs({ data, updateData, setPageNo, totalCount }) {
   const [filterValue, setFilterValue] = useState('')
-  const [searchData, setSearchData] = useState('')
   const AllLogsData = tableHeaderReplace(data, ['CPID', 'createdAt', 'messageType', 'payload', '_id'], tableHeader)
-
-  useEffect(() => {
-    if(filterValue !== ''){
-      const search = searchAndFilter(allLogs,filterValue);
-      const allData = tableHeaderReplace(search, ['CPID', 'createdAt', 'messageType', 'payload', '_id'], tableHeader)
-      setSearchData(allData)
-    }else{
-      setSearchData('')
-    }
-  }, [filterValue])
   
 
   return (
@@ -48,7 +37,7 @@ export default function AllChargerLogs({ data, allLogs, updateData, setPageNo, t
         <StyledTable
           showActionCell={false}
           headers={tableHeader}
-          data={searchData ? searchData : AllLogsData}
+          data={AllLogsData}
           setPageNo={setPageNo}
           totalCount={totalCount}
         />

@@ -35,15 +35,10 @@ const StyledTable = ({
   }, 5000);
 
   const rowsPerPage = 10;
-  const paginatedData = data.slice(
-    page * rowsPerPage,
-    (page + 1) * rowsPerPage
-  );
-  const pageCount = Math.ceil(totalCount / rowsPerPage);
+
+  const pageCount = Math.floor(totalCount / rowsPerPage);
 
   const handleChangePage = (newPage) => {
-    console.log("Current page:", page);
-    console.log("New page:", newPage);
     setPage(newPage); // Assuming newPage is 1-indexed
     setPageNo(newPage+1);
   };

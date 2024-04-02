@@ -5,19 +5,21 @@ import { getAllOcppTransactionLogs } from "../services/ocppAPI";
 export default function ChargingTransactions() {
 
   const [logs, setLogs] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState();
 
-  const init = (filter) => {
+  const init = (filter = {pageNo}) => {
     getAllOcppTransactionLogs(filter).then((res) => {
-      console.log(res.result);
       if (res) {
         setLogs(res.result);
+        setTotalCount(res.totalCount);
       }
     });
   };
 
   useEffect(() => {
     init();
-  }, []);
+  }, [pageNo]);
 
 
   return (
@@ -25,6 +27,8 @@ export default function ChargingTransactions() {
       <AllChargingTransactions
         data={logs}
         updateData={init}
+        setPageNo={setPageNo} 
+        totalCount={totalCount}
       />
     </div>
   );

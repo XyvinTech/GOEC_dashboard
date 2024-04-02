@@ -27,7 +27,7 @@ const tableHeader = [
 
 const newActions = ["View", "Download Invoice", "Resend Email"];
 
-export default function AllChargingTransactions({ data, updateData }) {
+export default function AllChargingTransactions({ data, updateData, setPageNo, totalCount  }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
   const [filterValue, setFilterValue] = useState('')
@@ -61,9 +61,11 @@ export default function AllChargingTransactions({ data, updateData }) {
       <Box sx={{ p: 3 }}>
         <StyledTable
           headers={tableHeader}
-          data={searchAndFilter(AllOcppTransactionData, filterValue)}
+          data={AllOcppTransactionData}
           actions={newActions}
           onActionClick={tableActionClick}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
         />
       </Box>
 
