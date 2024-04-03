@@ -24,7 +24,7 @@ const tableHeader = [
 
 
 
-export default function OEM({ data, updateData }) {
+export default function OEM({ data, updateData, setPageNo, totalCount }) {
   const [open, setOpen] = useState(false)
   const [filterValue, setFilterValue] = useState('')
   const [editStatus, setEditStatus] = useState(false)
@@ -71,7 +71,9 @@ export default function OEM({ data, updateData }) {
 
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader} 
-        data={searchAndFilter(oemData, filterValue)} 
+        data={oemData} 
+        setPageNo={setPageNo}
+        totalCount={totalCount}
         actions={["Edit", "Delete"]} 
         showActionCell={userCan(permissions.manufacture.modify)}
         onActionClick={tableActionClick} />

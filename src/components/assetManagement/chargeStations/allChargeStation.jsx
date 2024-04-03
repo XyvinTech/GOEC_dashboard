@@ -19,7 +19,7 @@ const tableHeader = [
   'Owner'
 ]
 
-export default function AllChargeStation({ data, deleteData, editData, reloadData, ...props }) {
+export default function AllChargeStation({ data, setPageNo, totalCount, deleteData, editData, reloadData, ...props }) {
   const navigate = useNavigate()
   const { userCan } = useAuth()
 
@@ -45,7 +45,9 @@ export default function AllChargeStation({ data, deleteData, editData, reloadDat
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader} 
-        data={searchAndFilter(chargeStationData, filterValue)}
+        setPageNo={setPageNo}
+        totalCount={totalCount}
+        data={chargeStationData}
         actions={userCan(permissions.chargingStations.modify) ? ["Edit","View","Delete"] : ["View"]} 
         onActionClick={tableActionClick} />
       </Box>

@@ -27,13 +27,17 @@ const tableHeader = [
 export default function ChargerLog({ CPID }) {
     const [filterValue, setFilterValue] = useState('')
     const [logList, setLogList] = useState([])
+    const [pageNo, setPageNo] = useState(1);
+    const [totalCount, setTotalCount] = useState(1);
+
     useEffect(() => {
         init()
-    }, [])
-    const init = (filter) => {
+    }, [pageNo])
+    const init = (filter={pageNo}) => {
         getMachineLog(CPID,filter).then((res) => {
             if (res.status) {
                 setLogList(tableHeaderReplace(res.result, ['connectorId', 'date', 'command', 'payload', 'uniqueId'], tableHeader))
+                setTotalCount(res.totalCount);
             }
         })
     }
@@ -50,7 +54,7 @@ export default function ChargerLog({ CPID }) {
             />
         </LastSynced>
             <Box sx={{ p: 3, overflow: 'scroll' }}>
-                <StyledTable headers={tableHeader} data={searchAndFilter(logList, filterValue)} showActionCell={false} />
+                <StyledTable headers={tableHeader} setPageNo={setPageNo} totalCount={totalCount} data={searchAndFilter(logList, filterValue)} showActionCell={false} />
             </Box>
         </>
     )

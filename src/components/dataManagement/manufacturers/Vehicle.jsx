@@ -20,7 +20,7 @@ const tableHeader = [
   "Created On"
 ];
 
-export default function Vehicles({ data, updateData }) {
+export default function Vehicles({ data, updateData, setPageNo1, totalCount1  }) {
   const [open, setOpen] = useState(false)
   const [filterValue, setFilterValue] = useState('')
   const [editStatus, setEditStatus] = useState(false)
@@ -71,7 +71,9 @@ export default function Vehicles({ data, updateData }) {
 
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader} 
-        data={searchAndFilter(brandData, filterValue)} 
+        data={brandData} 
+        setPageNo={setPageNo1}
+        totalCount={totalCount1}
         actions={["Edit", "Delete"]} 
         showActionCell={userCan(permissions.manufacture.modify)}
         onActionClick={tableActionClick} />

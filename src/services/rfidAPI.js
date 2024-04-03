@@ -55,9 +55,9 @@ export async function getRfidBySNo() {
   }
 }
 
-export async function getRfidList() {
+export async function getRfidList(filter={}) {
   try {
-    const response = await RFID_URL.get(`rfid/list`);
+    const response = await RFID_URL.get(`rfid/list`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;

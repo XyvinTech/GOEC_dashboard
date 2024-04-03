@@ -38,7 +38,7 @@ const EditCharger = ({ data, open, onClose, ...props }) => {
 }
 
 
-export default function AllEvChargers({ data, updateData }) {
+export default function AllEvChargers({ data, updateData, setPageNo, totalCount}) {
   const [editOpen, setEditOpen] = useState(false)
   const [filterValue, setFilterValue] = useState("");
   const [selectData, setSelectedData] = useState();
@@ -83,7 +83,9 @@ export default function AllEvChargers({ data, updateData }) {
         confirmButtonHandle={deleteData} />
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader}
-          data={searchAndFilter(evChargerData, filterValue)}
+          data={evChargerData}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
           onActionClick={tableActionClick}
           showActionCell={userCan(permissions.evChargersModel.modify)}
           actions={["Edit", "Delete"]} />

@@ -22,7 +22,7 @@ const tableHeader = [
 ]
 
 
-export default function AccountTrans({ data,updateData }) {
+export default function AccountTrans({ data,updateData, setPageNo, totalCount }) {
   const [filterValue, setFilterValue] = useState("");
   const accData = tableHeaderReplace(data, ["user", "createdAt", "type", "invoice_id", "amount", "status", "initiated_by", "transactionId", "reference"], tableHeader);
   const tableActionClick = (e) => {
@@ -44,7 +44,9 @@ export default function AccountTrans({ data,updateData }) {
       <Box sx={{ p: 3 }}>
         <StyledTable
           headers={tableHeader}
-          data={searchAndFilter(accData, filterValue)}
+          data={accData}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
           onActionClick={tableActionClick}
           actions={["Download Invoice","Resend Mail"]}
         />

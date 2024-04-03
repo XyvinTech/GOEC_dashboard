@@ -8,17 +8,19 @@ import { tableHeaderReplace } from "../utils/tableHeaderReplace";
 function RMSettings() {
   let [roles, setRoles] = useState([]);
   const [isChange, setIsChange] = useState(false)
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
-  const init = async () => {
-    let data = await getRoles();
+  const init = async (filter={pageNo}) => {
+    let data = await getRoles(filter);
 
     setRoles(data.result);
-    console.log(data.result);
+    setTotalCount(data.totalCount);
   };
 
   useEffect(() => {
     init();
-  }, [isChange]);
+  }, [isChange, pageNo]);
 
   const tableHeader = [
     "Role name",
@@ -36,7 +38,7 @@ function RMSettings() {
 
   return (
     <Box>
-      <RoleManagement headers={tableHeader} data={AllRoleData} setIsChange={setIsChange} isChange={isChange}/>
+      <RoleManagement headers={tableHeader} setPageNo={setPageNo} totalCount={totalCount} data={AllRoleData} setIsChange={setIsChange} isChange={isChange}/>
     </Box>
   );
 }

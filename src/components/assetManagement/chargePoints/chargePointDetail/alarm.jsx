@@ -35,13 +35,17 @@ export default function Alarm({ CPID }) {
     const [filterValue, setFilterValue] = useState('')
 
     const [alarmList, setAlarmList] = useState([])
+    const [pageNo, setPageNo] = useState(1);
+    const [totalCount, setTotalCount] = useState(1);
+
     useEffect(() => {
         init()
-    }, [])
-    const init = (dt={}) => {
+    }, [pageNo])
+    const init = (dt={pageNo}) => {
         getAlarmsById(CPID,dt).then((res) => {
             if (res.status) {
                 setAlarmList(tableHeaderReplace(res.result, ['cpid', 'date', 'summary', 'connectorId', 'status', 'errorCode'], tableHeader))
+                setTotalCount(res.totalCount);
             }
         })
     }
@@ -57,7 +61,7 @@ export default function Alarm({ CPID }) {
                 </RightDrawer>
             </LastSynced>
             <Box sx={{ p: 3, overflow: 'scroll' }}>
-                <StyledTable headers={tableHeader} data={searchAndFilter(alarmList, filterValue)} showActionCell={false} />
+                <StyledTable headers={tableHeader} setPageNo={setPageNo} totalCount={totalCount} data={alarmList} showActionCell={false} />
             </Box>
         </>
     )

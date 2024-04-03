@@ -13,7 +13,7 @@ import { Transition } from "../../../utils/DialogAnimation";
 import { useAuth } from "../../../core/auth/AuthContext";
 import { permissions } from "../../../core/routes/permissions";
 
-export default function RoleManagement({ headers, data, setIsChange, isChange }) {
+export default function RoleManagement({ headers, data, setIsChange, isChange, setPageNo, totalCount }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -55,6 +55,8 @@ export default function RoleManagement({ headers, data, setIsChange, isChange })
         </Box>
         <StyledTable headers={headers} 
         data={data}
+        setPageNo={setPageNo}
+        totalCount={totalCount}
         onActionClick={handleClick} 
         showActionCell={userCan(permissions.roleManagement.modify)}
         actions={["Edit","Delete"]} />

@@ -4,12 +4,11 @@ import { getAllOcppLogs } from "../services/ocppAPI";
 
 export default function ChargerLogs() {
   const [logs, setLogs] = useState([]);
-  const [allLogs, setAllLogs] = useState([]);
   const [pageNo, setPageNo] = useState(1);
-  const [totalCount, setTotalCount] = useState();
+  const [totalCount, setTotalCount] = useState(1);
 
-  const init = (filter = {}) => {
-    getAllOcppLogs(filter, pageNo).then((res) => {
+  const init = (filter = {pageNo}) => {
+    getAllOcppLogs(filter).then((res) => {
       if (res) {
         setLogs(res.result);
         setTotalCount(res.totalCount);
@@ -17,22 +16,13 @@ export default function ChargerLogs() {
     });
   };
 
-  const get = (filter = {}) => {
-    getAllOcppLogs(filter).then((res) => {
-      if (res) {
-        setAllLogs(res.result);
-      }
-    });
-  };
-
   useEffect(() => {
     init();
-    get();
   }, [pageNo]);
 
   return (
     <div>
-      <AllChargerLogs data={logs} allLogs={allLogs} updateData={init} setPageNo={setPageNo} pageNo={pageNo} totalCount={totalCount}/>
+      <AllChargerLogs data={logs} updateData={init} setPageNo={setPageNo} totalCount={totalCount}/>
     </div>
   );
 }

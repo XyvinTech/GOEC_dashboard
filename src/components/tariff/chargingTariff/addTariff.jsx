@@ -9,12 +9,12 @@ import { createChargingTariff, editChargingTariff } from "../../../services/char
 import { toast } from "react-toastify";
 import { getTaxList } from "../../../services/taxAPI";
 
-export default function AddTariff({ action, data, onIsChange, isChange,updateData }) {
+export default function AddTariff({ action, data, onIsChange, isChange,updateData, setOpen }) {
   const [taxListData, setTaxListData] = useState([]);
   const getTariffData = () => {
     getTaxList().then((res) => {
       if (res) {
-        setTaxListData(res);
+        setTaxListData(res.taxs);
       }
     });
   };
@@ -45,6 +45,10 @@ export default function AddTariff({ action, data, onIsChange, isChange,updateDat
     }
   }, [action, defaultValues, reset]);
 
+  const handleCancel = ()=>{
+    setOpen(false);
+    reset();
+  }
   const onSubmit = async (formData) => {
     const addData = {
       name : formData.name,
@@ -134,7 +138,7 @@ export default function AddTariff({ action, data, onIsChange, isChange,updateDat
               }}
             >
               <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                <StyledButton variant={"secondary"} width="103">
+                <StyledButton variant={"secondary"} width="103" onClick={handleCancel}>
                   Cancel
                 </StyledButton>
                 <StyledButton variant={"primary"} width="160">

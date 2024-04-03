@@ -12,15 +12,18 @@ const tableHeader = ["ChargeStation", "Address", "Longitude", "Latitude", "Owner
 export default function UserFavourites() {
   const { id } = useParams();
   const [favourites, setFavourites] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
-  const getData = async () => {
-    const res = await userFavourites(id);
+  const getData = async (filter={pageNo}) => {
+    const res = await userFavourites(id, filter);
     setFavourites(res.result);
+    setTotalCount(res.totalCount);
   };
 
   useEffect(() => {
     getData();
-  }, [id]);
+  }, [id,pageNo]);
 
   const favouritesData = tableHeaderReplace(
     favourites,
@@ -40,6 +43,8 @@ export default function UserFavourites() {
           onActionClick={(e) => {
             console.log(e);
           }}
+          setPageNo={setPageNo} 
+          totalCount={totalCount}
         />
       </Box>
     </Box>
