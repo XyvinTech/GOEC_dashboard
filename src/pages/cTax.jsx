@@ -10,6 +10,7 @@ export default function CTax() {
   const headers = [
     "Name",
     "Description",
+    "Status",
     "Created on",
   ];
 
