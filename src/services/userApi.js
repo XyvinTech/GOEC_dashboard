@@ -259,9 +259,9 @@ export async function createRole(data) {
 }
 
 
-export async function getRoles() {
+export async function getRoles(filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/role/list`);
+    const response = await USER_INSTANCE.get(`admin/role/list`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -298,9 +298,9 @@ export async function createAdmin(data) {
 }
 
 
-export async function getAdmins() {
+export async function getAdmins(filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/admin/list`);
+    const response = await USER_INSTANCE.get(`admin/admin/list`, {params:filter});
     return response.data;
   } catch (error) {
     throw error;

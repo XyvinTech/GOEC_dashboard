@@ -11,7 +11,7 @@ import { deleteAdmin } from "../../../services/userApi";
 import { useAuth } from "../../../core/auth/AuthContext";
 import { permissions } from "../../../core/routes/permissions";
 
-export default function AdminManangement({ data, headers, setIsChange, isChange }) {
+export default function AdminManangement({ data, headers, setIsChange, isChange, setPageNo, totalCount }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -53,6 +53,8 @@ export default function AdminManangement({ data, headers, setIsChange, isChange 
         </Box>
         <StyledTable headers={headers} 
         data={data} 
+        setPageNo={setPageNo}
+        totalCount={totalCount}
         onActionClick={handleClick} 
         showActionCell={userCan(permissions.adminManagement.modify)}
         actions={["Edit","Delete"]}
