@@ -9,7 +9,7 @@ import { createChargingTariff, editChargingTariff } from "../../../services/char
 import { toast } from "react-toastify";
 import { getTaxList } from "../../../services/taxAPI";
 
-export default function AddTariff({ action, data, onIsChange, isChange,updateData }) {
+export default function AddTariff({ action, data, onIsChange, isChange,updateData,onClose }) {
   const [taxListData, setTaxListData] = useState([]);
   const getTariffData = () => {
     getTaxList().then((res) => {
@@ -134,7 +134,7 @@ export default function AddTariff({ action, data, onIsChange, isChange,updateDat
               }}
             >
               <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                <StyledButton variant={"secondary"} width="103">
+                <StyledButton type="button" variant={"secondary"} width="103" onClick={onClose}>
                   Cancel
                 </StyledButton>
                 <StyledButton variant={"primary"} type="submit" width="160">

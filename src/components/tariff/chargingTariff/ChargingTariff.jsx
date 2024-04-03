@@ -125,6 +125,7 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
             data={tableData}
             onIsChange={onIsChange}
             isChange={isChange}
+            onClose = {handleClose}
             updateData={() => {
               setOpen(false);
               updateData();

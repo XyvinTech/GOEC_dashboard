@@ -50,7 +50,7 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
     }
   };
 
-  const taxData = tableHeaderReplace(data, ["name", "percentage", "createdAt"], headers);
+  const taxData = tableHeaderReplace(data, ["name", "percentage","status" ,"createdAt"], headers);
 
   return (
     <>
@@ -97,7 +97,7 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
                 fontWeight: 700,
               }}
             >
-              Add Tariff
+              {action === "edit" ? 'Edit' : 'Add'} Tariff
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>

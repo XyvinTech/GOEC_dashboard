@@ -27,7 +27,8 @@ const Sidebar = ({ open, onClose, ...props }) => {
     console.log(listItem);
     setFilterItems(listItem, [siderbarListItems(), userCan])
     // setActiveIndex(0)
-    navigate(window.location.pathname == '' ?
+    console.log(window.location.pathname);
+    navigate(window.location.pathname == '' || window.location.pathname == '/dashboard' ?
       (listItem[0].extendable ? `/${listItem[0].sub[0]?.href}` : `/${listItem[0].href}`) :
       `${window.location.pathname}`)
   }, [])
