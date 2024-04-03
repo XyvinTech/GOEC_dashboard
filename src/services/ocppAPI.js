@@ -161,9 +161,9 @@ export async function getMachineLog(evMachine,filter) {
   }
 }
 
-export async function getChargingHistory(userId, data) {
+export async function getChargingHistory(userId, data, filter={}) {
   try {
-    const response = await OCPP_INSTANCE.post(`ocpp/chargingHistory/${userId}`, data);
+    const response = await OCPP_INSTANCE.post(`ocpp/chargingHistory/${userId}`, data, {params:filter});
     return response.data;
   } catch (error) {
     throw error;

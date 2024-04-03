@@ -191,9 +191,9 @@ export async function userTransaction(Id) {
   }
 }
 
-export async function userFavourites(Id) {
+export async function userFavourites(Id,filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/favoriteStations/${Id}`);
+    const response = await USER_INSTANCE.get(`admin/favoriteStations/${Id}`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -227,9 +227,9 @@ export async function userAssignAndunAssignTarrif(Id, data) {
   }
 }
 
-export async function userRfidList(Id) {
+export async function userRfidList(Id, filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/rfidDetails/${Id}`);
+    const response = await USER_INSTANCE.get(`admin/rfidDetails/${Id}`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;

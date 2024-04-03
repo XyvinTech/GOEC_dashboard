@@ -22,16 +22,19 @@ export default function UserChargingTransaction() {
   const { id } = useParams();
 
   const [chargingTransaction, setChargingTransaction] = useState([])
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
-  const getData = async () => {
+  const getData = async (filter={pageNo}) => {
     const postData = {};
-    const res = await getChargingHistory(id, postData);
+    const res = await getChargingHistory(id, postData,filter);
     setChargingTransaction(res.result);
+    setTotalCount(res.totalCount);
   };
 
   useEffect(() => {
     getData();
-  }, [id]);
+  }, [id, pageNo]);
 
   const transData = tableHeaderReplace(chargingTransaction, ["transactionId","unitConsumed", "stationAddress", "duration", "chargingPoint", "connectorId", "amount", "closeBy"], tableHeader);
 
@@ -48,6 +51,8 @@ export default function UserChargingTransaction() {
           onActionClick={(e) => {
             console.log(e);
           }}
+          setPageNo={setPageNo} 
+          totalCount={totalCount}
         />
       </Box>
     </Box>

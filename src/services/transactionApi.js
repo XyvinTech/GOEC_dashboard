@@ -8,9 +8,9 @@ export async function getTransactionList(filter={}) {
   }
 }
 
-export async function getWalletTransaction(data) {
+export async function getWalletTransaction(data,filter={}) {
   try {
-    const response = await TRANSACTION_URL.post(`walletTransaction/dashboardUser/List`, data);
+    const response = await TRANSACTION_URL.post(`walletTransaction/dashboardUser/List`, data,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
