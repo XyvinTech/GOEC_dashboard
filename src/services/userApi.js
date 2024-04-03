@@ -63,9 +63,9 @@ export async function getUsersList() {
   }
 }
 
-export async function getUsersListforAdmin() {
+export async function getUsersListforAdmin(filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/userList`);
+    const response = await USER_INSTANCE.get(`admin/userList`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;

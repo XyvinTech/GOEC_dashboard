@@ -25,17 +25,21 @@ function restructureData(dataArray) {
 export default function CustomerLists() {
   const [userListData, setUserListData] = useState([]);
   const [filterValue, setFilterValue] = useState('')
-  const getTariffData = () => {
-    getUsersListforAdmin().then((res) => {
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+  
+  const getTariffData = (filter={pageNo}) => {
+    getUsersListforAdmin(filter).then((res) => {
       if (res.status) {
         setUserListData(res.result);
+        setTotalCount(res.totalCount);
       }
     });
   };
 
   useEffect(() => {
     getTariffData();
-  }, []);
+  }, [pageNo]);
 
   const navigate = useNavigate();
 
@@ -62,6 +66,8 @@ export default function CustomerLists() {
           showActionCell={true}
           actions={["view"]}
           onActionClick={actionClick}
+          setPageNo={setPageNo} 
+          totalCount={totalCount}
         />
       </Box>
     </Box>
