@@ -1,7 +1,7 @@
 import { TRANSACTION_URL } from "./axiosInstances";
-export async function getTransactionList() {
+export async function getTransactionList(filter={}) {
   try {
-    const response = await TRANSACTION_URL.get(`walletTransaction/dashboard/list`);
+    const response = await TRANSACTION_URL.get(`walletTransaction/dashboard/list`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
