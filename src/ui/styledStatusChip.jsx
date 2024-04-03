@@ -21,7 +21,7 @@ const StyledStatusChip = styled.span`
 
     if (["ACTIVE", "ONLINE", "ASSIGNED", "SUCCESS", "AVAILABLE", "YES"].includes(status)) {
       return "rgba(24, 73, 45, 1)"; // Green for active or successful statuses
-    } else if (status === "OFFLINE") {
+    } else if (["OFFLINE", "FAULTED"].includes(status)) {
       return "#c0392b"; // Red for offline
     } else if (status === "CHARGING") {
       return "#b0a702"; // Yellow for Charging
