@@ -131,6 +131,7 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData, setPa
               setOpen(false);
               updateData();
             }}
+            setOpen={setOpen}
           />
         </Box>
       </Modal>
