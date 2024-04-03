@@ -6,6 +6,8 @@ import { getTaxList } from "../services/taxAPI";
 export default function CTax() {
   const [taxListData, setTaxListData] = useState([]);
   const [isChange, setIsChange] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
   const headers = [
     "Name",
@@ -13,22 +15,23 @@ export default function CTax() {
     "Created on",
   ];
 
-  const getTaxData = ()=>{
-    getTaxList().then((res)=>{
+  const getTaxData = (filter={pageNo})=>{
+    getTaxList(filter).then((res)=>{
       if(res){
-        setTaxListData(res);
+        setTaxListData(res.taxs);
+        setTotalCount(res.totalCount);
       }
     })
   }
 
   useEffect(() => {
     getTaxData()
-  }, [isChange])
+  }, [isChange, pageNo])
   
 
   return (
     <Box>
-      <Tax data={taxListData} headers={headers} onIsChange={setIsChange} isChange={isChange} updateData={getTaxData}/>
+      <Tax data={taxListData} setPageNo={setPageNo} totalCount={totalCount} headers={headers} onIsChange={setIsChange} isChange={isChange} updateData={getTaxData}/>
     </Box>
   );
 }

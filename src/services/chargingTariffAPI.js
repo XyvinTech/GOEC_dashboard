@@ -59,9 +59,9 @@ export async function getChargingTariffTotalRate() {
   }
 }
 
-export async function getChargingTariffList() {
+export async function getChargingTariffList(filter={}) {
   try {
-    const response = await CONFIG_INSTANCES.get(`chargingTariff/list`);
+    const response = await CONFIG_INSTANCES.get(`chargingTariff/list`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;

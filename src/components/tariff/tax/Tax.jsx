@@ -14,7 +14,7 @@ import { deleteTax } from "../../../services/taxAPI";
 import { searchAndFilter } from "../../../utils/search";
 import { useAuth } from "../../../core/auth/AuthContext";
 import { permissions } from "../../../core/routes/permissions";
-function Tax({ data, headers, onIsChange, isChange, updateData }) {
+function Tax({ data, headers, onIsChange, isChange, updateData, setPageNo, totalCount }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -69,7 +69,9 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
           </StyledButton>
         </Box>
         <StyledTable headers={headers} 
-        data={searchAndFilter(taxData,filterValue)} 
+        data={taxData} 
+        setPageNo={setPageNo}
+        totalCount={totalCount}
         onActionClick={handleClick}
         showActionCell={userCan(permissions.tax.modify)}
         actions={["Edit","Delete"]}

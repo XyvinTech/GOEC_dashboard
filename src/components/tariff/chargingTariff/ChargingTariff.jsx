@@ -26,7 +26,7 @@ function restructureData(dataArray) {
   }));
 }
 
-function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
+function ChargingTariff({ data, headers, onIsChange, isChange, updateData, setPageNo, totalCount }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
@@ -87,7 +87,9 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
         </Box>
         <StyledTable
           headers={headers}
-          data={searchAndFilter(chargingTariffData, filterValue)}
+          data={chargingTariffData}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
           onActionClick={handleClick}
           showActionCell={userCan(permissions.chargingTariff.modify)}
           actions= {["Edit","Delete"]}
