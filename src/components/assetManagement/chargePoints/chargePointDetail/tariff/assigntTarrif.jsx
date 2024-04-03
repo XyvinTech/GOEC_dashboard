@@ -15,13 +15,16 @@ import { changeEVTarrif } from "../../../../../services/evMachineAPI";
 export default function AssignTarrif({ open, onClose, CPID, updated }) {
   const { handleSubmit, setValue, reset, formState: { errors }, control } = useForm();
   const [tarrifList, setTarrifList] = useState([])
-  useEffect(() => {
-    getChargingTariffList().then((res) => {
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+
+  useEffect((filter={pageNo}) => {
+    getChargingTariffList(filter).then((res) => {
       if (res) {
         setTarrifList(res.result.map((dt) => ({ label: dt.name, value: dt._id })));
       }
     })
-  }, [])
+  }, [pageNo])
 
   const onSubmit = (data) => {
     console.log(data);
