@@ -15,8 +15,14 @@ export default function Manufactures() {
   const [pageNo1, setPageNo1] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
   const [totalCount1, setTotalCount1] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery1, setSearchQuery1] = useState('');
+
 
   const init = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
     getOem(filter).then((res) => {
       if (res.status) {
         setOemListData(res.result);
@@ -26,6 +32,9 @@ export default function Manufactures() {
   };
 
   const init2 = (filter = {pageNo1}) => {
+    if(searchQuery1){
+      filter.searchQuery1 = searchQuery1;
+    }
     getBrand(filter).then((res) => {
       if (res.status) {
         setBrandListData(res.result)
@@ -36,7 +45,7 @@ export default function Manufactures() {
   useEffect(() => {
     init();
     init2();
-  }, [pageNo, pageNo1]);
+  }, [pageNo, pageNo1, searchQuery, searchQuery1]);
 
   const buttonChanged = (e) => {
     setTogglePage(e.index);
@@ -46,7 +55,7 @@ export default function Manufactures() {
       <Stack direction={"row"} sx={{ backgroundColor: "secondary.main" }}>
         <StyledTab buttons={["OEM", "Brand"]} onChanged={buttonChanged} />
       </Stack>
-      {togglePage === 0 ? oemListData && <OEM data={oemListData} setPageNo={setPageNo} totalCount={totalCount} updateData={init} /> : brandListData && <Vehicles data={brandListData} setPageNo1={setPageNo1} totalCount1={totalCount1} updateData={init2} />}
+      {togglePage === 0 ? oemListData && <OEM data={oemListData} setPageNo={setPageNo} totalCount={totalCount} setSearchQuery={setSearchQuery} updateData={init} /> : brandListData && <Vehicles data={brandListData} setPageNo1={setPageNo1} totalCount1={totalCount1} setSearchQuery1={setSearchQuery1} updateData={init2} />}
     </Box>
   );
 }

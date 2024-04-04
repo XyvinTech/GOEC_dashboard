@@ -24,9 +24,8 @@ const tableHeader = [
 
 
 
-export default function OEM({ data, updateData, setPageNo, totalCount }) {
+export default function OEM({ data, updateData, setPageNo, totalCount, setSearchQuery }) {
   const [open, setOpen] = useState(false)
-  const [filterValue, setFilterValue] = useState('')
   const [editStatus, setEditStatus] = useState(false)
   const [selectData, setSelectedData] = useState()
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -58,13 +57,17 @@ export default function OEM({ data, updateData, setPageNo, totalCount }) {
     })
   }
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
+
   return (
     <>
       <AddOEM open={open} onClose={() => { setOpen(false); setEditStatus(false); updateData() }} editStatus={editStatus} editData={selectData} />
       <ConfirmDialog title='OEM Delete' subtitle='Do you want to Delete OEM?' open={confirmOpen} onClose={() => { setConfirmOpen(false) }} confirmButtonHandle={deleteOEM} />
       <LastSynced heading="OEM" reloadHandle={updateData}  >
         <StyledSearchField placeholder={"Search"} onChange={(e) => {
-          setFilterValue(e.target.value)
+          handleSearch(e.target.value)
         }} />
         <StyledButton variant={'primary'} style={{ width: '100%', minWidth: '160px' }} onClick={() => { setSelectedData({}); setEditStatus(false); setOpen(true) }}>Add</StyledButton>
       </LastSynced>

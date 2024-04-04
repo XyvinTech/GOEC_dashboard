@@ -38,9 +38,8 @@ const EditCharger = ({ data, open, onClose, ...props }) => {
 }
 
 
-export default function AllEvChargers({ data, updateData, setPageNo, totalCount}) {
+export default function AllEvChargers({ data, updateData, setPageNo, totalCount, setSearchQuery}) {
   const [editOpen, setEditOpen] = useState(false)
-  const [filterValue, setFilterValue] = useState("");
   const [selectData, setSelectedData] = useState();
   const [dialogOpen, setDialogOpen] = useState(false)
   const { userCan } = useAuth()
@@ -66,11 +65,15 @@ export default function AllEvChargers({ data, updateData, setPageNo, totalCount}
     })
   }
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
+
   return (
     <>
       <LastSynced heading="EV Chargers" reloadHandle={updateData}>
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
-          setFilterValue(e.target.value)
+          handleSearch(e.target.value)
         }} />
       </LastSynced>
       <EditCharger open={editOpen} data={selectData} onClose={(() => { setEditOpen(false); updateData(); })} />

@@ -72,6 +72,10 @@ export async function getBrand(filter1={}) {
     if(filter1.pageNo1){
       filter.pageNo = filter1.pageNo1;
     }
+    if(filter1.searchQuery1){
+      filter.searchQuery = filter1.searchQuery1;
+    }
+
     const response = await VEHICLE_INSTANCES.get(`brand/list`,{params:filter});
     return response.data;
   } catch (error) {

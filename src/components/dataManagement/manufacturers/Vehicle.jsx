@@ -20,9 +20,8 @@ const tableHeader = [
   "Created On"
 ];
 
-export default function Vehicles({ data, updateData, setPageNo1, totalCount1  }) {
+export default function Vehicles({ data, updateData, setPageNo1, totalCount1, setSearchQuery1  }) {
   const [open, setOpen] = useState(false)
-  const [filterValue, setFilterValue] = useState('')
   const [editStatus, setEditStatus] = useState(false)
   const [selectData, setSelectedData] = useState()
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -55,7 +54,9 @@ export default function Vehicles({ data, updateData, setPageNo1, totalCount1  })
     })
   }
 
-
+  const handleSearch = (value)=>{
+    setSearchQuery1(value)
+}
 
   return (
     <>
@@ -64,7 +65,7 @@ export default function Vehicles({ data, updateData, setPageNo1, totalCount1  })
       <ConfirmDialog title='OEM Delete' subtitle='Do you want to Delete OEM?' open={confirmOpen} onClose={() => { setConfirmOpen(false) }} confirmButtonHandle={deleteBRAND} />
       <LastSynced heading="Brand" reloadHandle={updateData}>
         <StyledSearchField placeholder={"Search"} onChange={(e) => {
-          setFilterValue(e.target.value)
+          handleSearch(e.target.value)
         }} />
         <StyledButton variant={'primary'} style={{ width: '100%', minWidth: '160px' }} onClick={() => { setOpen(true) }}>Add</StyledButton>
       </LastSynced>

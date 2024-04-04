@@ -17,8 +17,12 @@ export default function ChargingStation() {
   const [selectedData, setSelectedData] = useState(false);
   const [pageNo, setPageNo] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const init = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
     getChargingStationList(filter).then((res) => {
       if (res.status) {
         setChargeStationListData(res.result)
@@ -30,7 +34,7 @@ export default function ChargingStation() {
 
   useEffect(() => {
     init();
-  }, [pageNo])
+  }, [pageNo, searchQuery])
 
   const deleteData = () => {
     deleteChargingStation(selectedData._id).then((res) => {
@@ -70,6 +74,7 @@ export default function ChargingStation() {
           reloadData={init}
           setPageNo={setPageNo} 
           totalCount={totalCount}
+          setSearchQuery={setSearchQuery} 
           /> :
         <AddChargingStation formSubmited={() => { init(); setTogglePage(0) }} />}
     </Box>

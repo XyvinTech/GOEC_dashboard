@@ -33,9 +33,7 @@ const EditVehicle = ({data, open, onClose, ...props }) => {
   )
 }
 
-export default function AllVehicles({ data, setPageNo, totalCount, updateData, ...props }) {
-console.log(data);
-  const [filterValue, setFilterValue] = useState("");
+export default function AllVehicles({ data, setPageNo, totalCount, setSearchQuery, updateData, ...props }) {
   const [selectData, setSelectedData] = useState();
   const [editOpen, setEditOpen] = useState(false);
   const VehicleData = tableHeaderReplace(data, ['brand', 'modelName', 'charger_types', 'number_of_ports'], tableHeader)
@@ -60,6 +58,10 @@ console.log(data);
     })
   }
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
+
   return (
     <>
       <EditVehicle open={editOpen} data={selectData} onClose={(() => { setEditOpen(false); updateData && updateData() })} />
@@ -67,7 +69,7 @@ console.log(data);
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {
-            setFilterValue(e.target.value);
+            handleSearch(e.target.value);
           }}
         />
       </LastSynced>

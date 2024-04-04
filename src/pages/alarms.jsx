@@ -11,6 +11,8 @@ export default function Alarms() {
   const [summaryData,setSummaryData] = useState()
   const [pageNo, setPageNo] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+
   const tabOnChange = (e) => {
     setTabIndex(e.index)
   }
@@ -18,13 +20,16 @@ export default function Alarms() {
 
   useEffect(() => {
     init()
-  }, [pageNo])
+  }, [pageNo, searchQuery])
   const init= ()=>{
     getAlarmsList()
     getAlarmSummaryData()
   }
 
   const getAlarmsList = (dt={pageNo})=>{
+    if(searchQuery){
+      dt.searchQuery = searchQuery;
+    }
     getAlarms(dt).then((res)=>{
       if (res.status) {
         setAlarmList(res.result)
@@ -45,7 +50,7 @@ export default function Alarms() {
     <Box>
       <StyledTab buttons={['Alarms', 'Alarm Summary']} onChanged={tabOnChange} />
       <Box>
-        {tabIndex === 0 ? <AlarmsList data={alarmList} dataReload={getAlarmsList} setPageNo={setPageNo} totalCount={totalCount}/> : (summaryData && <AlarmSummary data={summaryData} dataReload={getAlarmSummaryData} />)}
+        {tabIndex === 0 ? <AlarmsList data={alarmList} dataReload={getAlarmsList} setPageNo={setPageNo} totalCount={totalCount} setSearchQuery={setSearchQuery}/> : (summaryData && <AlarmSummary data={summaryData} dataReload={getAlarmSummaryData} />)}
       </Box>
     </Box>
   )

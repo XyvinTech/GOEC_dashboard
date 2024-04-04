@@ -17,17 +17,20 @@ const tableHeader = [
   "Unique ID"
 ];
 
-export default function AllChargerLogs({ data, updateData, setPageNo, totalCount }) {
-  const [filterValue, setFilterValue] = useState('')
+export default function AllChargerLogs({ data, updateData, setPageNo, totalCount, setSearchQuery }) {
+  
   const AllLogsData = tableHeaderReplace(data, ['CPID', 'createdAt', 'messageType', 'payload', '_id'], tableHeader)
   
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
 
   return (
     <>
 
       <LastSynced heading="Charger Logs" reloadHandle={updateData} >
       <StyledSearchField placeholder={'Search'} onChange={(e) => {
-                    setFilterValue(e.target.value)
+                    handleSearch(e.target.value)
                 }} />
                 <RightDrawer>
                     <Filter onSubmited={updateData} />

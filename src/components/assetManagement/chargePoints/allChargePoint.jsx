@@ -23,10 +23,14 @@ const tableHeader = [
   'Published'
 ]
 
-export default function AllChargePoint({ data, setPageNo, totalCount, deleteData, editData, reloadData, ...props }) {
+export default function AllChargePoint({ data, setPageNo, setSearchQuery, totalCount, deleteData, editData, reloadData, ...props }) {
   const navigate = useNavigate()
   const { userCan } = useAuth()
-  const [filterValue, setFilterValue] = useState('')
+
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
+
   const tableActionClick = (e) => {
     if (e.action === 'View') {
       navigate(`/charge-point-detail/${e.data._id}`)
@@ -44,7 +48,7 @@ export default function AllChargePoint({ data, setPageNo, totalCount, deleteData
     <>
       <LastSynced heading="Charge Points" reloadHandle={reloadData} >
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
-          setFilterValue(e.target.value)
+          handleSearch(e.target.value)
         }} />
       </LastSynced>
       <Box sx={{ p: 3 }}>
