@@ -6,8 +6,29 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const restoreAuthState = async () => {
+      const token = localStorage.getItem('token');
+      // Simulate async operation, e.g., decoding the token
+      if (token) {
+        // Set user state based on token
+      } else {
+        navigate('/login');
+      }
+      setIsLoading(false);
+    };
+
+    restoreAuthState();
+  }, [navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or any loading indicator
+  }
+
+  
   const getLoginUser = () => {
     const token = localStorage.getItem('token');
     // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNTE2MjM5MDIyfQ.ItUt9bHJO9XPiwClcP8RvWY3JqsnXOkIg2Mxnyk4aX4';
