@@ -152,7 +152,7 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container>
             <Grid item xs={12} sx={{ height: "250px" }}>
-              <FileUpload onFileSelect={handleFileUpload} image={vehicleData["icon"] && vehicleData["icon"]} />
+              <FileUpload onFileSelect={handleFileUpload} image={vehicleData["image"] && vehicleData["image"]}  />
             </Grid>
           </Grid>
 
@@ -255,7 +255,7 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
                 spacing={2}
                 sx={{ mt: 2 }}
               >
-                <StyledButton type="reset" variant={"secondary"} width="150">
+                <StyledButton type="button" variant={"secondary"} onClick={onClose && onClose} width="150">
                   {" "}
                   Cancel{" "}
                 </StyledButton>

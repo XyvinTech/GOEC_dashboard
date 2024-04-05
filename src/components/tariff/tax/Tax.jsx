@@ -49,7 +49,7 @@ function Tax({ data, headers, onIsChange, isChange, updateData, setPageNo, total
     }
   };
 
-  const taxData = tableHeaderReplace(data, ["name", "percentage", "createdAt"], headers);
+  const taxData = tableHeaderReplace(data, ["name", "percentage","status" ,"createdAt"], headers);
 
   const handleSearch = (value)=>{
     setSearchQuery(value)
@@ -102,7 +102,7 @@ function Tax({ data, headers, onIsChange, isChange, updateData, setPageNo, total
                 fontWeight: 700,
               }}
             >
-              Add Tariff
+              {action === "edit" ? 'Edit' : 'Add'} Tariff
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>

@@ -50,7 +50,6 @@ const RoutesConfig = () => {
             path: '/',
             element: <Navigate to="/dashboard/live-status" replace />,
         },
-        // Test purpose
         {
             path: '/user-details/:id',
             element: <UserDetails />,

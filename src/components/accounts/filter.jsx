@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Stack, Box, Grid, Typography } from "@mui/material";
-import StyledSelectField from "../../../ui/styledSelectField";
-import StyledButton from "../../../ui/styledButton";
+import { Stack, Box } from "@mui/material";
+import StyledSelectField from "../../ui/styledSelectField";
+import StyledButton from "../../ui/styledButton";
 import { useForm, Controller } from "react-hook-form";
-import StyledInput from "../../../ui/styledInput";
-import CalendarInput from "../../../ui/CalendarInput";
-import { getChargingPointsListOfStation, getListOfChargingStation } from "../../../services/stationAPI";
+import StyledInput from "../../ui/styledInput";
+import CalendarInput from "../../ui/CalendarInput";
+import { getChargingPointsListOfStation, getListOfChargingStation } from "../../services/stationAPI";
 
-
-const statusList = [
-  { value: "Available", label: "Available" },
-  { value: "Unavailable", label: "Unavailable" },
-  { value: "Faulted", label: "Faulted" },
-  { value: "Charging", label: "Charging" },
-  { value: "Preparing", label: "Preparing" },
-  { value: "Finishing", label: "Finishing" },
-]
 
 export default function Filter({ onSubmited }) {
   const [locationList, setLocationList] = useState([])
@@ -33,8 +24,13 @@ export default function Filter({ onSubmited }) {
   } = useForm();
   const onSubmit = (data) => {
     // Handle form submission with data
-    if (data.startDate && !data.endDate ) {
+    console.log(data);
+    if (data.startDate && !data.endDate) {
       setError("endDate", { type: "custom", message: "select End Date" })
+      return
+    }
+    if (data.startDate == data.endDate) {
+      setError("endDate", { type: "custom", message: "end date not able to same as start date" })
       return
     }
     if (Date.parse(data.startDate) > Date.parse(data.endDate)) {
@@ -46,19 +42,23 @@ export default function Filter({ onSubmited }) {
       return
     }
 
-
     let dt = {}
     for (const [key, value] of Object.entries(data)) {
-      if (value && key != 'location') {
-        console.log(key);
-        if(value.label){
-          dt[key] = value.label
-        }else{
-          dt[key] = value
+      if (key === 'location') {
+        if (value) {
+          dt[key] = value.value;
+          continue;
         }
-        
       }
+      if (key === 'cpid') {
+        if (value) {
+          dt[key] = value.label;
+          continue;
+        }
+      }
+      dt[key] = value
     }
+    localStorage.setItem("filter", JSON.stringify(dt))
     onSubmited && onSubmited(dt)
 
     // Close your form or perform other actions
@@ -87,14 +87,28 @@ export default function Filter({ onSubmited }) {
         setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
       }
     })
+    if (localStorage.getItem("filter") !== null) {
+      console.log(JSON.parse(localStorage.getItem("filter")));
+      reset(JSON.parse(localStorage.getItem("filter")))
+      getMachineList(JSON.parse(localStorage.getItem("filter")).location)
+    }
   }, [])
+
+  const getMachineList = (value) => {
+    getChargingPointsListOfStation(value).then((res) => {
+      if (res.result) {
+        setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+  }
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={modalStyle}>
           <Stack direction={"column"} spacing={2} sx={{ background: '' }}>
             <Label>Start date</Label>
-
             <Controller
               name="startDate"
               control={control}
@@ -148,27 +162,18 @@ export default function Filter({ onSubmited }) {
               )}
             // rules={{ required: "endDate is required" }}
             />
-            <Label>Location</Label>
+            <Label>Payment Status</Label>
 
             <Controller
-              name="location"
+              name="status"
               control={control}
               render={({ field }) => (
                 <>
                   <StyledSelectField
                     style={{ maxwidth: 200 }}
                     {...field}
-                    placeholder={"Select Location"}
+                    placeholder={"Search Payment Status"}
                     options={locationList}
-                    onChange={(e) => {
-                      setMachineList([])
-                      setValue("location", e)
-                      getChargingPointsListOfStation(e.value).then((res) => {
-                        if (res.result) {
-                          setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
-                        }
-                      })
-                    }}
                   />
                   {errors.location && (
                     <span style={errorMessageStyle}>
@@ -179,17 +184,17 @@ export default function Filter({ onSubmited }) {
               )}
             // rules={{ required: "Location is required" }}
             />
-            <Label>CPID</Label>
+            <Label>Transaction type</Label>
 
             <Controller
-              name="cpid"
+              name="type"
               control={control}
               render={({ field }) => (
                 <>
                   <StyledSelectField
                     {...field}
-                    placeholder={"Select CPID"}
-                    options={machineList}
+                    placeholder={"Select Transaction Type"}
+                    options={locationList}
                   />
                   {errors.cpid && (
                     <span style={errorMessageStyle}>
@@ -201,36 +206,36 @@ export default function Filter({ onSubmited }) {
             // rules={{ required: "CPID is required" }}
             />
 
-            <Label>Connector Status</Label>
+            <Label>Transaction</Label>
 
             <Controller
-              name="connectorStatus"
+              name="type"
               control={control}
               render={({ field }) => (
                 <>
                   <StyledSelectField
                     {...field}
-                    placeholder={"Select Connector Status"}
-                    options={statusList}
+                    placeholder={"Select Transaction Type"}
+                    options={locationList}
                   />
-                  {errors.connectorStatus && (
+                  {errors.cpid && (
                     <span style={errorMessageStyle}>
-                      {errors.connectorStatus.message}
+                      {errors.cpid.message}
                     </span>
                   )}
                 </>
               )}
-            // rules={{ required: "status is required" }}
+            // rules={{ required: "CPID is required" }}
             />
 
 
             <Stack direction={"row"} spacing={1} sx={{ justifyContent: 'center' }}>
-              <StyledButton variant="secondary" width={120} type="button"
-                onClick={() => { reset({}); onSubmited() }}>
-                Reset
-              </StyledButton>
-              <StyledButton width={150} variant="primary" type="submit">
+            <StyledButton width={150} variant="primary" type="submit">
                 Apply
+              </StyledButton>
+              <StyledButton variant="secondary" width={120} type="button"
+                onClick={() => { reset({}); onSubmited(); localStorage.removeItem("filter") }}>
+                Reset
               </StyledButton>
             </Stack>
           </Stack>

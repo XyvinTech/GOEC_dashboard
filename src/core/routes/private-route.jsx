@@ -4,7 +4,6 @@ import { useAuth } from '../auth/AuthContext'; // Adjust the import path as nece
 
 const PrivateRoute = ({ element, requiredPermission }) => {
   const { user, userCan,userHave } = useAuth();
-
   if (!user) {
     // Redirect to login if the user is not logged in
     return <Navigate to="/login" replace />;

@@ -94,7 +94,7 @@ const StyledTable = ({
                   const isTerminateSession =
                     header.toLowerCase() === "terminate session";
                   const isPublished = header.toLowerCase() === "published";
-
+                  const isConnectionStatus =  header.toLowerCase() === "connector status";
                   const command = prevHeader;
                   prevHeader = header;
                   return (
@@ -119,7 +119,11 @@ const StyledTable = ({
                         <StyledStatusChip $status={row[header]}>
                           {row[header]}
                         </StyledStatusChip>
-                      ) : row[header] || row[header] === "" ? (
+                      ) : isConnectionStatus ? (
+                        <StyledStatusChip $status={row[header]}>
+                          {row[header]}
+                        </StyledStatusChip>
+                      ): row[header] || row[header] === "" ? (
                         row[header]
                       ) : (
                         "_"

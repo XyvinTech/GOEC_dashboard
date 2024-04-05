@@ -63,7 +63,7 @@ export const NavItem = (props) => {
             </Button>
             <Collapse in={activ && extendable} sx={{
                     backgroundColor: activ && 'secondary.contrast',
-                    width: '100%'
+                    width: '100%',
                 }}>
                     <Stack
                         sx={{

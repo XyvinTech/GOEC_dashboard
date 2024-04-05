@@ -7,6 +7,7 @@ import { searchAndFilter } from "../../../utils/search";
 import { DummyData } from "../../../assets/json/AccountTransactions";
 import RightDrawer from "../../../ui/RightDrawer";
 import { tableHeaderReplace } from "../../../utils/tableHeaderReplace";
+import Filter from "../filter";
 
 
 const tableHeader = [
@@ -42,7 +43,9 @@ export default function AccountTrans({ data,updateData, setPageNo, totalCount, s
             handleSearch(e.target.value);
           }}
         />
-        <RightDrawer />
+        {/* <RightDrawer>
+          <Filter onSubmited={updateData} />
+        </RightDrawer> */}
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable
