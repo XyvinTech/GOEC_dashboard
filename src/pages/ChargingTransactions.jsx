@@ -7,8 +7,12 @@ export default function ChargingTransactions() {
   const [logs, setLogs] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const init = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
     getAllOcppTransactionLogs(filter).then((res) => {
       if (res) {
         setLogs(res.result);
@@ -19,7 +23,7 @@ export default function ChargingTransactions() {
 
   useEffect(() => {
     init();
-  }, [pageNo]);
+  }, [pageNo, searchQuery]);
 
 
   return (
@@ -29,6 +33,7 @@ export default function ChargingTransactions() {
         updateData={init}
         setPageNo={setPageNo} 
         totalCount={totalCount}
+        setSearchQuery={setSearchQuery}
       />
     </div>
   );

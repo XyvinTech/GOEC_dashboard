@@ -27,10 +27,9 @@ const tableHeader = [
 
 const newActions = ["View", "Download Invoice", "Resend Email"];
 
-export default function AllChargingTransactions({ data, updateData, setPageNo, totalCount  }) {
+export default function AllChargingTransactions({ data, updateData, setPageNo, totalCount, setSearchQuery }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
-  const [filterValue, setFilterValue] = useState('')
   const [selectedData,setSelectData] = useState()
 
   const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed', 'location', 'duration', 'chargePointId', 'connectorId', 'totalAmount', 'closureReason', 'closeBy'], tableHeader)
@@ -48,11 +47,15 @@ export default function AllChargingTransactions({ data, updateData, setPageNo, t
     }
   };
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
+
   return (
     <>
       <LastSynced heading="Charging Transactions" reloadHandle={updateData}  >
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
-          setFilterValue(e.target.value)
+          handleSearch(e.target.value)
         }} />
         <RightDrawer>
           <Filter onSubmited={updateData} />
