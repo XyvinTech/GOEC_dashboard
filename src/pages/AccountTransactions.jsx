@@ -8,8 +8,12 @@ function AccountTransactions() {
   const [transactData, setTransactData] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const getTaxData = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
     getTransactionList(filter).then((res) => {
       if (res) {
         setTransactData(res.result);
@@ -20,11 +24,11 @@ function AccountTransactions() {
 
   useEffect(() => {
     getTaxData()
-  }, [pageNo])
+  }, [pageNo, searchQuery])
 
   return (
     <Box>
-      {transactData && <AccountTrans data={transactData} setPageNo={setPageNo} totalCount={totalCount} updateData={getTaxData} />}
+      {transactData && <AccountTrans data={transactData} setPageNo={setPageNo} totalCount={totalCount} setSearchQuery={setSearchQuery} updateData={getTaxData} />}
     </Box>
   )
 }
