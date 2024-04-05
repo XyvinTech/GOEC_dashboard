@@ -4,7 +4,7 @@ import StyledTable from "../../../ui/styledTable";
 import LastSynced from "../../../layout/LastSynced";
 import StyledDivider from "../../../ui/styledDivider";
 import { ReactComponent as Close } from "../../../assets/icons/close-circle.svg";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import AddTax from "./addTax";
 import StyledButton from "../../../ui/styledButton";
@@ -14,11 +14,10 @@ import { deleteTax } from "../../../services/taxAPI";
 import { searchAndFilter } from "../../../utils/search";
 import { useAuth } from "../../../core/auth/AuthContext";
 import { permissions } from "../../../core/routes/permissions";
-function Tax({ data, headers, onIsChange, isChange, updateData }) {
+function Tax({ data, headers, onIsChange, isChange, updateData, setPageNo, totalCount, setSearchQuery }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
-  const [filterValue, setFilterValue] = useState("");
   const { userCan } = useAuth()
 
   // Function to open the modal
@@ -52,13 +51,17 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
 
   const taxData = tableHeaderReplace(data, ["name", "percentage", "createdAt"], headers);
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
+
   return (
     <>
       <LastSynced heading="Tax" reloadHandle={updateData}>
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {
-            setFilterValue(e.target.value);
+            handleSearch(e.target.value);
           }}
         />
       </LastSynced>
@@ -69,7 +72,9 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
           </StyledButton>
         </Box>
         <StyledTable headers={headers} 
-        data={searchAndFilter(taxData,filterValue)} 
+        data={taxData} 
+        setPageNo={setPageNo}
+        totalCount={totalCount}
         onActionClick={handleClick}
         showActionCell={userCan(permissions.tax.modify)}
         actions={["Edit","Delete"]}
@@ -102,7 +107,7 @@ function Tax({ data, headers, onIsChange, isChange, updateData }) {
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
           <StyledDivider />
-          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} />
+          <AddTax action={action} data={tableData} onIsChange={onIsChange} isChange={isChange} setOpen={setOpen}/>
         </Box>
       </Modal>
     </>

@@ -39,8 +39,9 @@ export default function DeductWallet({userData, onIsChange, isChange, open, onCl
 
   const onSubmit = async (data) => {
     const postData = {
-      amount: -data.amount,
+      amount: -1*Math.abs(data.amount),
       transactionId: data.reference,
+      reference: data.reference,
       doneByAdmin:true,
       type:"admin deduction"
     };

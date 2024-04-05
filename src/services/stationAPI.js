@@ -36,9 +36,9 @@ export async function getChargingStationById(Id) {
   }
 }
 
-export async function getChargingStationList() {
+export async function getChargingStationList(filter={}) {
   try {
-    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/dashboard/list`);
+    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/dashboard/list`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;

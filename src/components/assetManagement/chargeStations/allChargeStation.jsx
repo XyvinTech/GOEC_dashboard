@@ -19,12 +19,14 @@ const tableHeader = [
   'Owner'
 ]
 
-export default function AllChargeStation({ data, deleteData, editData, reloadData, ...props }) {
+export default function AllChargeStation({ data, setPageNo, totalCount, setSearchQuery, deleteData, editData, reloadData, ...props }) {
   const navigate = useNavigate()
   const { userCan } = useAuth()
 
-  const [filterValue, setFilterValue] = useState('')
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
   const chargeStationData = tableHeaderReplace(data, ['name', 'address', 'longitude', 'latitude', 'owner', 'status'], tableHeader)
   const tableActionClick = (e) => {
     if (e.action === 'View') {
@@ -40,12 +42,14 @@ export default function AllChargeStation({ data, deleteData, editData, reloadDat
 
       <LastSynced heading="Charge Stations" reloadHandle={reloadData} >
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
-          setFilterValue(e.target.value)
+          handleSearch(e.target.value)
         }} />
       </LastSynced>
       <Box sx={{ p: 3 }}>
         <StyledTable headers={tableHeader} 
-        data={searchAndFilter(chargeStationData, filterValue)}
+        setPageNo={setPageNo}
+        totalCount={totalCount}
+        data={chargeStationData}
         actions={userCan(permissions.chargingStations.modify) ? ["Edit","View","Delete"] : ["View"]} 
         onActionClick={tableActionClick} />
       </Box>

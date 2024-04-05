@@ -8,20 +8,22 @@ import { getRfidList } from '../services/rfidAPI';
 const RfidCards = () => {
   const [togglePage, setTogglePage] = useState(0);
   const [rfidData,setRfidData] = useState([])
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
-  const init = () => {
-    getRfidList().then((res) => {
+  const init = (filter = {pageNo}) => {
+    getRfidList(filter).then((res) => {
       setRfidData(res.result)
+      setTotalCount(res.totalCount);
     })
   }
 
   useEffect(() => {
     init()
-  }, [])
+  }, [pageNo])
 
 
   const buttonChanged = (e) => {
-    console.log(e);
     setTogglePage(e.index);
   };
   return (
@@ -32,7 +34,7 @@ const RfidCards = () => {
           onChanged={buttonChanged}
         />
       </Stack>
-      {togglePage === 0 ? <AllRfidCards data={rfidData} updateData={init}/> : <AssignRfid />}
+      {togglePage === 0 ? <AllRfidCards data={rfidData} setPageNo={setPageNo} totalCount={totalCount} updateData={init}/> : <AssignRfid />}
     </Box>
   )
 }

@@ -22,13 +22,16 @@ const tableHeader = [
 ]
 
 
-export default function AccountTrans({ data,updateData }) {
-  const [filterValue, setFilterValue] = useState("");
+export default function AccountTrans({ data,updateData, setPageNo, totalCount, setSearchQuery }) {
+
   const accData = tableHeaderReplace(data, ["user", "createdAt", "type", "invoice_id", "amount", "status", "initiated_by", "transactionId", "reference"], tableHeader);
   const tableActionClick = (e) => {
     console.log(e);
   };
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
 
   return (
     <>
@@ -36,7 +39,7 @@ export default function AccountTrans({ data,updateData }) {
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {
-            setFilterValue(e.target.value);
+            handleSearch(e.target.value);
           }}
         />
         <RightDrawer />
@@ -44,7 +47,9 @@ export default function AccountTrans({ data,updateData }) {
       <Box sx={{ p: 3 }}>
         <StyledTable
           headers={tableHeader}
-          data={searchAndFilter(accData, filterValue)}
+          data={accData}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
           onActionClick={tableActionClick}
           actions={["Download Invoice","Resend Mail"]}
         />

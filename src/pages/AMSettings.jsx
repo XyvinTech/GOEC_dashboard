@@ -10,16 +10,19 @@ function AMSettings() {
   let [admins, setAdmins] = useState([]);
   const [isChange, setIsChange] = useState(false)
   const tableHeader = ["Name", "Role", "Email", "Phone", "Designation", "Status"];
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
-  const init = async () => {
-    let data = await getAdmins();
+  const init = async (filter={pageNo}) => {
+    let data = await getAdmins(filter);
 
     setAdmins(data.result);
+    setTotalCount(data.totalCount);
   };
 
   useEffect(() => {
     init();
-  }, [isChange]);
+  }, [isChange, pageNo]);
 
   const AllAdminData = tableHeaderReplace(
     admins,
@@ -29,7 +32,7 @@ function AMSettings() {
 
   return (
     <Box>
-      <AdminManangement headers={tableHeader} data={AllAdminData}  setIsChange={setIsChange} isChange={isChange}/>
+      <AdminManangement headers={tableHeader} data={AllAdminData} setPageNo={setPageNo} totalCount={totalCount} setIsChange={setIsChange} isChange={isChange}/>
     </Box>
   );
 }

@@ -5,19 +5,25 @@ import { getAllOcppTransactionLogs } from "../services/ocppAPI";
 export default function ChargingTransactions() {
 
   const [logs, setLogs] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const init = (filter) => {
+  const init = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
     getAllOcppTransactionLogs(filter).then((res) => {
-      console.log(res.result);
       if (res) {
         setLogs(res.result);
+        setTotalCount(res.totalCount);
       }
     });
   };
 
   useEffect(() => {
     init();
-  }, []);
+  }, [pageNo, searchQuery]);
 
 
   return (
@@ -25,6 +31,9 @@ export default function ChargingTransactions() {
       <AllChargingTransactions
         data={logs}
         updateData={init}
+        setPageNo={setPageNo} 
+        totalCount={totalCount}
+        setSearchQuery={setSearchQuery}
       />
     </div>
   );

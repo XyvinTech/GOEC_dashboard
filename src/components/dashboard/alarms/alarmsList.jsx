@@ -19,24 +19,25 @@ const tableHeader = [
   'Error code'
 ]
 
-export default function AlarmsList({data, dataReload}) {
+export default function AlarmsList({data, dataReload, setPageNo, totalCount, setSearchQuery }) {
 
-  const [filterValue, setFilterValue] = useState('')
-
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
   const tabledata = tableHeaderReplace(data,['cpid','date','summary','connectorId','status','errorCode'],tableHeader)
 
   return (
     <>
       <LastSynced heading="Charge Points" reloadHandle={dataReload}>
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
-          setFilterValue(e.target.value)
+          handleSearch(e.target.value)
         }} />
         <RightDrawer>
           <Filter onSubmited={dataReload}/>
         </RightDrawer>
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        <StyledTable headers={tableHeader} data={searchAndFilter(tabledata, filterValue)} showActionCell={false} />
+        <StyledTable headers={tableHeader} data={tabledata} setPageNo={setPageNo} totalCount={totalCount} showActionCell={false} />
       </Box>
     </>
   )

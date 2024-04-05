@@ -26,7 +26,7 @@ const tableHeader = [
 ]
 
 
-const AllRfidCards = ({ data, updateData }) => {
+const AllRfidCards = ({ data, updateData, setPageNo, totalCount }) => {
   const [open, setOpen] = useState(false);
   const [isComponent, setIsComponent] = useState(0); // State to track which component to render
 
@@ -89,6 +89,8 @@ const AllRfidCards = ({ data, updateData }) => {
         <StyledTable
           headers={tableHeader}
           data={rfData}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
           onActionClick={(e) => handleClick(e)}
           showActionCell={userCan(permissions.rfid.modify)}
           actions={["Edit", "Delete"]} />

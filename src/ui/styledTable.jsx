@@ -17,6 +17,8 @@ const StyledTable = ({
   onActionClick,
   showActionCell = true,
   actions = ["Edit", "View", "Delete"],
+  setPageNo,
+  totalCount
 }) => {
   const [page, setPage] = useState(0);
   const [firstopen, setFirstOpen] = useState(true);
@@ -33,16 +35,12 @@ const StyledTable = ({
   }, 5000);
 
   const rowsPerPage = 10;
-  const paginatedData = data.slice(
-    page * rowsPerPage,
-    (page + 1) * rowsPerPage
-  );
-  const pageCount = Math.ceil(data.length / rowsPerPage);
+
+  const pageCount = Math.ceil(totalCount / rowsPerPage) > 0 ? Math.ceil(totalCount / rowsPerPage) : 1 ;
 
   const handleChangePage = (newPage) => {
-    console.log("Current page:", page);
-    console.log("New page:", newPage);
     setPage(newPage); // Assuming newPage is 1-indexed
+    setPageNo(newPage+1);
   };
 
   const handleStopClick = async (session) => {
@@ -88,7 +86,7 @@ const StyledTable = ({
               </Typography>
             </TableCell>
           ) : (
-            paginatedData.map((row, rowIndex) => (
+            data.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {headers.map((header, cellIndex) => {
                   const isStatusColumn = header.toLowerCase() === "status";

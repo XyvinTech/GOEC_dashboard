@@ -7,6 +7,9 @@ export default function CTariff() {
 
   const [tariffListData, setTariffListData] = useState([]);
   const [isChange, setIsChange] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const headers = [
     "Name",
@@ -17,22 +20,25 @@ export default function CTariff() {
     "Tax",
   ];
 
-  const getTariffData = ()=>{
-    getChargingTariffList().then((res)=>{
-      console.log(res.result);
+  const getTariffData = (filter={pageNo})=>{
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
+    getChargingTariffList(filter).then((res)=>{
       if(res){
         setTariffListData(res.result);
+        setTotalCount(res.totalCount);
       }
     })
   }
 
   useEffect(() => {
     getTariffData()
-  }, [isChange])
+  }, [isChange, pageNo, searchQuery])
 
   return (
     <Box>
-      <ChargingTariff data={tariffListData} headers={headers} onIsChange={setIsChange} isChange={isChange} updateData={getTariffData}/>
+      <ChargingTariff data={tariffListData} setSearchQuery={setSearchQuery} setPageNo={setPageNo} totalCount={totalCount} headers={headers} onIsChange={setIsChange} isChange={isChange} updateData={getTariffData}/>
     </Box>
   );
 }

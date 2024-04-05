@@ -6,22 +6,29 @@ import { getTransactionList } from '../services/transactionApi'
 function AccountTransactions() {
 
   const [transactData, setTransactData] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const getTaxData = () => {
-    getTransactionList().then((res) => {
+  const getTaxData = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
+    getTransactionList(filter).then((res) => {
       if (res) {
         setTransactData(res.result);
+        setTotalCount(res.totalCount);
       }
     })
   }
 
   useEffect(() => {
     getTaxData()
-  }, [])
+  }, [pageNo, searchQuery])
 
   return (
     <Box>
-      {transactData && <AccountTrans data={transactData} updateData={getTaxData} />}
+      {transactData && <AccountTrans data={transactData} setPageNo={setPageNo} totalCount={totalCount} setSearchQuery={setSearchQuery} updateData={getTaxData} />}
     </Box>
   )
 }
