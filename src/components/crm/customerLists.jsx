@@ -24,11 +24,14 @@ function restructureData(dataArray) {
 
 export default function CustomerLists() {
   const [userListData, setUserListData] = useState([]);
-  const [filterValue, setFilterValue] = useState('')
   const [pageNo, setPageNo] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
   
   const getTariffData = (filter={pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
     getUsersListforAdmin(filter).then((res) => {
       if (res.status) {
         setUserListData(res.result);
@@ -39,7 +42,7 @@ export default function CustomerLists() {
 
   useEffect(() => {
     getTariffData();
-  }, [pageNo]);
+  }, [pageNo, searchQuery]);
 
   const navigate = useNavigate();
 
@@ -56,13 +59,13 @@ export default function CustomerLists() {
     <Box>
       <LastSynced heading="Customers List" reloadHandle={getTariffData} >
         <StyledSearchField placeholder={'Search'} onChange={(e) => {
-          setFilterValue(e.target.value)
+          setSearchQuery(e.target.value)
         }} />
       </LastSynced>
       <Box sx={{ p: { xs: 2, md: 4 } }}>
         <StyledTable
           headers={tableHeader}
-          data={searchAndFilter(customersList,filterValue)}
+          data={customersList}
           showActionCell={true}
           actions={["view"]}
           onActionClick={actionClick}
