@@ -14,11 +14,10 @@ import { deleteTax } from "../../../services/taxAPI";
 import { searchAndFilter } from "../../../utils/search";
 import { useAuth } from "../../../core/auth/AuthContext";
 import { permissions } from "../../../core/routes/permissions";
-function Tax({ data, headers, onIsChange, isChange, updateData, setPageNo, totalCount }) {
+function Tax({ data, headers, onIsChange, isChange, updateData, setPageNo, totalCount, setSearchQuery }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
-  const [filterValue, setFilterValue] = useState("");
   const { userCan } = useAuth()
 
   // Function to open the modal
@@ -52,13 +51,17 @@ function Tax({ data, headers, onIsChange, isChange, updateData, setPageNo, total
 
   const taxData = tableHeaderReplace(data, ["name", "percentage", "createdAt"], headers);
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
+
   return (
     <>
       <LastSynced heading="Tax" reloadHandle={updateData}>
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {
-            setFilterValue(e.target.value);
+            handleSearch(e.target.value);
           }}
         />
       </LastSynced>
