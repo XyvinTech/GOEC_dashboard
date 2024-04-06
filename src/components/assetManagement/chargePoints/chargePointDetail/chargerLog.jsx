@@ -25,15 +25,18 @@ const tableHeader = [
 
 
 export default function ChargerLog({ CPID }) {
-    const [filterValue, setFilterValue] = useState('')
     const [logList, setLogList] = useState([])
     const [pageNo, setPageNo] = useState(1);
     const [totalCount, setTotalCount] = useState(1);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         init()
-    }, [pageNo])
+    }, [pageNo, searchQuery])
     const init = (filter={pageNo}) => {
+        if(searchQuery){
+            filter.searchQuery = searchQuery;
+          }
         getMachineLog(CPID,filter).then((res) => {
             if (res.status) {
                 setLogList(tableHeaderReplace(res.result, ['connectorId', 'date', 'command', 'payload', 'uniqueId'], tableHeader))
@@ -44,7 +47,7 @@ export default function ChargerLog({ CPID }) {
     return (
         <><LastSynced heading={'Charger logs'} reloadHandle={init}>
             <StyledSearchField placeholder={'Search'} onChange={(e) => {
-                setFilterValue(e.target.value)
+                setSearchQuery(e.target.value)
             }} />
             <RightDrawer>
                 <Filter onSubmited={init}/>
@@ -54,7 +57,7 @@ export default function ChargerLog({ CPID }) {
             />
         </LastSynced>
             <Box sx={{ p: 3, overflow: 'scroll' }}>
-                <StyledTable headers={tableHeader} setPageNo={setPageNo} totalCount={totalCount} data={searchAndFilter(logList, filterValue)} showActionCell={false} />
+                <StyledTable headers={tableHeader} setPageNo={setPageNo} totalCount={totalCount} data={logList} showActionCell={false} />
             </Box>
         </>
     )
