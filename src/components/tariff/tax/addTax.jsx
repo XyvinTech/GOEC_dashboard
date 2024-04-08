@@ -14,7 +14,7 @@ export default function AddTax({ action, data, onIsChange, isChange, setOpen }) 
       ? {
           name: data.Name,
           percentage: data.Description,
-          status: ["ACTIVE","TRUE"].includes(data.Status.toUpperCase())
+          status: data.Status ==='Active'
         }
       : { status: true };
   }, [action, data]);
@@ -39,7 +39,6 @@ export default function AddTax({ action, data, onIsChange, isChange, setOpen }) 
         toast.success(`Tax ${action === "add" ? "created" : "updated"} successfully`, { position: "top-right" });
         onIsChange(!isChange);
         reset();
-        // onClose();
       }
     } catch (error) {
       toast.error("Something went wrong", { position: "top-right" });
