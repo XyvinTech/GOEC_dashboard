@@ -198,3 +198,21 @@ export async function getChargingSummaryReport(params) {
     throw error;
   }
 }
+
+export async function getDashboardTrends(filter) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/analytics/trends`, {params:filter});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getDashboardUtilization(filter) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/analytics/utilization`, {params:filter});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
