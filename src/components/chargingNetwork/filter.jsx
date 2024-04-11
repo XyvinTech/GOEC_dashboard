@@ -81,13 +81,11 @@ export default function Filter({ onSubmited }) {
 
   useEffect(() => {
     getListOfChargingStation().then((res) => {
-      console.log(res);
       if (res.status) {
         setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
       }
     })
     if (localStorage.getItem("filter") !== null) {
-      console.log(JSON.parse(localStorage.getItem("filter")));
       reset(JSON.parse(localStorage.getItem("filter")))
       getMachineList(JSON.parse(localStorage.getItem("filter")).location)
     }
@@ -99,7 +97,6 @@ export default function Filter({ onSubmited }) {
         setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
       }
     }).catch(err => {
-      console.log(err);
     })
   }
   return (

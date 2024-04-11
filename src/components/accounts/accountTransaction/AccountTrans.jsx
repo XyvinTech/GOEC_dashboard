@@ -26,7 +26,6 @@ export default function AccountTrans({ data,updateData, setPageNo, totalCount, s
 
   const accData = tableHeaderReplace(data, ["user", "createdAt", "type", "invoice_id", "amount", "status", "initiated_by", "transactionId", "reference"], tableHeader);
   const tableActionClick = (e) => {
-    console.log(e);
   };
 
   const handleSearch = (value)=>{

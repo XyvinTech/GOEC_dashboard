@@ -2,7 +2,6 @@ import { NOTIFICATION_URL } from "./axiosInstances";
 
 export async function sendBulkMail(data) {
   try {
-    console.log(data);
     const response = await NOTIFICATION_URL.post(`notification/dashboard/email`, data,{
       headers: {
         'Content-Type': 'multipart/form-data', // Set Content-Type for this request
@@ -16,8 +15,6 @@ export async function sendBulkMail(data) {
 
 export async function sendBulkPushNotification(data) {
   try {
-    console.log(data);
-
     const response = await NOTIFICATION_URL.post(`notification/dashboard/firebase`, data)
     return response.data;
   } catch (error) {

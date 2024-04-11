@@ -60,7 +60,6 @@ export default function UserAccountTransactiomn() {
           showActionCell={true}
           actions={["view"]}
           onActionClick={(e) => {
-            console.log(e);
           }}
           setPageNo={setPageNo} 
           totalCount={totalCount}

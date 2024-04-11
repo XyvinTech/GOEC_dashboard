@@ -107,7 +107,6 @@ export default function TriggerMessage() {
     const cpid = sessionStorage.getItem("cpid");
     try {
       const res = await Trigger(cpid, data);
-      console.log(res);
       if (res) {
         const successToastId = toast.success(
           "Triggered successfully",

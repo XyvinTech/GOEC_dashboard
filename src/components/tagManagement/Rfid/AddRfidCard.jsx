@@ -19,7 +19,6 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
     },
   });
   const onSubmit = (data) => {
-    console.log('Form data submitted:', data);
     if (editStatus) {
       updateRFID(data)
     } else {
@@ -35,11 +34,9 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
       status: data.activate ? 'active' : 'unassigned'
     }
     createRfid(dt).then((res) => {
-      console.log('---->',res);
       toast.success("RFID added successfully")
       Close();
     }).catch((error) => {
-      console.log(error.response.data);
       toast.error(error.response.data.error)
     })
   }
@@ -52,7 +49,6 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
       status: data.activate ? 'active' : 'inactive'
     }
     editRfid(rfidData._id,dt).then((res) => {
-      console.log(res);
       toast.success("RFID updated successfully")
       Close();
     }).catch((error) => {

@@ -64,7 +64,6 @@ export default function EmailNotification() {
     }
     sendBulkPushNotification(formDataObject)
       .then((res) => {
-        console.log(res);
         toast.success("Send successfully");
         reset();
       })
@@ -74,7 +73,6 @@ export default function EmailNotification() {
   };
 
   const handleFileSelect = (file) => {
-    console.log(file.files[0]);
     setSelectedFile(file.files[0]);
     let i = 0;
     let st = setInterval(() => {
@@ -204,7 +202,6 @@ export default function EmailNotification() {
                 filename={selectedFile.name}
                 onClose={() => {
                   setSelectedFile();
-                  console.log(reference);
                 }}
               />
             )} */}

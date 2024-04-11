@@ -59,7 +59,6 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
 
   const onSubmit = (data) => {
     if (editStatus) {
-      console.log(data);
       updateVEHICLE(data)
     }
     else {
@@ -84,8 +83,6 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
         "compactable_port": data.compactable_port.map((item) => item.value)
       }
 
-      console.log(dt)
-
 
       let createNew = await createVehicle(dt)
       if (createNew.status) {
@@ -95,7 +92,6 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
       }
     } catch (error) {
       toast.error("Failed to create Vehicle");
-      console.log(error)
     }
   
     
@@ -115,14 +111,12 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
       "compactable_port": typeof (data.compactable_port[0]) === "object" ? data.compactable_port.map((item) => item.value) : vehicleData["compactable_port"]
     }
     editVehicle(vehicleData["_id"], dt).then((res) => {
-      console.log(res);
       if (res.status) {
         toast.success("vehicle updated successfully");
         reset();
         onClose()
       }
     }).catch((error) => {
-      console.log(error);
       toast.error("Failed to update Vehicle");
     })
   }

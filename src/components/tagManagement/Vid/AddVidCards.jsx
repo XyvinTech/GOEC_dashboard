@@ -18,7 +18,6 @@ const AddVidCards = ({ Close, Save }) => {
   });
   const onSubmit = (data) => {
     // Handle form submission with data
-    console.log('Form data submitted:',data);
     // Close your form or perform other actions
     Close();
   };

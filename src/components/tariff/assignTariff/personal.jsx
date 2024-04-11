@@ -38,7 +38,6 @@ export default function Personal({ location }) {
       return
     }
     userchargingTariff(user._id).then((res) => {
-      console.log(res);
       if (res.status) {
         setCurrentTarrif(res.result)
         handleOpen()

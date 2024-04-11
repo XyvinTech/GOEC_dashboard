@@ -24,7 +24,6 @@ const Sidebar = ({ open, onClose, ...props }) => {
       }
       )
     })).filter(item => item.sub ? item.sub.length > 0 : true);
-    console.log(listItem);
     setFilterItems(listItem, [siderbarListItems(), userCan])
     setActiveIndex(0)
     navigate(listItem[0].extendable ? `/${listItem[0].sub[0]?.href}` : `/${listItem[0].href}`)

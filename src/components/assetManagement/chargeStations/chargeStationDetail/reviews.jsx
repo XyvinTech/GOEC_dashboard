@@ -30,7 +30,6 @@ const ReviewComponent = ({ review, deleteClickHandle }) => {
 }
 
 export default function Reviews({ data, deleteClickHandle,dataUpdate, ...props }) {
-  console.log('test',data);
   return (
     <>
       <LastSynced heading={'Reviews'} reloadHandle={dataUpdate} />

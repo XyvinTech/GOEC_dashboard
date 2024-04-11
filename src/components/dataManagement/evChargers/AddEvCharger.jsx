@@ -114,9 +114,7 @@ export default function AddEvCharger({ editStatus = false, chargerData = {}, for
         capacity: data.capacity,
         connectors: connectors
       }
-      console.log(obj);
       createEvModel(obj).then((res) => {
-        console.log(res);
         if (res.status) {
           toast.success("EV charger Created Successfully")
           formSubmitted && formSubmitted()
@@ -140,9 +138,7 @@ export default function AddEvCharger({ editStatus = false, chargerData = {}, for
         capacity:data.capacity,
         connectors:connectors
       }
-      console.log(obj);
       editEvModel(chargerData._id,obj).then((res)=>{
-        console.log(res);
         if (res.status) {
           toast.success("EV charger Updated Successfully")
           formSubmitted && formSubmitted()

@@ -12,7 +12,6 @@ export default function FileUpload({ onFileSelect, image, accept,getBase64Data,r
     onDrop: (acceptedFiles) => {
       setFileStatus(true)
       onFileSelect && onFileSelect({ files: acceptedFiles })
-      // console.log(acceptedFiles[0]);
       getBase64(acceptedFiles[0],(result)=>{
         getBase64Data && getBase64Data(result)
       })
@@ -33,7 +32,6 @@ export default function FileUpload({ onFileSelect, image, accept,getBase64Data,r
         cb(reader.result)
     };
     reader.onerror = function (error) {
-        console.log('Error: ', error);
     };
 }
 

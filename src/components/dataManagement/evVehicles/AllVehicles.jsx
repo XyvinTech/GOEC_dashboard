@@ -44,7 +44,6 @@ export default function AllVehicles({ data, setPageNo, totalCount, setSearchQuer
       setEditOpen(true);
     }
     else if (e.action === "Delete") {
-      // console.log(e.data);
       deleteVEHICLE(e.data)
     }
   }
