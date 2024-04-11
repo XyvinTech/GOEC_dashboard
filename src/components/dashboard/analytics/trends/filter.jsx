@@ -16,11 +16,12 @@ const locations = [
   { value: "option6", label: "Charge points" },
 ];
 
-export default function Filter() {
+export default function Filter({onSubmited}) {
   const {
     control,
     handleSubmit,
     setValue,
+    reset,
     watch,
     formState: { errors },
     clearErrors,
@@ -31,7 +32,11 @@ export default function Filter() {
   });
   const onSubmit = (data) => {
     // Handle form submission with data
-    console.log("Form data submitted:", data);
+    let dt = {
+      startDate: data.startDate,
+      endDate: data.endDate
+    }
+    onSubmited && onSubmited(dt)
     // Close your form or perform other actions
   };
 
@@ -112,7 +117,7 @@ export default function Filter() {
                 )}
 
               />
-              <Label>Location</Label>
+              {/* <Label>Location</Label>
 
               <Controller
                 name="location"
@@ -131,11 +136,11 @@ export default function Filter() {
                   </>
                 )}
 
-              />
+              /> */}
 
 
 
-              <Label>CPID</Label>
+              {/* <Label>CPID</Label>
 
               <Controller
                 name="cpid"
@@ -154,7 +159,7 @@ export default function Filter() {
                   </>
                 )}
 
-              />
+              /> */}
 
 
               <Grid container spacing={6}>
@@ -165,7 +170,9 @@ export default function Filter() {
                   </StyledButton>
                 </Grid>
                 <Grid item xs={12} md={6} >
-                  <StyledButton width={120} variant="secondary" fontSize="14">
+                  <StyledButton width={120} variant="secondary" fontSize="14"
+                  onClick={() => { reset(); onSubmited() }}
+                  >
                     Reset
                   </StyledButton>
                 </Grid>

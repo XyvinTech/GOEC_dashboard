@@ -45,6 +45,15 @@ export async function getChargingStationList(filter={}) {
   }
 }
 
+export async function getChargingStationListDropdown() {
+  try {
+    const response = await CHARGING_STATION_INSTANCE.get(`chargingStations/dashboard/list/dropdown`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getChargingPointsListOfStation(id) {
   try {
     const response = await CHARGING_STATION_INSTANCE.get(`/chargingStations/dashboard/evMachineList/${id}`);
