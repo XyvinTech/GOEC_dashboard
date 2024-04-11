@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import StyledTab from "../ui/styledTab";
 import Personal from "../components/tariff/assignTariff/personal";
 import Location from "../components/tariff/assignTariff/location";
-import { getChargingStationList } from "../services/stationAPI";
+import { getChargingStationListDropdown } from "../services/stationAPI";
 export default function ATariff() {
   const [togglePage, setTogglePage] = useState(0);
   const [locationList, setLocationList] = useState([])
@@ -13,7 +13,7 @@ export default function ATariff() {
   };
 
   const getLocation = () => {
-    getChargingStationList().then((res) => {
+    getChargingStationListDropdown().then((res) => {
       if (res.status) {
         setLocationList(res.result.map((dt)=>({label:dt.name,value:dt._id})))
       }

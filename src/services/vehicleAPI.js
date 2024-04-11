@@ -83,6 +83,15 @@ export async function getBrand(filter1={}) {
   }
 }
 
+export async function getBrandDropdown() {
+  try {
+    const response = await VEHICLE_INSTANCES.get(`brand/list/dropdown`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function editBrand(Id, data) {
   try {
     const response = await VEHICLE_INSTANCES.put(`brand/${Id}`, data);

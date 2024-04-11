@@ -101,6 +101,15 @@ export async function getOem(filter={}) {
   }
 }
 
+export async function getOemDropdown() {
+  try {
+    const response = await EV_MACHINE_INSTANCE.get(`oem/list/dropdown`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function editOem(Id, data) {
   try {
     const response = await EV_MACHINE_INSTANCE.put(`oem/${Id}`, data);
@@ -145,6 +154,15 @@ export async function createEvModel(data) {
 export async function getEvModel(filter={}) {
   try {
     const response = await EV_MACHINE_INSTANCE.get(`evModel/list`, {params:filter});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getEvModelDropdown() {
+  try {
+    const response = await EV_MACHINE_INSTANCE.get(`evModel/list/dropdown`);
     return response.data;
   } catch (error) {
     throw error;
