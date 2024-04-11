@@ -64,7 +64,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       evModel: data.model.value,
       CPID: data.CPID,
       OEM: data.chargePointOEM.value,
-      cpidStatus: "Available",
       published: data.published ? 'Yes' : "No"
     }
     console.log(dt);
@@ -123,7 +122,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
 
     getEvModelDropdown().then((res) => {
       if (res.status) {
-        console.log(res.status)
         setModelList(res.result)
         if (editStatus) {
           let list = []
