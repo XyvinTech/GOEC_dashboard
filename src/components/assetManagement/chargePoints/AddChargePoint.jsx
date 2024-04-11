@@ -123,6 +123,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
 
     getEvModel().then((res) => {
       if (res.status) {
+        console.log(res.status)
         setModelList(res.result)
         if (editStatus) {
           let list = []
