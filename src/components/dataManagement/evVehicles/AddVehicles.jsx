@@ -59,7 +59,6 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
 
   const onSubmit = (data) => {
     if (editStatus) {
-      console.log(data);
       updateVEHICLE(data)
     }
     else {

@@ -11,6 +11,7 @@ import FileUpload from "../../../utils/FileUpload";
 import StyledTextArea from "../../../ui/styledTextArea";
 import { toast } from "react-toastify";
 import { sendBulkPushNotification } from "../../../services/notificationAPI";
+import { imageUploadAPI } from "../../../services/imageAPI";
 
 export default function EmailNotification() {
   const [userList, setUserList] = useState([]);
@@ -31,7 +32,7 @@ export default function EmailNotification() {
       content: "",
     },
   });
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     const mails = data.sendTo.map((dt) => dt.value);
     const userIds = data.sendTo.map(dataItem => {
       const user = userList.find(user => user.mobile === dataItem.label);
@@ -47,10 +48,15 @@ export default function EmailNotification() {
     formData.append("text", data.content);
     formData.append("url", data.url);
     formData.append("userArray", userIds);
+try {
+  if (selectedFile) {
+    let uploadImage = await imageUploadAPI(selectedFile)
+    formData.append("imagePath", uploadImage.url)
+  }
+} catch (error) {
+  toast.error("image upload error")
+}
 
-    // if (selectedFile) {
-    //   formData.append("file", selectedFile);
-    // }
     let formDataObject = {};
     for (let pair of formData.entries()) {
       if (pair[0] === "to[]") {
@@ -64,7 +70,6 @@ export default function EmailNotification() {
     }
     sendBulkPushNotification(formDataObject)
       .then((res) => {
-        console.log(res);
         toast.success("Send successfully");
         reset();
       })
@@ -192,7 +197,7 @@ export default function EmailNotification() {
               rules={{ required: "Content is required" }}
             />
 
-            {/* <FileUpload
+            <FileUpload
               ref={reference}
               accept={"*"}
               removedFile={selectedFile ? false : true}
@@ -207,9 +212,9 @@ export default function EmailNotification() {
                   console.log(reference);
                 }}
               />
-            )} */}
+            )} 
 
-            <Typography sx={TextStyle}>Target Url</Typography>
+            {/* <Typography sx={TextStyle}>Target Url</Typography>
             <Controller
               name="url"
               control={control}
@@ -223,7 +228,7 @@ export default function EmailNotification() {
                   )}
                 </>
               )}
-            />
+            /> */}
             <StyledButton
               type="submit"
               variant={"primary"}
