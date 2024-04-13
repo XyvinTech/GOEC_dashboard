@@ -12,7 +12,7 @@ import { Phone, Try } from "@mui/icons-material";
 import { createAdmin, getRoles, updateAdmin } from "../../../services/userApi";
 import { toast } from "react-toastify";
 
-export default function AddAdmin({ setIsChange, isChange, setAction, action, data, ...props }) {
+export default function AddAdmin({ setIsChange, isChange, setAction, action, data,onClose, ...props }) {
 
   const formOptions =
     action === "edit"
@@ -146,7 +146,7 @@ export default function AddAdmin({ setIsChange, isChange, setAction, action, dat
               }}
             >
               <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                <StyledButton variant={"secondary"} width="103">
+                <StyledButton type="button" variant={"secondary"} width="103" onClick={onClose}>
                   Cancel
                 </StyledButton>
                 <StyledButton variant={"primary"} width="160" type="submit"

@@ -46,7 +46,7 @@ export default function UserAccountTransactiomn() {
     getData();
   }, [id]);
 
-  const transData = tableHeaderReplace(transactionData, ["date","type", "transactionId", "amount", "status", "paymentMode"], tableHeader);
+  const transData = tableHeaderReplace(transactionData, ["createdAt","type", "transactionId", "amount", "status", "paymentMode"], tableHeader);
 
   return (
     <Box>
