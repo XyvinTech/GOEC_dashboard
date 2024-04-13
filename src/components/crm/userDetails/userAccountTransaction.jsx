@@ -31,22 +31,24 @@ const tableHeader = [
 export default function UserAccountTransactiomn() {
   const { id } = useParams();
   const [transactionData, setTransactionData] = useState([])
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
-  const getData = async () => {
+  const getData = async (filter={pageNo}) => {
     const postData = {
       user: id,
      
     };
-    const res = await getWalletTransaction(postData);
-    console.log(res);
+    const res = await getWalletTransaction(postData,filter);
     setTransactionData(res.result);
+    setTotalCount(res.totalCount);
   };
 
   useEffect(() => {
     getData();
-  }, [id]);
+  }, [id, pageNo]);
 
-  const transData = tableHeaderReplace(transactionData, ["createdAt","type", "transactionId", "amount", "status", "paymentMode"], tableHeader);
+  const transData = tableHeaderReplace(transactionData, ["createdAt","type", "transactionId", "amount", "status", "currency"], tableHeader);
 
   return (
     <Box>
@@ -60,6 +62,8 @@ export default function UserAccountTransactiomn() {
           onActionClick={(e) => {
             console.log(e);
           }}
+          setPageNo={setPageNo} 
+          totalCount={totalCount}
         />
       </Box>
     </Box>

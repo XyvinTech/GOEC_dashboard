@@ -46,9 +46,9 @@ export async function getVehicleList() {
   }
 }
 
-export async function getVehicleListForDashboard() {
+export async function getVehicleListForDashboard(filter={}) {
   try {
-    const response = await VEHICLE_INSTANCES.get(`vehicle/dashboard/list`);
+    const response = await VEHICLE_INSTANCES.get(`vehicle/dashboard/list`,{params: filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -66,9 +66,26 @@ export async function createBrand(data) {
   }
 }
 
-export async function getBrand(data) {
+export async function getBrand(filter1={}) {
   try {
-    const response = await VEHICLE_INSTANCES.get(`brand/list`);
+    let filter = {};
+    if(filter1.pageNo1){
+      filter.pageNo = filter1.pageNo1;
+    }
+    if(filter1.searchQuery1){
+      filter.searchQuery = filter1.searchQuery1;
+    }
+
+    const response = await VEHICLE_INSTANCES.get(`brand/list`,{params:filter});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getBrandDropdown() {
+  try {
+    const response = await VEHICLE_INSTANCES.get(`brand/list/dropdown`);
     return response.data;
   } catch (error) {
     throw error;

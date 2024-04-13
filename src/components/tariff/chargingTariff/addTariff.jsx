@@ -7,14 +7,14 @@ import InputField from "../../../ui/styledInput";
 import { Controller, useForm } from "react-hook-form";
 import { createChargingTariff, editChargingTariff } from "../../../services/chargingTariffAPI";
 import { toast } from "react-toastify";
-import { getTaxList } from "../../../services/taxAPI";
+import { getTaxListDropdown } from "../../../services/taxAPI";
 
-export default function AddTariff({ action, data, onIsChange, isChange,updateData,onClose }) {
+export default function AddTariff({ action, data, onIsChange, isChange,updateData, setOpen }) {
   const [taxListData, setTaxListData] = useState([]);
   const getTariffData = () => {
-    getTaxList().then((res) => {
+    getTaxListDropdown().then((res) => {
       if (res) {
-        setTaxListData(res);
+        setTaxListData(res.taxs);
       }
     });
   };
@@ -45,6 +45,10 @@ export default function AddTariff({ action, data, onIsChange, isChange,updateDat
     }
   }, [action, defaultValues, reset]);
 
+  const handleCancel = ()=>{
+    setOpen(false);
+    reset();
+  }
   const onSubmit = async (formData) => {
     const addData = {
       name : formData.name,
@@ -134,7 +138,7 @@ export default function AddTariff({ action, data, onIsChange, isChange,updateDat
               }}
             >
               <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                <StyledButton type="button" variant={"secondary"} width="103" onClick={onClose}>
+                <StyledButton variant={"secondary"} width="103" onClick={handleCancel}>
                   Cancel
                 </StyledButton>
                 <StyledButton variant={"primary"} type="submit" width="160">

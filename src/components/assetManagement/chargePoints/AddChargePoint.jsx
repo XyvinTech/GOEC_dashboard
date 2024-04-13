@@ -9,8 +9,8 @@ import { useForm, Controller } from "react-hook-form";
 import StyledInput from "../../../ui/styledInput";
 import CalendarInput from "../../../ui/CalendarInput";
 import StyledButton from "../../../ui/styledButton";
-import { getChargingStationList } from "../../../services/stationAPI";
-import { createEvMachine, editEvMachine, getEvModel, getOem } from "../../../services/evMachineAPI";
+import { getChargingStationListDropdown } from "../../../services/stationAPI";
+import { createEvMachine, editEvMachine, getEvModelDropdown, getOemDropdown } from "../../../services/evMachineAPI";
 import { toast } from "react-toastify";
 import { ContentCopy } from "@mui/icons-material";
 // StyledTable component
@@ -64,7 +64,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       evModel: data.model.value,
       CPID: data.CPID,
       OEM: data.chargePointOEM.value,
-      cpidStatus: "Available",
       published: data.published ? 'Yes' : "No"
     }
     console.log(dt);
@@ -103,7 +102,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   };
 
   const init = () => {
-    getChargingStationList().then((res) => {
+    getChargingStationListDropdown().then((res) => {
       if (res.status) {
         setStationList(res.result.map((e) => ({ label: e.name, value: e._id })))
         reset({
@@ -112,7 +111,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       }
     })
 
-    getOem().then((res) => {
+    getOemDropdown().then((res) => {
       if (res.status) {
         setOEMList(res.result.map((e) => ({ label: e.name, value: e._id })))
         reset({
@@ -121,7 +120,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       }
     })
 
-    getEvModel().then((res) => {
+    getEvModelDropdown().then((res) => {
       if (res.status) {
         setModelList(res.result)
         if (editStatus) {

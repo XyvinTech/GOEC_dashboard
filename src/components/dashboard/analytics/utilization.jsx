@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LastSynced from '../../../layout/LastSynced'
 import { Box, IconButton } from '@mui/material'
 import { Tune } from '@mui/icons-material'
 import { Bar } from 'react-chartjs-2'
+import { getDashboardUtilization } from '../../../services/ocppAPI'
+import RightDrawer from '../../../ui/RightDrawer'
+import Filter from './trends/filter'
 
 
 const datas = [
@@ -18,21 +21,35 @@ const datas = [
 
 export default function Utilization() {
 
+    const [trendsUtilization, setTrendsUtilization] = useState([])
+    
+    const init = (filter={}) => {
+        getDashboardUtilization(filter).then((res) => {
+            if (res.status) {
+                setTrendsUtilization(res.result)
+            }
+        })
+    }
+
+    useEffect(() => {
+        init()
+    }, [])
+
     const data = {
 
         datasets: [
             {
                 label: 'Energy Delivered(kWh)',
                 backgroundColor:'#DF5BCA',
-                data: datas.map((e) => e.value1),
+                data: trendsUtilization?.map((e) => e.value1),
             },
             {
                 label: 'Revenue(INR)',
                 backgroundColor:'#574CA6',
-                data: datas.map((e) => e.value2),
+                data: trendsUtilization?.map((e) => e.value2),
             }
         ],
-        labels: datas.map((e) => e.label)
+        labels: trendsUtilization?.map((e) => e.label)
     };
 
     const options = {
@@ -75,7 +92,9 @@ export default function Utilization() {
     return (
         <>
             <LastSynced heading={'Analytics - Utilization'}>
-                <IconButton sx={{ backgroundColor: 'secondary.button', borderRadius: '4px', px: 2 }}><Tune /></IconButton>
+            <RightDrawer >
+                <Filter onSubmited={init} />
+                </RightDrawer>
             </LastSynced>
             <Box sx={{ backgroundColor: 'secondary.main',borderRadius:'4px', height: { xs: 250, md: 350 }, p: { xs: 1, md: 2 },m:{ xs: 1, md: 2 }, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Bar data={data} options={options}/>

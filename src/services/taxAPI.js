@@ -36,13 +36,20 @@ export async function getTaxById(Id) {
   }
 }
 
-export async function getTaxList() {
+export async function getTaxList(filter={}) {
   try {
-    const response = await CONFIG_INSTANCES.get(`tax/list`);
-    console.log('---->',response.data);
+    const response = await CONFIG_INSTANCES.get(`tax/list`,{params:filter});
     return response.data;
   } catch (error) {
-    console.log('--->',error)
+    throw error;
+  }
+}
+
+export async function getTaxListDropdown() {
+  try {
+    const response = await CONFIG_INSTANCES.get(`tax/list/dropdown`);
+    return response.data;
+  } catch (error) {
     throw error;
   }
 }

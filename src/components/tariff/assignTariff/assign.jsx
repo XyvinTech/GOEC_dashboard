@@ -13,15 +13,17 @@ export default function Assign({ tab, data, onClose, user }) {
 
   const [tarrifList, setTarrifList] = useState([])
   const [selectedtarrif, setSelectedTarrif] = useState()
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
-
-  useEffect(() => {
-    getChargingTariffList().then((res) => {
+  useEffect((filter={pageNo}) => {
+    getChargingTariffList(filter).then((res) => {
       if (res) {
         setTarrifList(res.result.map((dt) => ({ label: dt.name, value: dt._id })));
+        setTotalCount(res.totalCount);
       }
     })
-  }, [])
+  }, [pageNo])
 
 
   const assignTarrif = () => {

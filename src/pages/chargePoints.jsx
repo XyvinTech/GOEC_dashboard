@@ -14,11 +14,18 @@ export default function ChargingPoints() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedData, setSelectedData] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const init = () => {
-    listEvMachine().then((res) => {
+  const init = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
+    listEvMachine(filter).then((res) => {
       if (res) {
         setChargePointListData(res.result)
+        setTotalCount(res.totalCount);
       }
     }
     )
@@ -26,7 +33,7 @@ export default function ChargingPoints() {
 
   useEffect(() => {
     init();
-  }, [])
+  }, [pageNo, searchQuery])
 
   const deleteData = () => {
     deleteEvMachine(selectedData._id).then((res) => {
@@ -57,6 +64,9 @@ export default function ChargingPoints() {
       <StyledTab activeIndex={togglePage} buttons={['All Chargepoints', 'Add chargepoints']} onChanged={buttonChanged} />
       {togglePage === 0 ? <AllChargePoint
         data={chargePointListData}
+        setSearchQuery={setSearchQuery}
+        setPageNo={setPageNo} 
+        totalCount={totalCount}
         deleteData={(data) => { setSelectedData(data); setDialogOpen(true) }}
         editData={(data) => { setSelectedData(data); setEditDialogOpen(true) }} 
         reloadData={init}/> : 

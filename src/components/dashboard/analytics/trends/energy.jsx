@@ -20,25 +20,25 @@ function getGradient(ctx, chartArea) {
     return gradient;
 }
 
-const datas = [
-    { value: 70, label: '16-02-2023' },
-    { value: 20, label: '16-02-2023' },
-    { value: 15, label: '16-02-2023' },
-    { value: 10, label: '16-02-2023' },
-    { value: 0, label: '16-02-2023' },
-    { value: 0, label: '16-02-2023' },
-    { value: 0, label: '16-02-2023' },
-    { value: 0, label: '16-02-2023' },
-];
+// const datas = [
+//     { value: 70, label: '16-02-2023' },
+//     { value: 20, label: '16-02-2023' },
+//     { value: 15, label: '16-02-2023' },
+//     { value: 10, label: '16-02-2023' },
+//     { value: 0, label: '16-02-2023' },
+//     { value: 0, label: '16-02-2023' },
+//     { value: 0, label: '16-02-2023' },
+//     { value: 0, label: '16-02-2023' },
+// ];
 
-export default function Energy() {
+export default function Energy({trendsData}) {
 
     const data = {
 
         datasets: [
             {
                 axis: 'y',
-                data: datas.map((e) => e.value),
+                data: trendsData?.map((e) => e.totalEnergy),
                 pointBackgroundColor: function (context) {
                     const chart = context.chart;
                     const { ctx, chartArea } = chart;
@@ -59,7 +59,7 @@ export default function Energy() {
                 }
             },
         ],
-        labels: datas.map((e) => e.label)
+        labels: trendsData?.map((e) => e.date)
     };
 
     const options = {

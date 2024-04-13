@@ -10,20 +10,25 @@ import { getVehicleListForDashboard } from '../services/vehicleAPI'
 export default function Vehicles() {
   const [togglePage, setTogglePage] = useState(0);
   const [vehicleListData, setVehicleListData] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const init = () => {
-    getVehicleListForDashboard().then((res) => {
+  const init = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
+    getVehicleListForDashboard(filter).then((res) => {
       if (res.status) {
-        console.log(res.result);
         setVehicleListData(res.result.map((item) => ({ ...item, charger_types: item.compactable_port.toString() })));
-        console.log(vehicleListData);
+        setTotalCount(res.totalCount);
       }
     });
   };
 
   useEffect(() => {
     init();
-  }, []);
+  }, [pageNo, searchQuery]);
 
   const buttonChanged = (e) => {
     console.log(e);
@@ -36,7 +41,7 @@ export default function Vehicles() {
           activeIndex={togglePage}
           buttons={['All EV Vehicle', 'Add EV Vehicle']} onChanged={buttonChanged} />
       </Stack>
-      {togglePage === 0 ? <AllVehicles data={vehicleListData} updateData={init} /> : <AddVehicles formSubmited={() => { setTogglePage(0); init() }} />}
+      {togglePage === 0 ? <AllVehicles data={vehicleListData} setPageNo={setPageNo} totalCount={totalCount} setSearchQuery={setSearchQuery} updateData={init} /> : <AddVehicles formSubmited={() => { setTogglePage(0); init() }} />}
     </Box>
   );
 }

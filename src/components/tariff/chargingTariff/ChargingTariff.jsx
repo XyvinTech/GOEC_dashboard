@@ -26,11 +26,10 @@ function restructureData(dataArray) {
   }));
 }
 
-function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
+function ChargingTariff({ data, headers, onIsChange, isChange, updateData, setPageNo, totalCount, setSearchQuery }) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [tableData, setTableData] = useState();
-  const [filterValue, setFilterValue] = useState("");
   const { userCan } = useAuth()
   // Function to open the modal
   const handleOpen = () => {
@@ -69,13 +68,17 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
     headers
   );
 
+  const handleSearch = (value)=>{
+    setSearchQuery(value)
+}
+
   return (
     <>
       <LastSynced heading="Charge Tariff" reloadHandle={updateData}>
         <StyledSearchField
           placeholder={"Search"}
           onChange={(e) => {
-            setFilterValue(e.target.value);
+            handleSearch(e.target.value);
           }}
         />
       </LastSynced>
@@ -87,7 +90,9 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
         </Box>
         <StyledTable
           headers={headers}
-          data={searchAndFilter(chargingTariffData, filterValue)}
+          data={chargingTariffData}
+          setPageNo={setPageNo}
+          totalCount={totalCount}
           onActionClick={handleClick}
           showActionCell={userCan(permissions.chargingTariff.modify)}
           actions= {["Edit","Delete"]}
@@ -130,6 +135,7 @@ function ChargingTariff({ data, headers, onIsChange, isChange, updateData }) {
               setOpen(false);
               updateData();
             }}
+            setOpen={setOpen}
           />
         </Box>
       </Modal>

@@ -23,7 +23,7 @@ export default function Analytics() {
   }
   return (
     <Box>
-      <StyledTab buttons={['Overview', /*'Trends', 'Utilization'*/]} onChanged={tabOnChange} />
+      <StyledTab buttons={['Overview', 'Trends', 'Utilization']} onChanged={tabOnChange} />
       <Box>
         {tabIndex === 0 ? <Overview data={overviewData} /> : tabIndex === 1 ? <Trends /> : <Utilization/>}
       </Box>

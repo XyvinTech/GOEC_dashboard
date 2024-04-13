@@ -8,7 +8,7 @@ import FileUpload from "../../../utils/FileUpload";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createVehicle, editVehicle, getBrand } from "../../../services/vehicleAPI";
+import { createVehicle, editVehicle, getBrandDropdown } from "../../../services/vehicleAPI";
 import { imageUploadAPI } from "../../../services/imageAPI";
 
 let compactable_ports = [
@@ -39,8 +39,7 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
     }
   );
   const getBrandApi = () => {
-    getBrand().then((res) => {
-      console.log(res.result);
+    getBrandDropdown().then((res) => {
       if (res.status) {
         const formattedBrands = res.result.map((brand) => ({
           label: brand.brandName,
@@ -60,7 +59,6 @@ export default function AddVehicles({ vehicleData = {}, onClose, formSubmited, e
 
   const onSubmit = (data) => {
     if (editStatus) {
-      console.log(data);
       updateVEHICLE(data)
     }
     else {

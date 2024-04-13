@@ -4,23 +4,30 @@ import { getAllOcppLogs } from "../services/ocppAPI";
 
 export default function ChargerLogs() {
   const [logs, setLogs] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const init = (filter={}) => {
+  const init = (filter = {pageNo}) => {
+    if(searchQuery){
+      filter.searchQuery = searchQuery;
+    }
     getAllOcppLogs(filter).then((res) => {
-      console.log('test',res.result);
       if (res) {
         setLogs(res.result);
+        setTotalCount(res.totalCount);
       }
     });
   };
 
   useEffect(() => {
     init();
-  }, []);
+  }, [pageNo, searchQuery]);
+
 
   return (
     <div>
-      <AllChargerLogs data={logs} updateData={init} />
+      <AllChargerLogs data={logs} updateData={init} setPageNo={setPageNo} totalCount={totalCount} setSearchQuery={setSearchQuery} />
     </div>
   );
 }

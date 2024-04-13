@@ -8,13 +8,13 @@ import { createTax, editTax } from "../../../services/taxAPI";
 import { toast } from "react-toastify";
 import StyledInput from "../../../ui/styledInput";
 
-export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
+export default function AddTax({ action, data, onIsChange, isChange, setOpen }) {
   const defaultValues = useMemo(() => {
     return action === "edit"
       ? {
           name: data.Name,
           percentage: data.Description,
-          status: ["ACTIVE","TRUE"].includes(data.Status.toUpperCase())
+          status: data.Status ==='Active'
         }
       : { status: true };
   }, [action, data]);
@@ -27,6 +27,11 @@ export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
     }
   }, [action, defaultValues, reset]);
 
+  const handleCancel = ()=>{
+    setOpen(false);
+    reset();
+  }
+
   const onSubmit = async (formData) => {
     try {
       const res = action === "add" ? await createTax(formData) : await editTax(data._id, formData);
@@ -34,7 +39,6 @@ export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
         toast.success(`Tax ${action === "add" ? "created" : "updated"} successfully`, { position: "top-right" });
         onIsChange(!isChange);
         reset();
-        onClose();
       }
     } catch (error) {
       toast.error("Something went wrong", { position: "top-right" });
@@ -80,7 +84,7 @@ export default function AddTax({ action, data, onIsChange, isChange,onClose }) {
               }}
             >
               <Stack direction={"row"} spacing={2} sx={{ mt: 2 }}>
-                <StyledButton type="button" variant={"secondary"} width="103" onClick={onClose}>
+                <StyledButton variant={"secondary"} width="103" onClick={handleCancel}>
                   Cancel
                 </StyledButton>
                 <StyledButton variant={"primary"} type="submit" width="160">

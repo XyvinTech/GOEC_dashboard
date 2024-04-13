@@ -59,7 +59,7 @@ export async function changeConfig(data, cpid) {
   }
 }
 
-export async function getAllOcppLogs(filter={}) {
+export async function getAllOcppLogs(filter) {
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/logs`,{params:filter});
     return response.data;
@@ -161,9 +161,9 @@ export async function getMachineLog(evMachine,filter) {
   }
 }
 
-export async function getChargingHistory(userId, data) {
+export async function getChargingHistory(userId, data, filter={}) {
   try {
-    const response = await OCPP_INSTANCE.post(`ocpp/chargingHistory/${userId}`, data);
+    const response = await OCPP_INSTANCE.post(`ocpp/chargingHistory/${userId}`, data, {params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -193,6 +193,24 @@ export async function getDashboardAnalytics() {
 export async function getChargingSummaryReport(params) {
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transaction/report`,{params:params});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getDashboardTrends(filter) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/analytics/trends`, {params:filter});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getDashboardUtilization(filter) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/analytics/utilization`, {params:filter});
     return response.data;
   } catch (error) {
     throw error;

@@ -24,11 +24,14 @@ export default function RFID() {
     const { id } = useParams();
 
   const [data, setData] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
 
-  const init = async () => {
+  const init = async (filter={pageNo}) => {
     try {
-      const res = await userRfidList(id)
+      const res = await userRfidList(id,filter)
       setData(res.result)
+      setTotalCount(res.totalCount);
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +39,7 @@ export default function RFID() {
 
   useEffect(() => {
     init();
-  }, []);
+  }, [pageNo]);
 
   const tableActionClick = async (e) => {
     
@@ -79,6 +82,8 @@ export default function RFID() {
         <StyledTable
           headers={tableHeader}
           data={rfidData}
+          setPageNo={setPageNo} 
+          totalCount={totalCount}
           showActionCell={true}
           actions={["Unassign"]}
           onActionClick={tableActionClick}

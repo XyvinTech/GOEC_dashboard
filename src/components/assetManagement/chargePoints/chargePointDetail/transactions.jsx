@@ -31,18 +31,23 @@ const tableHeader = [
 
 
 export default function Transactions({ CPID }) {
-    const [filterValue, setFilterValue] = useState('')
     const [transactionList, setTransactionList] = useState([])
     const [detailOpen, setDetailOpen] = useState(false)
+    const [pageNo, setPageNo] = useState(1);
+    const [totalCount, setTotalCount] = useState(1);
+    const [searchQuery, setSearchQuery] = useState('');
+
     useEffect(() => {
         init()
-    }, [])
-    const init = (filter={}) => {
+    }, [pageNo, searchQuery])
+    const init = (filter={pageNo}) => {
+        if(searchQuery){
+            filter.searchQuery = searchQuery;
+          }
         getTransactionById(CPID,filter).then((res) => {
-            console.log(res);
             if (res.success) {
-                console.log(res.result);
                 setTransactionList(tableHeaderReplace(res.result, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed', 'location', 'duration', 'chargePointId', 'totalAmount', 'closureReason'], tableHeader))
+                setTotalCount(res.totalCount);
             }
         })
     }
@@ -57,7 +62,7 @@ export default function Transactions({ CPID }) {
             <TransactionDetails open={detailOpen} onClose={() => { setDetailOpen(false) }} />
             <LastSynced heading={'Transactions'} reloadHandle={init}>
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
-                    setFilterValue(e.target.value)
+                    setSearchQuery(e.target.value)
                 }} />
                 <RightDrawer>
                     <Filter onSubmited={init} />
@@ -67,7 +72,7 @@ export default function Transactions({ CPID }) {
                 />
             </LastSynced>
             <Box sx={{ p: 3 }}>
-                <StyledTable headers={tableHeader} data={searchAndFilter(transactionList, filterValue)} actions={['Resend email', 'Download Invoice ', 'View']} onActionClick={actionclickHandle} />
+                <StyledTable headers={tableHeader} data={transactionList} setPageNo={setPageNo} totalCount={totalCount} actions={['Resend email', 'Download Invoice ', 'View']} onActionClick={actionclickHandle} />
             </Box>
         </>
     )

@@ -39,6 +39,7 @@ export default function AddTopup({ userData, onIsChange, isChange, open, onClose
     const postData = {
       amount: data.amount,
       transactionId: data.reference,
+      reference: data.reference,
       doneByAdmin:true,
       type:"admin topup"
     };

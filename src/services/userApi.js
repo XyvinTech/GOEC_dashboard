@@ -63,9 +63,9 @@ export async function getUsersList() {
   }
 }
 
-export async function getUsersListforAdmin() {
+export async function getUsersListforAdmin(filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/userList`);
+    const response = await USER_INSTANCE.get(`admin/userList`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -191,9 +191,9 @@ export async function userTransaction(Id) {
   }
 }
 
-export async function userFavourites(Id) {
+export async function userFavourites(Id,filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/favoriteStations/${Id}`);
+    const response = await USER_INSTANCE.get(`admin/favoriteStations/${Id}`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -227,9 +227,9 @@ export async function userAssignAndunAssignTarrif(Id, data) {
   }
 }
 
-export async function userRfidList(Id) {
+export async function userRfidList(Id, filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/rfidDetails/${Id}`);
+    const response = await USER_INSTANCE.get(`admin/rfidDetails/${Id}`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -259,9 +259,9 @@ export async function createRole(data) {
 }
 
 
-export async function getRoles() {
+export async function getRoles(filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/role/list`);
+    const response = await USER_INSTANCE.get(`admin/role/list`,{params:filter});
     return response.data;
   } catch (error) {
     throw error;
@@ -298,9 +298,9 @@ export async function createAdmin(data) {
 }
 
 
-export async function getAdmins() {
+export async function getAdmins(filter={}) {
   try {
-    const response = await USER_INSTANCE.get(`admin/admin/list`);
+    const response = await USER_INSTANCE.get(`admin/admin/list`, {params:filter});
     return response.data;
   } catch (error) {
     throw error;
