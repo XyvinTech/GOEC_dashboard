@@ -11,31 +11,55 @@ const Sidebar = ({ open, onClose, ...props }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"))
   const { userCan } = useAuth();
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [filteredItems, setFilterItems] = useState([])
-  const indexChange = () => setActiveIndex(-1);
+  const [filteredItems, setFilteredItems] = useState([]);
   const navigate = useNavigate()
 
-  // Filter both main items and sub-items based on the userCan function
+  // Load sidebar items initially and on user permission changes
   useEffect(() => {
-    let listItem = siderbarListItems().map(item => ({
-      ...item,
-      sub: item.sub?.filter(subItem => {
-        return (!subItem.requiredRoles || subItem.requiredRoles.some(role => userCan(role)))
-      }
-      )
-    })).filter(item => item.sub ? item.sub.length > 0 : true);
-    console.log(listItem);
-    setFilterItems(listItem, [siderbarListItems(), userCan])
-    // setActiveIndex(0)
-    console.log(window.location.pathname);
-    navigate(window.location.pathname == '' || window.location.pathname == '/dashboard' ?
-      (listItem[0].extendable ? `/${listItem[0].sub[0]?.href}` : `/${listItem[0].href}`) :
+    const filterSidebarItems = () => {
+      const updatedItems = siderbarListItems().map(item => ({
+        ...item,
+        sub: item.sub?.filter(subItem => (
+          !subItem.requiredRoles || subItem.requiredRoles.some(role => userCan(role))
+        ))
+      })).filter(item => item.sub ? item.sub.length > 0 : true);
+      setFilteredItems(updatedItems);
+
+      navigate(window.location.pathname == '' || window.location.pathname == '/dashboard' ?
+      (updatedItems[0].extendable ? `/${updatedItems[0].sub[0]?.href}` : `/${updatedItems[0].href}`) :
       `${window.location.pathname}`)
-  }, [])
+      // Check if the active index is still valid after filtering
+      if (activeIndex >= updatedItems.length) {
+        setActiveIndex(-1);
+      }
+    };
+    
+    filterSidebarItems();
+  }, [activeIndex]);
 
-  const Content = ({ items }) => {
+  const handleItemClick = (index) => {
+    setActiveIndex(index);
+    if(index === activeIndex){
+      onClose(); // Close the sidebar on item click
+    }
+  };
 
-    return (
+  return (
+    <Drawer
+      anchor="left"
+      open={open}
+      onClose={onClose}
+      PaperProps={{
+        sx: {
+          backgroundColor: "secondary.main",
+          color: "secondary.contrastText",
+          width: 260,
+          border:'none'
+        },
+      }}
+      sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
+      variant={lgUp ? "permanent" : "temporary"}
+    >
       <Box
         sx={{
           display: "flex",
@@ -74,66 +98,20 @@ const Sidebar = ({ open, onClose, ...props }) => {
             overflowY: "auto",
           }}
         >
-
-          {items.map((item, index) => {
-            return (
-              <NavItem
-                key={item.title}
-                icon={item.icon}
-                href={item.href}
-                title={item.title}
-                sub={item.sub}
-                active={index === activeIndex}
-                extendable={item.extendable}
-                onClick={() => {
-                  index !== activeIndex && setActiveIndex(index);
-                  index === activeIndex && onClose();
-                }}
-                indexChange={indexChange}
-              />
-            );
-          })}
+          {filteredItems.map((item, index) => (
+            <NavItem
+              key={item.title}
+              icon={item.icon}
+              href={item.href}
+              title={item.title}
+              sub={item.sub}
+              active={index === activeIndex}
+              extendable={item.extendable}
+              onClick={() => handleItemClick(index)}
+            />
+          ))}
         </Box>
       </Box>
-    );
-  }
-
-  if (lgUp) {
-    return (
-      <Drawer
-        anchor="left"
-        open
-        PaperProps={{
-          sx: {
-            backgroundColor: "secondary.main",
-            color: "secondary.contrastText",
-            width: 260,
-            border: "none",
-          },
-        }}
-        variant="permanent"
-      >
-        <Content items={filteredItems} />
-      </Drawer>
-    );
-  }
-
-  return (
-    <Drawer
-      anchor="left"
-      onClose={onClose}
-      open={open}
-      PaperProps={{
-        sx: {
-          backgroundColor: "secondary.main",
-          color: "secondary.contrastText",
-          width: 260,
-        },
-      }}
-      sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
-      variant="temporary"
-    >
-      <Content items={filteredItems} />
     </Drawer>
   );
 };
