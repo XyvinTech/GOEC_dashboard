@@ -62,7 +62,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       evModel: data.model.value,
       CPID: data.CPID,
       OEM: data.chargePointOEM.value,
-      cpidStatus: "Available",
       published: data.published ? 'Yes' : "No"
     }
 

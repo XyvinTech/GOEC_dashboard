@@ -7,6 +7,8 @@ import LastSynced from '../../../../layout/LastSynced'
 import { useNavigate } from 'react-router-dom'
 import { Transition } from '../../../../utils/DialogAnimation'
 import { ReactComponent as Close } from "../../../../assets/icons/close-icon-large.svg";
+import { toast } from 'react-toastify'
+import { deleteEvMachine } from '../../../../services/evMachineAPI'
 
 const tableHeader = [
   'CPID',
@@ -48,10 +50,21 @@ export default function ChargePoints({ data, stationId,dataUpdate, ...props }) {
       setEditStatus(true);
       setOpen(true)
     }
+    else if (e.action === 'Delete') {
+      deleteData(e.data)
+      
+    }
   }
   const formSubmitHandle = ()=>{
     dataUpdate();
     setOpen(false);
+  }
+
+  const deleteData = (data) => {
+    deleteEvMachine(data._id).then((res) => {
+      toast.success("charging station deleted successfully")
+      dataUpdate()
+    })
   }
 
 
@@ -72,7 +85,7 @@ export default function ChargePoints({ data, stationId,dataUpdate, ...props }) {
         <StyledButton variant='primary' style={{ width: '100%', height: '45px', fontSize: '14px', fontWeight: '400' }} onClick={() => { setEditStatus(false); setOpen(true) }}> Add Chargepoint</StyledButton>
       </LastSynced>
       <Box sx={{ p: 3 }}>
-        {data.length > 0 && <StyledTable headers={tableHeader} data={allChargePointsData} actions={["View", "Edit"]} onActionClick={actionButtonHandle} />}
+        {data.length > 0 && <StyledTable headers={tableHeader} data={allChargePointsData} actions={["View", "Edit","Delete"]} onActionClick={actionButtonHandle} />}
       </Box>
     </>
   )
