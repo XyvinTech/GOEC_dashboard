@@ -14,7 +14,7 @@ export default function ChargePointDetailsAnalytics({ data }) {
         onClose={onClose}
         TransitionComponent={Transition}
       >
-        <StyledCalender onClose={onClose} onDateChange={(e) => { console.log(e); }} />
+        <StyledCalender onClose={onClose} onDateChange={(e) => { /*console.log(e);*/ }} />
       </Dialog>
       <Stack
         direction={"row"}

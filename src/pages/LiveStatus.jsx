@@ -24,7 +24,6 @@ export default function LiveStatus() {
          "longitude":"76.3117538"
      }).then((res)=>{
         if (res.status) {
-          console.log(res.result);
           setChargingStations(res.result)
         }
       })

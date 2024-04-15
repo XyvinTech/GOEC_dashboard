@@ -31,9 +31,7 @@ export default function Assign({ tab, data, onClose, user }) {
       let dt = {
         chargingTariff: selectedtarrif.value
       }
-      console.log(dt);
       changeEVTarrif(data._id, dt).then((res) => {
-        console.log(res);
         toast.success("successfully assigned")
         onClose && onClose()
       }).catch((err) => {
@@ -43,9 +41,7 @@ export default function Assign({ tab, data, onClose, user }) {
       let dt = {
         chargingTariff: selectedtarrif.value
       }
-      console.log(dt);
       userAssignAndunAssignTarrif(user._id, dt).then((res) => {
-        console.log(res);
         toast.success("successfully assigned")
         onClose && onClose()
       }).catch((err) => {

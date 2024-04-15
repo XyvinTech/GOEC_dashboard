@@ -23,7 +23,7 @@ export default function VID() {
             </Dialog>
             <LastSynced heading={'Assigned VID'} showButton={true} handleClick={()=>{setopen(true)}}/>
             <Box sx={{ p: { xs: 2, md: 4 } }}>
-                <StyledTable headers={tableHeader} data={VIDData} showActionCell={true} actions={['Unassign', 'view', 'Delete']} onActionClick={(e) => { console.log(e); }} />
+                <StyledTable headers={tableHeader} data={VIDData} showActionCell={true} actions={['Unassign', 'view', 'Delete']} onActionClick={(e) => { /*console.log(e);*/ }} />
             </Box>
         </Box>
     )

@@ -69,7 +69,6 @@ export default function StyledCalender({ onDateChange,onClose, ...props }) {
   const dateChange = (newValue) => {
     if (newValue > startDate && newValue < endDate) {
       const midDate = new Date((new Date(dayjs(startDate).format('YYYY-MM-DD')).getTime() + new Date(dayjs(endDate).format('YYYY-MM-DD')).getTime()) / 2)
-      console.log(midDate);
       if (midDate > newValue) {
         setStartDate(newValue)
       } else {

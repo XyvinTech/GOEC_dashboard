@@ -31,7 +31,6 @@ function FunctionalAccess({ control,datas, isUpdate }) {
             <TableBody>
               {allPermissions.map((permission, index) => (
                 <tr key={permission.id}>
-                  {/* {console.log(permission)} */}
                   <TableCell>{permission.name}</TableCell>
                   {
                     permission.permissionArray.map((item) => (

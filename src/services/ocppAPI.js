@@ -11,7 +11,6 @@ export async function remoteStart(data, cpid) {
 
 export async function remoteStopTransaction(cpid, data) {
   try {
-    console.log(cpid, data);
     const response = await OCPP_INSTANCE.post(`ocpp/remoteStopTransaction/${cpid}`, data);
     return response.data;
   } catch (error) {
@@ -193,6 +192,24 @@ export async function getDashboardAnalytics() {
 export async function getChargingSummaryReport(params) {
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/dashboard/transaction/report`,{params:params});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getDashboardTrends(filter) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/analytics/trends`, {params:filter});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getDashboardUtilization(filter) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/analytics/utilization`, {params:filter});
     return response.data;
   } catch (error) {
     throw error;

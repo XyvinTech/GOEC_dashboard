@@ -7,12 +7,12 @@ import InputField from "../../../ui/styledInput";
 import { Controller, useForm } from "react-hook-form";
 import { createChargingTariff, editChargingTariff } from "../../../services/chargingTariffAPI";
 import { toast } from "react-toastify";
-import { getTaxList } from "../../../services/taxAPI";
+import { getTaxListDropdown } from "../../../services/taxAPI";
 
 export default function AddTariff({ action, data, onIsChange, isChange,updateData, setOpen }) {
   const [taxListData, setTaxListData] = useState([]);
   const getTariffData = () => {
-    getTaxList().then((res) => {
+    getTaxListDropdown().then((res) => {
       if (res) {
         setTaxListData(res.taxs);
       }
@@ -81,7 +81,6 @@ export default function AddTariff({ action, data, onIsChange, isChange,updateDat
         }
       }
     } catch (error) {
-      console.log(error);
       const errorToastId = toast.error("Something went wrong", {
         position: "top-right",
       });

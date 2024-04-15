@@ -24,7 +24,6 @@ const Sidebar = ({ open, onClose, ...props }) => {
       }
       )
     })).filter(item => item.sub ? item.sub.length > 0 : true);
-    console.log(listItem);
     setFilterItems(listItem, [siderbarListItems(), userCan])
     // setActiveIndex(0)
     console.log(window.location.pathname);

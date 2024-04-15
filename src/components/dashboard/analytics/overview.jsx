@@ -58,7 +58,6 @@ export default function Overview({ data }) {
     const theme = useTheme();
 
     useEffect(() => {
-        console.log(data);
         if (data) {
             var dt = data.statusCounts
             var output = Object.entries(dt).map(([key, value]) => ({ key, value, color: colors[key] }));

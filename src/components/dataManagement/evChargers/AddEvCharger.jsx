@@ -13,7 +13,7 @@ import StyledButton from "../../../ui/styledButton";
 import { Add } from "@mui/icons-material";
 import ConnectorDetails from "./addEvcharger/connectorDetails";
 import { Controller, useForm } from "react-hook-form";
-import { createEvModel, editEvModel, getOem } from "../../../services/evMachineAPI";
+import { createEvModel, editEvModel, getOemDropdown } from "../../../services/evMachineAPI";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 // StyledTable component
@@ -78,7 +78,7 @@ export default function AddEvCharger({ editStatus = false, chargerData = {}, for
   });
 
   const getOEMApi = () => {
-    getOem().then((res) => {
+    getOemDropdown().then((res) => {
       if (res.status) {
         const formattedOEM = res.result.map((brand) => ({
           label: brand.name,
@@ -114,9 +114,7 @@ export default function AddEvCharger({ editStatus = false, chargerData = {}, for
         capacity: data.capacity,
         connectors: connectors
       }
-      console.log(obj);
       createEvModel(obj).then((res) => {
-        console.log(res);
         if (res.status) {
           toast.success("EV charger Created Successfully")
           formSubmitted && formSubmitted()
@@ -140,9 +138,7 @@ export default function AddEvCharger({ editStatus = false, chargerData = {}, for
         capacity:data.capacity,
         connectors:connectors
       }
-      console.log(obj);
       editEvModel(chargerData._id,obj).then((res)=>{
-        console.log(res);
         if (res.status) {
           toast.success("EV charger Updated Successfully")
           formSubmitted && formSubmitted()

@@ -11,7 +11,6 @@ export default function BookingTrans() {
   const [filterValue, setFilterValue] = useState("");
 
   const tableActionClick = (e) => {
-    console.log(e);
   };
 
   const tableHeader = [

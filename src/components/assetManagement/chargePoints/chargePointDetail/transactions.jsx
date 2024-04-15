@@ -31,16 +31,19 @@ const tableHeader = [
 
 
 export default function Transactions({ CPID }) {
-    const [filterValue, setFilterValue] = useState('')
     const [transactionList, setTransactionList] = useState([])
     const [detailOpen, setDetailOpen] = useState(false)
     const [pageNo, setPageNo] = useState(1);
     const [totalCount, setTotalCount] = useState(1);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         init()
-    }, [pageNo])
+    }, [pageNo, searchQuery])
     const init = (filter={pageNo}) => {
+        if(searchQuery){
+            filter.searchQuery = searchQuery;
+          }
         getTransactionById(CPID,filter).then((res) => {
             if (res.success) {
                 setTransactionList(tableHeaderReplace(res.result, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed', 'location', 'duration', 'chargePointId', 'totalAmount', 'closureReason'], tableHeader))
@@ -59,7 +62,7 @@ export default function Transactions({ CPID }) {
             <TransactionDetails open={detailOpen} onClose={() => { setDetailOpen(false) }} />
             <LastSynced heading={'Transactions'} reloadHandle={init}>
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
-                    setFilterValue(e.target.value)
+                    setSearchQuery(e.target.value)
                 }} />
                 <RightDrawer>
                     <Filter onSubmited={init} />

@@ -33,7 +33,6 @@ export default function AddRole({ setIsChange, isChange, action, data,onClose, .
   } = methods;
 
   const onSubmit = async (Formdata) => {
-    console.log(Formdata);
     let dt = {
       functionalPermissions: Formdata.functionalPermissions,
       isActive: Formdata.isActive,
@@ -42,7 +41,6 @@ export default function AddRole({ setIsChange, isChange, action, data,onClose, .
       togglePage: Formdata.togglePage,
       locationalPermissions: Formdata.locationalPermissions.map((d)=>{return d.value ? d : {value:d}})
       }
-      console.log(dt);
     try {
       if (action === "add") {
         await createRole(dt);
@@ -52,7 +50,6 @@ export default function AddRole({ setIsChange, isChange, action, data,onClose, .
       setIsChange(!isChange);
       props.onSuccess();
     } catch (error) {
-      console.log(error);
       toast.error("Failed to add role");
     }
   };

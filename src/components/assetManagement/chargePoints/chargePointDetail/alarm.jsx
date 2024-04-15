@@ -32,7 +32,8 @@ const tableHeader = [
 
 
 export default function Alarm({ CPID }) {
-    const [filterValue, setFilterValue] = useState('')
+    const [searchQuery, setSearchQuery] = useState('');
+
 
     const [alarmList, setAlarmList] = useState([])
     const [pageNo, setPageNo] = useState(1);
@@ -40,8 +41,11 @@ export default function Alarm({ CPID }) {
 
     useEffect(() => {
         init()
-    }, [pageNo])
+    }, [pageNo, searchQuery])
     const init = (dt={pageNo}) => {
+        if(searchQuery){
+            dt.searchQuery = searchQuery;
+          }
         getAlarmsById(CPID,dt).then((res) => {
             if (res.status) {
                 setAlarmList(tableHeaderReplace(res.result, ['cpid', 'date', 'summary', 'connectorId', 'status', 'errorCode'], tableHeader))
@@ -54,7 +58,7 @@ export default function Alarm({ CPID }) {
         <>
             <LastSynced heading="Alarms" reloadHandle={init}>
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
-                    setFilterValue(e.target.value)
+                    setSearchQuery(e.target.value)
                 }} />
                 <RightDrawer>
                     <Filter onSubmited={init} />

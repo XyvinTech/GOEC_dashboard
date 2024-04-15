@@ -44,3 +44,12 @@ export async function getTaxList(filter={}) {
     throw error;
   }
 }
+
+export async function getTaxListDropdown() {
+  try {
+    const response = await CONFIG_INSTANCES.get(`tax/list/dropdown`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

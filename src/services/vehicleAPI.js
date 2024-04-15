@@ -2,7 +2,6 @@ import { VEHICLE_INSTANCES } from "./axiosInstances";
 
 export async function createVehicle(data) {
   try {
-    console.log(data);
     const response = await VEHICLE_INSTANCES.post(`vehicle/create`, data);
     return response.data;
   } catch (error) {
@@ -77,6 +76,15 @@ export async function getBrand(filter1={}) {
     }
 
     const response = await VEHICLE_INSTANCES.get(`brand/list`,{params:filter});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getBrandDropdown() {
+  try {
+    const response = await VEHICLE_INSTANCES.get(`brand/list/dropdown`);
     return response.data;
   } catch (error) {
     throw error;

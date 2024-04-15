@@ -38,7 +38,6 @@ export default function SearchCustomers() {
       if (res) {
         setSearchCustomers(res.result[0])
       }
-      console.log(res);
     }).catch(error => {
       toast.error(error.response.data.error)
     })

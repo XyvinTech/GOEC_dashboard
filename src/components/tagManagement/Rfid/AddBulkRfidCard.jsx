@@ -50,7 +50,6 @@ const AddBulkRfidCard = ({ Close, Save }) => {
       }
     }
     reader.readAsBinaryString(file);
-    // console.log(data);
     // let i = 5;
     // const interval = setInterval(() => {
     //   i += 5

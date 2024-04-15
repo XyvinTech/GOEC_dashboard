@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LastSynced from '../../../layout/LastSynced'
 import { Box, Button, Grid, IconButton, Stack, Typography } from '@mui/material'
 import { Tune } from '@mui/icons-material'
@@ -8,6 +8,7 @@ import ChargingTransaction from './trends/chargingTransaction'
 import Energy from './trends/energy'
 import RightDrawer from '../../../ui/RightDrawer'
 import Filter from './trends/filter'
+import { getDashboardTrends } from '../../../services/ocppAPI'
 
 
 const buttons = [
@@ -17,27 +18,52 @@ const buttons = [
 ]
 
 export default function Trends() {
+
+    const [trendsRevenue, setTrendsRevenue] = useState([])
+    const [trendsChargingTransactions, setTrendsChargingTransactions] = useState([])
+    const [trendsEnergy, setTrendsEnergy] = useState([])
+    const [totalRevenue, setTotalRevenue] = useState()
+    const [totalCount, setTotalCount] = useState()
+    const [totalUnit, setTotalUnit] = useState()
+
+    const init = (filter={}) => {
+        getDashboardTrends(filter).then((res) => {
+            if (res.status) {
+                setTrendsRevenue(res.revenue)
+                setTrendsChargingTransactions(res.chargingTransactions)
+                setTrendsEnergy(res.energy)
+                setTotalRevenue(res.totalRevenue.toFixed(2))
+                setTotalCount(res.totalCount)
+                setTotalUnit(res.totalUnit.toFixed(2))
+            }
+        })
+    }
+
+    useEffect(() => {
+        init()
+    }, [])
+
     const [buttonIndex, setbuttonIndex] = useState(0)
     return (
         <>
 
             <LastSynced heading={'Analytics - Trends'}>
                 <RightDrawer >
-                    <Filter />
+                <Filter onSubmited={init} />
                 </RightDrawer>
             </LastSynced>
             <Box sx={{ p: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={4}>
-                        <DashboardDataCard title={'Revenue'} subTitle={'Earned(INR)'} value={59} />
+                        <DashboardDataCard title={'Revenue'} subTitle={'Earned(INR)'} value={totalRevenue} />
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <DashboardDataCard title={'Energy'} subTitle={'Delivered (kWh)'} value={128} />
+                        <DashboardDataCard title={'Energy'} subTitle={'Delivered (kWh)'} value={totalUnit} />
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <DashboardDataCard title={'Charging'} subTitle={'Transactions'} value={8} />
+                        <DashboardDataCard title={'Charging'} subTitle={'Transactions'} value={totalCount} />
                     </Grid>
                 </Grid>
                 <Stack direction={'row'} spacing={1} p={2}>
@@ -57,7 +83,7 @@ export default function Trends() {
                         ))
                     }
                 </Stack>
-                {buttonIndex == 0 ? <Revenue /> : buttonIndex == 1 ? <ChargingTransaction /> : <Energy />}
+                {buttonIndex == 0 ? <Revenue trendsData={trendsRevenue}/> : buttonIndex == 1 ? <ChargingTransaction trendsDate={trendsChargingTransactions}/> : <Energy trendsData={trendsEnergy}/>}
                 <Typography variant='subtitle2' color={'secondary.contrastText'} my={2}>Authorized by</Typography>
                 <Grid container spacing={2}>
 
