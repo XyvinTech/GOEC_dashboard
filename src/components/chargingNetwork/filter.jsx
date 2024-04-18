@@ -29,10 +29,10 @@ export default function Filter({ onSubmited }) {
       setError("endDate", { type: "custom", message: "select End Date" })
       return
     }
-    if (data.startDate == data.endDate) {
-      setError("endDate", { type: "custom", message: "end date not able to same as start date" })
-      return
-    }
+    // if (data.startDate == data.endDate) {
+    //   setError("endDate", { type: "custom", message: "end date not able to same as start date" })
+    //   return
+    // }
     if (Date.parse(data.startDate) > Date.parse(data.endDate)) {
       setError("endDate", { type: "custom", message: "end date should greater than start date" })
       return
