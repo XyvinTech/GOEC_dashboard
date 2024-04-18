@@ -32,9 +32,9 @@ export default function ChargePoints({ data, stationId,dataUpdate, ...props }) {
       {
         '_id': item._id,
         'CPID': item.CPID,
-        'OEM': item.evModelDetails[0].oem,
-        'Model': item.evModelDetails[0].model_name,
-        'Tariff': item.chargingTariffDetails[0] ? item.chargingTariffDetails[0].tax_name : '',
+        'OEM': item.evModelDetails[0]?.oem,
+        'Model': item.evModelDetails[0]?.model_name,
+        'Tariff': item.chargingTariffDetails[0] ? item.chargingTariffDetails[0]?.tax_name : '',
         'Status': item.cpidStatus,
         'Published': item.published,
         ...item
