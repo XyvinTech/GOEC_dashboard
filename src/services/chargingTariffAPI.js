@@ -67,3 +67,12 @@ export async function getChargingTariffList(filter={}) {
     throw error;
   }
 }
+
+export async function getChargingTariffListDropdown() {
+  try {
+    const response = await CONFIG_INSTANCES.get(`chargingTariff/list/dropdown`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
