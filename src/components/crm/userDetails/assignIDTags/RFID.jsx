@@ -33,7 +33,6 @@ export default function RFID() {
       setData(res.result)
       setTotalCount(res.totalCount);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -51,7 +50,6 @@ export default function RFID() {
 
        } catch (error) {
         toast.error("Some error");
-        console.log(error);
        }
   }
 

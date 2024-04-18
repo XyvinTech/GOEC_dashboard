@@ -50,7 +50,6 @@ export default function Filter({ onSubmited }) {
     let dt = {}
     for (const [key, value] of Object.entries(data)) {
       if (value && key != 'location') {
-        console.log(key);
         if(value.label){
           dt[key] = value.label
         }else{
@@ -82,7 +81,6 @@ export default function Filter({ onSubmited }) {
 
   useEffect(() => {
     getListOfChargingStation().then((res) => {
-      console.log(res);
       if (res.status) {
         setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
       }

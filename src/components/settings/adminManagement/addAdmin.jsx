@@ -48,7 +48,6 @@ export default function AddAdmin({ setIsChange, isChange, setAction, action, dat
       props.onSuccess();
       setIsChange(!isChange);
     } catch (error) {
-      console.log(error);
       toast.error("Failed to add role");
     }finally {
       setLoading(false); // Stop loading regardless of the outcome

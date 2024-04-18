@@ -26,7 +26,6 @@ export default function AddOEM({ open, onClose, editStatus = false, editData = {
   };
 
   const createOEM = (data) => {
-    console.log(data);
     createOem(data).then((res) => {
       if (res.status) {
         toast.success("OEM created successfully");
@@ -34,7 +33,6 @@ export default function AddOEM({ open, onClose, editStatus = false, editData = {
         reset();
       }
     }).catch((error) => {
-      console.log(error);
       toast.error("Failed to create OEM");
     })
   }

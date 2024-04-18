@@ -41,7 +41,6 @@ export default function UserFavourites() {
           showActionCell={true}
           actions={["view"]}
           onActionClick={(e) => {
-            console.log(e);
           }}
           setPageNo={setPageNo} 
           totalCount={totalCount}

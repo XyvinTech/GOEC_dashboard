@@ -27,13 +27,10 @@ export default function AssignTarrif({ open, onClose, CPID, updated }) {
   }, [pageNo])
 
   const onSubmit = (data) => {
-    console.log(data);
     let dt = {
       chargingTariff: data.chargingTariff.value
     }
-    console.log(dt);
     changeEVTarrif(CPID, dt).then((res) => {
-      console.log(res);
       toast.success("successfully assigned")
       updated && updated()
       onClose && onClose()

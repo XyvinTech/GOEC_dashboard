@@ -68,7 +68,6 @@ export default function DownloadReport() {
 
 
     const selectedReportFunction = reportApiFunctions[data.report];
-    console.log(selectedReportFunction);
 
 
  if (selectedReportFunction) {
@@ -216,7 +215,6 @@ export default function DownloadReport() {
                               getChargingPointsListOfStation(e.value).then(
                                 (res) => {
                                   if (res.result) {
-                                    console.log(res.result);
                                     setMachineList(
                                       res.result.map((dt) => ({
                                         label: dt.evMachines.CPID,

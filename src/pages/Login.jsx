@@ -31,7 +31,6 @@ export default function Login() {
     setIsSubmit(true)
     try {
       let data = await adminLogin(formData)
-
       localStorage.setItem('token', data.token)
       toast.success("Login Success");
       setIsSubmit(false)

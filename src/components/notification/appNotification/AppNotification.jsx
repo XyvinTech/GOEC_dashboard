@@ -79,7 +79,6 @@ try {
   };
 
   const handleFileSelect = (file) => {
-    console.log(file.files[0]);
     setSelectedFile(file.files[0]);
     let i = 0;
     let st = setInterval(() => {
@@ -209,7 +208,6 @@ try {
                 filename={selectedFile.name}
                 onClose={() => {
                   setSelectedFile();
-                  console.log(reference);
                 }}
               />
             )} 

@@ -17,7 +17,7 @@ export default function Analytics({data}) {
                 onClose={onClose}
                 TransitionComponent={Transition}
             >
-                <StyledCalender onClose={onClose} onDateChange={(e)=>{console.log(e); }}/>
+                <StyledCalender onClose={onClose} onDateChange={(e)=>{/*console.log(e);*/ }}/>
             </Dialog>
             <Stack direction={'row'} sx={{ borderBottom: '1px solid rgba(255, 255, 255, 0.20)', justifyContent: 'space-between', px: 3, py: 1 }}>
                 <Typography variant='h6' color={'secondary.contrastText'}>Analytics</Typography>

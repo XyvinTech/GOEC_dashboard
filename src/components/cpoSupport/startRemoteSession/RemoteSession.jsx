@@ -33,16 +33,13 @@ export default function RemoteSession() {
     setValue
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
     let CPID = data.cpid.value.CPID
     let dt = {
       idTag : user.userId,
       connectorId:data.connectorId.value
   }
-  console.log(dt);
 
   remoteStart(dt,CPID).then((res)=>{
-    console.log(res);
     toast.success("remote session Started")
   }).catch((error)=>{
     console.error(error);
@@ -51,7 +48,6 @@ export default function RemoteSession() {
 
   const handleUserFetch = () => {
     getUserByEmailMobile(`phoneNumber=${phoneNumber}`).then((res) => {
-      console.log('test',res.result[0]);
       setUser(res.result[0]);
     }).catch((error) => {
       toast.error("user not found");
@@ -61,7 +57,6 @@ export default function RemoteSession() {
 
   useEffect(() => {
     getListOfChargingStation().then((res) => {
-      console.log(res);
       if (res.status) {
         setLocationList(res.result.map((dt) => ({ label: dt.name, value: dt._id })))
       }
@@ -138,7 +133,6 @@ export default function RemoteSession() {
                             setMachineList([])
                             setValue("location",e)
                             getChargingPointsListOfStation(e.value).then((res) => {
-                              console.log(res);
                               if (res.result) {
                                 setMachineList(res.result.map((dt) => ({ label: dt.evMachines.CPID, value: dt.evMachines })))
                               }
@@ -167,7 +161,6 @@ export default function RemoteSession() {
                           onChange={(e) => {
                             setConnectorList([])
                             setValue("cpid",e)
-                            console.log(e);
                             setConnectorList(e.value.connectors.map((dt) => ({ label: dt.connectorId, value: dt.connectorId })))
                           }}
                         />

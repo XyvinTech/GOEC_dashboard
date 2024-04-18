@@ -98,7 +98,6 @@ export default function ChargePointDetailsConnectors({ data, unlockButtonHandle 
         {
           connectors && connectors.map((item) => (
             <Grid item xs={6} sm={4} md={6}>
-              {console.log(item)}
               <Stack direction={"column"}
                 sx={{ backgroundColor: "#2B2930", borderRadius: "4px", justifyContent: 'flex-end' }}
               >

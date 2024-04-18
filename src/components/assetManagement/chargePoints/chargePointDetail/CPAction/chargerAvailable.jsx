@@ -102,7 +102,6 @@ export default function ChargerAvailable() {
     const cpid = sessionStorage.getItem("cpid");
     try {
       const res = await ChangeAvailability(cpid, data);
-      console.log(res);
       if (res) {
         const successToastId = toast.success(
           "Charging Tariff created successfully",
