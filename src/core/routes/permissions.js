@@ -87,6 +87,9 @@ export const permissions = {
     view: "report_view",
     modify: "report_modify"
   },
+  logs: {
+    view: "logs_view",
+  },
   // adminManagement: {
   //   view: "report_view",
   //   modify: "report_modify"

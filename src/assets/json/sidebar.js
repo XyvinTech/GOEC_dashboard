@@ -215,6 +215,13 @@ export const siderbarListItems = () => {
             requiredRoles: [permissions.report.view]
         },
         {
+            icon: (<AccountIcon />),
+            title: 'Logs',
+            href: 'logs',
+            extendable: false,
+            requiredRoles: [permissions.logs.view]
+        },
+        {
             icon: (<SettingsIcon />),
             title: 'Settings',
             extendable: true,

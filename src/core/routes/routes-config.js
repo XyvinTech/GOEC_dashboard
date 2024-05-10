@@ -40,6 +40,7 @@ import PrivateRoute from "./private-route";
 import EmailNotification from "../../components/notification/emailNotification/EmailNotification";
 import AppNotification from "../../components/notification/appNotification/AppNotification";
 import { permissions } from "./permissions";
+import Logs from "../../pages/Logs";
 
 
 const RoutesConfig = () => {
@@ -252,6 +253,17 @@ const RoutesConfig = () => {
                 {
                     path: '',
                     element:  <PrivateRoute element={<Reports />} requiredPermission={permissions.report.view} />,
+                }
+            ]
+        },
+        //!---------Logs
+        {
+            path: '/logs',
+            element: <DashboardLayout />,
+            children: [
+                {
+                    path: '',
+                    element:  <PrivateRoute element={<Logs />} requiredPermission={permissions.report.view} />,
                 }
             ]
         },

@@ -9,6 +9,7 @@ import TableSkeleton from "./tableSkeleton";
 import { Typography } from "@mui/material";
 import { remoteStopTransaction } from "../services/ocppAPI";
 import { toast } from "react-toastify";
+import moment from "moment";
 // StyledTable component
 
 const StyledTable = ({
@@ -18,7 +19,7 @@ const StyledTable = ({
   showActionCell = true,
   actions = ["Edit", "View", "Delete"],
   setPageNo,
-  totalCount
+  totalCount,
 }) => {
   const [page, setPage] = useState(0);
   const [firstopen, setFirstOpen] = useState(true);
@@ -36,30 +37,28 @@ const StyledTable = ({
 
   const rowsPerPage = 10;
 
-  const pageCount = Math.ceil(totalCount / rowsPerPage) > 0 ? Math.ceil(totalCount / rowsPerPage) : 1 ;
+  const pageCount =
+    Math.ceil(totalCount / rowsPerPage) > 0 ? Math.ceil(totalCount / rowsPerPage) : 1;
 
   const handleChangePage = (newPage) => {
     setPage(newPage); // Assuming newPage is 1-indexed
-    setPageNo(newPage+1);
+    setPageNo(newPage + 1);
   };
 
   const handleStopClick = async (session) => {
-    const transactionId = session["OCPP Txn ID"]
-      ?session["OCPP Txn ID"]
-      : null;
+    const transactionId = session["OCPP Txn ID"] ? session["OCPP Txn ID"] : null;
     // alert(`Terminate session for id: ${transactionId}`);
     let payload = {
       transactionId: transactionId,
     };
     try {
-       await remoteStopTransaction(session.CPID, payload);
+      await remoteStopTransaction(session.CPID, payload);
       toast.success("Session terminated successfully ");
       setIsChange(!isChange);
     } catch (error) {
       toast.error(error.response.data.error);
       setIsChange(!isChange);
     }
-      
   };
   let prevHeader = null;
 
@@ -90,39 +89,36 @@ const StyledTable = ({
                 {headers.map((header, cellIndex) => {
                   const isStatusColumn = header.toLowerCase() === "status";
                   const isPayload = header.toLowerCase() === "payload data";
-                  const isTerminateSession =
-                    header.toLowerCase() === "terminate session";
+                  const isTerminateSession = header.toLowerCase() === "terminate session";
                   const isPublished = header.toLowerCase() === "published";
-                  const isConnectionStatus =  header.toLowerCase() === "connector status";
+                  const isConnectionStatus = header.toLowerCase() === "connector status";
+                  const isDateColumn =
+                    header.toLowerCase() === "date" ||
+                    header.toLowerCase() === "created on" ||
+                    header.toLowerCase() === "last updated";
                   const command = prevHeader;
                   prevHeader = header;
                   return (
                     <TableCell
                       key={`${rowIndex}-${header}`}
                       $isfirstcolumn={cellIndex === 0}
+                      $isMessage={header.toLowerCase() === "message"}
                     >
                       {isStatusColumn ? (
-                        <StyledStatusChip $status={row[header]}>
-                          {row[header]}
-                        </StyledStatusChip>
+                        <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
                       ) : isTerminateSession ? (
                         <StyledStopButton onClick={() => handleStopClick(row)}>
                           Stop
                         </StyledStopButton>
                       ) : isPayload ? (
-                        <StyledPayloadTableCell
-                          value={row[header]}
-                          command={row[command]}
-                        />
+                        <StyledPayloadTableCell value={row[header]} command={row[command]} />
                       ) : isPublished ? (
-                        <StyledStatusChip $status={row[header]}>
-                          {row[header]}
-                        </StyledStatusChip>
+                        <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
                       ) : isConnectionStatus ? (
-                        <StyledStatusChip $status={row[header]}>
-                          {row[header]}
-                        </StyledStatusChip>
-                      ): row[header] || row[header] === "" ? (
+                        <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
+                      ) : isDateColumn ? (
+                        moment(row[header]).format("DD-MM-YYYY")
+                      ) : row[header] || row[header] === "" ? (
                         row[header]
                       ) : (
                         "_"
@@ -147,11 +143,7 @@ const StyledTable = ({
           )}
         </TableBody>
       </Table>
-      <StyledPagination
-        page={page}
-        pageCount={pageCount}
-        onChange={handleChangePage}
-      />
+      <StyledPagination page={page} pageCount={pageCount} onChange={handleChangePage} />
     </TableContainer>
   );
 };
@@ -223,7 +215,9 @@ export const TableCell = styled.td`
   font-weight: 400;
   line-height: 150%; /* 18px */
   color: ${(props) =>
-    props.$isfirstcolumn // Use $ prefix for transient prop
-      ? "#2D9CDB"
-      : "rgba(181, 184, 197, 1)"}; // Blue text color for the first column, white for others
+    props.$isfirstcolumn
+      ? "#2D9CDB" // Blue text color for the first column
+      : props.$isMessage
+      ? "red" // Red text color for the "Message" column
+      : "rgba(181, 184, 197, 1)"}; // Default text color for other columns
 `;
