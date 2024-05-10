@@ -215,3 +215,13 @@ export async function getDashboardUtilization(filter) {
     throw error;
   }
 }
+
+export async function getDiagonostics(cpid, data) {
+  try {
+
+    const response = await OCPP_INSTANCE.post(`ocpp/getDiagonostics/${cpid}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

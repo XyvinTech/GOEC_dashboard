@@ -31,7 +31,7 @@ export default function SendLocalList() {
       const res = await LocalList(cpid, data);
       if (res) {
         const successToastId = toast.success(
-          "Charging Tariff created successfully",
+          "SendLocalList Response",
           {
             position: "top-right",
           }
