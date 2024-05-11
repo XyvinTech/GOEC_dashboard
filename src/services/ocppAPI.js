@@ -225,3 +225,12 @@ export async function getDiagonostics(cpid, data) {
     throw error;
   }
 }
+
+export async function getConfiguration(cpid, data) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/getConfiguration/${cpid}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

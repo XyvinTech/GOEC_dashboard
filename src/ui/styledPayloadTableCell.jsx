@@ -1,9 +1,9 @@
 import { Box, Button, Dialog, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import StyledDivider from "./styledDivider";
-import { Transition } from '../utils/DialogAnimation'
+import { Transition } from "../utils/DialogAnimation";
 
-export default function StyledPayloadTableCell({ value, command }) {
+export default function StyledPayloadTableCell({ value, command, sourceData }) {
   const [open, setOpen] = useState(false);
 
   if (value == null) {
@@ -15,7 +15,6 @@ export default function StyledPayloadTableCell({ value, command }) {
     StringValue = JSON.stringify(value, null, 2);
   }
 
-
   return (
     <Box>
       <Dialog
@@ -25,7 +24,7 @@ export default function StyledPayloadTableCell({ value, command }) {
         }}
         maxWidth="sm"
         fullWidth
-                TransitionComponent={Transition}
+        TransitionComponent={Transition}
       >
         <Box
           sx={{
@@ -46,15 +45,18 @@ export default function StyledPayloadTableCell({ value, command }) {
           <StyledDivider />
           <Typography
             variant="body1"
+            color={
+              sourceData === "CMS"
+                ? "#EB5757"
+                : sourceData === "CP"
+                ? "#219653"
+                : "secondary.contrastText"
+            }
             sx={{
-              color: "secondary.contrastText",
               p: 2,
             }}
           >
-            <pre>
-             
-              {StringValue}
-            </pre>
+            <pre>{StringValue}</pre>
           </Typography>
         </Box>
       </Dialog>

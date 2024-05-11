@@ -13,6 +13,7 @@ import { searchAndFilter } from '../../../../utils/search'
 import RightDrawer from '../../../../ui/RightDrawer'
 import Filter from './chargerLog/filter'
 import { exportExcelData } from '../../../../utils/excelExport'
+import Indicator from './indicator'
 
 
 const tableHeader = [
@@ -39,7 +40,7 @@ export default function ChargerLog({ CPID }) {
           }
         getMachineLog(CPID,filter).then((res) => {
             if (res.status) {
-                setLogList(tableHeaderReplace(res.result, ['connectorId', 'date', 'command', 'payload', 'uniqueId'], tableHeader))
+                setLogList(tableHeaderReplace(res.result, ['connectorId', 'date', 'command', 'payload', 'uniqueId', 'source'], tableHeader))
                 setTotalCount(res.totalCount);
             }
         })
@@ -58,6 +59,7 @@ export default function ChargerLog({ CPID }) {
         </LastSynced>
             <Box sx={{ p: 3, overflow: 'scroll' }}>
                 <StyledTable headers={tableHeader} setPageNo={setPageNo} totalCount={totalCount} data={logList} showActionCell={false} />
+                <Indicator/>
             </Box>
         </>
     )

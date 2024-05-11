@@ -8,6 +8,7 @@ import RightDrawer from '../../../ui/RightDrawer';
 import Filter from '../filter';
 import { searchAndFilter } from '../../../utils/search';
 import { useState } from 'react';
+import Indicator from '../../assetManagement/chargePoints/chargePointDetail/indicator';
 
 const tableHeader = [
   "CPID",
@@ -44,6 +45,7 @@ export default function AllChargerLogs({ data, updateData, setPageNo, totalCount
           setPageNo={setPageNo}
           totalCount={totalCount}
         />
+        <Indicator />
       </Box>
 
 

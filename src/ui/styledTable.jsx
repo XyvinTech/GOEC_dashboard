@@ -84,62 +84,68 @@ const StyledTable = ({
               </Typography>
             </TableCell>
           ) : (
-            data.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {headers.map((header, cellIndex) => {
-                  const isStatusColumn = header.toLowerCase() === "status";
-                  const isPayload = header.toLowerCase() === "payload data";
-                  const isTerminateSession = header.toLowerCase() === "terminate session";
-                  const isPublished = header.toLowerCase() === "published";
-                  const isConnectionStatus = header.toLowerCase() === "connector status";
-                  const isDateColumn =
-                    header.toLowerCase() === "date" ||
-                    header.toLowerCase() === "created on" ||
-                    header.toLowerCase() === "last updated";
-                  const command = prevHeader;
-                  prevHeader = header;
-                  return (
-                    <TableCell
-                      key={`${rowIndex}-${header}`}
-                      $isfirstcolumn={cellIndex === 0}
-                      $isMessage={header.toLowerCase() === "message"}
-                    >
-                      {isStatusColumn ? (
-                        <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
-                      ) : isTerminateSession ? (
-                        <StyledStopButton onClick={() => handleStopClick(row)}>
-                          Stop
-                        </StyledStopButton>
-                      ) : isPayload ? (
-                        <StyledPayloadTableCell value={row[header]} command={row[command]} />
-                      ) : isPublished ? (
-                        <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
-                      ) : isConnectionStatus ? (
-                        <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
-                      ) : isDateColumn ? (
-                        moment(row[header]).format("DD-MM-YYYY")
-                      ) : row[header] || row[header] === "" ? (
-                        row[header]
-                      ) : (
-                        "_"
-                      )}
-                    </TableCell>
-                  );
-                })}
+            data.map((row, rowIndex) => {
+              const sourceData = row.source;
+              return (
+                <tr key={rowIndex}>
+                  {headers.map((header, cellIndex) => {
+                    const isStatusColumn = header.toLowerCase() === "status";
+                    const isPayload = header.toLowerCase() === "payload data";
+                    const isTerminateSession = header.toLowerCase() === "terminate session";
+                    const isPublished = header.toLowerCase() === "published";
+                    const isConnectionStatus = header.toLowerCase() === "connector status";
+                    const isCommand = header.toLowerCase() === "command";
+                    const isDateColumn =
+                      header.toLowerCase() === "date" ||
+                      header.toLowerCase() === "created on" ||
+                      header.toLowerCase() === "last updated";
+                    const command = prevHeader;
+                    prevHeader = header;
 
-                {showActionCell && (
-                  <td>
-                    <StyledActionCell
-                      actions={actions}
-                      id={row.id} // Assuming your row data has an 'id' property
-                      onCliked={(e) => {
-                        onActionClick && onActionClick({ data: row, ...e });
-                      }}
-                    />
-                  </td>
-                )}
-              </tr>
-            ))
+                    return (
+                      <TableCell
+                        key={`${rowIndex}-${header}`}
+                        $isfirstcolumn={cellIndex === 0}
+                        $isMessage={header.toLowerCase() === "message"}
+                        $sourceData={sourceData}
+                        $isPayload={isPayload}
+                        $isCommand={isCommand}
+                      >
+                        {/* Render cell content based on header */}
+                        {isStatusColumn ? (
+                          <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
+                        ) : isTerminateSession ? (
+                          <StyledStopButton onClick={() => handleStopClick(row)}>Stop</StyledStopButton>
+                        ) : isPayload ? (
+                          <StyledPayloadTableCell value={row[header]} command={row[command]} sourceData={sourceData}/>
+                        ) : isPublished || isConnectionStatus ? (
+                          <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
+                        ) : isDateColumn ? (
+                          moment(row[header]).format("DD-MM-YYYY")
+                        ) : row[header] || row[header] === "" ? (
+                          row[header]
+                        ) : (
+                          "_"
+                        )}
+                      </TableCell>
+                    );
+                  })}
+
+                  {/* Render action cell if required */}
+                  {showActionCell && (
+                    <td>
+                      <StyledActionCell
+                        actions={actions}
+                        id={row.id} // Assuming your row data has an 'id' property
+                        onCliked={(e) => {
+                          onActionClick && onActionClick({ data: row, ...e });
+                        }}
+                      />
+                    </td>
+                  )}
+                </tr>
+              );
+            })
           )}
         </TableBody>
       </Table>
@@ -219,5 +225,13 @@ export const TableCell = styled.td`
       ? "#2D9CDB" // Blue text color for the first column
       : props.$isMessage
       ? "red" // Red text color for the "Message" column
+      : props.$sourceData === "CMS"
+      ? props.$isCommand || props.$isPayload
+        ? "#EB5757" // Change color to red for isCommand and isPayload if sourceData is 'cms'
+        : "rgba(181, 184, 197, 1)" // Default text color for other columns
+      : props.$sourceData === "CP"
+      ? props.$isCommand || props.$isPayload
+        ? "#219653" // Change color to green for isCommand and isPayload if sourceData is 'cp'
+        : "rgba(181, 184, 197, 1)" // Default text color for other columns
       : "rgba(181, 184, 197, 1)"}; // Default text color for other columns
 `;
