@@ -48,10 +48,8 @@ export default function ConfigMeter({ title, selectData, chipData, ...props }) {
   const handleChipDelete = (index) => {
     const newChipData = [...chipData];
     newChipData.splice(index, 1);
-    // Update chipData state or props here with newChipData
   };
 
-  // Filter measurandOptions to exclude items already in chipData
   const filteredOptions = measurandOptions.filter(option => !chipData.includes(option.title));
 
   return (

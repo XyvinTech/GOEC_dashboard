@@ -12,6 +12,21 @@ import { getConfiguration } from "../../../../services/ocppAPI";
 import StyledBackdropLoader from "../../../../ui/styledBackdropLoader";
 import ReactTimeAgo from "react-time-ago";
 
+const configurationList = [
+  {
+    label: "Core Profile",
+  },
+  {
+    label: "Local Auth List Management Profile",
+  },
+  {
+    label: "Reservation Profile",
+  },
+  {
+    label: "Smart Charging Profile",
+  },
+];
+
 const switchList = [
   "Allow offline transaction unknown ID",
   "Authorization cache enabled",
@@ -50,7 +65,7 @@ const meterList = [
 const configCPList = [
   {
     label: "Get configuration keys",
-    value: "24",
+    value: "",
   },
   {
     label: "Meter value aligned data max length",
@@ -61,7 +76,7 @@ const configCPList = [
     value: "",
   },
   {
-    label: "Connector phase rotation max length",
+    label: "Get configuration max keys",
     value: "",
   },
   {
@@ -77,7 +92,31 @@ const configCPList = [
     value: "",
   },
   {
-    label: "Supported feature profiles",
+    label: "Local auth list max length",
+    value: "",
+  },
+  {
+    label: "Send local list max length",
+    value: "",
+  },
+  {
+    label: "Reserve connector zero supported",
+    value: "",
+  },
+  {
+    label: "Charge profile max stack level",
+    value: "",
+  },
+  {
+    label: "Charging schedule allowed charging rate unit",
+    value: "",
+  },
+  {
+    label: "Charging schedule max periods",
+    value: "",
+  },
+  {
+    label: "Max charging profiles installed",
     value: "",
   },
 ];
@@ -165,35 +204,42 @@ export default function CPConfig() {
       data: configurationData.find((item) => item.key === switchToKeyMap[label]).value,
     }));
 
-    configurationData.forEach(item => {
-      switch (item.key) {
-        case 'MeterValuesAlignedData':
-          updateChipData('Metre value aligned data', item.value);
-          break;
-        case 'MeterValuesSampledData':
-          updateChipData('Meter value Sample data', item.value);
-          break;
-        case 'StopTxnSampledData':
-          updateChipData('Stop Transaction Sample data', item.value);
-          break;
-        case 'StopTxnAlignedData':
-          updateChipData('Stop Transaction aligned data', item.value);
-          break;
-        default:
-          break;
-      }
-    });
-    
-    
-    function updateChipData(title, value) {
-      const foundItem = meterList.find(item => item.title === title);
-      if (foundItem) {
-        const values = value.split(',').map(val => val);
-        foundItem.chipData = values;
-      }
+  configurationData.forEach((item) => {
+    switch (item.key) {
+      case "MeterValuesAlignedData":
+        updateChipData("Metre value aligned data", item.value);
+        break;
+      case "MeterValuesSampledData":
+        updateChipData("Meter value Sample data", item.value);
+        break;
+      case "StopTxnSampledData":
+        updateChipData("Stop Transaction Sample data", item.value);
+        break;
+      case "StopTxnAlignedData":
+        updateChipData("Stop Transaction aligned data", item.value);
+        break;
+      default:
+        break;
     }
-    
-    console.log("🚀 ~ .map ~ configurationData:", configurationData)
+  });
+
+  function updateChipData(title, value) {
+    const foundItem = meterList.find((item) => item.title === title);
+    if (foundItem) {
+      const values = value.split(",").map((val) => val);
+      foundItem.chipData = values;
+    }
+  }
+
+  const readonlyTrueEntries = configurationData.filter((entry) => entry.readonly === true);
+
+  const readOnly = readonlyTrueEntries.map((entry) => ({
+    label: entry.key,
+    value: entry.value,
+  }));
+  console.log("🚀 ~ readOnly ~ readOnly:", readOnly)
+
+  console.log("🚀 ~ .map ~ configurationData:", configurationData);
 
   return (
     <>
@@ -242,9 +288,7 @@ export default function CPConfig() {
             >
               Configuration
             </Typography>
-            <StyledSelectField
-              placeholder={"Core profile"}
-            />
+            <StyledSelectField placeholder={"Core profile"} options={configurationList} />
             <StyledButton variant="primary" onClick={handleConfiguration}>
               Get Configuration
             </StyledButton>
@@ -265,17 +309,18 @@ export default function CPConfig() {
               ))}
           </Grid>
           <Stack direction={"column"} spacing={3}>
-          {configurationData.length > 0 &&
+            {configurationData.length > 0 &&
               meterList.map((item, i) => (
                 <ConfigMeter title={item.title} chipData={item.chipData} key={i} />
               ))}
           </Stack>
           <Grid container spacing={3} my={3}>
-            {configCPList.map((item, i) => (
-              <Grid item md={6} xs={12}>
-                <ConfigCP label={item.label} value={item.value} key={i} />
-              </Grid>
-            ))}
+            {configurationData.length > 0 &&
+              readOnly.map((item, i) => (
+                <Grid item md={6} xs={12}>
+                  <ConfigCP label={item.label} value={item.value} key={i} />
+                </Grid>
+              ))}
           </Grid>
         </Stack>
       </Box>
