@@ -13,16 +13,20 @@ function LocationalAccess({ isUpdate, datas }) {
     formState: { errors },
   } = useFormContext(); // Use useFormContext to access form methods
 
-  const [optionList, setOptionList] = useState([])
+  const [optionList, setOptionList] = useState([]);
 
   const loadLocationOptions = async (inputValue) => {
     try {
       const response = await getListOfChargingStation(inputValue);
       if (response.status) {
-        setOptionList(response.result.map((station) => ({
+        const stationOptions = response.result.map((station) => ({
           label: station.name,
           value: station._id,
-        })))
+        }));
+
+        const allOption = { label: "All", value: "*" };
+
+        setOptionList([allOption, ...stationOptions]);
       }
     } catch (error) {
       console.error("Error fetching stations", error);
@@ -30,14 +34,19 @@ function LocationalAccess({ isUpdate, datas }) {
   };
   useEffect(() => {
     loadLocationOptions();
-  }, [])
+  }, []);
 
+  const handleSelectAll = () => {
+    const allValuesExceptAll = optionList
+      .filter((option) => option.value !== "*")
+      .map((option) => option.value);
+  
+    setValue("locationalPermissions", allValuesExceptAll);
+  };  
 
   return (
     <>
-      <Typography sx={{ marginBottom: 3, marginTop: 3 }}>
-        Location Name
-      </Typography>
+      <Typography sx={{ marginBottom: 3, marginTop: 3 }}>Location Name</Typography>
       <Grid item xs={12}>
         <Controller
           name="locationalPermissions"
@@ -49,13 +58,19 @@ function LocationalAccess({ isUpdate, datas }) {
                 options={optionList}
                 placeholder="Select Location"
                 isMulti
+                onChange={(selectedOptions) => {
+                  if (selectedOptions.some((option) => option.value === "*")) {
+                    handleSelectAll();
+                  } else {
+                    field.onChange(selectedOptions);
+                  }
+                }}
               />
               {errors.locations && (
                 <span style={errorMessageStyle}>{errors.locations.message}</span>
               )}
             </>
           )}
-
         />
       </Grid>
     </>
