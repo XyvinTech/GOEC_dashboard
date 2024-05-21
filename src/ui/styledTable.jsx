@@ -110,14 +110,29 @@ const StyledTable = ({
                         $sourceData={sourceData}
                         $isPayload={isPayload}
                         $isCommand={isCommand}
+                        onClick={() => {
+                          if (
+                            showActionCell &&
+                            cellIndex === 0 &&
+                            actions.includes("View")
+                          ) {
+                            onActionClick({ action: "View", data: row });
+                          }
+                        }}
                       >
                         {/* Render cell content based on header */}
                         {isStatusColumn ? (
                           <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
                         ) : isTerminateSession ? (
-                          <StyledStopButton onClick={() => handleStopClick(row)}>Stop</StyledStopButton>
+                          <StyledStopButton onClick={() => handleStopClick(row)}>
+                            Stop
+                          </StyledStopButton>
                         ) : isPayload ? (
-                          <StyledPayloadTableCell value={row[header]} command={row[command]} sourceData={sourceData}/>
+                          <StyledPayloadTableCell
+                            value={row[header]}
+                            command={row[command]}
+                            sourceData={sourceData}
+                          />
                         ) : isPublished || isConnectionStatus ? (
                           <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
                         ) : isDateColumn ? (
@@ -220,6 +235,7 @@ export const TableCell = styled.td`
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 18px */
+  cursor: ${(props) => (props.$isfirstcolumn ? "pointer" : "default")};
   color: ${(props) =>
     props.$isfirstcolumn
       ? "#2D9CDB" // Blue text color for the first column
