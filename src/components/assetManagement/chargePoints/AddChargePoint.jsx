@@ -363,7 +363,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
                   )}
                 </>
               )}
-              rules={{ required: " Authorisation key is required" }}
+              // rules={{ required: " Authorisation key is required" }}
             />
           </Grid>
         </Grid>
@@ -392,7 +392,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
                   )}
                 </>
               )}
-              rules={{ required: "Serial Number is required" }}
+              // rules={{ required: "Serial Number is required" }}
             />
           </Grid>
         </Grid>

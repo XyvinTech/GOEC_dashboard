@@ -26,7 +26,7 @@ export default function MapContainer({ chargingStations }) {
     };
   },
     []);
-  console.log(chargingStations);
+
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -62,6 +62,7 @@ export default function MapContainer({ chargingStations }) {
               };
 
 
+              
               return (
                 <Marker key={item.id}
                   position={position}
