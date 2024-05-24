@@ -31,7 +31,6 @@ export default function ActiveSessionPage() {
 
   const getData = async () => {
     const res = await getActiveSession();
-    console.log(res.result);
     setActiveSession(res.result);
   };
 

@@ -21,7 +21,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   const [modelList, setModelList] = useState([])
 
   const [modelOptions, setModelOptions] = useState([])
-  console.log(chargepointData);
   const {
     control,
     handleSubmit,
@@ -45,7 +44,6 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
   });
   const onSubmit = (data) => {
     // Handle form submission with data
-    // console.log("Form data submitted:", data);
     // Close your form or perform other actions
     if (editStatus) {
       updateChargePoint(data)
@@ -66,7 +64,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       OEM: data.chargePointOEM.value,
       published: data.published ? 'Yes' : "No"
     }
-    console.log(dt);
+
     createEvMachine(dt).then((res) => {
       toast.success("Chargepoint created successfully ")
       formsubmitted()

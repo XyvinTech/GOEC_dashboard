@@ -31,7 +31,6 @@ export default function Vehicles() {
   }, [pageNo, searchQuery]);
 
   const buttonChanged = (e) => {
-    console.log(e);
     setTogglePage(e.index);
   };
   return (

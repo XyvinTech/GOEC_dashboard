@@ -49,7 +49,6 @@ export default function UserChargingTransaction() {
           showActionCell={true}
           actions={["view"]}
           onActionClick={(e) => {
-            console.log(e);
           }}
           setPageNo={setPageNo} 
           totalCount={totalCount}

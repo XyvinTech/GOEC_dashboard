@@ -81,7 +81,6 @@ export default function AddTariff({ action, data, onIsChange, isChange,updateDat
         }
       }
     } catch (error) {
-      console.log(error);
       const errorToastId = toast.error("Something went wrong", {
         position: "top-right",
       });

@@ -79,7 +79,6 @@ try {
   };
 
   const handleFileSelect = (file) => {
-    console.log(file.files[0]);
     setSelectedFile(file.files[0]);
     let i = 0;
     let st = setInterval(() => {
@@ -97,11 +96,18 @@ try {
       setUserList(response.result);
    
       if (response.status) {
-       
-        return response.result.map((user) => ({
+        const mappedUsers = response.result.map((user) => ({
           label: user.mobile,
           value: user.firebaseToken,
         }));
+      
+        // Adding the 'All' option to the beginning of the mappedUsers array
+        const updatedSuggestions = [
+          { label: 'All', value: '*' },
+          ...mappedUsers,
+        ];
+      
+        return updatedSuggestions;
       }
       return [];
     } catch (error) {
@@ -142,9 +148,13 @@ try {
                       if (
                         selectedOptions.some((option) => option.value === "*")
                       ) {
-                        loadUserOptions("").then((fullList) => {
-                          setValue("sendTo", fullList);
-                        });
+                        const confirmation = window.confirm("Are you sure want to send notification to all?");
+                        if(confirmation){                            
+                          loadUserOptions("").then((fullList) => {
+                            const filteredList = fullList.filter((option) => option.value !== '*');
+                            setValue("sendTo", filteredList);
+                          });
+                        }
                       } else {
                         setValue("sendTo", selectedOptions);
                       }
@@ -209,7 +219,6 @@ try {
                 filename={selectedFile.name}
                 onClose={() => {
                   setSelectedFile();
-                  console.log(reference);
                 }}
               />
             )} 

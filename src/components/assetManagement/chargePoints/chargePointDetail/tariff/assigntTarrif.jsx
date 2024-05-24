@@ -9,31 +9,27 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Transition } from "../../../../../utils/DialogAnimation";
-import { getChargingTariffList } from "../../../../../services/chargingTariffAPI";
+import { getChargingTariffListDropdown } from "../../../../../services/chargingTariffAPI";
 import { changeEVTarrif } from "../../../../../services/evMachineAPI";
 
 export default function AssignTarrif({ open, onClose, CPID, updated }) {
   const { handleSubmit, setValue, reset, formState: { errors }, control } = useForm();
   const [tarrifList, setTarrifList] = useState([])
-  const [pageNo, setPageNo] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
 
-  useEffect((filter={pageNo}) => {
-    getChargingTariffList(filter).then((res) => {
+  useEffect(() => {
+    getChargingTariffListDropdown().then((res) => {
       if (res) {
         setTarrifList(res.result.map((dt) => ({ label: dt.name, value: dt._id })));
       }
     })
-  }, [pageNo])
+  }, [])
 
   const onSubmit = (data) => {
-    console.log(data);
     let dt = {
       chargingTariff: data.chargingTariff.value
     }
-    console.log(dt);
     changeEVTarrif(CPID, dt).then((res) => {
-      console.log(res);
       toast.success("successfully assigned")
       updated && updated()
       onClose && onClose()

@@ -128,7 +128,6 @@ export async function removeVehicle(vehId, data) {
 
 export async function addRfidTag(id, data) {
   try {
-    console.log(data);
     const response = await USER_INSTANCE.put(`users/addRfidTag/${id}`, data);
     return response.data;
   } catch (error) {
@@ -250,7 +249,6 @@ export async function userSuggestionList(data) {
 
 export async function createRole(data) {
   try {
-    console.log(data);
     const response = await USER_INSTANCE.post(`admin/role/create`,data);
     return response.data;
   } catch (error) {

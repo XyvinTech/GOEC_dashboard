@@ -57,7 +57,6 @@ export default function AllEvChargers({ data, updateData, setPageNo, totalCount,
 
   const deleteData = () => {
     deleteEvModel(selectData._id).then((res) => {
-      console.log(res);
       toast.success("EV charger Deleted successfull")
       updateData && updateData()
     }).catch((error) => {

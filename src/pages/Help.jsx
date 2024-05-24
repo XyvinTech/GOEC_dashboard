@@ -7,7 +7,6 @@ function Help() {
     const [togglePage, setTogglePage] = useState(0);
   
     const buttonChanged = (e) => {
-      console.log(e);
       setTogglePage(e.index);
     };
   return (

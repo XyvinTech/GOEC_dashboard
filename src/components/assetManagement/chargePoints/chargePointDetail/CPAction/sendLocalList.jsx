@@ -29,10 +29,9 @@ export default function SendLocalList() {
     const cpid = sessionStorage.getItem("cpid");
     try {
       const res = await LocalList(cpid, data);
-      console.log(res);
       if (res) {
         const successToastId = toast.success(
-          "Charging Tariff created successfully",
+          "SendLocalList Response",
           {
             position: "top-right",
           }

@@ -10,7 +10,6 @@ import StyledSwitch from "../../../ui/styledSwitch";
 import { useForm, Controller } from "react-hook-form"
 
 const EditVidCards = ({existingData,Close,Save}) => {
-  console.log("data :"+existingData)
   const isOnline = existingData['Status'] === 'online';
   const {
     control,
@@ -30,7 +29,6 @@ const EditVidCards = ({existingData,Close,Save}) => {
 
   const onSubmit = (data) => {
     // Handle form submission with data
-    console.log('Form data submitted:',data);
     // Close your form or perform other actions
     Close();
   };
@@ -48,7 +46,6 @@ const EditVidCards = ({existingData,Close,Save}) => {
 
   // Inside EditVidCard component
   useEffect(() => {
-    //console.log("existingData in EditVidCard:", existingData);
   }, [existingData]);
 
   return (

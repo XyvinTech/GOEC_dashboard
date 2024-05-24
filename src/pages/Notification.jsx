@@ -7,7 +7,6 @@ import AppNotification from '../components/notification/appNotification/AppNotif
 export default function Notification() {
     const [togglePage, setTogglePage] = useState(0);
     const buttonChanged = (e) => {
-        console.log(e);
         setTogglePage(e.index);
       };
   return (

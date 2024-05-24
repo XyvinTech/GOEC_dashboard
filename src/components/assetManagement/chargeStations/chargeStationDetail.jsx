@@ -33,7 +33,6 @@ export default function ChargeStationDetail() {
 
     const stationDetailGet = () => {
         getChargingStationById(id).then((res) => {
-            console.log(res.result);
             if (res.status) {
                 setStationDetails(res.result)
             }
@@ -56,7 +55,7 @@ export default function ChargeStationDetail() {
     }
 
 
-
+    
 
     return (
         <>

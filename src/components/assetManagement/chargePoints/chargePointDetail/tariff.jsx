@@ -21,7 +21,6 @@ export default function     Tariff({ CPID,id }) {
 
     const init = () => {
         getChargerTarrifDetail(CPID).then((res) => {
-            console.log(res);
             if (res.status) {
                 setTarrifDetails(res.result)
             }
@@ -34,7 +33,6 @@ export default function     Tariff({ CPID,id }) {
 
 const unAssinHandle = ()=>{
     changeEVTarrif(id, {}).then((res) => {
-        console.log(res);
         init()
       }).catch((err) => {
         toast.error(err.response.data.error)

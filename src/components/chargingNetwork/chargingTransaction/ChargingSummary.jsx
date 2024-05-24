@@ -24,7 +24,6 @@ export default function ChargingSummary({ datas }) {
   const [data,setData] = useState([])
 
   useEffect(() => {
-    console.log(datas);
     setData([
       { label: "Customer name", value: datas["Username"] },
       { label: "Vehicle number", value: "-" },

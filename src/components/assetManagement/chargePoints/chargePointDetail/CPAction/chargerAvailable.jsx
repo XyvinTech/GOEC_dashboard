@@ -1,5 +1,5 @@
 import { Box, Grid, Hidden, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import StyledSelectField from "../../../../../ui/styledSelectField";
 import StyledDivider from "../../../../../ui/styledDivider";
 import StyledButton from "../../../../../ui/styledButton";
@@ -53,7 +53,7 @@ const PayloadComponent = ({
           {title}
         </Typography>
       </Stack>
-      <Box sx={{ backgroundColor: "secondary.contrast", height: "250px" }}>
+      <Box sx={{ backgroundColor: "secondary.contrast", height: "250px", display:"flex", justifyContent:"space-between", flexDirection:"column" }}>
         <Typography
           variant="body2"
           sx={{
@@ -61,7 +61,7 @@ const PayloadComponent = ({
             p: 2,
           }}
         >
-          {code}
+          {JSON.stringify(code)}
         </Typography>
         {toast && (
           <Toast title={toastTitle} code={toastCode} variant={toastVariant} />
@@ -94,16 +94,20 @@ export default function ChargerAvailable() {
     },
   });
 
+  const [availablityData, setAvailablityData] = useState();
+  const [payloadData, setPayloadData] = useState();
+
   const onSubmit = async (formData) => {
     const data = {
       connectorId: formData.connectorId.value,
       type: formData.type.value,
     };
+    setPayloadData(data);
     const cpid = sessionStorage.getItem("cpid");
     try {
       const res = await ChangeAvailability(cpid, data);
-      console.log(res);
       if (res) {
+        setAvailablityData(res.data);
         const successToastId = toast.success(
           "Charging Tariff created successfully",
           {
@@ -214,23 +218,19 @@ export default function ChargerAvailable() {
           <Grid item xs={12} md={6}>
             <PayloadComponent
               title={"Payload: ChangeAvailability"}
-              code={"{hello:seccess}"}
-              variant="success"
+              code={payloadData}
+              variant={payloadData ? "success" : "error" }
               toast={true}
-              toastVariant={"success"}
-              toastTitle={"Payload Sent"}
-              toastCode={"1668656494-54311937"}
+              toastVariant={payloadData ? "success" : "error" }
+              toastTitle={payloadData ? "Payload Sent" :"Charger Not Connected"}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <PayloadComponent
               title={"Responds: ChangeAvailabilityConfirmation"}
-              code={"{hello:seccess}"}
-              variant="error"
-              toast={true}
+              code={availablityData}
+              variant={availablityData?.status === "Accepted" ? "success" : "error"}
               toastVariant={"danger"}
-              toastTitle={"Charger Not Connected"}
-              toastCode={"1668656494-54311937"}
             />
           </Grid>
         </Grid>

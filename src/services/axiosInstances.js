@@ -83,6 +83,6 @@ export const NOTIFICATION_URL = createAxiosInstance(`${baseURL}:5682/api/v1`, { 
 //!image upload
 export const IMAGE_UPLOAD_URL = createAxiosInstance(`${baseURL}:5100/api/v1`, { "Content-Type": "multipart/form-data" });
 
+///! rfid 
 
-
-
+export const LOGS_URL = createAxiosInstance(`${baseURL}:5570/api/v1`, { "Content-Type": "application/json" });

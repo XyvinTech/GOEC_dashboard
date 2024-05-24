@@ -3,7 +3,6 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 export default function CustomerCard({ data, ...props }) {
-  console.log(data);
   const navigate = useNavigate();
   return (
     <Stack direction={'column'} spacing={4} sx={{ alignItems: 'center', backgroundColor: 'secondary.main', borderRadius: '6px', p: 2 }}>

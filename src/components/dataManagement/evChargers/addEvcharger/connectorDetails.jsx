@@ -20,7 +20,6 @@ let compactable_ports = [
 ];
 
 export default function ConnectorDetails({ open, onClose, connectorNumber = 1, data = {}, onSubmited, editStatus }) {
-    console.log(data);
     let defaultValues = {}
     if (editStatus) {
         data.map((dt, ind) => {

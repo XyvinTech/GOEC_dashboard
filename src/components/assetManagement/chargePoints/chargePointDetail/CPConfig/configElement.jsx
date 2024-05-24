@@ -9,8 +9,8 @@ export default function ConfigElement({ label, data, ...props }) {
         <Stack direction={'row'} sx={{justifyContent:'space-between',alignItems:'center'}} props>
             <Typography>{label}</Typography>
             <Stack direction={'row'} spacing={1}>
-                <Button sx={{backgroundColor:'secondary.button',color:'primary.DimText',width:'150px'}}>{data}</Button>
-                <StyledInput defaultValue={data} style={{width:'150px',textAlign:'center'}}/>
+                <Button sx={{backgroundColor:'secondary.button',color:'primary.DimText',width:'150px'}}>{data && data}</Button>
+                <StyledInput defaultValue={data && data} style={{width:'150px',textAlign:'center'}}/>
                 <StyledButton style={{backgroundColor:'#0047C2',color:'#fffc',width:'150px'}}>Save</StyledButton>
             </Stack>
         </Stack>

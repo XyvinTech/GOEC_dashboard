@@ -92,6 +92,7 @@ export default function AdminManangement({ data, headers, setIsChange, isChange,
             setAction={setAction}
             data={tableData}
             onSuccess={handleAdminSuccess}
+            onClose={handleClose}
             setIsChange={setIsChange}
             isChange={isChange}
           />

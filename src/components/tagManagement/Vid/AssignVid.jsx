@@ -38,7 +38,6 @@ const AssignVid = () => {
 
     const onSubmit = (data) => {
         // Handle form submission here
-        console.log('Form data submitted:', data);
 
         // Clear the form after successful submission
         reset();

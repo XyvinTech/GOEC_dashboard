@@ -35,7 +35,6 @@ export default function AddVehicle({ open, onClose, editStatus = false, editData
           reset();
       }
     }).catch((error) => {
-      console.log(error);
       toast.error("Failed to create OEM");
     })
   }
@@ -48,7 +47,6 @@ export default function AddVehicle({ open, onClose, editStatus = false, editData
         onClose && onClose();
         reset();
     }).catch((error) => {
-      console.log(error);
       toast.error("Failed to update OEM");
     })
   }

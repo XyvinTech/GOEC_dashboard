@@ -52,10 +52,8 @@ export default function EmailNotification() {
         formDataObject[pair[0]] = pair[1];
       }
     }
-    console.log(formDataObject);
     sendBulkMail(formDataObject)
       .then((res) => {
-        console.log(res);
         toast.success("Send successfully");
         reset();
       })
@@ -65,7 +63,6 @@ export default function EmailNotification() {
   };
 
   const handleFileSelect = (file) => {
-    console.log(file.files[0]);
     setSelectedFile(file.files[0]);
     let i = 0;
     let st = setInterval(() => {
@@ -81,10 +78,18 @@ export default function EmailNotification() {
     try {
       const response = await userSuggestionList(inputValue);
       if (response.status) {
-        return response.result.map((user) => ({
+        const mappedUsers = response.result.map((user) => ({
           label: user.email,
           value: user.email,
         }));
+      
+        // Adding the 'All' option to the beginning of the mappedUsers array
+        const updatedSuggestions = [
+          { label: 'All', value: '*' },
+          ...mappedUsers,
+        ];
+      
+        return updatedSuggestions;
       }
       return [];
     } catch (error) {
@@ -125,9 +130,13 @@ export default function EmailNotification() {
                       if (
                         selectedOptions.some((option) => option.value === "*")
                       ) {
-                        loadUserOptions("").then((fullList) => {
-                          setValue("sendTo", fullList);
-                        });
+                        const confirmation = window.confirm("Are you sure want to send mail to all?");
+                        if(confirmation){                          
+                          loadUserOptions("").then((fullList) => {
+                            const filteredList = fullList.filter((option) => option.value !== '*');
+                            setValue("sendTo", filteredList);
+                          });
+                        }
                       } else {
                         setValue("sendTo", selectedOptions);
                       }
@@ -192,7 +201,6 @@ export default function EmailNotification() {
                 filename={selectedFile.name}
                 onClose={() => {
                   setSelectedFile();
-                  console.log(reference);
                 }}
               />
             )}
