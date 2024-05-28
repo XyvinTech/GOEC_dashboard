@@ -112,6 +112,7 @@ const AddChargingStation = ({ data = {}, formSubmited, editStatus = false, ...pr
           }
           createChargingStation(dt).then((res) => {
             if (res.status) {
+              localStorage.setItem('token', res.token);
               toast.success("Charging Station created successfully")
               reset();
               formSubmited();
