@@ -69,7 +69,7 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       toast.success("Chargepoint created successfully ")
       formsubmitted()
     }).catch((error) => {
-      toast.error(error)
+      toast.error(error.response.data.error)
     })
   }
 
