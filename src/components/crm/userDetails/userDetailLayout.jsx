@@ -29,15 +29,15 @@ export default function UserDetailsLayout({children,onOptionChanged, ...props}) 
                 <ArrowBackIosNew sx={{ cursor: 'pointer',display: {xs: 'none',lg: 'inline-flex'} }} onClick={() => { navigate(-1) }} />
                 <Typography variant='h6' color={'secondary.contrastText'}>CRM / User Details</Typography>
                 <Box sx={{ flexGrow: 1 }} />
-                <Box sx={{ paddingRight: '25px' }}>
+                {/* <Box sx={{ paddingRight: '25px' }}>
                     <Notification />
-                </Box>
-                <Typography sx={{
+                </Box> */}
+                {/* <Typography sx={{
                     color: 'primary.DimText',
                     display: { xs: 'none', md: 'inline-flex' }
-                }} variant='subtitle2'>Jackie Chan</Typography>
+                }} variant='subtitle2'>Jackie Chan</Typography> */}
 
-                <Avatar
+                {/* <Avatar
                     sx={{
                         cursor: 'pointer',
                         height: 40,
@@ -47,7 +47,7 @@ export default function UserDetailsLayout({children,onOptionChanged, ...props}) 
                     }}
 
                 >
-                </Avatar>
+                </Avatar> */}
             </Stack>
             <UserSidebar open={open} onClose={()=>{setOpen(false)}} onChanged={onOptionChanged} />               
                 <Box pl={{lg:32}}>
