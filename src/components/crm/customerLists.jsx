@@ -67,7 +67,7 @@ export default function CustomerLists() {
           headers={tableHeader}
           data={customersList}
           showActionCell={true}
-          actions={["view"]}
+          actions={["View"]}
           onActionClick={actionClick}
           setPageNo={setPageNo} 
           totalCount={totalCount}
