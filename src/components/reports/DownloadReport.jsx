@@ -7,17 +7,12 @@ import LastSynced from "../../layout/LastSynced";
 import { useForm, Controller } from "react-hook-form";
 import CalendarInput from "../../ui/CalendarInput";
 import StyledInput from "../../ui/styledInput";
-import {
-  getChargingPointsListOfStation,
-  getListOfChargingStation,
-} from "../../services/stationAPI";
+import { getChargingPointsListOfStation, getListOfChargingStation } from "../../services/stationAPI";
 import { getReportForChargePoint } from "../../services/evMachineAPI";
 import { generateExcel } from "../../utils/excelReport";
 import { getWalletReport } from "../../services/walletAPI";
 import { getChargingSummaryReport } from "../../services/ocppAPI";
-
-
-
+import moment from "moment"; // Import moment for date formatting
 
 export default function DownloadReport() {
   const {
@@ -32,15 +27,16 @@ export default function DownloadReport() {
   } = useForm();
 
   const reportApiFunctions = {
-    "Charge points":(params) => getReportForChargePoint(params),
-    "Account Transaction":(params) => getWalletReport(params),
-    "Alarms":(params) => getReportForChargePoint(params),
-    "Charging Summary":(params) => getChargingSummaryReport(params),
-    "User Registration":(params) => getWalletReport(params),
-    "Feedback":(params) => getWalletReport(params),
+    "Charge points": (params) => getReportForChargePoint(params),
+    "Account Transaction": (params) => getWalletReport(params),
+    "Alarms": (params) => getReportForChargePoint(params),
+    "Charging Summary": (params) => getChargingSummaryReport(params),
+    "User Registration": (params) => getWalletReport(params),
+    "Feedback": (params) => getWalletReport(params),
   };
 
   const onSubmit = async (data) => {
+    let locationName = data.location?.label;
     data = { ...data, report: selectedOption };
 
     if (data.startDate && !data.endDate) {
@@ -65,17 +61,14 @@ export default function DownloadReport() {
       data.cpid = data.cpid?.label;
     }
 
-
-
     const selectedReportFunction = reportApiFunctions[data.report];
 
-
- if (selectedReportFunction) {
+    if (selectedReportFunction) {
       try {
-        const reportData = await selectedReportFunction(data); 
+        const reportData = await selectedReportFunction(data);
         const excelData = reportData.result;
         if (excelData) {
-          generateExcel(excelData.headers, excelData.body);
+          generateExcel(excelData.headers, excelData.body, locationName);
         }
       } catch (error) {
         console.error("Error fetching report data:", error);
@@ -83,20 +76,21 @@ export default function DownloadReport() {
     } else {
       console.error("Selected report function is not defined:", data.report);
     }
-
   };
 
   const handleDateChangeInParent = (date) => {
-    setValue("startDate", date);
+    const formattedDate = moment(date).format("YYYY-MM-DD");
+    setValue("startDate", formattedDate);
     clearErrors("startDate");
   };
-  const startDate = watch("startDate", ""); // Watching the value for 'expiryDate'
+  const startDate = watch("startDate", ""); // Watching the value for 'startDate'
 
   const handleEndDateChangeInParent = (date) => {
-    setValue("endDate", date);
+    const formattedDate = moment(date).format("YYYY-MM-DD");
+    setValue("endDate", formattedDate);
     clearErrors("endDate");
   };
-  const endDate = watch("endDate", ""); // Watching the value for 'expiryDate'
+  const endDate = watch("endDate", ""); // Watching the value for 'endDate'
 
   const options = [
     { value: "option1", label: "Account Transaction" },
@@ -124,6 +118,7 @@ export default function DownloadReport() {
   const handleSelectChange = (event) => {
     setSelectedOption(event.label);
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
