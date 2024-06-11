@@ -46,8 +46,11 @@ const AddRfidCard = ({ Close, editStatus = false, rfidData }) => {
       expiry: data.expiryDate,
       rfidTag: data.rfidTag,
       serialNumber: data.serialNumber,
-      status: data.activate ? 'active' : 'inactive'
+      // status: data.activate ? 'active' : 'inactive'
     }
+
+    data.activate != undefined && (dt.status = data.activate ? 'active' : 'inactive')
+
     editRfid(rfidData._id,dt).then((res) => {
       toast.success("RFID updated successfully")
       Close();
