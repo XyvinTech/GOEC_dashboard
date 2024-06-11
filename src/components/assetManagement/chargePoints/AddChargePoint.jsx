@@ -85,8 +85,9 @@ const AddChargePoint = ({ chargepointData, headers, data, onClose, formsubmitted
       CPID: data.CPID,
       OEM: data.chargePointOEM.value ? data.chargePointOEM.value : getListId(OEMList, chargepointData["OEM"]),
       cpidStatus: chargepointData["Status"],
-      published: data.published ? 'Yes' : "No"
+      // published: data.published ? 'Yes' : "No"
     }
+    data.published !== undefined && (dt.published = data.published ? 'Yes' : "No")
     editEvMachine(chargepointData._id, dt).then((res) => {
       toast.success("Chargepoint updated successfully ")
       formsubmitted()
