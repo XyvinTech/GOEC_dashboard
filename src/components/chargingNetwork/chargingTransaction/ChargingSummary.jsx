@@ -26,21 +26,21 @@ export default function ChargingSummary({ datas }) {
   useEffect(() => {
     setData([
       { label: "Customer name", value: datas["Username"] },
-      { label: "Vehicle number", value: "-" },
+      { label: "Vehicle number", value: datas["vehicleNum"] },
       { label: "Vehicle model", value: "Oberon Mall, Ernakulam" },
       { label: "Chargepoint", value: datas["Chargepoint ID"] },
       { label: "Connector type", value: "-" },
       { label: "Connector ID", value: datas["Connector ID"] },
-      { label: "Charging start", value: "-" },
-      { label: "Charging End", value: "-" },
+      { label: "Charging start", value: datas["startTime"] },
+      { label: "Charging End", value: datas["endTime"] },
       { label: "Duration", value: datas["Duration (hh:mm:ss)"] },
       { label: "Delivered Energy", value: datas["Units Consumed"] },
-      { label: "Session ID", value: "-" },
+      { label: "Session ID", value: datas["id"] },
       { label: "Tariff", value: "-" },
-      { label: "Meter start", value: "-" },
-      { label: "Meter stop", value: "-" },
-      { label: "Initial Soc", value: "-" },
-      { label: "Last Soc", value: "-" },
+      { label: "Meter start", value: datas["meterStart"]  },
+      { label: "Meter stop", value: datas["meterStop"]  },
+      { label: "Initial Soc", value: datas["startSoc"] },
+      { label: "Last Soc", value: datas["currentSoc"] },
       { label: "Tax Type", value: "-" },
       { label: "Tax Rate", value: "-" },
       { label: "Total Tax amount", value: "-" },
@@ -82,11 +82,11 @@ export default function ChargingSummary({ datas }) {
             </Grid>
             <Grid item xs={8}>
               <Typography variant="subtitle1">
-                Oberon Mall, Ernakulam
+                {datas["Location Name"]}
               </Typography>
-              <Typography variant="caption">
+              {/* <Typography variant="caption">
                 NH Bypass, Oberon Mall
-              </Typography>
+              </Typography> */}
             </Grid>
           </Grid>
         </Grid>
