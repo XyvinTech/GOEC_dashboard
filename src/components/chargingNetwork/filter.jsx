@@ -24,7 +24,6 @@ export default function Filter({ onSubmited }) {
   } = useForm();
   const onSubmit = (data) => {
     // Handle form submission with data
-    console.log(data);
     if (data.startDate && !data.endDate) {
       setError("endDate", { type: "custom", message: "select End Date" })
       return
@@ -57,6 +56,7 @@ export default function Filter({ onSubmited }) {
         }
       }
       dt[key] = value
+      dt['pageNo'] = 1
     }
     localStorage.setItem("filter", JSON.stringify(dt))
     onSubmited && onSubmited(dt)
