@@ -10,6 +10,12 @@ export default function ChargingTransactions() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const init = (filter = {pageNo}) => {
+    const filterStore = localStorage.getItem('filter');
+    if(filterStore){
+      const cfilter = JSON.parse(filterStore);
+      cfilter.pageNo = filter.pageNo;
+      filter = {...cfilter};
+    }
     if(searchQuery){
       filter.searchQuery = searchQuery;
     }
