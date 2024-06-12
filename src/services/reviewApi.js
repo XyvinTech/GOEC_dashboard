@@ -26,3 +26,12 @@ export async function userReviews(Id) {
     throw error;
   }
 }
+
+export async function getFeedbackReport(params) {
+  try {
+    const response = await REVIEW_INSTANCE.get(`reviews/feedbackReport`, {params:params});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

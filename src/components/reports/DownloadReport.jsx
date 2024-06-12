@@ -13,6 +13,7 @@ import { generateExcel } from "../../utils/excelReport";
 import { getAccountTransactionReport, getWalletReport } from "../../services/walletAPI";
 import { getChargingSummaryReport } from "../../services/ocppAPI";
 import moment from "moment"; // Import moment for date formatting
+import { getFeedbackReport } from "../../services/reviewApi";
 
 export default function DownloadReport() {
   const {
@@ -32,7 +33,7 @@ export default function DownloadReport() {
     "Alarms": (params) => getReportForChargePoint(params),
     "Charging Summary": (params) => getChargingSummaryReport(params),
     "User Registration": (params) => getWalletReport(params),
-    "Feedback": (params) => getWalletReport(params),
+    "Feedback": (params) => getFeedbackReport(params),
   };
 
   const onSubmit = async (data) => {
