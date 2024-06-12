@@ -11,7 +11,7 @@ import { getChargingPointsListOfStation, getListOfChargingStation } from "../../
 import { getReportForChargePoint } from "../../services/evMachineAPI";
 import { generateExcel } from "../../utils/excelReport";
 import { getAccountTransactionReport, getWalletReport } from "../../services/walletAPI";
-import { getChargingSummaryReport } from "../../services/ocppAPI";
+import { getAlarmReport, getChargingSummaryReport } from "../../services/ocppAPI";
 import moment from "moment"; // Import moment for date formatting
 import { getFeedbackReport } from "../../services/reviewApi";
 import { getUserRegistationReport } from "../../services/userApi";
@@ -31,7 +31,7 @@ export default function DownloadReport() {
   const reportApiFunctions = {
     "Charge points": (params) => getReportForChargePoint(params),
     "Account Transaction": (params) => getAccountTransactionReport(params),
-    "Alarms": (params) => getReportForChargePoint(params),
+    "Alarms": (params) => getAlarmReport(params),
     "Charging Summary": (params) => getChargingSummaryReport(params),
     "User Registration": (params) => getUserRegistationReport(params),
     "Feedback": (params) => getFeedbackReport(params),
@@ -61,7 +61,7 @@ export default function DownloadReport() {
     } else {
       data.cpid = data.cpid?.label;
     }
-    
+
     const selectedReportFunction = reportApiFunctions[data.report];
 
     if (selectedReportFunction) {

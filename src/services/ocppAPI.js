@@ -234,3 +234,12 @@ export async function getConfiguration(cpid, data) {
     throw error;
   }
 }
+
+export async function getAlarmReport(params) {
+  try {
+    const response = await OCPP_INSTANCE.get(`ocpp/dashboard/alarmReport`,{params:params});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
