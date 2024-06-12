@@ -10,7 +10,7 @@ import StyledInput from "../../ui/styledInput";
 import { getChargingPointsListOfStation, getListOfChargingStation } from "../../services/stationAPI";
 import { getReportForChargePoint } from "../../services/evMachineAPI";
 import { generateExcel } from "../../utils/excelReport";
-import { getWalletReport } from "../../services/walletAPI";
+import { getAccountTransactionReport, getWalletReport } from "../../services/walletAPI";
 import { getChargingSummaryReport } from "../../services/ocppAPI";
 import moment from "moment"; // Import moment for date formatting
 
@@ -28,7 +28,7 @@ export default function DownloadReport() {
 
   const reportApiFunctions = {
     "Charge points": (params) => getReportForChargePoint(params),
-    "Account Transaction": (params) => getWalletReport(params),
+    "Account Transaction": (params) => getAccountTransactionReport(params),
     "Alarms": (params) => getReportForChargePoint(params),
     "Charging Summary": (params) => getChargingSummaryReport(params),
     "User Registration": (params) => getWalletReport(params),
@@ -38,7 +38,6 @@ export default function DownloadReport() {
   const onSubmit = async (data) => {
     let locationName = data.location?.label;
     data = { ...data, report: selectedOption };
-
     if (data.startDate && !data.endDate) {
       setError("endDate", { type: "custom", message: "select End Date" });
       return;
@@ -68,7 +67,7 @@ export default function DownloadReport() {
         const reportData = await selectedReportFunction(data);
         const excelData = reportData.result;
         if (excelData) {
-          generateExcel(excelData.headers, excelData.body, locationName);
+          generateExcel(excelData.headers, excelData.body);
         }
       } catch (error) {
         console.error("Error fetching report data:", error);

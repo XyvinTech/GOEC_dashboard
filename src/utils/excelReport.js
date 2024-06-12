@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
-export const generateExcel = (headers, body, name) => {
+export const generateExcel = (headers, body) => {
   // Create a new workbook and a worksheet
   const workbook = XLSX.utils.book_new();
   const worksheet = XLSX.utils.json_to_sheet([]);
@@ -23,6 +23,6 @@ export const generateExcel = (headers, body, name) => {
 
   // Create a Blob and use FileSaver to save it
   const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  saveAs(blob, `${name}_report.xlsx`);
+  saveAs(blob, `report.xlsx`);
 };
 

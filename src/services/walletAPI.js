@@ -67,3 +67,14 @@ export async function getWalletReport(params) {
     throw error;
   }
 }
+
+export async function getAccountTransactionReport(params) {
+  try {
+    const response = await TRANSACTION_URL.get(
+      `walletTransaction/dashboard/account-transaction/report`,{params:params}
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
