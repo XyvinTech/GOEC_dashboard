@@ -332,3 +332,12 @@ export async function adminLogin(data) {
     throw error;
   }
 }
+
+export async function getUserRegistationReport(params) {
+  try {
+    const response = await USER_INSTANCE.get(`users/getUserRegistationReport`, {params:params});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

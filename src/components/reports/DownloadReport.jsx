@@ -14,6 +14,7 @@ import { getAccountTransactionReport, getWalletReport } from "../../services/wal
 import { getChargingSummaryReport } from "../../services/ocppAPI";
 import moment from "moment"; // Import moment for date formatting
 import { getFeedbackReport } from "../../services/reviewApi";
+import { getUserRegistationReport } from "../../services/userApi";
 
 export default function DownloadReport() {
   const {
@@ -32,7 +33,7 @@ export default function DownloadReport() {
     "Account Transaction": (params) => getAccountTransactionReport(params),
     "Alarms": (params) => getReportForChargePoint(params),
     "Charging Summary": (params) => getChargingSummaryReport(params),
-    "User Registration": (params) => getWalletReport(params),
+    "User Registration": (params) => getUserRegistationReport(params),
     "Feedback": (params) => getFeedbackReport(params),
   };
 
@@ -60,7 +61,7 @@ export default function DownloadReport() {
     } else {
       data.cpid = data.cpid?.label;
     }
-
+    
     const selectedReportFunction = reportApiFunctions[data.report];
 
     if (selectedReportFunction) {
