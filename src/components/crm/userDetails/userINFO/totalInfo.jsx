@@ -15,12 +15,12 @@ export default function TotalInfo({userData}) {
         {
             label: 'Total Amount',
             sub: 'billed (INR)',
-            value: userData?.total_units && userData?.total_units.toFixed(2)
+            value: userData?.totalAmount && userData?.totalAmount.toFixed(2)
         },
         {
             label: 'Total units',
             sub: 'Consumed(kWh)',
-            value: userData?.totalAmount && userData?.totalAmount.toFixed(2)
+            value: userData?.total_units && userData?.total_units.toFixed(2)
         }
     
     ]
