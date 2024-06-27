@@ -9,7 +9,7 @@ import { Download } from "@mui/icons-material";
 import { Transition } from "../../../../utils/DialogAnimation";
 
 
-const QRPopUp = ({ open, onClose, url }) => {
+const QRPopUp = ({ open, onClose, url, title, connectorId }) => {
   return (
     <Dialog open={open} onClose={onClose} TransitionComponent={Transition}>
       <Stack direction={"column"} sx={{ backgroundColor: 'primary.main' }}>
@@ -43,7 +43,7 @@ const QRPopUp = ({ open, onClose, url }) => {
                     // Setting various property values
                     let alink = document.createElement("a");
                     alink.href = fileURL;
-                    alink.download = "CONNECTOR_QR.png";
+                    alink.download = `${title+"_"+connectorId}.png`;
                     alink.click();
                 });
             });
@@ -66,20 +66,24 @@ const QRPopUp = ({ open, onClose, url }) => {
 export default function ChargePointDetailsConnectors({ data, unlockButtonHandle }) {
   const [qrOpen, setQropen] = useState(false)
   const [qrURL, setQrURL] = useState('')
+  const [qrTitle, setQrTitle] = useState('')
+  const [connectorName, setConnectorName] = useState('')
   const [connectors, setConnectors] = useState([])
+
 
   useEffect(()=>{
     if (data) {
       setConnectors(data.connectors.map((dt,index)=>(
         {...dt,...data.evModelDetails[0].connectors[index]}
       )))
+      setConnectorName(data.name)
     }
   },[data])
   return (
     <Box
       sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}
     >
-      <QRPopUp open={qrOpen} onClose={() => { setQropen(false) }} url={qrURL} />
+      <QRPopUp open={qrOpen} onClose={() => { setQropen(false) }} url={qrURL} title={connectorName} connectorId={qrTitle}/>
       <Box container spacing={2} px={6}>
         <Stack direction={"row"} spacing={2} pt={2}>
           <Typography
@@ -102,7 +106,7 @@ export default function ChargePointDetailsConnectors({ data, unlockButtonHandle 
                 sx={{ backgroundColor: "#2B2930", borderRadius: "4px", justifyContent: 'flex-end' }}
               >
                 <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
-                  <Qr_evplug style={{ cursor: 'pointer' }} onClick={() => { setQropen(true); setQrURL(item.qrCode); }} />
+                  <Qr_evplug style={{ cursor: 'pointer' }} onClick={() => { setQropen(true); setQrURL(item.qrCode); setQrTitle(item.connectorId) }} />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   {getConnectorIcon(item.type, item.status)}
