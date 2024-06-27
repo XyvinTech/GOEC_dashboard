@@ -135,8 +135,8 @@ const StyledTable = ({
                           />
                         ) : isPublished || isConnectionStatus ? (
                           <StyledStatusChip $status={row[header]}>{row[header]}</StyledStatusChip>
-                        ) : isDateColumn ? (
-                          moment(row[header]).format("DD-MM-YYYY")
+                        // ) : isDateColumn ? (
+                        //   moment(row[header]).format("DD-MM-YYYY")
                         ) : row[header] || row[header] === "" ? (
                           row[header]
                         ) : (
