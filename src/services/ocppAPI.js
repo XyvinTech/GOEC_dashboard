@@ -235,6 +235,15 @@ export async function getConfiguration(cpid, data) {
   }
 }
 
+export async function changeConfiguration(cpid, data) {
+  try {
+    const response = await OCPP_INSTANCE.post(`/ocpp/changeConfig/${cpid}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getAlarmReport(params) {
   try {
     const response = await OCPP_INSTANCE.get(`ocpp/dashboard/alarmReport`,{params:params});

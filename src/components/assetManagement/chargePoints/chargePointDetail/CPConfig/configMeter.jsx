@@ -1,14 +1,26 @@
-import { Box, Grid, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react';
-import StyledButton from '../../../../../ui/styledButton';
-import StyledSelectField from '../../../../../ui/styledSelectField';
-import { Clear } from '@mui/icons-material';
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import StyledButton from "../../../../../ui/styledButton";
+import StyledSelectField from "../../../../../ui/styledSelectField";
+import { Clear } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import { changeConfiguration } from "../../../../../services/ocppAPI";
 
 const ChipBox = ({ label, onDelete }) => {
   return (
-    <Stack direction={'row'} sx={{ backgroundColor: 'secondary.lightGray', alignItems: 'center', px: 2, py: 1, borderRadius: '20px', justifyContent: 'space-between' }}>
+    <Stack
+      direction={"row"}
+      sx={{
+        backgroundColor: "secondary.lightGray",
+        alignItems: "center",
+        px: 2,
+        py: 1,
+        borderRadius: "20px",
+        justifyContent: "space-between",
+      }}
+    >
       <Typography>{label}</Typography>
-      <Clear sx={{ fontSize: '20px' }} onClick={onDelete} />
+      <Clear sx={{ fontSize: "20px", cursor: "pointer" }} onClick={onDelete} />
     </Stack>
   );
 };
@@ -36,41 +48,80 @@ export default function ConfigMeter({ title, selectData, chipData, ...props }) {
     { title: "RPM" },
     { title: "SoC" },
     { title: "Temperature" },
-    { title: "Voltage" }
+    { title: "Voltage" },
   ];
 
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [chips, setChips] = useState(chipData);
+  const [loading, setLoading] = useState(false);
 
   const handleSelectChange = (selected) => {
-    setSelectedOptions(selected);
+    setSelectedOptions(selected.map((option) => option.value));
   };
 
   const handleChipDelete = (index) => {
-    const newChipData = [...chipData];
+    const newChipData = [...chips];
     newChipData.splice(index, 1);
+    setChips(newChipData);
   };
 
-  const filteredOptions = measurandOptions.filter(option => !chipData.includes(option.title));
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const cpid = sessionStorage.getItem("cpid");
+      const newChips = [...chips, ...selectedOptions];
+      const res = await changeConfiguration(cpid, {
+        key: title,
+        value: newChips.join(","),
+      });
+      if (res.status) {
+        toast.success("Configuration updated successfully!");
+        setChips(newChips);
+        setSelectedOptions([]);
+      }
+    } catch (error) {
+      toast.error("Failed to update configuration.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredOptions = measurandOptions.filter(
+    (option) => !chips.includes(option.title)
+  );
 
   return (
-    <Box sx={{ backgroundColor: 'primary.grey', p: 2 }}>
+    <Box sx={{ backgroundColor: "primary.grey", p: 2 }}>
       <Stack direction="column" spacing={1}>
         <Typography>{title}</Typography>
         <Stack direction="row" spacing={3} sx={{ p: 3 }}>
           <StyledSelectField
             isMulti
             placeholder="Select"
-            options={filteredOptions.map(option => ({
+            options={filteredOptions.map((option) => ({
               label: option.title,
-              value: option.title
+              value: option.title,
             }))}
-            value={selectedOptions}
+            value={selectedOptions.map((option) => ({
+              label: option,
+              value: option,
+            }))}
             onChange={handleSelectChange}
           />
-          <StyledButton style={{ backgroundColor: '#0047C2', color: '#fff', width: '150px' }}>Save</StyledButton>
+          <StyledButton
+            onClick={handleSave}
+            style={{
+              backgroundColor: "#0047C2",
+              color: "#fff",
+              width: "150px",
+            }}
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save"}
+          </StyledButton>
         </Stack>
         <Grid container spacing={2}>
-          {chipData.map((item, index) => (
+          {chips.map((item, index) => (
             <Grid item key={index} md={1.7}>
               <ChipBox label={item} onDelete={() => handleChipDelete(index)} />
             </Grid>

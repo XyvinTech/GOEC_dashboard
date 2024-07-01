@@ -293,7 +293,7 @@ export default function CPConfig() {
               Get Configuration
             </StyledButton>
           </Stack>
-          <configureElement label={"dff"} data={"dfsg"} />
+          {/* <configureElement label={"dff"} data={"dfsg"} /> */}
           <Stack direction={"column"} spacing={2} my={2}>
             {configurationData.length > 0 &&
               finalConfigList?.map((item, i) => {
