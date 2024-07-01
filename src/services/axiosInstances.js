@@ -1,9 +1,9 @@
 import axios from "axios";
 
 
-const baseURL = `https://oxium.goecworld.com`;
+// const baseURL = `https://oxium.goecworld.com`;
 // const baseURL = `http://localhost`;
-// const baseURL = process.env.REACT_APP_API_URL || `http://localhost`;
+const baseURL = process.env.REACT_APP_API_URL || `http://localhost`;
 const createAxiosInstance = (baseURL, defaultHeaders = {}) => {
   const instance = axios.create({ baseURL, headers: defaultHeaders });
   setupInterceptors(instance);
