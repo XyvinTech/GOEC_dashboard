@@ -45,7 +45,7 @@ const CalendarInput = ({dateValue,onDateChange }) => {
   const handleDateChange = (date) => {
 
     if (date instanceof Date && !isNaN(date)) {
-      const formattedDate = format(date, 'dd-MM-yyyy');
+      const formattedDate = format(date, 'yyyy-MM-dd');
       if (onDateChange) {
         onDateChange(formattedDate);
       }
