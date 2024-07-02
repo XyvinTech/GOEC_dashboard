@@ -10,6 +10,8 @@ import StyledSearchField from "../../../ui/styledSearchField";
 import Filter from "../filter";
 import RightDrawer from "../../../ui/RightDrawer";
 import { searchAndFilter } from "../../../utils/search";
+import { getInvoice, sendMail } from "../../../services/ocppAPI";
+import { toast } from "react-toastify";
 const tableHeader = [
   "Transaction ID",
   "Date",
@@ -27,36 +29,88 @@ const tableHeader = [
 
 const newActions = ["View", "Download Invoice", "Resend Email"];
 
-export default function AllChargingTransactions({ data, updateData, setPageNo, totalCount, setSearchQuery }) {
+export default function AllChargingTransactions({
+  data,
+  updateData,
+  setPageNo,
+  totalCount,
+  setSearchQuery,
+}) {
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState("");
-  const [selectedData,setSelectData] = useState()
+  const [selectedData, setSelectData] = useState();
 
-  const AllOcppTransactionData = tableHeaderReplace(data, ['transactionId', 'date', 'username', 'transactionMode', 'unitConsumed', 'location', 'duration', 'chargePointId', 'connectorId', 'totalAmount', 'closureReason', 'closeBy', 'vehicleNum', 'currentSoc', 'startSoc', 'id', 'meterStart', 'meterStop', 'startTime', 'endTime'], tableHeader)
-
+  const AllOcppTransactionData = tableHeaderReplace(
+    data,
+    [
+      "transactionId",
+      "date",
+      "username",
+      "transactionMode",
+      "unitConsumed",
+      "location",
+      "duration",
+      "chargePointId",
+      "connectorId",
+      "totalAmount",
+      "closureReason",
+      "closeBy",
+      "vehicleNum",
+      "currentSoc",
+      "startSoc",
+      "id",
+      "meterStart",
+      "meterStop",
+      "startTime",
+      "endTime",
+    ],
+    tableHeader
+  );
 
   // Function to close the modal
   const handleClose = () => {
     setOpen(false);
   };
-  const tableActionClick = (e) => {
+  const tableActionClick = async (e) => {
+    if (e.action === "Download Invoice") {
+      const res = await getInvoice(e.data["Transaction ID"]);
+      const base64String = res.result;
+      const linkSource = `data:application/pdf;base64,${base64String}`;
+      const downloadLink = document.createElement("a");
+      const fileName = `Invoice_${e.data["Transaction ID"]}.pdf`;
+
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.click();
+    }
+    if(e.action === "Resend Email"){
+      const res = await sendMail(e.data["Transaction ID"]);
+      if(res === "error"){
+        toast.error("Email not sent");
+      }else {
+        toast.success("Email sent successfully");
+      }
+    }
     if (e.action === "View") {
       setAction("view");
-      setSelectData(e.data)
+      setSelectData(e.data);
       setOpen(true);
     }
   };
 
-  const handleSearch = (value)=>{
-    setSearchQuery(value)
-}
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+  };
 
   return (
     <>
-      <LastSynced heading="Charging Transactions" reloadHandle={updateData}  >
-        <StyledSearchField placeholder={'Search'} onChange={(e) => {
-          handleSearch(e.target.value)
-        }} />
+      <LastSynced heading="Charging Transactions" reloadHandle={updateData}>
+        <StyledSearchField
+          placeholder={"Search"}
+          onChange={(e) => {
+            handleSearch(e.target.value);
+          }}
+        />
         <RightDrawer>
           <Filter onSubmited={updateData} />
         </RightDrawer>
@@ -73,12 +127,7 @@ export default function AllChargingTransactions({ data, updateData, setPageNo, t
       </Box>
 
       {/* Modal */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        maxWidth="xs"
-        fullWidth
-      >
+      <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
         <Box sx={modalStyle}>
           <Stack
             direction="row"
@@ -97,7 +146,7 @@ export default function AllChargingTransactions({ data, updateData, setPageNo, t
             </Typography>
             <Close onClick={handleClose} style={{ cursor: "pointer" }} />
           </Stack>
-          <ChargingSummary datas={selectedData}/>
+          <ChargingSummary datas={selectedData} />
         </Box>
       </Dialog>
     </>
