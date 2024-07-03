@@ -18,7 +18,7 @@ function restructureData(dataArray) {
     email: item.email,
     mobile: item.mobile,
     rfid: item.rfidValues.map((res, i) => (i === item.rfidValues.length - 1 ? res.serialNumber : res.serialNumber + ",")),
-    tariff: item.length > 0 ? item.tariffValues.map((res) => res._id) : "Basic",
+    tariff: item.tariffValues.length > 0 ? item.tariffValues.map((res) => res.name) : "Basic",
   }));
 }
 
@@ -52,6 +52,7 @@ export default function CustomerLists() {
 
 
   const restructuredData = restructureData(userListData);
+  console.log("🚀 ~ CustomerLists ~ restructuredData:", restructuredData)
 
   const customersList = tableHeaderReplace(restructuredData, ["name", "mobile", "email", "rfid", "tariff"], tableHeader);
 
