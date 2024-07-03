@@ -46,6 +46,7 @@ export default function DownloadReport() {
     }
     if (
       (data.report !== "Account Transaction" ||
+        data.report !== "Charge points" ||
         data.report !== "User Registration") &&
       !data.location
     ) {
@@ -192,6 +193,7 @@ export default function DownloadReport() {
               />
 
               {selectedOption !== "Account Transaction" &&
+              selectedOption !== "Charge points" &&
                 selectedOption !== "User Registration" && (
                   <>
                     <Label>Location</Label>
