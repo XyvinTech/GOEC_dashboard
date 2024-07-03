@@ -88,7 +88,6 @@ export default function Filter({ onSubmited }) {
       }
     })
     if (localStorage.getItem("filter") !== null) {
-      console.log(JSON.parse(localStorage.getItem("filter")));
       reset(JSON.parse(localStorage.getItem("filter")))
       getMachineList(JSON.parse(localStorage.getItem("filter")).location)
     }

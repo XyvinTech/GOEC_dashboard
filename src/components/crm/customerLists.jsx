@@ -52,7 +52,6 @@ export default function CustomerLists() {
 
 
   const restructuredData = restructureData(userListData);
-  console.log("🚀 ~ CustomerLists ~ restructuredData:", restructuredData)
 
   const customersList = tableHeaderReplace(restructuredData, ["name", "mobile", "email", "rfid", "tariff"], tableHeader);
 

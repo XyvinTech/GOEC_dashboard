@@ -237,9 +237,6 @@ export default function CPConfig() {
     label: entry.key,
     value: entry.value,
   }));
-  console.log("🚀 ~ readOnly ~ readOnly:", readOnly)
-
-  console.log("🚀 ~ .map ~ configurationData:", configurationData);
 
   return (
     <>
