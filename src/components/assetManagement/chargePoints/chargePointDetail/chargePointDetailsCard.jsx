@@ -5,6 +5,7 @@ import { ReactComponent as ContentCopy } from "../../../../assets/icons/content_
 import StyledDivider from "../../../../ui/styledDivider";
 import StyledInput from "../../../../ui/styledInput";
 import { toast } from "react-toastify";
+import moment from "moment";
 export default function ChargePointDetailsCard({ data }) {
   return (
     <Box pb={2} sx={{ backgroundColor: "secondary.main", borderRadius: "4px" }}>
@@ -247,6 +248,32 @@ export default function ChargePointDetailsCard({ data }) {
             }}
           >
             {data && data.published}
+          </Typography>
+        </Stack>
+
+
+        <Stack
+          direction={"row"}
+          p={1.3}
+          sx={{ justifyContent: "space-between", backgroundColor: "#211F26" }}
+        >
+          <Typography
+            sx={{
+              color: "primary.DimText",
+              fontWeight: "500",
+              fontSize: "14px",
+            }}
+          >
+            Created On
+          </Typography>
+          <Typography
+            sx={{
+              color: "primary.contrastText",
+              fontWeight: "400",
+              fontSize: "14px",
+            }}
+          >
+            {data &&  moment(data.createdAt).format("DD-MM-YYYY")}
           </Typography>
         </Stack>
 
