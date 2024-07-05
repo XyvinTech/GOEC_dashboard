@@ -21,7 +21,7 @@ export default function RemoteSession() {
   const [locationList, setLocationList] = useState([])
   const [machineList, setMachineList] = useState([])
   const [connectorList, setConnectorList] = useState([])
-
+  const [loading, setLoading] = useState(false);
 
 
   const {
@@ -33,6 +33,7 @@ export default function RemoteSession() {
     setValue
   } = useForm();
   const onSubmit = (data) => {
+    setLoading(true);
     let CPID = data.cpid.value.CPID
     let dt = {
       idTag : user.userId,
@@ -43,6 +44,8 @@ export default function RemoteSession() {
     toast.success("remote session Started")
   }).catch((error)=>{
     console.error(error);
+  }).finally(()=>{
+    setLoading(false);
   })
   };
 
@@ -241,7 +244,7 @@ export default function RemoteSession() {
                         width="100"
                         height="50"
                       >
-                        Start
+                        {loading ? "Starting..." : "Start"}
                       </StyledButton>
                     </Grid>
                   </Grid>
