@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { OCPP_INSTANCE } from "./axiosInstances";
 
 export async function remoteStart(data, cpid) {
@@ -228,6 +229,7 @@ export async function getChargingSummaryReport(params) {
     );
     return response.data;
   } catch (error) {
+    toast.error(error.response.data.message);
     throw error;
   }
 }

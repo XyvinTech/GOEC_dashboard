@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { EV_MACHINE_INSTANCE } from "./axiosInstances";
 
 export async function createEvMachine(data) {
@@ -222,6 +223,7 @@ export async function getReportForChargePoint(params) {
     const response = await EV_MACHINE_INSTANCE.get(`evMachine/dashboard/report/2`,{params:params});
     return response.data;
   } catch (error) {
+    toast.error(error.message);
     throw error;
   }
 }
