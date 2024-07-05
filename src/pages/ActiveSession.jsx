@@ -81,6 +81,6 @@ export default function ActiveSessionPage() {
 
 
   return (
-    <>{activeSession.length > 0 ? <ActiveSession data={activeSessionData} tableHeader={tableHeader}/> : <NoActiveSession />}</>
+    <>{activeSession.length > 0 ? <ActiveSession data={activeSessionData} dataReload={getData} tableHeader={tableHeader}/> : <NoActiveSession />}</>
   );
 }
