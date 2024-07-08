@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Stack, Box, Grid, Typography } from "@mui/material";
 import StyledSelectField from "../../../../ui/styledSelectField";
@@ -6,17 +6,11 @@ import StyledButton from "../../../../ui/styledButton";
 import { useForm, Controller } from "react-hook-form";
 import StyledInput from "../../../../ui/styledInput";
 import CalendarInput from "../../../../ui/CalendarInput";
+import { getListOfChargingStation } from "../../../../services/stationAPI";
 
-const locations = [
-  { value: "option1", label: "Account Transaction" },
-  { value: "option2", label: "Feedback" },
-  { value: "option3", label: "Charging Summary" },
-  { value: "option4", label: "User Registration" },
-  { value: "option5", label: "Alarm" },
-  { value: "option6", label: "Charge points" },
-];
+export default function Filter({ onSubmited }) {
+  const [locations, setLocations] = useState([]);
 
-export default function Filter({onSubmited}) {
   const {
     control,
     handleSubmit,
@@ -31,29 +25,44 @@ export default function Filter({onSubmited}) {
     },
   });
   const onSubmit = (data) => {
+    let location = data.location?.map((item) => item.value);
+    if(data.location != undefined){
+      if (location[0] === "all") {
+        location = locations?.map((item) => item.value).filter(value => value !== "all");
+      }    
+    }
     // Handle form submission with data
     let dt = {
       startDate: data.startDate,
-      endDate: data.endDate
-    }
-    onSubmited && onSubmited(dt)
+      endDate: data.endDate,
+      location: location,
+    };
+    onSubmited && onSubmited(dt);
     // Close your form or perform other actions
   };
 
   const handleDateChangeInParent = (date) => {
     setValue("startDate", date); // Assuming you have 'expiryDate' in your form state
     clearErrors("startDate");
-
   };
   const startDate = watch("startDate", ""); // Watching the value for 'expiryDate'
-
 
   const handleEndDateChangeInParent = (date) => {
     setValue("endDate", date); // Assuming you have 'expiryDate' in your form state
     clearErrors("endDate");
-
   };
   const endDate = watch("endDate", ""); // Watching the value for 'expiryDate'
+
+  useEffect(() => {
+    getListOfChargingStation().then((res) => {
+      if (res.status) {
+        setLocations([
+          { label: "All", value: "all" },
+          ...res.result.map((dt) => ({ label: dt.name, value: dt._id })),
+        ]);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -70,15 +79,14 @@ export default function Filter({onSubmited}) {
                   <>
                     <StyledInput
                       {...field}
-
                       iconright={
                         <CalendarInput
                           onDateChange={handleDateChangeInParent}
-                        />}
+                        />
+                      }
                       placeholder={"mm/dd/yyyy"}
                       value={startDate}
                       readOnly
-
                     />
                     {errors.startDate && (
                       <span style={errorMessageStyle}>
@@ -94,19 +102,16 @@ export default function Filter({onSubmited}) {
                 control={control}
                 render={({ field }) => (
                   <>
-
-
                     <StyledInput
                       {...field}
-
                       iconright={
                         <CalendarInput
                           onDateChange={handleEndDateChangeInParent}
-                        />}
+                        />
+                      }
                       placeholder={"mm/dd/yyyy"}
                       value={endDate}
                       readOnly
-
                     />
                     {errors.endDate && (
                       <span style={errorMessageStyle}>
@@ -115,9 +120,8 @@ export default function Filter({onSubmited}) {
                     )}
                   </>
                 )}
-
               />
-              {/* <Label>Location</Label>
+              <Label>Location</Label>
 
               <Controller
                 name="location"
@@ -125,8 +129,13 @@ export default function Filter({onSubmited}) {
                 render={({ field }) => (
                   <>
                     <StyledSelectField
-                      placeholder={"Select Report"}
+                      isMulti
+                      placeholder="Select Location"
+                      {...field}
                       options={locations}
+                      onChange={(selectedOptions) => {
+                        field.onChange(selectedOptions);
+                      }}
                     />
                     {errors.location && (
                       <span style={errorMessageStyle}>
@@ -135,10 +144,7 @@ export default function Filter({onSubmited}) {
                     )}
                   </>
                 )}
-
-              /> */}
-
-
+              />
 
               {/* <Label>CPID</Label>
 
@@ -161,17 +167,26 @@ export default function Filter({onSubmited}) {
 
               /> */}
 
-
               <Grid container spacing={6}>
-                <Grid item xs={12} md={6} >
-
-                  <StyledButton width={120} variant="primary" fontSize="14" type="submit">
+                <Grid item xs={12} md={6}>
+                  <StyledButton
+                    width={120}
+                    variant="primary"
+                    fontSize="14"
+                    type="submit"
+                  >
                     Apply
                   </StyledButton>
                 </Grid>
-                <Grid item xs={12} md={6} >
-                  <StyledButton width={120} variant="secondary" fontSize="14"
-                  onClick={() => { reset(); onSubmited() }}
+                <Grid item xs={12} md={6}>
+                  <StyledButton
+                    width={120}
+                    variant="secondary"
+                    fontSize="14"
+                    onClick={() => {
+                      reset();
+                      onSubmited();
+                    }}
                   >
                     Reset
                   </StyledButton>
@@ -232,19 +247,19 @@ const modalStyle = {
   p: 4,
   color: "#fff", // White text for better visibility on dark background
   outline: "none", // Remove the focus ring
-  height: '100%',
+  height: "100%",
   display: "flex",
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: '50vh',
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "50vh",
 };
 
 // Styled table container
 export const TableContainer = styled.div`
-background: #27292f; // Dark background for the table
-overflow-x: auto; // Allows table to be scrollable horizontally
-border-radius: 8px; // Rounded corners
-margin: 20px 0; // Margin for spacing, adjust as needed
+  background: #27292f; // Dark background for the table
+  overflow-x: auto; // Allows table to be scrollable horizontally
+  border-radius: 8px; // Rounded corners
+  margin: 20px 0; // Margin for spacing, adjust as needed
 `;
 
 const errorMessageStyle = {

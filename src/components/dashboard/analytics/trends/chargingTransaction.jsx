@@ -38,7 +38,7 @@ export default function ChargingTransaction({trendsDate}) {
         datasets: [
             {
                 axis: 'y',
-                data: trendsDate?.map((e) => e.count),
+                data: trendsDate?.map((e) => e.total),
                 pointBackgroundColor: function (context) {
                     const chart = context.chart;
                     const { ctx, chartArea } = chart;

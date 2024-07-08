@@ -38,7 +38,7 @@ export default function Revenue({trendsData}) {
         datasets: [
             {
                 axis: 'y',
-                data: trendsData?.map((e) => e.totalRevenue),
+                data: trendsData?.map((e) => e.total),
                 pointBackgroundColor: function (context) {
                     const chart = context.chart;
                     const { ctx, chartArea } = chart;

@@ -22,9 +22,9 @@ export default function Trends() {
     const [trendsRevenue, setTrendsRevenue] = useState([])
     const [trendsChargingTransactions, setTrendsChargingTransactions] = useState([])
     const [trendsEnergy, setTrendsEnergy] = useState([])
-    const [totalRevenue, setTotalRevenue] = useState()
-    const [totalCount, setTotalCount] = useState()
-    const [totalUnit, setTotalUnit] = useState()
+    const [totalRevenue, setTotalRevenue] = useState("Loading...")
+    const [totalCount, setTotalCount] = useState("Loading...")
+    const [totalUnit, setTotalUnit] = useState("Loading...")
 
     const init = (filter={}) => {
         getDashboardTrends(filter).then((res) => {
@@ -70,6 +70,7 @@ export default function Trends() {
                     {
                         buttons.map((item, ind) => (
                             <Button
+                                key={ind}
                                 sx={{
                                     backgroundColor: buttonIndex == ind ? 'secondary.button' : 'secondary.main',
                                     width: '200px', height: '40px', border: '1px solid #fff6', borderRadius: '4px',
