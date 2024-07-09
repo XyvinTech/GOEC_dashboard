@@ -56,6 +56,7 @@ export default function AllChargingTransactions({
       "closureReason",
       "closeBy",
       "vehicleNum",
+      "vehicleInfo",
       "currentSoc",
       "startSoc",
       "id",

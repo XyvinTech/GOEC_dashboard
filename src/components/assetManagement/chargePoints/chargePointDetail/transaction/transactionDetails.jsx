@@ -6,7 +6,8 @@ import { Star } from '@mui/icons-material';
 
 
 
-export default function TransactionDetails({ open, onClose }) {
+export default function TransactionDetails({ open, onClose, data }) {
+    console.log("🚀 ~ TransactionDetails ~ data:", data)
     return (
         <Dialog fullWidth maxWidth='sm' open={open} onClose={onClose && onClose} TransitionComponent={Transition}>
             <Stack direction={'row'} sx={{ p: 2, backgroundColor: 'secondary.main', justifyContent: 'space-between', borderBottom: 'solid 1px #fff3' }}>
@@ -32,91 +33,91 @@ export default function TransactionDetails({ open, onClose }) {
                                 <Typography fontSize={'12px'}>5</Typography>
                             </Stack>
                             <Stack direction={'column'} spacing={'5px'} sx={{ mt: 2 }}>
-                                <Typography sx={{fontSize:{xs:'16px',md:'24px'},fontWeight:700,color:'secondary.contrastText'}}>Oberon Mall , Ernakulam</Typography>
-                                <Typography variant='subtitle2' sx={{ color: 'secondary.contrastText', fontSize: '12px', fontWeight: '400' }}>NH Bypass Edapally (P.O.) Kochi Kochi Kerala - 682024</Typography>
+                                <Typography sx={{fontSize:{xs:'16px',md:'24px'},fontWeight:700,color:'secondary.contrastText'}}>{data && data['Chargepoint ID']}</Typography>
+                                <Typography variant='subtitle2' sx={{ color: 'secondary.contrastText', fontSize: '12px', fontWeight: '400' }}>{data && data['Location Name']}</Typography>
                             </Stack>
                         </Stack>
                     </Grid>
                 </Grid>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Customer name</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>ws://goeccms.numocity.com:9033/ocpp/go1</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['Username']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Vehicle number</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>CPID</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['vehicleNum']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Vehicle model</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>Oberon Mall, Ernakulam</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data.vehilcleInfo.modelName}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Chargepoint</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>DELTA</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['Chargepoint ID']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Connector type</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>DC</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data.vehilcleInfo.compactable_port}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Connector ID</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>DIHEVE50CSCS00</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['connectorId']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Charging start</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>Date & time</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['startTime']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Charging End</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>Date & time</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['endTime']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Duration</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>OCPP(1.6)</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['Duration(hh:mm:ss)']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Delivered Energy</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>Dec 8, 2021 6:06:42 PM</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['Units Consumed']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Session ID</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>YES</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['id']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Tariff</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>false</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>-</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Meter start</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>YES</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['meterStart']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Meter stop</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>false</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['meterStop']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Initial Soc</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>YES</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['startSoc']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Last Soc</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>false</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>{data && data['currentSoc']}</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Tax Type</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>YES</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>-</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#2B2930',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Tax Rate</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>false</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>-</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',backgroundColor:'#211F26',px:2,py:1}}>
                     <Typography variant='body1' color='primary.contrastText' sx={{fontWeight:300}}>Total Tax amount</Typography>
-                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>false</Typography>
+                    <Typography variant='body1' color='secondary.contrastText' sx={{fontWeight:100}}>-</Typography>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent:'space-between',alignItems:'center',backgroundColor:'#212326',p:2}}>
                     <Typography variant='h6' color='primary.contrastText' sx={{fontWeight:500}}>Total Amount</Typography>
-                    <Typography variant='h5' color='#6FCC60' sx={{fontWeight:800}}>$200</Typography>
+                    <Typography variant='h5' color='#6FCC60' sx={{fontWeight:800}}>{data && data['Total Amount']}</Typography>
                 </Stack>
             </Stack>
         </Dialog>

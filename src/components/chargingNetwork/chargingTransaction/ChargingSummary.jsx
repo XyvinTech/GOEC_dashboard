@@ -27,9 +27,9 @@ export default function ChargingSummary({ datas }) {
     setData([
       { label: "Customer name", value: datas["Username"] },
       { label: "Vehicle number", value: datas["vehicleNum"] },
-      { label: "Vehicle model", value: "Oberon Mall, Ernakulam" },
+      { label: "Vehicle model", value: datas.vehicleInfo?.modelName },
       { label: "Chargepoint", value: datas["Chargepoint ID"] },
-      { label: "Connector type", value: "-" },
+      { label: "Connector type", value: datas.vehicleInfo?.compactable_port },
       { label: "Connector ID", value: datas["Connector ID"] },
       { label: "Charging start", value: datas["startTime"] },
       { label: "Charging End", value: datas["endTime"] },

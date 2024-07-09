@@ -36,6 +36,7 @@ export default function Transactions({ CPID }) {
     const [pageNo, setPageNo] = useState(1);
     const [totalCount, setTotalCount] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
+    const [transaction, setTransaction] = useState();
 
     useEffect(() => {
         init()
@@ -54,12 +55,13 @@ export default function Transactions({ CPID }) {
 
     const actionclickHandle = (e) => {
         if (e.action === 'View') {
+            setTransaction(e.data)
             setDetailOpen(true)
         }
     }
     return (
         <>
-            <TransactionDetails open={detailOpen} onClose={() => { setDetailOpen(false) }} />
+            <TransactionDetails data={transaction} open={detailOpen} onClose={() => { setDetailOpen(false) }} />
             <LastSynced heading={'Transactions'} reloadHandle={init}>
                 <StyledSearchField placeholder={'Search'} onChange={(e) => {
                     setSearchQuery(e.target.value)
