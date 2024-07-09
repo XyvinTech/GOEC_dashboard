@@ -32,7 +32,7 @@ export default function Assign({ tab, data, onClose, user }) {
         chargingTariff: selectedtarrif.value
       }
       changeEVTarrif(data._id, dt).then((res) => {
-        toast.success("successfully assigned")
+        toast.success("Successfully assigned")
         onClose && onClose()
       }).catch((err) => {
         toast.error(err.response.data.error)
@@ -42,7 +42,7 @@ export default function Assign({ tab, data, onClose, user }) {
         chargingTariff: selectedtarrif.value
       }
       userAssignAndunAssignTarrif(user._id, dt).then((res) => {
-        toast.success("successfully assigned")
+        toast.success("Successfully assigned")
         onClose && onClose()
       }).catch((err) => {
         toast.error(err.response.data.error)
@@ -59,6 +59,7 @@ export default function Assign({ tab, data, onClose, user }) {
       })
     } else if (tab === "personal") {
       userAssignAndunAssignTarrif(user._id, {}).then((res) => {
+        toast.success("Successfully unassigned")
         onClose && onClose()
       }).catch((err) => {
         toast.error(err.response.data.error)
@@ -223,7 +224,7 @@ export default function Assign({ tab, data, onClose, user }) {
             <Typography sx={{ marginBottom: 1, marginTop: 2, color: 'secondary.contrastText' }}>
               Assign Tariff
             </Typography>
-            <StyledSelectField placeholder={"Select Tariff"} options={tarrifList} maxMenuHeight={100} onChange={setSelectedTarrif} />
+            <StyledSelectField placeholder={"Select Tariff"} value={selectedtarrif} options={tarrifList} maxMenuHeight={100} onChange={(e) => setSelectedTarrif(e)} />
           </Grid>
           <Grid
             item
