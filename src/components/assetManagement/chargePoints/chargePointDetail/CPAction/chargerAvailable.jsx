@@ -109,7 +109,7 @@ export default function ChargerAvailable() {
       if (res) {
         setAvailablityData(res.data);
         const successToastId = toast.success(
-          "Charging Tariff created successfully",
+          res.message,
           {
             position: "top-right",
           }
